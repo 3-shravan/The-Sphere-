@@ -1,0 +1,346 @@
+.page {
+  background-color: var(--black);
+  color: white;
+  min-height: 100vh;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 4rem;
+  cursor: default;
+}
+
+.line1,
+.line2,
+.and {
+  margin: 0 2rem;
+  font-family: "Futura-Bold";
+  text-transform: uppercase;
+}
+.line1 {
+  font-size: 6rem;
+  line-height: 5rem;
+  max-width: 82%;
+  letter-spacing: 0.2rem;
+  text-shadow: 0 0 6px var(--shadow-green);
+}
+.and {
+  font-size: 5.5rem;
+  line-height: 3.2rem;
+  color: var(--crimson);
+}
+.line2 {
+  font-size: 5rem;
+  text-shadow: 0 0 4px var(--shadow-green);
+  line-height: 4.1rem;
+  letter-spacing: 0.5rem;
+}
+.bg {
+  position: relative;
+  background-color: var(--dark-100);
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 40%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, var(--black), transparent);
+  }
+}
+
+.loading {
+  width: 100px;
+  height: 4px;
+  margin-top: -2.1rem;
+  background-color: var(--wheat);
+  position: absolute;
+  border-radius: 2px;
+  box-shadow: -10px 0 20px var(--shadow-green), 0 0 20px var(--shadow-green);
+}
+
+.getStartedButton {
+  margin: 2.5rem 0 5rem 1.6rem;
+  padding: 0.8rem 0.8rem;
+  width: 8.2rem;
+  display: flex;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-family: "Gilroy Bold";
+  color: var(--crimson);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  &:hover {
+    transition: all 0.3s linear;
+    background-color: white;
+    color: black;
+    box-shadow: 0 0 60px var(--forest-green);
+  }
+}
+.icon {
+  padding-left: 6px;
+  color: var(--wheat);
+  font-size: 0.9rem;
+}
+
+.marqueeContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: black;
+  padding: 10px 0;
+  display: flex;
+
+  &::before,
+  &::after {
+    content: "";
+    opacity: 2;
+    position: absolute;
+    top: 0;
+    width: 15%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, var(--black), transparent);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, var(--black), transparent);
+  }
+}
+
+.marqueeContent {
+  display: flex;
+  min-width: 100%;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.marqueeItem {
+  font-size: 0.8rem;
+  padding: 0 25px;
+}
+
+@media (max-width: 1200px) {
+  .line1 {
+    font-size: 5rem;
+    line-height: 4.5rem;
+  }
+  .line2 {
+    font-size: 4.5rem;
+    line-height: 3.8rem;
+  }
+  .and {
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 1016px) {
+  .authContainer {
+    margin-top: 2.2rem;
+    width: 100%;
+  }
+  .line1 {
+    font-size: 4.5rem;
+    line-height: 3.9rem;
+  }
+  .and {
+    font-size: 4rem;
+  }
+  .line2 {
+    font-size: 4.5rem;
+    line-height: 3.8rem;
+  }
+  .getStartedButton {
+    width: 8rem;
+    margin-top: 1rem;
+    padding: 0.8rem 0.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .authContainer {
+    height: auto;
+    margin-top: 3rem;
+  }
+  .line1 {
+    font-size: 4.2rem;
+    line-height: 3.5rem;
+    max-width: 85%;
+  }
+  .and {
+    font-size: 4.2rem;
+  }
+  .line2 {
+    font-size: 4.2rem;
+    line-height: 3.5rem;
+  }
+  .getStartedButton {
+    width: 8rem;
+    margin-top: 3rem;
+    padding: 0.8rem 0.7rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 618px) {
+  .line1 {
+    font-size: 4.1rem;
+    line-height: 3.5rem;
+    width: 80%;
+  }
+  .and {
+    font-size: 4.2rem;
+  }
+  .bg::after {
+    display: none;
+  }
+  .line2 {
+    font-size: 4rem;
+    line-height: 3.2rem;
+  }
+  .getStartedButton {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .authContainer {
+    margin-top: 4rem;
+    height: auto;
+  }
+  .line1 {
+    font-size: 3.8rem;
+    line-height: 3.2rem;
+  }
+  .and {
+    font-size: 3.8rem;
+  }
+  .line2 {
+    font-size: 3.5rem;
+    line-height: 2.9rem;
+  }
+  .bg::after {
+    display: none;
+  }
+
+  .getStartedButton {
+    margin-top: 2.2rem;
+    width: 7.5rem;
+    padding: 0.9rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  .marqueeContainer {
+    padding: 5px 0;
+  }
+  .marqueeItem {
+    font-size: 0.7rem;
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 500px) {
+  .authContainer {
+    margin-top: 5rem;
+    height: auto;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .line2 {
+    font-size: 3.6rem;
+    letter-spacing: -1px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .line1 {
+    padding-top: 1rem;
+    font-size: 4.2rem;
+    line-height: 4rem;
+  }
+
+  .line2 {
+    line-height: 3rem;
+    padding-top: 0.3rem;
+  }
+
+  .and {
+    font-size: 4rem;
+  }
+
+  .bg::after {
+    display: none;
+  }
+
+  .getStartedButton {
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    width: 100%;
+    margin: 0;
+    margin-top: 13.7rem;
+    padding: 0.9rem 0.7rem;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .authContainer {
+    margin-top: 9rem;
+    height: auto;
+  }
+  .line1 {
+    width: 80%;
+    font-size: 4rem;
+    line-height: 3.5rem;
+  }
+
+  .line2 {
+    font-size: 3.2rem;
+    line-height: 2rem;
+  }
+
+  .and {
+    font-size: 4rem;
+    text-align: start;
+  }
+
+  .getStartedButton {
+    font-size: 1.3rem;
+    margin-top: 10rem;
+  }
+
+  .marqueeItem {
+    font-size: 0.7rem;
+  }
+}
+@media (max-width: 335px) {
+  .line1 {
+    font-size: 3.4rem;
+    line-height: 3.4rem;
+  }
+  .line2 {
+    font-size: 3.2rem;
+    letter-spacing: 1-rem;
+    line-height: 3.4rem;
+  }
+}

@@ -1,0 +1,217 @@
+.header {
+  height: 12vh;
+  width: 100%;
+}
+
+.sphere {
+  position: fixed;
+  top: 2.7%;
+  left: 2.7%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.letters {
+  color: var(--crimson);
+  font-size: 2rem;
+  text-transform: uppercase;
+  margin-bottom: -1.2rem;
+  display: flex;
+  letter-spacing: -1.5px;
+  font-family: "Futura-Bold";
+  align-items: center;
+}
+
+.dot {
+  color: var(--wheat);
+  font-size: 3rem;
+  margin-top: -3vh;
+  height: 10vh;
+  /* background-color: #fff; */
+}
+
+.loginButton {
+  padding: 0.5rem 0.5rem;
+  font-size: 0.8rem;
+  position: fixed;
+  right: 6%;
+  top: 2.9%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Gilroy Bold";
+  color: var(--off-white);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 50px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.loginButton::after {
+  content: "";
+  position: absolute;
+  bottom: 1.5vh;
+  left: 0.65vw;
+  scale: 0;
+  height: 1.5px;
+  width: 100%;
+  background-color: #fff;
+  transition: all 0.5s ease-in-out;
+}
+
+.loginButton:hover::after {
+  height: 1.5px;
+  scale: 1;
+  width: 70%;
+  background-color: var(--crimson);
+  transition: all 0.35s ease-in-out;
+  /* color: var(--forest-green); */
+}
+
+.loginIcon {
+  font-size: 0rem;
+  color: #88e5ba;
+  text-decoration: underline;
+}
+
+.menu {
+  position: fixed;
+  right: 2%;
+  top: 3.5%;
+  font-size: 1.7rem;
+  cursor: pointer;
+  color: var(--white);
+  z-index: 2;
+}
+
+.menu:hover {
+  color: var(--crimson);
+}
+
+@media screen and (max-width: 1200px) {
+  .sphere {
+    left: 2.8%;
+  }
+  .nav {
+    width: 20%;
+    padding: 0 2rem;
+  }
+
+  .letters {
+    margin-bottom: -1.2rem;
+  }
+  .dot {
+    margin-top: -1.4rem;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .header {
+    height: 17vh;
+  }
+  .sphere {
+    top: 2.8%;
+    left: 2.8%;
+  }
+  .nav {
+    width: 20%;
+    padding: 0 2rem;
+  }
+
+  .letters {
+    margin-bottom: -1.2rem;
+  }
+  .dot {
+    margin-top: -1.4rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    height: 16vh;
+  }
+  .sphere {
+    top: 3.5%;
+    left: 4%;
+  }
+
+  .letters {
+    font-size: 1.8rem;
+    margin-bottom: -1.2rem;
+  }
+  .dot {
+    font-size: 3rem;
+    margin-top: -0.9rem;
+  }
+
+  .loginButton {
+    font-size: 0.7rem;
+    right: 3%;
+    top: 8%;
+  }
+  .loginIcon {
+    font-size: 0.7rem;
+  }
+  .menu {
+    font-size: 1.8rem;
+    right: 4%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .header {
+    height: 10vh;
+  }
+  .sphere {
+    top: 3.5%;
+    left: 5%;
+  }
+  .letters {
+    font-size: 1.7rem;
+    margin-bottom: -1.1rem;
+  }
+
+  .dot {
+    font-size: 2.9rem;
+    margin-top: -14px;
+  }
+  .loginButton {
+    font-size: 1rem;
+    right: 2%;
+  }
+  .loginIcon {
+    padding: 2px;
+    font-size: 0.9rem;
+  }
+  .menu {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .header {
+    height: 5vh;
+  }
+  .letters {
+    font-size: 1.6rem;
+    margin-bottom: -1rem;
+  }
+  .dot {
+    font-size: 3rem;
+    margin-top: -1.2rem;
+  }
+
+  .loginButton {
+    right: 2%;
+  }
+  .loginIcon {
+    padding: 2px;
+    font-size: 0.9rem;
+  }
+  .menu {
+    font-size: 1.8rem;
+  }
+}

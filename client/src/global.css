@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+@theme {
+  --color-htt: #131313;
+  --color-text: #000000;
+}
+
+:root {
+  --black: black;
+  --white: white;
+  --crimson: crimson;
+  --wheat: wheat;
+  --off-white: #c7c7c7;
+
+  --dark-100: #131313;
+  --dark-300: #464646;
+
+  /**********TEXTS*******/
+  --subtle-yellow: #abb185;
+  --subtle-text: #6c6c6c;
+  --subtle-text-hover: #3e3e3e;
+
+  /**********Green Shades**********/
+  --shadow-green: #00ff88;
+  --green: #007550;
+  --forest-green: #16483b;
+  --forest-dark-green: #061f17;
+
+  /********* GRADIENT **********/
+  /* --gradient-bg-green: rgba(24, 93, 76, 0.75); */
+  --gradient-bg-green: rgba(28, 103, 84, 0.75);
+  --gradient-bg-text: rgba(7, 22, 16, 0.299);
+}
+
+/*
+********** 
+Theme Mode------
+***********
+*/
+
+.light {
+  --bg: var(--white);
+  --font: var(--black);
+}
+
+.dark {
+  --bg: var(--black);
+  --font: var(--white);
+}
+
+/*
+********** 
+Custom Font
+***********
+*/
+
+@font-face {
+  font-family: "Futura-Bold";
+  font-style: normal;
+  src: url("./assets/fonts/Futura-Bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Gilroy Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./assets/fonts/Gilroy-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Gilroy Medium";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./assets/fonts/Gilroy-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Gilroy Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./assets/fonts/Gilroy-Regular.woff") format("woff");
+}
+@font-face {
+  font-family: "Gilroy-Medium";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./assets/fonts/Gilroy-Medium.woff") format("woff");
+}
+
+.myfontR {
+  font-family: "Gilroy Regular";
+}
+.myfontM {
+  font-family: "Gilroy Medium";
+}
+.myfontB {
+  font-family: "Gilroy Bold";
+}
+
+/*
+********** 
+Boiler Plate-----------
+***********
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--font);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/*
+************************
+WEBKITS-----------
+*************************
+**/
+
+::selection {
+  background-color: #2e2e2e;
+  color: #fbfbfb;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #131313;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555555;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #7a7a7a;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputField:-webkit-autofill {
+  font-family: "Gilroy Regular" !important;
+  font-size: 0.9rem !important;
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 50px rgb(0, 0, 0) inset !important;
+  -webkit-text-fill-color: rgb(255, 255, 255) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
