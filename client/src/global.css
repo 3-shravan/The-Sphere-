@@ -120,6 +120,11 @@ body {
   overflow-x: hidden;
 }
 
+.heroSection {
+  min-height: 100vh;
+  background-color: #000000;
+}
+
 /*
 ************************
 WEBKITS-----------

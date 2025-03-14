@@ -1,6 +1,7 @@
 .header {
-  height: 12vh;
+  height: 17vh;
   width: 100%;
+  background-color: black;
 }
 
 .sphere {
@@ -10,7 +11,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  z-index: 2;
+  z-index: 20;
   font-family: "Futura-Bold";
   text-transform: uppercase;
   letter-spacing: -1.5px;

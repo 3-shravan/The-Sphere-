@@ -1,13 +1,16 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 
+import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { useApi } from "../../../hooks/useApi";
 import { LoginInitialFormData } from "../../../utils/Constants";
 import { useAuth } from "../../../context/AuthContext";
 import { setTokenAndAuthenticated } from "../../../utils/LocalStorage";
 import { IoLogIn } from "react-icons/io5";
+import { MdKeyboardDoubleArrowDown } from "react-icons/md";
+import { useMenu } from "../../../context/MenuContext";
 
+import Menu from "../../../components/UI/Menu";
 import loginstyles from "./Login.module.css";
 import styles from "../AuthComponents.module.css";
 import AuthButton from "../../../components/UI/AuthButton";
@@ -17,8 +20,11 @@ import PrivacyTermsAndConditions from "../../../components/UI/PrivacyToc";
 import GoToSignUp from "./LoginComponents/GoToSignUp";
 import Header from "../../../components/UI/Header";
 
+
 const Login = () => {
   const { setAuth } = useAuth();
+  const { menu } = useMenu()
+
   const navigate = useNavigate();
 
   const [formData, setFormData] = React.useState(LoginInitialFormData);
@@ -54,58 +60,73 @@ const Login = () => {
 
   return (
     <>
-      <Header />
-      <motion.div
-        className={loginstyles.container}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.1, ease: "linear" }}
-      >
-        <form action="" className={loginstyles.formContainer}>
-          <motion.h1
+      <div className='heroSection'>
+
+        <Header />
+
+        <AnimatePresence>
+          {menu && <Menu />}
+        </AnimatePresence>
+
+        <div className="text-white text-center text-3xl mx-[50%] mt-72 flex">
+          <span className="text-amber-200"><MdKeyboardDoubleArrowDown /></span>
+        </div>
+
+
+        {
+          !menu && <motion.div
+            className={loginstyles.container}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.25, ease: "linear" }}
-            className={styles.heading1}
-          >
-            Good To See You Back !{" "}
-          </motion.h1>
-
-          <span className={styles.spanLine} onClick={() => handleMethod()}>
-            Login via
-            <h2>{loginByEmail ? "Phone Number" : "Email"}</h2>
-          </span>
-
-          {loginByEmail ? (
-            <LoginByEmail handleChange={handleChange} formData={formData} />
-          ) : (
-            <LoginByPhone handleChange={handleChange} formData={formData} />
-          )}
-
-          <motion.div
-            initial={{ opacity: 0.5 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1, ease: "linear" }}
           >
-            <AuthButton
-              handleNext={submitHandler}
-              text="Login"
-              type="submit"
-              loading={loading}
-              icon={<IoLogIn className="text-black/90" />}
-            />
-            <button
-              className={styles.secondaryButton}
-              onClick={() => navigate("/forgetPassword" ,{replace:true})}
-              type="button"
-            >
-              Forget Password ?
-            </button>
-            <GoToSignUp />
+            <form action="" className={loginstyles.formContainer}>
+              <motion.h1
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25, ease: "linear" }}
+                className={styles.heading1}
+              >
+                Good To See You Back !{" "}
+              </motion.h1>
+
+              <span className={styles.spanLine} onClick={() => handleMethod()}>
+                Login via
+                <h2>{loginByEmail ? "Phone Number" : "Email"}</h2>
+              </span>
+
+              {loginByEmail ? (
+                <LoginByEmail handleChange={handleChange} formData={formData} />
+              ) : (
+                <LoginByPhone handleChange={handleChange} formData={formData} />
+              )}
+
+              <motion.div
+                initial={{ opacity: 0.5 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1, ease: "linear" }}
+              >
+                <AuthButton
+                  handleNext={submitHandler}
+                  text="Login"
+                  type="submit"
+                  loading={loading}
+                  icon={<IoLogIn className="text-black/90" />}
+                />
+                <button
+                  className={styles.secondaryButton}
+                  onClick={() => navigate("/forgetPassword", { replace: true })}
+                  type="button"
+                >
+                  Forget Password ?
+                </button>
+                <GoToSignUp />
+              </motion.div>
+            </form>
+            <PrivacyTermsAndConditions />
           </motion.div>
-        </form>
-        <PrivacyTermsAndConditions />
-      </motion.div>
+        }
+      </div>
     </>
   );
 };

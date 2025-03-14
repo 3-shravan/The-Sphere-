@@ -1,12 +1,17 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { CiHeart } from "react-icons/ci";
+import { IoMdClose } from "react-icons/io";
 import { TbMenu } from "react-icons/tb";
 import "../../assets/styles/header.css";
 import { replace, useNavigate } from "react-router-dom";
+import { useMenu } from "../../context/MenuContext";
+
 
 const Header = () => {
   const navigate = useNavigate();
+  const { menu, toggleMenu, isMenuDisabled } = useMenu()
+
   return (
     <div className="header">
       <motion.div
@@ -29,89 +34,49 @@ const Header = () => {
           transition={{ delay: 4 }}
           className="letterDiv"
         >
-          <motion.span
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 6 }}
-            className="letters"
-          >
-            S
-          </motion.span>
-          <motion.span
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 6.1 }}
-            className="letters"
-          >
-            p
-          </motion.span>
-          <motion.span
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 6.2 }}
-            className="letters"
-          >
-            h
-          </motion.span>
-          <motion.span
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 6.3 }}
-            className="letters"
-          >
-            e
-          </motion.span>
-          <motion.span
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 6.4 }}
-            className="letters"
-          >
-            r
-          </motion.span>
-          <motion.span
-            initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ delay: 6.5 }}
-            className="letters"
-          >
-            e
-          </motion.span>
+
+
+          {["S", "P", "H", "E", "R", "E"].map((letter, index) => {
+            return <motion.span
+              key={index}
+              initial={{ y: -100 }}
+              animate={{ y: 0 }}
+              transition={{ delay: 6 + (index * 0.1) }}
+              className="letters"
+            >
+              {letter}
+            </motion.span>
+          }
+          )}
+
           <motion.span
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ delay: 5.5 }}
             className="letters dot"
-            onClick={() => navigate('/',{replace:true})}
-
-
+            onClick={() => navigate('/', { replace: true })}
           >
             .
           </motion.span>
         </motion.span>
-        {/* <motion.span
-          initial={{ y: -180 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 5.5 }}
-          className="dot letters"
-        >
-          .
-        </motion.span> */}
       </motion.div>
-
-      <div className="nav">
-        {window.location.pathname === "/" && (
-          <span onClick={() => navigate("/login", { replace: true })} className="loginButton">
-            Login
-            <span className="loginIcon">
-              <CiHeart />
+      {!isMenuDisabled &&
+        <div className="nav">
+          {window.location.pathname === "/" && (
+            <span onClick={() => navigate("/login", { replace: true })} className="loginButton">
+              Login
+              {/* <span className="loginIcon">
+                <CiHeart />
+              </span> */}
             </span>
+          )}
+          <span className="menu"
+            onClick={toggleMenu}
+          >
+            {menu ? <IoMdClose /> : <TbMenu />}
           </span>
-        )}
-        <span className="menu">
-          <TbMenu />
-        </span>
-      </div>
+        </div>
+      }
     </div>
   );
 };

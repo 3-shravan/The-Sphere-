@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Reset.module.css";
-import authStyles from "../authcomponents.module.css";
+import authStyles from "../AuthComponents.module.css";
 import FormContainer from "./FormContainer";
 import AuthButton from "../../../components/UI/AuthButton";
 import Header from "../../../components/UI/Header";
@@ -10,6 +10,7 @@ import { Link, useParams } from "react-router-dom";
 import { useApi } from "../../../hooks/useApi";
 import { motion } from "framer-motion";
 import { RiRestartFill } from "react-icons/ri";
+import { useMenu } from "../../../context/MenuContext";
 
 const initialFormData = {
   newPassword: "",
@@ -17,8 +18,15 @@ const initialFormData = {
 };
 
 const ResetPassowrdViaEmail = () => {
+  const { disableMenu, enableMenu } = useMenu();
   const { token } = useParams();
   const [formData, setFormData] = React.useState(initialFormData);
+
+  React.useEffect(() => {
+    disableMenu();
+    return enableMenu;
+  }, []);
+
 
   const { execute, loading } = useApi(
     `/resetPassword/email/${token}`,

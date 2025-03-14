@@ -15,12 +15,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: black;
 }
 
 .container::before {
   content: "Login";
   position: absolute;
-
   top: 18%;
   left: 50%;
   width: 100%;
@@ -31,7 +31,6 @@
   letter-spacing: -0.7rem;
   font-family: "Futura-Bold";
   color: var(--gradient-bg-text);
-  z-index: -1;
 }
 
 .formContainer {
