@@ -1,41 +1,99 @@
+import React from 'react'
+import { motion } from "framer-motion"
 import { useAuth } from "../../context/AuthContext";
-import { useTheme } from "../../context/ThemeContext";
+import { Loader2 } from "../../components/UI/Loader"
 import useLogout from "../../hooks/useLogout";
-import { Loader, Loader2 } from "../../components/UI/Loader"
-import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { BsArrowDownRightCircleFill } from "react-icons/bs";
 
-
+import Card from "../../components/feedComponents/Card"
+import Button from "../../components/feedComponents/Button"
+import AddPost from "../../components/feedComponents/AddPost"
+import Sidebar from '../../components/feedComponents/Sidebar';
+import LogoutNTheme from '../../components/feedComponents/LogoutNTheme';
 
 const Feed = () => {
-  const { theme, toggleTheme } = useTheme()
   const { auth } = useAuth();
-  const { logout, loading } = useLogout()
+  const { loading } = useLogout()
+
+
   return loading ? <Loader2 /> :
-    <div className=" h-screen font-extrabold bg-[var(--bg)] text-[var(--dark-300)] flex flex-col justify-center items-center text-m font-[Futura-Bold]">
-      <h1 className="text-xl">Welcome</h1>
-      <h1 className=" text-3xl  border-l-2 text-zinc-800  px-1 ml-2 border-[var(--font)]  font-[Gilroy-Medium]">
-        {auth?.profile?.name}.
-      </h1>
+    (
+      <motion.div className='flex   min-h-screen w-screen gap-2 px-2 pt-4' >
 
-      <div className="flex items-center justify-center gap-2 mt-10">
-        <button
-          className=" rounded-full  text-[2rem] bg-[var(--dark-100)] text-[var(--crimson)] hover:bg-[var(--dark-100)] hover:text-[var(--dark-300)]   "
-          onClick={() => logout()}
-        >
-          <BsArrowDownRightCircleFill />
-        </button>
+        {/***********  
+     * @section_1
+  *  *********** / */}
 
-        <button
-          className=" rounded-full px-2 py-2 bg-[var(--font)] text-[var(--bg)]  hover:bg-[var(--font)] hover:text-[var(--dark-300)]   "
+        <div className="secton1 flex flex-col p-2 bg-[var(--bg)]  w-[20%] h-92vh  rounded-sm">
 
-          onClick={() => toggleTheme()}
-        >
-          {theme === 'dark' ? <MdLightMode /> : <MdDarkMode />}
-        </button>
-      </div>
-    </div>
 
-};
+          {/***********  
+     * @Avatar
+  *  *********** / */}
 
-export default Feed;
+
+          <div className="flex flex-col items-center w-full p-2">
+            <img
+              src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj7j9IDpZsbq4HghrNPneZustxYupRgrt0oQ&s'
+              className="rounded-full bg-amber-200 h-20 w-20 md:h-20 md:w-20"
+            />
+
+            <h2 className='font-semibold'>{auth?.profile?.name}</h2>
+          </div>
+
+
+          {/***********  
+      * @Sidebar
+   *  *********** / */}
+
+          <div className=' pt-2 h-full'>
+            <aside className='w-full h-full mr-2 p-2 text-[var(--font)] bg-[var(--bg)] ' >
+              <Sidebar />
+            </aside>
+          </div>
+        </div>
+
+
+
+
+        {/***********  
+     * @Section_2
+  *  *********** / */}
+
+        <div className="section2 relative flex flex-col gap-2 bg-[var(--bg)]  w-[56%] rounded-sm p-2 ">
+
+          <span className='font-[Futura-Bold] px-1'>Feeds</span>
+
+          {/***********  
+               * @Scroll_Card_Container
+            *  *********** / */}
+
+
+          <div className="flex  flex-col mt-5 items-center gap-2 max-h-[80vh] overflow-y-auto custom-scrollbar-hide">
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+          </div>
+          <AddPost />
+        </div>
+
+
+        {/***********  
+      * @Section_3
+   *  *********** / */}
+
+
+        <div className="section3 flex bg-[var(--bg)]  w-[25%] h-20vh p-2 rounded-sm">
+          <span className='font-[Futura-Bold] p-2'>Stories</span>
+
+          <LogoutNTheme />
+
+        </div>
+
+      </motion.div>
+    )
+}
+
+export default Feed

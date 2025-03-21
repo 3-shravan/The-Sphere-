@@ -167,3 +167,12 @@ input::-webkit-inner-spin-button {
   -webkit-text-fill-color: rgb(255, 255, 255) !important;
   transition: background-color 9999s ease-in-out 0s;
 }
+
+/* Hide scrollbar only for this specific div */
+.custom-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.custom-scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

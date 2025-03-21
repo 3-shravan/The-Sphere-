@@ -250,7 +250,7 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
       await user.save({ validateBeforeSave: false })
 
       //create a resetpassword URL
-      const resetPasswordUrl = `${process.env.CLIENT_URL}/resetPassword/email/${resetToken}`
+      const resetPasswordUrl =`${process.env.LOCAL_HOST_URL}/resetPassword/email/${resetToken}`
       const message = generateResetEmailTemplate(resetPasswordUrl)
       try {
          sendEmail({ email, subject: 'Your Reset Password Link', message })

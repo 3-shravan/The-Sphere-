@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { CiHeart } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { TbMenu } from "react-icons/tb";
 import "../../assets/styles/header.css";
