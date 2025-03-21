@@ -21,6 +21,36 @@ const userSchema = new mongoose.Schema({
       maxLength: [32, `Password should be less than 32 characters.`],
       select: false
    },
+   age: {
+      type: Number,
+      default: ''
+   },
+   profilePicture: {
+      type: String,
+      default: ''
+   },
+
+   bio: {
+      type: String,
+      default: ''
+   },
+   gender: {
+      type: String,
+      enum: ['Male', 'Female', 'Other']
+   },
+   followers: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+   },
+   following: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+   },
+   bookmarks: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post'
+   }
+   ,
    accountVerified: {
       type: Boolean,
       default: false
@@ -94,4 +124,4 @@ userSchema.methods.generateResetPasswordOTP = async function () {
 }
 
 
-export const User = mongoose.model('user', userSchema)
+export const User = mongoose.model('User', userSchema)
