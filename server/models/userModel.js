@@ -3,17 +3,34 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import { generateFiveDigitRandomNumber } from '../utils/utilities.js';
+import { type } from 'os';
 
 const userSchema = new mongoose.Schema({
    name: {
       type: String,
-      require: true
+      require: true,
+      unique: false,
+      trim: true,
+      maxLength: [32, `Name should be less than 32 characters.`],
+      minLength: [3, `Name should be atlest 3 characters long.`],
    },
    email: {
       type: String,
+      trim: true,
+      minLength: [5, `Email should be atlest 5 characters long.`],
+      maxLength: [32, `Email should be less than 32 characters.`],
+      match: [
+         /^([a-zA-Z0-9_.+-]+)@([a-zA-Z0-9-]+)\.([a-zA-Z0-9-.]+)$/,
+         `Please enter a valid email address.`,
+      ],
    },
    phone: {
-      type: String
+      type: String,
+      trim: true,
+      match: [
+         /^([0-9]{10})$/,
+         `Please enter a valid phone number.`,
+      ],
    },
    password: {
       type: String,
@@ -23,37 +40,51 @@ const userSchema = new mongoose.Schema({
    },
    age: {
       type: Number,
-      default: ''
+      default: 18,
+      min: [13, 'You must be at least 13 years old to register.'],
+      max: [120, 'Please enter a valid age.'],
    },
    profilePicture: {
       type: String,
       default: ''
    },
-
    bio: {
       type: String,
-      default: ''
+      default: '',
+      maxLength: [200, 'Bio should be less than 200 characters.']
    },
    gender: {
       type: String,
       enum: ['Male', 'Female', 'Other']
    },
-   followers: {
+   followers: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
-   },
-   following: {
+   }],
+   following: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
-   },
-   bookmarks: {
+   }],
+   saved: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Post'
-   }
-   ,
+   }],
+
+   settings: {
+      privateAccount: { type: Boolean, default: false },
+      notifications: { type: Boolean, default: true }
+   },
+
    accountVerified: {
       type: Boolean,
       default: false
+   },
+   attempts: {
+      type: Number,
+      default: 0
+   },
+   lastAttempt: {
+      type: Date
    },
    verificationCode: {
       type: Number
@@ -77,15 +108,12 @@ const userSchema = new mongoose.Schema({
    resetPasswordOTPExpire: {
       type: Date
    },
-   createdAt: {
-      type: Date,
-      default: Date.now
-   }
-})
+
+}, { timestamps: true })
 
 userSchema.pre('save', async function (next) {
    if (!this.isModified('password')) {
-      next()
+      return next()
    }
    this.password = await bcrypt.hash(this.password, 10)
 })
@@ -124,4 +152,4 @@ userSchema.methods.generateResetPasswordOTP = async function () {
 }
 
 
-export const User = mongoose.model('User', userSchema)
+export const User = mongoose.model('user', userSchema)

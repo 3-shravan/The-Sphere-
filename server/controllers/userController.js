@@ -15,62 +15,97 @@ import { makePhoneCall } from "../services/phoneCall.js";
 
 
 /* Register Controller */
-
 export const register = catchAsyncError(
    async (req, res, next) => {
       try {
-         const { name, email, phone, password, verificationMethod } = req.body;
+         let { name, email, phone, password, verificationMethod } = req.body;
 
          if (!name || (!phone && !email) || !password || !verificationMethod) {
-            return next(new ErrorHandler(400, 'All fields are required.'))
+            return next(new ErrorHandler(400, 'All fields are required.'));
          }
 
-         //verification method mismatch with rovided field 
+         // Convert empty phone number to null
+         phone = phone?.trim() || undefined;
+         email = email?.trim() || undefined;
 
+         // Verification method mismatch
          if (!phone && verificationMethod === 'phone') {
-            return next(new ErrorHandler(400, "Phone number is required for phone verification."))
+            return next(new ErrorHandler(400, "Phone number is required for phone verification."));
          }
          if (!email && verificationMethod === 'email') {
-            return next(new ErrorHandler(400, "Email address is required for email verification."))
+            return next(new ErrorHandler(400, "Email address is required for email verification."));
          }
 
-         //check for valid phone number
+         // Validate phone number
          if (phone && !validatePhoneNo(phone)) {
-            return next(new ErrorHandler(400, "Please enter a valid phone number."))
+            return next(new ErrorHandler(400, "Please enter a valid phone number."));
          }
 
-         //check if user already exists 
+         // Check if a verified user with the same name, phone, or email exists
+
+         const isExistName = await User.findOne({ name, accountVerified: true });
+         if (isExistName) return next(new ErrorHandler(409, 'Username already exists.'));
+
          if (phone) {
-            const isExistPhone = await User.findOne({ phone, accountVerified: true })
-            if (isExistPhone) return next(new ErrorHandler(409, 'Phone number is already registered.'))
+            const isExistPhone = await User.findOne({ phone, accountVerified: true });
+            if (isExistPhone) return next(new ErrorHandler(409, 'Phone number is already registered.'));
          }
          if (email) {
-            const isExistEmail = await User.findOne({ email, accountVerified: true })
-            if (isExistEmail) return next(new ErrorHandler(409, 'Email address is already registered.'))
+            const isExistEmail = await User.findOne({ email, accountVerified: true });
+            if (isExistEmail) return next(new ErrorHandler(409, 'Email address is already registered.'));
          }
 
-         //limit the user for making repeated request
-         if (await registrationAttempt(phone, email) > 3) {
-            return next(new ErrorHandler(429, "You have exceeded the maximum number of attempts.Please try again after an hour."))
+         let isExistUnverifiedUser = await User.findOne({
+            $or: [
+               { phone: { $exists: true, $eq: phone }, accountVerified: false },
+               { email: { $exists: true, $eq: email }, accountVerified: false }
+            ]
+         });
+
+         if (isExistUnverifiedUser && isExistUnverifiedUser.attempts >= 3) {
+            const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+            if (isExistUnverifiedUser.lastAttempt > oneHourAgo) {
+               return next(new ErrorHandler(429, "You have exceeded the maximum number of attempts. Please try again after an hour."));
+            }
+
+            isExistUnverifiedUser.attempts = 0;
+            isExistUnverifiedUser.lastAttempt = undefined;
+            await isExistUnverifiedUser.save();
+
          }
 
-         const user = await createUser({ name, phone, email, password })
+         if (isExistUnverifiedUser) {
+            // Update OTP for the existing unverified user
+            const verificationCode = await isExistUnverifiedUser.generateVerificationCode();
+            await User.findOneAndUpdate(
+               { _id: isExistUnverifiedUser._id },
+               { $inc: { attempts: 1 }, $set: { lastAttempt: Date.now() } },
+               { new: true }
+            );
+            await isExistUnverifiedUser.save();
+            const message = await sendVerificationCode(verificationMethod, verificationCode, name, email, phone, res);
+            return handleSuccessResponse(res, 200, message);
+         }
 
-         //create a otp and send to user after storing the same otp in database to veryfy it later 
-         const verificationCode = await user.generateVerificationCode()
-         await user.save()
 
-         //send code to user email or phone based on user preference
-         const message = await sendVerificationCode(verificationMethod, verificationCode, name, email, phone, res)
-         handleSuccessResponse(res, 200, message)
+         // If no user exists, create a new user
+         const user = await createUser({ name, phone, email, password });
+         const verificationCode = await user.generateVerificationCode();
+         await User.findOneAndUpdate(
+            { _id: user._id },
+            { $set: { attempts: 0, lastAttempt: undefined } }
+         );
+         await user.save();
+
+
+         const message = await sendVerificationCode(verificationMethod, verificationCode, name, email, phone, res);
+         handleSuccessResponse(res, 200, message);
 
       } catch (error) {
-         next(error)
+         next(error);
       }
    }
-)
-
-
+);
 
 
 /* Controller that verifies the user is real by verifying its opt */
@@ -78,7 +113,7 @@ export const register = catchAsyncError(
 export const verifyOTP = catchAsyncError(async (req, res, next) => {
    const { email, phone, otp } = req.body
 
-   //if missing fields
+
    if (!otp) return next(new ErrorHandler(400, 'OTP is required.'))
    if (!phone && !email) return next(new ErrorHandler(400, 'Either phone number or email is required for verification'))
 
@@ -250,7 +285,7 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
       await user.save({ validateBeforeSave: false })
 
       //create a resetpassword URL
-      const resetPasswordUrl =`${process.env.LOCAL_HOST_URL}/resetPassword/email/${resetToken}`
+      const resetPasswordUrl = `${process.env.LOCAL_HOST_URL}/resetPassword/email/${resetToken}`
       const message = generateResetEmailTemplate(resetPasswordUrl)
       try {
          sendEmail({ email, subject: 'Your Reset Password Link', message })

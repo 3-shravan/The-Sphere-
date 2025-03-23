@@ -13,8 +13,19 @@ const commentSchema = new mongoose.Schema({
    post: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Post',
+      // index: true,
       required: true
-   }
-})
+   },
+   likedBy: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+   }],
+   isDeleted: {
+      type: Boolean,
+      default: false
+   },
 
-export const Comments = mongoose.model("Comments", commentSchema)
+})
+// commentSchema.index({ post: 1, createdAt: -1 });
+
+export const Comment = mongoose.model("Comment", commentSchema)
