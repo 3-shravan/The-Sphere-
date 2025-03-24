@@ -1,20 +1,23 @@
 import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
-import crypto from 'crypto'
+import getDataUri from '../config/dataUriParser.js'
+import cloudinary from '../config/cloudinary.js'
 import { User } from "../models/userModel.js";
 import { createUser } from "../services/userServices.js";
-import { validatePhoneNo, registrationAttempt, crpytPassword } from '../utils/utilities.js'
+import { validatePhoneNo, crpytPassword } from '../utils/utilities.js'
 import { sendVerificationCode } from "../services/sendVerificationCode.js";
 import { sendToken } from "../services/sendToken.js";
 import { ExpiredToken } from "../models/blackListedTokenModel.js";
 import { sendEmail } from "../services/sendEmail.js";
-import { handleSuccessResponse } from "../utils/responseHandler.js";
+import { handleErrorResponse, handleSuccessResponse } from "../utils/responseHandler.js";
 import { generateResetEmailTemplate } from "../utils/emailTemplate.js";
 import { makePhoneCall } from "../services/phoneCall.js";
 
 
 
-/* Register Controller */
+{/***********  
+     * @Register_User
+  *  *********** / */}
 export const register = catchAsyncError(
    async (req, res, next) => {
       try {
@@ -97,7 +100,6 @@ export const register = catchAsyncError(
          );
          await user.save();
 
-
          const message = await sendVerificationCode(verificationMethod, verificationCode, name, email, phone, res);
          handleSuccessResponse(res, 200, message);
 
@@ -108,21 +110,25 @@ export const register = catchAsyncError(
 );
 
 
-/* Controller that verifies the user is real by verifying its opt */
+
+
+
+
+
+
+{/***********  
+     * @Verify_OTP
+  *  *********** / */}
 
 export const verifyOTP = catchAsyncError(async (req, res, next) => {
+
    const { email, phone, otp } = req.body
-
-
    if (!otp) return next(new ErrorHandler(400, 'OTP is required.'))
    if (!phone && !email) return next(new ErrorHandler(400, 'Either phone number or email is required for verification'))
 
-   //check if phone number is i valid format 
    if (phone && !validatePhoneNo(phone)) {
       return next(new ErrorHandler(400, 'Invalid phone number'))
    }
-
-   //query to find the user
    const query = { accountVerified: false };
 
    if (phone && email) {
@@ -136,27 +142,8 @@ export const verifyOTP = catchAsyncError(async (req, res, next) => {
       query.email = email;
    }
 
-   //fetch the latest user entry from database using above query
-   const users = await User.find(query).sort({ createdAt: -1 });
-
-
-   //if no user exists
-   if (users.length === 0) {
-      return next(new ErrorHandler(404, 'User not found. Please check the provided phone number or email.'))
-   }
-
-   //when there are multiple user req ...delete them after fetching the latest
-   if (users.length > 1) {
-      await User.deleteMany({
-         _id: { $ne: users[0]._id },
-         $or: [
-            { phone, accountVerified: false },
-            { email, accountVerified: false }
-         ]
-      });
-   }
-
-   let user = users[0];
+   const user = await User.findOne(query);
+   if (!user) return next(new ErrorHandler(404, 'No user found to be verified.'))
 
    //fetch that stored OTP and compare it with OTP provided by user
    const verificationcode = user.verificationCode;
@@ -175,6 +162,8 @@ export const verifyOTP = catchAsyncError(async (req, res, next) => {
    user.accountVerified = true;
    user.verificationCode = undefined;
    user.verificationCodeExpire = undefined;
+   user.attempts = undefined;
+   user.lastAttempt = undefined;
 
    user.save({ validateModifiedOnly: true })
 
@@ -184,24 +173,21 @@ export const verifyOTP = catchAsyncError(async (req, res, next) => {
 
 
 
-/* Login Controller */
-
+{/***********  
+     * @Login
+  *  *********** / */}
 export const login = catchAsyncError(async (req, res, next) => {
 
    const { email, phone, password } = req.body
-
    //user can only login with either phone number or email address
-   if ((!email && !phone) || !password) {
-      return next(new ErrorHandler(400, "Either Phone number or Email is required with password"))
-   }
-   if (email && phone) {
-      return next(new ErrorHandler(400, "Please provide either Email or Phone number, not both."));
-   }
+   if ((!email && !phone) || !password)
+      return next(new ErrorHandler(400, "Credentials are required."))
 
+   if (email && phone)
+      return next(new ErrorHandler(400, "  Please provide either email or phone number."));
 
    let user;
 
-   //find user using phone or email ...as user must exist to login 
    if (phone) {
       user = await User.findOne({ phone, accountVerified: true }).select("+password")
       if (!user) return next(new ErrorHandler(404, "No user found with this phone number or account is not verified."))
@@ -211,26 +197,22 @@ export const login = catchAsyncError(async (req, res, next) => {
       if (!user) return next(new ErrorHandler(404, "No user found with this email address or account is not verified."))
    }
 
-
    //Validate the password 
    const isMatch = await user.comparePassword(password);
    if (!isMatch) return next(new ErrorHandler(400, 'Incorrect password. Please try again.'))
-
-
-   //send null value as password to client 
    user.password = ""
-
    sendToken(user, 200, 'Login Successfull', res)
 })
 
 
 
 
-/* Controller to handle logout logiic */
 
+{/***********  
+     * @Logout
+  *  *********** / */}
 export const logout = catchAsyncError(async (req, res, next) => {
 
-   //fetch the token 
    const token = req.headers.authorization?.split(" ")[1] || req.cookies.token
 
    // make the token expire so that no user can login after logout using this token 
@@ -251,28 +233,31 @@ export const logout = catchAsyncError(async (req, res, next) => {
 
 
 
-/* This controller sends the User info as response */
 
+
+
+
+{/***********  
+     * @Get_User
+  *  *********** / */}
 export const getUser = catchAsyncError(async (req, res, next) => {
    res.status(200).json({ success: true, user: req.user })
 })
 
 
 
-/* Cotroller to handle the logic for forget password and send verfication link or OTP to verify the user for resting the password of his account */
 
+
+
+{/***********  
+     * @Forget_Password
+  *  *********** / */}
 export const forgetPassword = catchAsyncError(async (req, res, next) => {
 
    const { email, phone } = req.body
 
-   //user can req for verification code either via phone number or verification link via Email address
-   if (!phone && !email) {
-      return next(new ErrorHandler(400, "Either provide registered email or phone number"));
-   }
-   //validate the phone number is in correct format
-   if (phone && !validatePhoneNo(phone)) {
-      return next(new ErrorHandler(400, "Please enter a valid phone number."))
-   }
+   if (!phone && !email) return next(new ErrorHandler(400, "Either provide registered email or phone number"));
+   if (phone && !validatePhoneNo(phone)) return next(new ErrorHandler(400, "Please enter a valid phone number."))
 
 
    //when user want to reset the password by verification link via email address
@@ -284,7 +269,7 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
       const resetToken = await user.generateResetPasswordToken()
       await user.save({ validateBeforeSave: false })
 
-      //create a resetpassword URL
+      //create and send a resetpassword URL
       const resetPasswordUrl = `${process.env.LOCAL_HOST_URL}/resetPassword/email/${resetToken}`
       const message = generateResetEmailTemplate(resetPasswordUrl)
       try {
@@ -292,12 +277,9 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
          handleSuccessResponse(res, 200, `Reset password link is sent to ${email}`)
 
       } catch (error) {
-         // if can't send the verification link clear the resetToken fields...as user will get new token 
          user.resetPasswordToken = undefined
          user.resetPasswordTokenExpire = undefined
-
          await user.save({ validateBeforeSave: false })
-
          return next(new ErrorHandler(400, error.message || "Failed to send password reset link"))
       }
    }
@@ -318,21 +300,22 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
          handleSuccessResponse(res, 200, `Verification code to reset your password has been sent`)
 
       } catch (error) {
-
-         // if can't send the verification code clear the resetOTP fields...as user will get new otp 
          user.resetPasswordOTP = undefined
          user.resetPasswordOTPExpire = undefined
          await user.save({ validateBeforeSave: false })
-
-         return next(new ErrorHandler(400, error.message || 'Failed to make call for verification Code | Phone Nu,ber invalid'))
+         return next(new ErrorHandler(400, error.message || 'Failed to make call for verification Code | Phone Number invalid'))
       }
    }
 })
 
 
 
-/* OTP verification for reseting the password via phone number */
 
+
+
+{/***********  
+     * @Verify_Reset_Password_OTP_via_Phone
+  *  *********** / */}
 export const verifyResetPasswordOTP = catchAsyncError(async (req, res, next) => {
    const { phone, otp } = req.body
    if (!otp || !phone) return next(new ErrorHandler(400, "phone number and OTP are required for verification"))
@@ -351,29 +334,29 @@ export const verifyResetPasswordOTP = catchAsyncError(async (req, res, next) => 
 
 
 
-/* this controller handles the logic for reseting the password via a email as well as phone number */
 
+
+{/***********  
+     * @Reset_Password
+  *  *********** / */}
 export const resetPassword = catchAsyncError(async (req, res, next) => {
-   //get the token from params from verification link sent to the uesr's email address
    const { token } = req.params
-
    const { phone, newPassword, confirmPassword } = req.body
 
    if (!newPassword || !confirmPassword) return next(new ErrorHandler(400, "Plaese provide your new password as well as confirm password"))
-
    if (newPassword !== confirmPassword) return next(new ErrorHandler(400, 'New password and confirm Password do not match'))
 
    let user;
 
    // reseting through the email verification link
    if (token) {
-
       const resetPasswordToken = crpytPassword(token)
       user = await User.findOne({ resetPasswordToken, accountVerified: true, resetPasswordTokenExpire: { $gt: Date.now() } }).select('+password')
       if (!user) return next(new ErrorHandler(400, "Invalid token or Expired"))
 
       user.resetPasswordToken = undefined
       user.resetPasswordTokenExpire = undefined
+      user.attempts = undefined;
 
    }
    // reseting through the phone verification OTP/code
@@ -384,6 +367,7 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
       user.resetPassword = false
       user.resetPasswordOTP = undefined
       user.resetPasswordOTPExpire = undefined
+      user.attempts = undefined;
    }
 
    //if user's new password is previously used one
@@ -399,4 +383,101 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
 })
 
 
+
+
+{/***********  
+     * @Update_Profile
+  *  *********** / */}
+export const updateProfile = catchAsyncError(async (req, res, next) => {
+   const { name, bio, gender } = req.body
+   const userId = req.user._id
+   const profilePicture = req.file
+
+   let cloudResponse;
+   if (profilePicture) {
+      const fileUri = getDataUri(profilePicture)
+      cloudResponse = await cloudinary.uploader.upload(fileUri)
+   }
+   const user = await User.findById(userId)
+   if (bio) user.bio = bio;
+   if (gender) user.gender = gender;
+   if (name) user.name = name;
+   if (profilePicture) user.profilePicture = cloudResponse.secure_url;
+
+   await user.save()
+   handleSuccessResponse(res, 200, "Profile updated successfully", user)
+
+})
+
+
+
+
+
+{/***********  
+     * @Get_Other_User_Profile
+  *  *********** / */}
+export const getProfile = catchAsyncError(async (req, res, next) => {
+   const username = req.params.username
+   let user = await User.findOne({ name: username, accountVerified: true }).select('-password')
+   if (!user) return next(new ErrorHandler(404, 'User not found'))
+   handleSuccessResponse(res, 200, 'Profile fetched', user)
+})
+
+
+{/***********  
+     * @Get_Suggested_Users
+  *  *********** / */}
+export const getSuggestedUsers = catchAsyncError(async (req, res, next) => {
+   const userId = req.user._id
+   const user = await User.findOne({ _id: userId, accountVerified: true }).select('-password')
+   const users = await User.find({ _id: { $nin: [userId, ...user.following] }, accountVerified: true }).sort({ createdAt: -1 }).select('-password').limit(10);
+   if (!users) return next(new ErrorHandler(404, 'Suggested Users are not available currently.'))
+   handleSuccessResponse(res, 200, 'Suggested users fetched', users);
+})
+
+
+
+
+
+
+{/***********  
+     * @Delete_Account
+  *  *********** / */}
+export const deleteAccount = catchAsyncError(async (req, res, next) => {
+   const userId = req.user._id
+   const user = await User.deleteOne({ _id: userId })
+   if (!user) return next(new ErrorHandler(404, 'User not found'))
+   handleSuccessResponse(res, 200, 'Account deleted', user)
+})
+
+
+{/***********  
+     * @Follow_Unfollow
+  *  *********** / */}
+export const followUnfollow = catchAsyncError(async (req, res, next) => {
+   const toFollow = req.params.username;
+   const followedBy = req.user._id;
+
+   const user = await User.findById(followedBy)
+   const toFollowUser = await User.findOne({ name: toFollow })
+
+   if (!toFollowUser || !user) {
+      handleErrorResponse(res, 404, 'User not found')
+   }
+   if (toFollowUser._id.toString() === user._id.toString()) {
+      return handleErrorResponse(res, 400, 'You cannot follow yourself')
+   }
+   if (user.following.includes(toFollowUser._id)) {
+      user.following = user.following.filter((userId) => userId.toString() !== toFollowUser._id.toString())
+      toFollowUser.followers = toFollowUser.followers.filter((userId) => userId.toString() !== user._id.toString())
+      await user.save()
+      await toFollowUser.save()
+      return handleSuccessResponse(res, 200, 'Unfollowed successfully')
+   }
+   user.following.push(toFollowUser._id)
+   toFollowUser.followers.push(user._id)
+   await user.save()
+   await toFollowUser.save()
+   handleSuccessResponse(res, 200, 'Followed successfully')
+})
 

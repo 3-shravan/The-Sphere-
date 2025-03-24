@@ -1,15 +1,21 @@
 import express from 'express'
 import { authUser } from '../middlewares/authUser.js'
 import {
+   deleteAccount,
+   followUnfollow,
    forgetPassword,
+   getProfile,
+   getSuggestedUsers,
    getUser,
    login,
    logout,
    register,
    resetPassword,
+   updateProfile,
    verifyOTP,
    verifyResetPasswordOTP
 } from '../controllers/userController.js'
+import { uploadMiddleware } from '../config/multer.js'
 
 
 const router = express.Router()
@@ -23,5 +29,10 @@ router.post('/forgetPassword', forgetPassword)
 router.post('/forgetPassword/verifyOTP', verifyResetPasswordOTP)
 router.put('/resetPassword/email/:token', resetPassword)
 router.put('/resetPassword/phone', resetPassword)
+router.put('/updateProfile', authUser, uploadMiddleware, updateProfile)
+router.get('/getProfile/:username', getProfile)
+router.get('/suggestedUsers', authUser, getSuggestedUsers)
+router.delete('/deleteAccount', authUser, deleteAccount)
+router.post('/:username/follow', authUser, followUnfollow)
 
 export default router
