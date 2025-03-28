@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import { generateFiveDigitRandomNumber } from '../utils/utilities.js';
-import { type } from 'os';
 
 const userSchema = new mongoose.Schema({
    name: {
@@ -73,12 +72,6 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Post'
    }],
-
-   settings: {
-      privateAccount: { type: Boolean, default: false },
-      notifications: { type: Boolean, default: true }
-   },
-
    accountVerified: {
       type: Boolean,
       default: false
@@ -156,4 +149,4 @@ userSchema.methods.generateResetPasswordOTP = async function () {
 }
 
 
-export const User = mongoose.model('user', userSchema)
+export const User = mongoose.model('User', userSchema)

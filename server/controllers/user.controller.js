@@ -126,11 +126,10 @@ export const verifyOTP = catchAsyncError(async (req, res, next) => {
    if (!otp) return next(new ErrorHandler(400, 'OTP is required.'))
    if (!phone && !email) return next(new ErrorHandler(400, 'Either phone number or email is required for verification'))
 
-   if (phone && !validatePhoneNo(phone)) {
+   if (phone && !validatePhoneNo(phone))
       return next(new ErrorHandler(400, 'Invalid phone number'))
-   }
-   const query = { accountVerified: false };
 
+   const query = { accountVerified: false };
    if (phone && email) {
       query.$or = [
          { phone },
@@ -182,12 +181,11 @@ export const login = catchAsyncError(async (req, res, next) => {
    //user can only login with either phone number or email address
    if ((!email && !phone) || !password)
       return next(new ErrorHandler(400, "Credentials are required."))
-
    if (email && phone)
       return next(new ErrorHandler(400, "  Please provide either email or phone number."));
 
-   let user;
 
+   let user;
    if (phone) {
       user = await User.findOne({ phone, accountVerified: true }).select("+password")
       if (!user) return next(new ErrorHandler(404, "No user found with this phone number or account is not verified."))
@@ -214,21 +212,14 @@ export const login = catchAsyncError(async (req, res, next) => {
 export const logout = catchAsyncError(async (req, res, next) => {
 
    const token = req.headers.authorization?.split(" ")[1] || req.cookies.token
-
-   // make the token expire so that no user can login after logout using this token 
    try {
       await ExpiredToken.create({ token })
    } catch (error) {
       throw new ErrorHandler(500, `Error black listing token: ${error.message}`);
    }
-
-   //expire and clear the cookies
    res.clearCookie("token", { httpOnly: true });
-   res.cookie("token", "", {
-      expires: new Date(Date.now()), httpOnly: true
-   })
-
-   res.status(200).json({ success: true, message: "Logged out Successfully" })
+   res.cookie("token", "", { expires: new Date(Date.now()), httpOnly: true })
+   handleSuccessResponse(res, 200, "Logged out successfully")
 })
 
 
@@ -327,7 +318,6 @@ export const verifyResetPasswordOTP = catchAsyncError(async (req, res, next) => 
    user.resetPasswordOTP = undefined
    user.resetPasswordOTPExpire = undefined
    await user.save({ validateBeforeSave: false })
-
    handleSuccessResponse(res, 200, 'OTP Verified.')
 })
 
@@ -340,6 +330,7 @@ export const verifyResetPasswordOTP = catchAsyncError(async (req, res, next) => 
      * @Reset_Password
   *  *********** / */}
 export const resetPassword = catchAsyncError(async (req, res, next) => {
+
    const { token } = req.params
    const { phone, newPassword, confirmPassword } = req.body
 
@@ -347,8 +338,6 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
    if (newPassword !== confirmPassword) return next(new ErrorHandler(400, 'New password and confirm Password do not match'))
 
    let user;
-
-   // reseting through the email verification link
    if (token) {
       const resetPasswordToken = crpytPassword(token)
       user = await User.findOne({ resetPasswordToken, accountVerified: true, resetPasswordTokenExpire: { $gt: Date.now() } }).select('+password')
@@ -357,9 +346,7 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
       user.resetPasswordToken = undefined
       user.resetPasswordTokenExpire = undefined
       user.attempts = undefined;
-
    }
-   // reseting through the phone verification OTP/code
    if (phone) {
       user = await User.findOne({ phone, accountVerified: true, resetPassword: true }).select('+password')
       if (!user) return next(new ErrorHandler(400, 'Unauthorize to reset password'))
@@ -370,14 +357,10 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
       user.attempts = undefined;
    }
 
-   //if user's new password is previously used one
    const isMatch = await user.comparePassword(newPassword)
    if (isMatch) return next(new ErrorHandler(400, 'Previouly used password. Please enter new password.'))
-
-   //set the new password
    user.password = newPassword
    await user.save()
-
    handleSuccessResponse(res, 200, "Password Reset Successfully")
 
 })

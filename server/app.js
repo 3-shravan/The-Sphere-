@@ -8,7 +8,8 @@ import cookieParser from 'cookie-parser'
 import connectToDatabase from './config/database.js'
 import { errorMiddleware } from './middlewares/errorHandler.js'
 
-import userRouter from './routes/userRoutes.js'
+import userRouter from './routes/user.routes.js'
+import postRouter from './routes/post.routes.js'
 import cleanupAllExpiredData from './Automation/cleanupManager.js'
 
 
@@ -30,6 +31,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/api/v1/user', userRouter)
+app.use('/api/v1/post', postRouter)
 
 connectToDatabase()
 cleanupAllExpiredData()

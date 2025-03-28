@@ -1,5 +1,6 @@
 import express from 'express'
 import { authUser } from '../middlewares/authUser.js'
+import { uploadMiddleware } from '../config/multer.js'
 import {
    deleteAccount,
    followUnfollow,
@@ -14,8 +15,7 @@ import {
    updateProfile,
    verifyOTP,
    verifyResetPasswordOTP
-} from '../controllers/userController.js'
-import { uploadMiddleware } from '../config/multer.js'
+} from '../controllers/user.controller.js'
 
 
 const router = express.Router()
