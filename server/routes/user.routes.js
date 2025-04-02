@@ -5,6 +5,7 @@ import {
    deleteAccount,
    followUnfollow,
    forgetPassword,
+   getAllUsers,
    getProfile,
    getSuggestedUsers,
    getUser,
@@ -34,5 +35,6 @@ router.get('/getProfile/:username', getProfile)
 router.get('/suggestedUsers', authUser, getSuggestedUsers)
 router.delete('/deleteAccount', authUser, deleteAccount)
 router.post('/:username/follow', authUser, followUnfollow)
+router.get('/allUsers', authUser, getAllUsers)
 
 export default router

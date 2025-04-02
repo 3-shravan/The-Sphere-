@@ -20,7 +20,6 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
    const { caption, thoughts, location, tags } = req.body
    const image = req.file
 
-   // if (!image || !image.buffer) return next(new ErrorHandler(400, "Invalid image upload"));
    let post;
    if (image) {
       const optimizedImageBuffer = await sharp(image.buffer)

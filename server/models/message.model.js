@@ -1,46 +1,25 @@
 import mongoose from 'mongoose'
 const messageSchema = new mongoose.Schema({
 
-   // conversation: {
-   //    type: mongoose.Schema.Types.ObjectId,
-   //    ref: "Conversation",
-   //    required: true,
-   // },
+   chat: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Chat",
+   },
 
    sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
-   },
-   receiver: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true
    },
    content: {
       type: String,
-      required: true
-   },
-   systemMessage: {
-      type: String,
-      default: ''
+      required: true,
+      trim: true
    },
    isLiked: {
       type: Boolean,
       default: false
    },
-   isRead: {
-      type: Boolean,
-      default: false
-   },
-   readBy: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-   }],
-   deletedFor: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-   }]
+
 
 }, { timestamps: true })
 

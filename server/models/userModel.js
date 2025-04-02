@@ -45,7 +45,9 @@ const userSchema = new mongoose.Schema({
    },
    profilePicture: {
       type: String,
-      default: ''
+   },
+   profilePicturePublicId: {
+      type: String,
    },
    bio: {
       type: String,
@@ -72,6 +74,14 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Post'
    }],
+   isOnline: {
+      type: Boolean,
+      default: false
+   },
+   lastActive: {
+      type: Date,
+      default: Date.now
+   },
    accountVerified: {
       type: Boolean,
       default: false

@@ -10,6 +10,7 @@ import { errorMiddleware } from './middlewares/errorHandler.js'
 
 import userRouter from './routes/user.routes.js'
 import postRouter from './routes/post.routes.js'
+import chatRouter from './routes/chat.routes.js'
 import cleanupAllExpiredData from './Automation/cleanupManager.js'
 
 
@@ -32,6 +33,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/post', postRouter)
+app.use('/api/v1/chat', chatRouter)
 
 connectToDatabase()
 cleanupAllExpiredData()

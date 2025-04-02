@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
-const conversationSchema = new mongoose.Schema({
-   participants: [{
+const chatSchema = new mongoose.Schema({
+   users: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
    }],
@@ -9,7 +9,11 @@ const conversationSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Message"
    },
-   blockedParticipants: [{
+   lastSeen: [{
+      user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      lastSeenAt: { type: Date, default: Date.now }
+   }],
+   blockedUsers: [{
       user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       blockedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       blockedAt: { type: Date, default: Date.now }
@@ -18,7 +22,7 @@ const conversationSchema = new mongoose.Schema({
       user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       count: { type: Number, default: 0 }
    }],
-   conversationName: {
+   groupName: {
       type: String,
       default: ""
    },
@@ -30,42 +34,27 @@ const conversationSchema = new mongoose.Schema({
       type: String,
       default: ""
    },
-
+   groupPicturePublicId: {
+      type: String,
+      default: ""
+   },
    admins: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
    }],
-
-   mutedBy: [
-      {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "User"
-      }
-   ],
-   pinnedBy: [
-      {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "User"
-      }
-   ],
-   typingUsers: [
-      {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "User"
-      }
-   ],
-   archivedBy: [
-      {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: "User"
-      }
-   ],
-   isDeleted: {
-      type: Boolean,
-      default: false
+   groupDescription: {
+      type: String,
+      default: ""
    },
-
+   groupCreatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+   },
+   typingUsers: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+   }],
 }, { timestamps: true })
 
 
-export const Conversation = mongoose.model('Conversation', conversationSchema)
+export const Chat = mongoose.model('Chat', chatSchema)

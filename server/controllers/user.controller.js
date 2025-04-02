@@ -1,7 +1,6 @@
 import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
-import getDataUri from '../config/dataUriParser.js'
-import cloudinary from '../config/cloudinary.js'
+import { uploadImage, deleteImage } from '../config/cloudinary.js'
 import { User } from "../models/userModel.js";
 import { createUser } from "../services/userServices.js";
 import { validatePhoneNo, crpytPassword } from '../utils/utilities.js'
@@ -376,22 +375,44 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
    const userId = req.user._id
    const profilePicture = req.file
 
-   let cloudResponse;
-   if (profilePicture) {
-      const fileUri = getDataUri(profilePicture)
-      cloudResponse = await cloudinary.uploader.upload(fileUri)
-   }
    const user = await User.findById(userId)
+   if (!user) return next(new ErrorHandler(404, "User not found"));
+
+   if (profilePicture) {
+      const newPublicId = `user_${userId}_profile`;
+
+      if (user.profilePicturePublicId) {
+         await deleteImage(user.profilePicturePublicId);
+      }
+
+      const { url, publicId } = await uploadImage(profilePicture, newPublicId);
+      user.profilePicture = url;
+      user.profilePicturePublicId = publicId;
+
+   }
    if (bio) user.bio = bio;
    if (gender) user.gender = gender;
    if (name) user.name = name;
-   if (profilePicture) user.profilePicture = cloudResponse.secure_url;
 
    await user.save()
    handleSuccessResponse(res, 200, "Profile updated successfully", user)
 
 })
 
+export const deleteProfilePicture = catchAsyncError(async (req, res, next) => {
+   const userId = req.user._id
+   const user = await User.findById(userId)
+   if (!user) return next(new ErrorHandler(404, "User not found"));
+
+   if (user.profilePicturePublicId) {
+      await deleteImage(user.profilePicturePublicId);
+      user.profilePicture = undefined;
+      user.profilePicturePublicId = undefined;
+      await user.save()
+   }
+   handleSuccessResponse(res, 200, "Profile picture deleted successfully", user)
+
+})
 
 
 
@@ -463,4 +484,20 @@ export const followUnfollow = catchAsyncError(async (req, res, next) => {
    await toFollowUser.save()
    handleSuccessResponse(res, 200, 'Followed successfully')
 })
+
+
+export const getAllUsers = catchAsyncError(async (req, res, next) => {
+   const query = req.query.search ?
+      {
+         $or: [
+            { name: { $regex: req.query.search, $options: 'i' } },
+            { email: { $regex: req.query.search, $options: 'i' } }
+         ]
+      } : {}
+
+   const users = await User.find(query).find({ _id: { $ne: req.user._id } })
+   if (!users) return next(new ErrorHandler(404, 'No users found'))
+   handleSuccessResponse(res, 200, 'Users fetched successfully', users)
+}
+)
 
