@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { errorToast, successToast } from "../utils/ToastNotifications";
 import { useAuth } from '../context/AuthContext';
 
-const BASE_URL = "http://localhost:8000/api/v1/user";
+const BASE_URL = "http://localhost:8000/api/v1/auth";
 
 export const useApi = (endpoint, method = "GET", redirectUrl = null) => {
 

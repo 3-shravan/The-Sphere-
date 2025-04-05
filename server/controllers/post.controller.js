@@ -2,13 +2,26 @@ import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
 import sharp from "sharp";
 import cloudinary from "../config/cloudinary.js";
-
 import { Post } from "../models/post.model.js";
 import { User } from "../models/userModel.js";
+import { Block } from "../models/block.model.js";
+import { uploadImage, deleteImage } from "../config/cloudinary.js";
 import { Comment } from "../models/comment.model.js";
 import { createPost } from "../services/post.services.js";
 import { handleSuccessResponse } from "../utils/responseHandler.js";
 
+
+
+
+const isBlocked = async (userId, targetId) => {
+   const blocked = await Block.findOne({
+      $or: [
+         { blockerId: userId, blockedId: targetId },
+         { blockerId: targetId, blockedId: userId }
+      ]
+   });
+   return !!blocked;
+};
 
 
 
@@ -66,8 +79,15 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
 
 
 export const getAllPosts = catchAsyncError(async (req, res, next) => {
+
+   const userId = req.user._id;
+
+   const blockedUsers = await Block.find({
+      $or: [{ blockerId: userId }, { blockedId: userId }]
+   }).distinct("blockedId");
+
    const posts = await Post
-      .find()
+      .find({ author: { $nin: blockedUsers } })
       .sort({ createdAt: -1 })
       .populate({ path: "author", select: "name , profilePicture" })
       .populate({ path: "likes", select: "name , profilePicture" })
@@ -137,6 +157,11 @@ export const likePost = catchAsyncError(async (req, res, next) => {
    const post = await Post.findById(postId)
    if (!post) return next(new ErrorHandler(404, "Post not found"))
 
+   // Check if user is blocked
+   if (await isBlocked(likedBy, post.author)) {
+      return next(new ErrorHandler(403, "You cannot like this post"));
+   }
+
    const isLiked = post.likes.includes(likedBy)
    if (isLiked) {
       post.likes.pull(likedBy)
@@ -198,6 +223,12 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
 
    const post = await Post.findById(postId)
    if (!post) return next(new ErrorHandler(404, "Post not found"))
+
+
+   // Check if user is blocked
+   if (await isBlocked(commentedBy, post.author)) {
+      return next(new ErrorHandler(403, "You cannot like this post"));
+   }
 
    const comment = await Comment.create({ text, author: commentedBy, post: postId })
    if (!comment) return next(new ErrorHandler(500, "Failed to create comment"))
@@ -303,6 +334,11 @@ export const getSavedPosts = catchAsyncError(async (req, res, next) => {
 
    const savedBy = req.user._id
    const user = await User.findById(savedBy)
+
+   const blockedUsers = await Block.find({
+      $or: [{ blockerId: savedBy }, { blockedId: savedBy }]
+   }).distinct("blockedId");
+
 
    const posts = await Post.find({ _id: { $in: user.saved } }).populate({ path: "author", select: "name , profilePicture" })
    if (!posts) return next(new ErrorHandler(404, "No saved posts found"))

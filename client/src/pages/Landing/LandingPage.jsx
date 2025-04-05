@@ -6,11 +6,11 @@ import styles from "./LandingPage.module.css";
 import { BsChatLeftHeartFill } from "react-icons/bs";
 import Header from "../../components/UI/Header";
 import Menu from "../../components/UI/Menu";
-import { useMenu } from '../../context/MenuContext'
+import { useMenu } from "../../context/MenuContext";
 
 const LandingPage = () => {
   const [hideLine, setHideLine] = useState(false);
-  const { menu } = useMenu()
+  const { menu } = useMenu();
 
   const navigate = useNavigate();
   return (
@@ -18,22 +18,32 @@ const LandingPage = () => {
       <div className={styles.page}>
         <Header />
 
+        <AnimatePresence>{menu && <Menu />}</AnimatePresence>
 
-        <AnimatePresence>
-          {menu && <Menu />}
-        </AnimatePresence>
+        {/***********
+         * @SignUp_button
+         *  *********** / */}
 
-
-
+        <motion.button
+          className={styles.getStartedButton}
+          onClick={() => {
+            navigate("/signup", { replace: true });
+          }}
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 2, ease: "linear" }}
+        >
+          Let's signup{" "}
+          <span className={styles.icon}>
+            {" "}
+            <BsChatLeftHeartFill />
+          </span>
+        </motion.button>
 
         <div className={styles.hero}>
-
-
-          {/***********  
-             * @line1
-          *  *********** / */}
-
-
+          {/***********
+           * @line1
+           *  *********** / */}
 
           <motion.h1
             className={styles.line1}
@@ -41,7 +51,7 @@ const LandingPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           >
-            Your World of Endless Sharing
+            World of Sharing
           </motion.h1>
 
           {!hideLine && (
@@ -67,29 +77,19 @@ const LandingPage = () => {
             &
           </motion.div>
 
-          {/***********  
-                 * @bg
-              *  *********** / */}
-
-
-
           <motion.div
             className={styles.bg}
-            initial={{ y: -270, backgroundColor: "#DC143C" }}
+            initial={{ y: -300, backgroundColor: "#000" }}
             animate={{ y: 0, backgroundColor: "#131313" }}
             transition={{
               delay: 1,
               duration: 0.8,
-
               ease: "easeOut",
             }}
           >
-
-            {/***********  
+            {/***********
              * @Discovery
-              *  *********** / */}
-
-
+             *  *********** / */}
 
             <motion.div
               className={styles.line2}
@@ -104,46 +104,13 @@ const LandingPage = () => {
               Discovery.
             </motion.div>
           </motion.div>
-
-          {/***********  
-         * @SignUp_button
-          *  *********** / */}
-
-
-
-          <motion.button
-            className={styles.getStartedButton}
-            onClick={() => {
-
-              navigate("/signup", { replace: true });
-            }}
-            initial={{ x: -300, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 2.3, duration: 1.5, ease: "anticipate" }}
-          >
-            Let's signup{" "}
-            <span className={styles.icon}>
-              {" "}
-              <BsChatLeftHeartFill />
-            </span>
-          </motion.button>
         </div>
 
-
-        {/*********** 
-         * @MARQUEEE_EFFECT 
+        {/***********
+         * @MARQUEEE_EFFECT
          *  *********** / */}
 
-        <motion.div
-          className={styles.marqueeContainer}
-          initial={{ y: -465 }}
-          animate={{ y: 0 }}
-          transition={{
-            delay: 6.7,
-            duration: 4.5,
-            ease: "anticipate",
-          }}
-        >
+        <motion.div className={styles.marqueeContainer}>
           {[...Array(2)].map((_, i) => (
             <motion.div
               key={i}
@@ -152,7 +119,6 @@ const LandingPage = () => {
               transition={{
                 repeat: Infinity,
                 duration: 80,
-                delay: 7,
                 ease: "linear",
               }}
             >
@@ -164,8 +130,6 @@ const LandingPage = () => {
             </motion.div>
           ))}
         </motion.div>
-
-
       </div>
     </>
   );

@@ -6,10 +6,9 @@ import "../../assets/styles/header.css";
 import { replace, useNavigate } from "react-router-dom";
 import { useMenu } from "../../context/MenuContext";
 
-
 const Header = () => {
   const navigate = useNavigate();
-  const { menu, toggleMenu, isMenuDisabled } = useMenu()
+  const { menu, toggleMenu, isMenuDisabled } = useMenu();
 
   return (
     <div className="header">
@@ -17,12 +16,12 @@ const Header = () => {
         className="sphere"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ delay: 5, ease: "linear" }}
+        transition={{ delay: 1, ease: "linear" }}
       >
         <motion.span
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          transition={{ delay: 4.5 }}
+          transition={{ delay: 2 }}
           className="letter"
         >
           The
@@ -30,52 +29,52 @@ const Header = () => {
         <motion.span
           initial={{ y: -100 }}
           animate={{ y: 0 }}
-          transition={{ delay: 4 }}
+          transition={{ delay: 2.5 }}
           className="letterDiv"
         >
-
-
           {["S", "P", "H", "E", "R", "E"].map((letter, index) => {
-            return <motion.span
-              key={index}
-              initial={{ y: -100 }}
-              animate={{ y: 0 }}
-              transition={{ delay: 6 + (index * 0.1) }}
-              className="letters"
-            >
-              {letter}
-            </motion.span>
-          }
-          )}
+            return (
+              <motion.span
+                key={index}
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ delay: 3 + index * 0.1 }}
+                className="letters"
+              >
+                {letter}
+              </motion.span>
+            );
+          })}
 
           <motion.span
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ delay: 5.5 }}
             className="letters dot"
-            onClick={() => navigate('/', { replace: true })}
+            onClick={() => navigate("/", { replace: true })}
           >
             .
           </motion.span>
         </motion.span>
       </motion.div>
-      {!isMenuDisabled &&
+      {!isMenuDisabled && (
         <div className="nav">
           {window.location.pathname === "/" && (
-            <span onClick={() => navigate("/login", { replace: true })} className="loginButton">
+            <span
+              onClick={() => navigate("/login", { replace: true })}
+              className="loginButton"
+            >
               Login
               {/* <span className="loginIcon">
                 <CiHeart />
               </span> */}
             </span>
           )}
-          <span className="menu"
-            onClick={toggleMenu}
-          >
+          <span className="menu" onClick={toggleMenu}>
             {menu ? <IoMdClose /> : <TbMenu />}
           </span>
         </div>
-      }
+      )}
     </div>
   );
 };

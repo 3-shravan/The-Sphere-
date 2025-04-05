@@ -15,10 +15,18 @@ const messageSchema = new mongoose.Schema({
       required: true,
       trim: true
    },
+   media: {
+      type: String,
+      default: null
+   },
    isLiked: {
       type: Boolean,
       default: false
    },
+   readBy: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+   }],
 
 
 }, { timestamps: true })

@@ -13,11 +13,6 @@ const chatSchema = new mongoose.Schema({
       user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       lastSeenAt: { type: Date, default: Date.now }
    }],
-   blockedUsers: [{
-      user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-      blockedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-      blockedAt: { type: Date, default: Date.now }
-   }],
    unreadMessages: [{
       user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       count: { type: Number, default: 0 }
@@ -50,10 +45,7 @@ const chatSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
    },
-   typingUsers: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-   }],
+
 }, { timestamps: true })
 
 
