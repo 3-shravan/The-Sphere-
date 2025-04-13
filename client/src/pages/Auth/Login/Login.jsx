@@ -68,11 +68,6 @@ const Login = () => {
           {menu && <Menu />}
         </AnimatePresence>
 
-        {/* <div className="text-white text-center text-3xl mx-[50%] mt-72 flex">
-          <span className="text-amber-200"><MdKeyboardDoubleArrowDown /></span>
-        </div> */}
-
-
         {
           !menu && <motion.div
             className={loginstyles.container}

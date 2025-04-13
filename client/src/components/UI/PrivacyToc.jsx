@@ -10,14 +10,14 @@ const PrivacyTermsAndConditions = () => {
           understood, and agreed to our{" "}
           <Link
             to="/privacy-policy"
-            className="cursor-pointer text-[#179f74] hover:underline ease-in-out"
+            className="cursor-pointer text-[#9e9e9e] hover:underline ease-in-out"
           >
             Privacy Policy
           </Link>{" "}
           and{" "}
           <Link
             to="/terms-conditions"
-            className="cursor-pointer text-[#179f74] hover:underline ease-in-out"
+            className="cursor-pointer text-[#9e9e9e] hover:underline ease-in-out"
           >
             Terms & Conditions
           </Link>

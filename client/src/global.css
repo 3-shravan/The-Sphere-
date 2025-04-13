@@ -87,6 +87,17 @@ Custom Font
   src: url("./assets/fonts/Gilroy-Medium.woff") format("woff");
 }
 
+@font-face {
+  font-family: "Blackout-Midnight";
+  src: url("./assets/fonts/Blackout-Midnight.woff2") format("woff2"),
+    url("./assets/fonts/Blackout-Midnight.woff") format("woff");
+}
+@font-face {
+  font-family: "Blackout-2am";
+  src: url("./assets/fonts/Blackout-2AM.woff2") format("woff2"),
+    url("./assets/fonts/Blackout-2AM.woff2") format("woff");
+}
+
 .myfontR {
   font-family: "Gilroy Regular";
 }
@@ -137,6 +148,7 @@ WEBKITS-----------
 }
 
 ::-webkit-scrollbar {
+  display: none;
   width: 6px;
   height: 6px;
 }

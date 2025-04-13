@@ -166,7 +166,6 @@
 .redirectLink {
   color: var(--subtle-yellow);
   font-family: "Gilroy Medium";
-  text-decoration: underline;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   cursor: pointer;
