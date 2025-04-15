@@ -1,12 +1,11 @@
-import React from "react";
-import { Outlet, replace, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { Outlet, useNavigate, useEffect } from "@lib";
+import { useAuth } from "@context";
 
 const PublicRoutes = () => {
   const navigate = useNavigate();
   const { auth } = useAuth();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!auth.token === "undefined" && auth.isAuthenticated) {
       navigate("/feeds", { replace: true });
       return;

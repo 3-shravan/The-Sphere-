@@ -1,15 +1,14 @@
-import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { useApi } from "../hooks/useApi";
-import { useAuth } from "../context/AuthContext";
-import {Loader, Loader2} from "../components/UI/Loader";
+import { Outlet, useNavigate, useEffect } from "@lib";
+import { useApi } from "@hooks";
+import { useAuth } from "@context";
+import { Loader } from "@components";
 
 const ProtectedRoutes = () => {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
   const { execute, loading, error } = useApi("/profile", "GET", "/feeds");
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (auth.token === "undefined" || !auth.isAuthenticated) {
       navigate("/login", { replace: true });
       return;
@@ -23,17 +22,16 @@ const ProtectedRoutes = () => {
           profile: response.data.user,
         }));
       } else {
-        localStorage.removeItem('token')
-        localStorage.removeItem('isAuthenticated')
+        localStorage.removeItem("token");
+        localStorage.removeItem("isAuthenticated");
       }
-
     };
 
     fetchProfile();
   }, [auth.isAuthenticated, auth.token, navigate]);
 
   if (loading) {
-    return <Loader2 />;
+    return <Loader />;
   }
 
   return <Outlet />;

@@ -1,21 +1,19 @@
-import React from 'react';
-import axios from 'axios';
-import { useNavigate } from "react-router-dom";
-import { errorToast, successToast } from "../utils/ToastNotifications";
-import { useAuth } from '../context/AuthContext';
+import { useNavigate, axios, useState, useCallback } from "@lib";
+import { errorToast, successToast } from "@utils";
+import { useAuth } from '@context';
 
 const BASE_URL = "http://localhost:8000/api/v1/auth";
 
-export const useApi = (endpoint, method = "GET", redirectUrl = null) => {
+const useApi = (endpoint, method = "GET", redirectUrl = null) => {
 
    const navigate = useNavigate();
    const { auth } = useAuth();
 
-   const [data, setData] = React.useState(null);
-   const [loading, setLoading] = React.useState(false);
-   const [error, setError] = React.useState(null);
+   const [data, setData] = useState(null);
+   const [loading, setLoading] = useState(false);
+   const [error, setError] = useState(null);
 
-   const execute = React.useCallback(async (body = null) => {
+   const execute = useCallback(async (body = null) => {
       setLoading(true);
       setError(null);
       try {
@@ -47,4 +45,6 @@ export const useApi = (endpoint, method = "GET", redirectUrl = null) => {
 
    return { execute, data, loading, error };
 };
+
+export default useApi;
 

@@ -1,12 +1,12 @@
-import React from 'react'
-import { useApi } from './useApi'
-import { removeTokenAndAuthenticated } from '../utils/LocalStorage'
+import { useCallback } from '@lib'
+import { useApi } from '@hooks'
+import { removeTokenAndAuthenticated } from '@utils'
 
-export const useLogout = () => {
+const useLogout = () => {
 
-   const { execute ,loading } = useApi('/logout', "GET", "/login")
+   const { execute, loading } = useApi('/logout', "GET", "/login")
 
-   const logout = React.useCallback(async () => {
+   const logout = useCallback(async () => {
       const response = await execute();
       if (response.status === 200) removeTokenAndAuthenticated()
    })

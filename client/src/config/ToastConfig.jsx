@@ -1,5 +1,5 @@
-import { Toaster } from "sonner";
-import "../assets/styles/toastStyles.css";
+import { Toaster } from "@lib";
+import "@styles/toast.css";
 const ToastConfig = () => {
   return (
     <Toaster

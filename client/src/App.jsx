@@ -1,5 +1,5 @@
-import ToastConfig from "./config/ToastConfig";
-import AppRoutes from "./Routes/AppRoutes";
+import ToastConfig from "@config/ToastConfig";
+import AppRoutes from "@routes/AppRoutes";
 const App = () => {
   return (
     <>

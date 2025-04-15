@@ -27,9 +27,14 @@
   --forest-dark-green: #061f17;
 
   /********* GRADIENT **********/
-  /* --gradient-bg-green: rgba(24, 93, 76, 0.75); */
-  --gradient-bg-green: rgba(28, 103, 84, 0.75);
-  --gradient-bg-text: rgba(7, 22, 16, 0.299);
+
+  /* --gradient-bg-green: rgba(28, 103, 84, 0.75); 
+   --gradient-bg-text: rgba(7, 22, 16, 0.299);  */
+  --gradient-bg-green: rgba(19, 133, 105, 0.788);
+  --gradient-bg-text: rgba(6, 27, 18, 0.194);
+
+  /* --gradient-bg-green: rgba(183, 12, 80, 0.934);
+  --gradient-bg-text: rgba(59, 10, 30, 0.231); */
 }
 
 /*
@@ -98,15 +103,7 @@ Custom Font
     url("./assets/fonts/Blackout-2AM.woff2") format("woff");
 }
 
-.myfontR {
-  font-family: "Gilroy Regular";
-}
-.myfontM {
-  font-family: "Gilroy Medium";
-}
-.myfontB {
-  font-family: "Gilroy Bold";
-}
+
 
 /*
 ********** 

@@ -1,11 +1,11 @@
-import React from "react";
-import { motion } from "framer-motion";
 import {
+  motion,
   FaUserAstronaut,
   FaGithub,
   FaLinkedin,
   FaTwitter,
-} from "react-icons/fa";
+} from "@lib";
+
 const textVariants = {
   initial: { opacity: 1 },
   hover: {

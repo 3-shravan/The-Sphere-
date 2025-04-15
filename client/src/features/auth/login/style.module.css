@@ -1,0 +1,134 @@
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(to top, black 35%, transparent 125%),
+    linear-gradient(to bottom, var(--gradient-bg-green) 25%, transparent 85%),
+    linear-gradient(to right, black 15%, transparent 60%),
+    linear-gradient(to left, black 15%, transparent 60%);
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.container::before {
+  content: "Login";
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  font-size: 14rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: -0.1rem;
+  font-family: "Futura-Bold";
+  color: var(--gradient-bg-text);
+}
+
+.formContainer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 35%;
+  width: 42%;
+  max-width: 550px;
+  font-size: 1rem;
+  padding: 1rem 1.8rem;
+  color: white;
+  border-radius: 10px;
+  background-color: #000000;
+}
+
+@media (max-width: 1024px) {
+  .container::before {
+    font-size: 10rem;
+    top: 15%;
+  }
+
+  .formContainer {
+    width: 50%;
+  }
+}
+
+@media (max-width: 980px) {
+  .container::before {
+    font-size: 10rem;
+    top: 15%;
+  }
+
+  .formContainer {
+    width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container::before {
+    font-size: 7.5rem;
+    width: 100%;
+    top: 15%;
+    line-height: 6rem;
+  }
+  .formContainer {
+    width: 100%;
+    top: 35%;
+  }
+}
+@media (max-width: 630px) {
+  .container::before {
+    width: 100%;
+    font-size: 8rem;
+    line-height: 7rem;
+  }
+
+  .formContainer {
+    width: 100%;
+    top: 35%;
+  }
+}
+
+@media (max-width: 550px) {
+  .container::before {
+    font-size: 8rem;
+    top: 25%;
+    letter-spacing: -0.3rem;
+  }
+
+  .formContainer {
+    width: 100%;
+    top: 40%;
+  }
+}
+
+@media (max-width: 420px) {
+  .container::before {
+    font-size: 7rem;
+    width: 100%;
+    top: 22%;
+  }
+
+  .formContainer {
+    width: 100%;
+    top: 40%;
+  }
+}
+@media (max-width: 350px) {
+  .container::before {
+    font-size: 6rem;
+    width: 100%;
+    top: 20%;
+  }
+
+  .formContainer {
+    width: 100%;
+    top: 30%;
+  }
+}

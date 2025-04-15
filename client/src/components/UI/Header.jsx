@@ -1,11 +1,12 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { IoMdClose } from "react-icons/io";
-import { TbMenu } from "react-icons/tb";
-import "../../assets/styles/header.css";
-import { replace, useNavigate } from "react-router-dom";
-import { useMenu } from "../../context/MenuContext";
-import { RiLoginCircleFill } from "react-icons/ri";
+import "@styles/header.css";
+import { useMenu } from "@context";
+import {
+  useNavigate,
+  motion,
+  IoMdClose,
+  TbMenu,
+  RiLoginCircleFill,
+} from "@lib";
 
 const Header = () => {
   const navigate = useNavigate();

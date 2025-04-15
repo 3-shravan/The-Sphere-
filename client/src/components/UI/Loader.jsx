@@ -1,39 +1,5 @@
-import { motion, useAnimate } from "framer-motion";
-import { useEffect } from "react";
-
-import "../../assets/styles/LoadingStyle.css";
-
-export function Loader() {
-  const [scope, animate] = useAnimate();
-
-  useEffect(() => {
-    const containerWidth = document.querySelector(".container").offsetWidth;
-    const animateLoader = async () => {
-      await animate(
-        [
-          [scope.current, { x: 0, width: "100%" }],
-          [scope.current, { x: containerWidth, width: "0%" }, { delay: 0.6 }]
-        ],
-        {
-          duration: 3,
-          repeat: Infinity,
-          repeatDelay: 0
-        }
-      );
-    };
-    animateLoader();
-  }, []);
-
-  return (
-    <div className="container">
-      <motion.div ref={scope} className="loader" />
-      <h1 className="text">
-        <i>Wait a Sec...</i>
-      </h1>
-    </div>
-  );
-}
-
+import { motion } from "@lib";
+import "@styles/loader.css";
 
 export const Spinner = ({ text, radius, fontSize, letterSpacing }) => {
   const characters = text.split("");
@@ -49,7 +15,7 @@ export const Spinner = ({ text, radius, fontSize, letterSpacing }) => {
             style={{
               transformOrigin: `0 ${radius}px`,
               transform: `rotate(${i * letterSpacing}deg)`,
-              fontSize
+              fontSize,
             }}
           >
             {ch}
@@ -58,15 +24,11 @@ export const Spinner = ({ text, radius, fontSize, letterSpacing }) => {
       </p>
     </motion.div>
   );
+};
 
-}
-
-
-export function Loader2() {
-
+function Loader() {
   return (
     <div className="container2">
-
       <motion.div
         className="spinner spinner-1"
         initial={{ rotate: 45 }}
@@ -108,5 +70,5 @@ export function Loader2() {
       </motion.div>
     </div>
   );
-
 }
+export default Loader;
