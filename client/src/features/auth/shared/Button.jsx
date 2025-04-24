@@ -15,9 +15,7 @@ const AuthButton = ({ handleNext, text, type, loading, register, icon }) => {
           <>
             <span className="btninput">
               {text}
-              <span className=" text-zinc-100 flex pt-0.5 font-bold text-2xl">
-                {icon}
-              </span>
+              <span className="  flex pt-0.5 font-bold text-2xl ">{icon}</span>
             </span>
           </>
         )}

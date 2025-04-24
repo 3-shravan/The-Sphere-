@@ -9,8 +9,8 @@
   width: 3rem;
   height: 3rem;
   text-align: center;
-  color: var(--crimson);
-  font-family: "Futura-Bold";
+  color: var(--color-primary);
+  font-family: "Futura";
   border: 0.1px solid var(--forest-green);
   border-radius: 8px;
   cursor: default;

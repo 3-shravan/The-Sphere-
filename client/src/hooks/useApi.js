@@ -1,50 +1,44 @@
-import { useNavigate, axios, useState, useCallback } from "@lib";
+import { useNavigate, useState, useCallback } from "@lib";
 import { errorToast, successToast } from "@utils";
-import { useAuth } from '@context';
+import axios from "@services/axios";
 
-const BASE_URL = "http://localhost:8000/api/v1/auth";
+const useApi = () => {
+  const navigate = useNavigate();
 
-const useApi = (endpoint, method = "GET", redirectUrl = null) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-   const navigate = useNavigate();
-   const { auth } = useAuth();
-
-   const [data, setData] = useState(null);
-   const [loading, setLoading] = useState(false);
-   const [error, setError] = useState(null);
-
-   const execute = useCallback(async (body = null) => {
+  const request = useCallback(
+    async ({ endpoint, method = "GET", body = null, redirectUrl = null }) => {
       setLoading(true);
       setError(null);
       try {
-         const response = await axios({
-            url: `${BASE_URL}${endpoint}`,
-            method,
-            data: body,
-            headers: {
-               Authorization: `Bearer ${auth.token}`,
-               "Content-Type": "application/json"
-            }
-         });
-         if (response.status === 200) {
-            setData(response.data);
-            if (response.data?.message) successToast(response.data.message);
-            if (redirectUrl) navigate(redirectUrl, { replace: true });
-
-            return response;
-         }
+        const response = await axios({
+          url: endpoint,
+          method,
+          data: body,
+        });
+        if (response.status === 200) {
+          setData(response.data);
+          if (response.data?.message) successToast(response.data.message);
+          if (redirectUrl) navigate(redirectUrl, { replace: true });
+          return response;
+        }
       } catch (err) {
-         const errorMessage = err.response?.data?.message || "Server is down right now.";
-         errorToast(errorMessage);
-         setError(errorMessage);
+        console.log(err.response)
+        const msg = err.response?.data?.message || "Something went wrong";
+        errorToast(msg);
+        setError(msg);
+        return msg;
+      } finally {
+        setLoading(false);
+      }
+    },
+    [navigate]
+  );
 
-         return errorMessage;
-      } finally { setLoading(false) }
-
-   }, [endpoint, method, redirectUrl, navigate]);
-
-   return { execute, data, loading, error };
+  return { request, data, loading, error };
 };
 
 export default useApi;
-

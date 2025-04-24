@@ -3,28 +3,45 @@
   width: 100%;
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: 999;
 }
 .nav {
   width: 50%;
   margin: 0 auto;
   height: 10vh;
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   justify-content: center;
   align-items: center;
 }
 
-.sphere-letters {
+.sphere {
   position: fixed;
-  font-size: 1.3rem;
   top: 2.7%;
   left: 2.7%;
+}
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  width: 30px;
+  cursor: pointer;
+}
+.sphere-letters {
+  font-size: 1.6rem;
   z-index: 2;
-  font-family: "Blackout-Midnight";
-  letter-spacing: 1.5px;
-  color: rgb(245, 239, 228);
+  font-weight: 800;
+  font-family: "Poppins";
+  text-transform: uppercase;
+  color: rgb(214, 214, 214);
   cursor: default;
+  padding: 0.2rem 0.2rem 0.2rem 1.5rem;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
 }
 
 .letters {
@@ -46,11 +63,12 @@
 .login-button,
 .signup-button {
   padding: 0.5rem 1rem;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Blackout-Midnight";
+  font-family: "Poppins";
+  font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
   border-radius: 50px;
@@ -65,17 +83,18 @@
 .menu {
   position: fixed;
   top: 3.5%;
-  right: 2.7%;
+  right: 4%;
   z-index: 100;
-  font-size: 1.5rem;
+  font-size: 0.8rem;
   cursor: pointer;
   color: white;
-  font-family: "Blackout-Midnight";
+  text-transform: uppercase;
+  font-family: "Poppins";
   z-index: 2;
 }
 
 .menu:hover {
-  color: var(--color-white);
+  color: rgb(126, 126, 126);
 }
 
 @media screen and (max-width: 1200px) {
@@ -148,7 +167,7 @@
   }
 
   .menu {
-    font-size: 1.5rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -179,6 +198,6 @@
   }
 
   .menu {
-    font-size: 1.4rem;
+    font-size: 0.8rem;
   }
 }

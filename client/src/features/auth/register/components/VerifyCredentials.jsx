@@ -77,7 +77,7 @@ const VerifyCredentials = ({ formData, handleChange, handlePrevious }) => {
             <input
               ref={inputRef}
               type="email"
-              placeholder=" Email"
+              placeholder=" e.g sphere@gmail.com"
               name="email"
               value={formData.email}
               onChange={handleChange}

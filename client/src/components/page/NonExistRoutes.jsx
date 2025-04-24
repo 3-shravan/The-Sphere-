@@ -15,7 +15,7 @@ const NonExistRoutes = () => {
         404
       </motion.h1>
       <motion.p
-        className="text-lg mb-8 text-white/25 font-bold font-[Gilroy-Medium] leading-5 text-center max-w-md"
+        className="text-lg mb-8 text-white/25 font-bold font-[Gilroy] leading-5 text-center max-w-md"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}

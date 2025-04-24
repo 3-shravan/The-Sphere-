@@ -11,7 +11,7 @@ const LogoutNTheme = () => {
   return (
     <div className=" flex items-center h-10 p-2 justify-end gap-2 w-full">
       <button
-        className=" rounded-full h-7.75 text-[2rem] bg-[var(--dark-100)] text-[var(--crimson)] hover:bg-[var(--dark-100)] hover:text-[var(--dark-300)]   "
+        className=" rounded-full h-7.75 text-[2rem] bg-[var(--dark-100)] text-[var(--color-primary)] hover:bg-[var(--dark-100)] hover:text-[var(--dark-300)]   "
         onClick={() => logout()}
       >
         <BsArrowDownRightCircleFill />

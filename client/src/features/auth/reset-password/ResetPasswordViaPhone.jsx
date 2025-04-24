@@ -2,7 +2,7 @@ import styles from "./style.module.css";
 import authStyles from "@features/auth/shared/auth.module.css";
 import FormContainer from "./components/FormContainer";
 import PrivacyTermsAndConditions from "@components/common/PrivacyToc";
-import Header from "@components/UI/Header";
+import {Header} from "@components";
 import { AuthButton } from "../shared";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
@@ -19,7 +19,7 @@ const ResetPasswordViaPhone = () => {
   const { disableMenu, enableMenu } = useMenu();
   const [formData, setFormData] = useState(ResetPasswordFormDataPhone);
   const params = useParams();
-  const { execute, loading } = useApi("/resetPassword/phone", "PUT", "/login");
+  const { request, loading } = useApi();
 
   useEffect(() => {
     disableMenu();
@@ -30,7 +30,12 @@ const ResetPasswordViaPhone = () => {
     e.preventDefault();
     let reqData = { ...formData, phone: params.phoneNumber };
 
-    await execute(reqData);
+    await request({
+      endpoint: "/auth/resetPassword/phone",
+      method: "PUT",
+      body: reqData,
+      redirectUrl: "/login",
+    });
   };
   return (
     <>

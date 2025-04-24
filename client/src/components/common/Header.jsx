@@ -2,11 +2,26 @@ import "@styles/header.css";
 import { useMenu } from "@context";
 import {
   useNavigate,
-  motion,
   IoMdClose,
+  motion,
   TbMenu,
   RiLoginCircleFill,
 } from "@lib";
+
+const containerVariants = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 1,
+    },
+  },
+};
+
+const letterVariants = {
+  initial: { y: -100, opacity: 0 },
+  animate: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 200 } },
+};
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,30 +29,23 @@ const Header = () => {
 
   return (
     <div className="header">
-      <motion.div
-        className="sphere"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 1, ease: "linear" }}
-      >
+      <motion.div className="sphere">
+        <img
+          src="favicon-dark.svg"
+          alt=""
+          className="logo"
+          onClick={() => navigate("/", { replace: true })}
+        />
         <motion.span
-          initial={{ y: -100 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 1 }}
           className="sphere-letters"
+          variants={containerVariants}
+          initial="initial"
+          animate="animate"
+          onClick={() => navigate("/", { replace: true })}
         >
-          {["S", "P", "H", "E", "R", "E", "."].map((letter, index) => {
-            return (
-              <motion.span
-                key={index}
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ delay: 2 + index * 0.1 }}
-              >
-                {letter}
-              </motion.span>
-            );
-          })}
+          {["S", "p", "h", "e", "r", "e"].map((letter, index) => (
+            <motion.span key={index} variants={letterVariants}></motion.span>
+          ))}
         </motion.span>
       </motion.div>
 
@@ -46,32 +54,23 @@ const Header = () => {
           <>
             <div
               onClick={() => navigate("/login", { replace: true })}
-              className="nav-buttons "
+              className="nav-buttons"
             >
-              {/* <img src="" alt="" /> */}
               <span className="nav-icons">
-                {" "}
                 <RiLoginCircleFill color="grey" />
               </span>
               <button className="login-button">Login</button>
             </div>
             <div
               onClick={() => navigate("/signup", { replace: true })}
-              className="nav-buttons "
+              className="nav-buttons"
             >
-              {/* <img src="" alt="" /> */}
-
               <button className="signup-button">Signup</button>
             </div>
           </>
         )}
-        <span
-          className="menu"
-          onClick={() => {
-            toggleMenu();
-          }}
-        >
-          {menu ? <IoMdClose /> : <TbMenu />}
+        <span className="menu" onClick={toggleMenu}>
+          {menu ? "Close" : "Menu"}
         </span>
       </div>
     </div>

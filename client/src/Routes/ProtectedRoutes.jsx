@@ -2,32 +2,34 @@ import { Outlet, useNavigate, useEffect } from "@lib";
 import { useApi } from "@hooks";
 import { useAuth } from "@context";
 import { Loader } from "@components";
+import { removeTokenAndAuthenticated } from "@utils";
 
 const ProtectedRoutes = () => {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
-  const { execute, loading, error } = useApi("/profile", "GET", "/feeds");
+  const { request, loading } = useApi();
 
   useEffect(() => {
-    if (auth.token === "undefined" || !auth.isAuthenticated) {
+    if (!auth.token || !auth.isAuthenticated) {
       navigate("/login", { replace: true });
       return;
     }
 
     const fetchProfile = async () => {
-      const response = await execute();
+      const response = await request({
+        endpoint: "auth/profile",
+      });
       if (response.status === 200) {
         setAuth((prev) => ({
           ...prev,
           profile: response.data.user,
         }));
       } else {
-        localStorage.removeItem("token");
-        localStorage.removeItem("isAuthenticated");
+        removeTokenAndAuthenticated();
       }
     };
 
-    fetchProfile();
+    if (auth.token) fetchProfile();
   }, [auth.isAuthenticated, auth.token, navigate]);
 
   if (loading) {

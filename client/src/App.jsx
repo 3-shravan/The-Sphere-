@@ -1,10 +1,14 @@
 import ToastConfig from "@config/ToastConfig";
+import { ReactLenis, useLenis } from "lenis/react";
 import AppRoutes from "@routes/AppRoutes";
 const App = () => {
+  const lenis = useLenis(({ scroll }) => {});
   return (
     <>
-      <ToastConfig />
-      <AppRoutes />
+      <ReactLenis root>
+        <ToastConfig />
+        <AppRoutes />
+      </ReactLenis>
     </>
   );
 };

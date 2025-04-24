@@ -17,4 +17,5 @@ export {
   FaGithub,
   FaLinkedin,
   FaTwitter,
+  FaStarOfLife 
 } from "react-icons/fa";

@@ -17,7 +17,7 @@ const Login = () => {
 
   const [formData, setFormData] = React.useState(LoginInitialFormData);
   const [loginByEmail, setLoginByEmail] = React.useState(true);
-  const { execute, loading } = useApi("/login", "POST", "/feeds");
+  const { request, loading } = useApi();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +35,12 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    const response = await execute(formData);
+    const response = await request({
+      endpoint: "auth/login",
+      method: "POST",
+      body: formData,
+      redirectUrl: "/feeds",
+    });
     if (response.status === 200) {
       setAuth({
         token: response.data.token,

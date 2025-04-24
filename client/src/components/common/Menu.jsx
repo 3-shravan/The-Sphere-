@@ -1,10 +1,4 @@
-import {
-  motion,
-  FaUserAstronaut,
-  FaGithub,
-  FaLinkedin,
-  FaTwitter,
-} from "@lib";
+import { motion, FaUserAstronaut, FaGithub, FaLinkedin, FaTwitter } from "@lib";
 
 const textVariants = {
   initial: { opacity: 1 },
@@ -52,7 +46,7 @@ const Menu = () => {
         duration: 1,
         ease: "anticipate",
       }}
-      className="relative flex flex-col justify-center items-center bg-[#131313] min-h-[100vh] w-screen text-white/35 font-[Gilroy-Medium] z-10 px-5"
+      className="relative flex flex-col justify-center items-center bg-[#131313] min-h-[100vh] w-screen text-white/35 font-[Gilroy] z-10 px-5"
     >
       <div className="flex flex-col items-center justify-center  text-center h-[65vh] ">
         <FaUserAstronaut className="text-6xl text-emerald-500 animate-pulse mb-4" />

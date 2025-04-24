@@ -19,16 +19,17 @@ const ResetPassowrdViaEmail = () => {
     return enableMenu;
   }, []);
 
-  const { execute, loading } = useApi(
-    `/resetPassword/email/${token}`,
-    "PUT",
-    "/login"
-  );
+  const { request, loading } = useApi();
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    await execute(formData);
+    await request({
+      endpoint: `auth/resetPassword/email/${token}`,
+      method: "PUT",
+      body: formData,
+      redirectUrl: "/login",
+    });
   };
 
   return (

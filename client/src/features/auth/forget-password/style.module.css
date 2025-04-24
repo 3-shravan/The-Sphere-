@@ -30,7 +30,7 @@
   line-height: 7.5rem;
   text-transform: uppercase;
   letter-spacing: -0.5rem;
-  font-family: "Futura-Bold";
+  font-family: "Futura";
   color: var(--gradient-bg-text);
   z-index: -1;
 }

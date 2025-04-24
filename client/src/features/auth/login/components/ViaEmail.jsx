@@ -12,7 +12,7 @@ const ViaEmail = ({ handleChange, formData }) => {
         <MdMarkEmailUnread className="text-[1.7rem] absolute left-3 text-zinc-300 pr-2 border-r-1 border-zinc-700 h-6 mx-auto" />{" "}
         <input
           type="email"
-          placeholder=" Email"
+          placeholder=" e.g sphere@gmail.com"
           name="email"
           value={formData.email}
           onChange={(e) => handleChange(e)}
@@ -25,7 +25,7 @@ const ViaEmail = ({ handleChange, formData }) => {
 
         <input
           type="password"
-          placeholder=" Password"
+          placeholder=" password"
           name="password"
           value={formData.password}
           onChange={(e) => handleChange(e)}

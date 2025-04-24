@@ -56,7 +56,7 @@ const Register = () => {
     setStage((prev) => prev - 1);
   };
 
-  const { execute, loading } = useApi("/register", "POST");
+  const { request, loading } = useApi();
 
   const showError = async () => {
     return errorToast(
@@ -78,7 +78,11 @@ const Register = () => {
 
     setIsResend(false);
 
-    const response = await execute(formData);
+    const response = await request({
+      endpoint: "auth/register",
+      method: "POST",
+      body: formData,
+    });
     if (response.status === 200) {
       handleNext();
       setResendTimer(RESEND_TIME);
@@ -103,7 +107,11 @@ const Register = () => {
 
     setIsResend(false);
 
-    const response = await execute(formData);
+    const response = await request({
+      endpoint: "auth/register",
+      method: "POST",
+      body: formData,
+    });
     if (response.status === 200) {
       handleNext();
       setResendTimer(RESEND_TIME);

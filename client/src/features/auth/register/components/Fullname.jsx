@@ -31,7 +31,7 @@ const Fullname = ({ handleNext, formData, handleChange }) => {
           <input
             ref={inputRef}
             type="text"
-            placeholder=" Username"
+            placeholder=" username"
             name="name"
             value={formData.name}
             onChange={(e) => handleChange(e)}

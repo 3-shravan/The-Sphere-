@@ -18,7 +18,7 @@ const VerifyOTP = ({
   const phone = formData.phone ? `+91${formData.phone}` : "";
   const { setAuth } = useAuth();
 
-  const { execute, loading } = useApi("/verifyotp", "POST", "/feeds");
+  const { request, loading } = useApi();
 
   const handleResendOtp = () => {
     isResend ? resendHandler() : showError();
@@ -31,7 +31,12 @@ const VerifyOTP = ({
       otp,
     };
 
-    const response = await execute(requestData);
+    const response = await request({
+      endpoint: "auth/verifyOtp",
+      method: "POST",
+      body: requestData,
+      redirectUrl: "/feeds",
+    });
 
     if (response.status === 200) {
       setAuth({

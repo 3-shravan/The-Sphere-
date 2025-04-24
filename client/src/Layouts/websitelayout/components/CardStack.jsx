@@ -1,0 +1,104 @@
+
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useEffect } from "react";
+import Lenis from "@studio-freight/lenis";
+
+// Smooth scroll hook
+const useSmoothScroll = () => {
+  useEffect(() => {
+    const lenis = new Lenis({ smooth: true });
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+  }, []);
+};
+
+// Flower SVG for decoration
+const FlowerSVG = ({ className }) => (
+  <svg
+    width="200"
+    height="200"
+    viewBox="0 0 200 200"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    {" "}
+    <g clip-path="url(#clip0_105_480)">
+      {" "}
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M124.899 4.91713L105.8 85.9981L149.627 15.16C150.985 12.9661 154.033 12.6119 155.857 14.4361L185.564 44.1427C187.388 45.9669 187.034 49.0153 184.84 50.3727L114.002 94.2004L195.083 75.101C197.594 74.5095 200 76.4147 200 78.9945V121.006C200 123.586 197.594 125.491 195.083 124.899L114.002 105.8L184.84 149.628C187.034 150.985 187.388 154.033 185.564 155.858L155.857 185.564C154.033 187.388 150.985 187.034 149.627 184.84L105.8 114.002L124.899 195.083C125.491 197.594 123.585 200 121.006 200H78.9943C76.4145 200 74.5094 197.594 75.1009 195.083L94.2003 114.002L50.3726 184.84C49.0153 187.034 45.9668 187.388 44.1426 185.564L14.4361 155.857C12.6119 154.033 12.9661 150.985 15.16 149.627L85.9975 105.8L4.91714 124.899C2.40606 125.491 0 123.586 0 121.006V78.9944C1.94914e-06 76.4146 2.40605 74.5095 4.91714 75.101L85.998 94.2003L15.16 50.3728C12.9661 49.0154 12.6119 45.9669 14.4361 44.1427L44.1426 14.4362C45.9668 12.612 49.0153 12.9662 50.3726 15.1601L94.2003 85.9983L75.1009 4.91714C74.5094 2.40606 76.4145 3.89828e-06 78.9943 3.67275e-06L121.006 0C123.586 0 125.491 2.40605 124.899 4.91713ZM100 111.429C106.312 111.429 111.429 106.312 111.429 100C111.429 93.6882 106.312 88.5714 100 88.5714C93.6882 88.5714 88.5714 93.6882 88.5714 100C88.5714 106.312 93.6882 111.429 100 111.429Z"
+        fill="url(#paint0_linear_105_480)"
+      />{" "}
+    </g>{" "}
+    <defs>
+      {" "}
+      <linearGradient
+        id="paint0_linear_105_480"
+        x1="14"
+        y1="26"
+        x2="179"
+        y2="179.5"
+        gradientUnits="userSpaceOnUse"
+      >
+        {" "}
+        <stop stop-color="#E9B8FF" /> <stop offset="1" stop-color="#F9ECFF" />{" "}
+      </linearGradient>{" "}
+      <clipPath id="clip0_105_480">
+        {" "}
+        <rect width="200" height="200" fill="white" />{" "}
+      </clipPath>{" "}
+    </defs>{" "}
+  </svg>
+);
+
+// Card section component
+const CardSection = ({ color, bg, text, zIndex = 10 }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+
+  return (
+   <section ref={ref} className="relative h-[300vh] sm:h-[400vh]">
+  <motion.div
+    style={{ y, scale, opacity, zIndex }}
+    className={`sticky top-0 w-full h-[100svh] sm:h-screen rounded-xl shadow-2xl ${bg} ${color} flex items-center justify-center overflow-hidden`}
+  >
+    <FlowerSVG className="w-64 h-64 top-10 left-10 opacity-10" />
+    <FlowerSVG className="w-48 h-48 bottom-10 right-10 opacity-10 rotate-45" />
+    <h1 className="stroke-outline-text text-[28vw]">
+      {text}
+    </h1>
+  </motion.div>
+</section>
+
+  );
+};
+
+const StackedCards = () => {
+  useSmoothScroll();
+
+  return (
+    <div className="bg-zinc-950 font-[Poppins]">
+      <CardSection
+        bg="bg-emerald-400"
+        color="text-black"
+        text="Connect"
+        zIndex={30}
+      />
+      <CardSection bg="bg-red-400" text="Share" zIndex={20} />
+      <CardSection bg="bg-blue-400" text="Discover" zIndex={10} />
+    </div>
+  );
+};
+
+export default StackedCards;

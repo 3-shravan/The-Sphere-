@@ -32,8 +32,8 @@
   font-size: 1.8rem;
   text-align: start;
   height: 8vh;
-  font-family: "Futura-Bold";
-  color: var(--subtle-yellow);
+  font-family: "Futura";
+  color: var(--color-accent);
 }
 .heading2 {
   text-align: start;
@@ -45,12 +45,14 @@
 }
 
 .inputName {
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: left;
-  line-height: 1.3rem;
+  line-height: 1rem;
   margin-top: 4vh;
-  font-family: "Futura-Bold";
-  color: var(--forest-green);
+  padding-left: 0.2vw;
+  font-family: "Gilroy";
+  font-weight: 400;
+  color: var(--dark-300);
 }
 
 .inputWrapper {
@@ -62,7 +64,7 @@
 }
 
 .inputField {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,7 +72,7 @@
   width: 100%;
 
   border-radius: 50px;
-  padding: 0.7rem 3rem;
+  padding: 0.8rem 3rem;
   border: 1px solid var(--dark-300);
   transition: all 0.3s ease-in-out;
 
@@ -90,7 +92,7 @@
 }
 
 .selectionButton {
-  font-family: "Futura-Bold";
+  font-family: "Futura";
   margin-top: 1.5vh;
   font-size: 0.9rem;
   cursor: pointer;
@@ -143,7 +145,7 @@
   padding: 0.7rem 1rem;
   width: 100%;
   margin: 0.8vh 0 1.5vh 0;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-family: "Gilroy Bold";
   border-radius: 30px;
   cursor: pointer;
@@ -164,15 +166,16 @@
 }
 
 .redirectLink {
-  color: var(--subtle-yellow);
+  color: var(--color-accent);
   font-family: "Gilroy Medium";
   letter-spacing: 1.5px;
   text-transform: uppercase;
   cursor: pointer;
+  font-size: 0.7rem;
   &:hover {
     text-decoration: underline;
     color: var(--subtle-text-hover);
-    transition: 0.2s all ease-in-out;
+    transition: 0.1s all ease-in-out;
   }
 }
 

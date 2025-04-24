@@ -30,7 +30,7 @@ const ForgetPassword = () => {
   const [isResend, setIsResend] = React.useState(true);
   const [resendTimer, setResendTimer] = React.useState(0);
 
-  const { execute, loading } = useApi("/forgetPassword", "POST");
+  const { request, loading } = useApi();
 
   React.useEffect(() => {
     let timer;
@@ -80,7 +80,11 @@ const ForgetPassword = () => {
     }
     setIsResend(false);
 
-    const response = await execute(formData);
+    const response = await request({
+      endpoint: "auth/forgetPassword",
+      method: "POST",
+      body: formData,
+    });
     if (response.status === 200) {
       setResendTimer(RESEND_TIME);
       !byEmail && setStage(1);
@@ -104,7 +108,11 @@ const ForgetPassword = () => {
     }
     setIsResend(false);
 
-    const response = await execute(formData);
+    const response = await request({
+      endpoint: "auth/forgetPassword",
+      method: "POST",
+      body: formData,
+    });
     if (response.status === 200) {
       setResendTimer(RESEND_TIME);
       !byEmail && setStage(1);
