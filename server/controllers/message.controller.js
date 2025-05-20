@@ -25,7 +25,7 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
       chat.lastMessage = message._id
       await chat.save()
       await message.populate('sender', 'name profilePicture')
-      return handleSuccessResponse(res, 200, "Message sent successfully", message)
+      return handleSuccessResponse(res, 200, "Message sent successfully", {message})
    }
 
 
@@ -75,7 +75,7 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
    await chat.save()
 
    await newMessage.populate('sender', 'name profilePicture')
-   handleSuccessResponse(res, 200, "Message sent successfully", newMessage)
+   handleSuccessResponse(res, 200, "Message sent successfully", {newMessage})
 
 })
 
@@ -88,7 +88,7 @@ export const fetchMessages = catchAsyncError(async (req, res, next) => {
    const messages = await Message.find({ chat: chatId }).populate('sender', 'name profilePicture').sort({ createdAt: -1 })
    if (!messages) return next(new ErrorHandler(404, 'No messages found'));
 
-   handleSuccessResponse(res, 200, "Messages fetched successfully", messages)
+   handleSuccessResponse(res, 200, "Messages fetched successfully", {messages})
 })
 
 
@@ -99,7 +99,7 @@ export const deleteMessage = catchAsyncError(async (req, res, next) => {
 
    const message = await Message.findOneAndDelete({ _id: messageId, sender: req.user._id })
    if (!message) return next(new ErrorHandler(404, 'Message not found'));
-   handleSuccessResponse(res, 200, "Message deleted successfully", message)
+   handleSuccessResponse(res, 200, "Message deleted successfully", {message})
 })
 
 

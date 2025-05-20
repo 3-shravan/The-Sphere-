@@ -53,6 +53,7 @@
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
+
 }
 
 .sectionRevealLinksInner {
@@ -70,10 +71,18 @@
   height: 100vh;
   padding: 1rem;
   padding-top: 9rem;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .sectionVelocityText {
   margin-top: 5rem;
+}
+
+@media (max-width: 768px) {
+  .sectionRevealLinksInner {
+   
+    flex-direction: column;
+    
+  }
 }
 

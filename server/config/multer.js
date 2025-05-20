@@ -4,4 +4,4 @@ const upload = multer({
    storage: multer.memoryStorage()
 })
 
-export const uploadMiddleware = upload.single('file');
+export const singleUpload = (fieldname) => upload.single(fieldname);

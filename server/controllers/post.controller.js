@@ -62,7 +62,7 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
    await author.save()
 
    await post.populate({ path: "author", select: "name profilePicture" })
-   handleSuccessResponse(res, 201, "Post created successfully", post)
+   handleSuccessResponse(res, 201, "Post created successfully", { post })
 
 })
 
@@ -101,7 +101,7 @@ export const getAllPosts = catchAsyncError(async (req, res, next) => {
       })
 
    if (!posts) return next(new ErrorHandler(404, "No posts found"))
-   handleSuccessResponse(res, 200, "Posts fetched successfully", posts)
+   handleSuccessResponse(res, 200, "Posts fetched successfully", { posts })
 
 })
 
@@ -136,7 +136,7 @@ export const getMyPosts = catchAsyncError(async (req, res, next) => {
          }
       })
    if (!posts) return next(new ErrorHandler(404, "No posts found"))
-   handleSuccessResponse(res, 200, "Posts fetched successfully", posts)
+   handleSuccessResponse(res, 200, "Posts fetched successfully", { posts })
 
 })
 
@@ -169,6 +169,7 @@ export const likePost = catchAsyncError(async (req, res, next) => {
       return handleSuccessResponse(res, 200, "Post unliked successfully")
    }
    post.likes.push(likedBy)
+   await post.populate({ path: "likes", select: "name , profilePicture" })
    await post.save()
    handleSuccessResponse(res, 200, "Post liked successfully")
 
@@ -236,7 +237,7 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
    await comment.populate({ path: "author", select: "name , profilePicture" })
    post.comments.push(comment._id)
    await post.save()
-   handleSuccessResponse(res, 200, "Comment added successfully", comment)
+   handleSuccessResponse(res, 200, "Comment added successfully", {comment})
 })
 
 
@@ -259,7 +260,7 @@ export const getPostComments = catchAsyncError(async (req, res, next) => {
       .sort({ createdAt: -1 })
 
    if (!comments) return next(new ErrorHandler(404, "No comments found"))
-   handleSuccessResponse(res, 200, "Comments fetched successfully", comments)
+   handleSuccessResponse(res, 200, "Comments fetched successfully", {comments})
 
 })
 
@@ -340,8 +341,8 @@ export const getSavedPosts = catchAsyncError(async (req, res, next) => {
    }).distinct("blockedId");
 
 
-   const posts = await Post.find({ _id: { $in: user.saved } }).populate({ path: "author", select: "name , profilePicture" })
-   if (!posts) return next(new ErrorHandler(404, "No saved posts found"))
+   const savedPosts = await Post.find({ _id: { $in: user.saved } }).populate({ path: "author", select: "name , profilePicture" })
+   if (!savedPosts) return next(new ErrorHandler(404, "No saved posts found"))
 
-   handleSuccessResponse(res, 200, "Saved posts fetched successfully", posts)
+   handleSuccessResponse(res, 200, "Saved posts fetched successfully", { savedPosts })
 })

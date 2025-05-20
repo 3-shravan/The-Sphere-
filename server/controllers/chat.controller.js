@@ -33,7 +33,7 @@ export const getChat = catchAsyncError(async (req, res, next) => {
          .sort({ createdAt: -1 })
       chatData.messages = messages;
    }
-   handleSuccessResponse(res, 200, "Chat fetched successfully", chatData)
+   handleSuccessResponse(res, 200, "Chat fetched successfully", {chatData})
 
 })
 
@@ -103,7 +103,7 @@ export const connections = catchAsyncError(async (req, res, next) => {
       };
    });
 
-   handleSuccessResponse(res, 200, "Chats fetched successfully", formattedChats);
+   handleSuccessResponse(res, 200, "Chats fetched successfully", {formattedChats});
 
 });
 

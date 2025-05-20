@@ -25,7 +25,7 @@ import React, { useRef } from "react";
   );
   const skewX = useSpring(skewXRaw, { mass: 3, stiffness: 400, damping: 50 });
 
-  const xRaw = useTransform(scrollYProgress, [0, 1], [0, -4000]);
+  const xRaw = useTransform(scrollYProgress, [0, 1], [0, -2000]);
   const x = useSpring(xRaw, { mass: 3, stiffness: 400, damping: 50 });
 
   return (
@@ -35,8 +35,7 @@ import React, { useRef } from "react";
           style={{ skewX, x }}
           className="origin-bottom-left flex items-center justify-center whitespace-nowrap text-6xl font-black font-[Poppins] uppercase leading-[0.85] md:text-7xl md:leading-[0.85]"
         >
-          the app whether you're sharing moments discovering
-          new trends or building connections
+          &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;  Where moments meet trends 
           <Asterisk
             size={110}
             color="blue"

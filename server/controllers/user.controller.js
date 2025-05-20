@@ -39,7 +39,7 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
    if (name) user.name = name;
 
    await user.save()
-   handleSuccessResponse(res, 200, "Profile updated successfully", user)
+   handleSuccessResponse(res, 200, "Profile updated successfully", {user})
 
 })
 
@@ -54,7 +54,7 @@ export const deleteProfilePicture = catchAsyncError(async (req, res, next) => {
       user.profilePicturePublicId = undefined;
       await user.save()
    }
-   handleSuccessResponse(res, 200, "Profile picture deleted successfully", user)
+   handleSuccessResponse(res, 200, "Profile picture deleted successfully", {user})
 
 })
 
@@ -87,7 +87,7 @@ export const getProfile = catchAsyncError(async (req, res, next) => {
       return next(new ErrorHandler(403, 'You cannot view this profile.'));
    }
 
-   handleSuccessResponse(res, 200, 'Profile fetched', user)
+   handleSuccessResponse(res, 200, 'Profile fetched', {user})
 })
 
 
@@ -115,7 +115,7 @@ export const getSuggestedUsers = catchAsyncError(async (req, res, next) => {
       .limit(10);
 
    if (!users) return next(new ErrorHandler(404, 'Suggested Users are not available currently.'))
-   handleSuccessResponse(res, 200, 'Suggested users fetched', users);
+   handleSuccessResponse(res, 200, 'Suggested users fetched', {users});
 })
 
 
@@ -129,7 +129,7 @@ export const deleteAccount = catchAsyncError(async (req, res, next) => {
    const userId = req.user._id
    const user = await User.deleteOne({ _id: userId })
    if (!user) return next(new ErrorHandler(404, 'User not found'))
-   handleSuccessResponse(res, 200, 'Account deleted', user)
+   handleSuccessResponse(res, 200, 'Account deleted', {user})
 })
 
 
@@ -201,7 +201,7 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
 
    const users = await User.find(query).find({ _id: { $ne: req.user._id } })
    if (!users) return next(new ErrorHandler(404, 'No users found'))
-   handleSuccessResponse(res, 200, 'Users fetched successfully', users)
+   handleSuccessResponse(res, 200, 'Users fetched successfully', {users})
 }
 )
 

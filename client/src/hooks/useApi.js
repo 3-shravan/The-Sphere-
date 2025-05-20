@@ -4,7 +4,6 @@ import axios from "@services/axios";
 
 const useApi = () => {
   const navigate = useNavigate();
-
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,18 +18,15 @@ const useApi = () => {
           method,
           data: body,
         });
-        if (response.status === 200) {
-          setData(response.data);
-          if (response.data?.message) successToast(response.data.message);
-          if (redirectUrl) navigate(redirectUrl, { replace: true });
-          return response;
-        }
+        setData(response.data);
+        if (response.data?.message) successToast(response.data.message);
+        if (redirectUrl) navigate(redirectUrl, { replace: true });
+        return response;
       } catch (err) {
-        console.log(err.response)
-        const msg = err.response?.data?.message || "Something went wrong";
+        const msg = err.response?.data?.message || "Server failed to respond";
         errorToast(msg);
         setError(msg);
-        return msg;
+
       } finally {
         setLoading(false);
       }

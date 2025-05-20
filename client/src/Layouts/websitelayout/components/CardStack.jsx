@@ -55,7 +55,6 @@ const FlowerSVG = ({ className }) => (
   </svg>
 );
 
-// Card section component
 const CardSection = ({ color, bg, text, zIndex = 10 }) => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -71,10 +70,10 @@ const CardSection = ({ color, bg, text, zIndex = 10 }) => {
    <section ref={ref} className="relative h-[300vh] sm:h-[400vh]">
   <motion.div
     style={{ y, scale, opacity, zIndex }}
-    className={`sticky top-0 w-full h-[100svh] sm:h-screen rounded-xl shadow-2xl ${bg} ${color} flex items-center justify-center overflow-hidden`}
+    className={`sticky top-0 w-full  h-[60svh] sm:h-screen shadow-2xl ${bg} ${color} flex items-center justify-center overflow-hidden`}
   >
     <FlowerSVG className="w-64 h-64 top-10 left-10 opacity-10" />
-    <FlowerSVG className="w-48 h-48 bottom-10 right-10 opacity-10 rotate-45" />
+    {/* <FlowerSVG className="w-48 h-48 bottom-10 right-10 opacity-10 rotate-45" /> */}
     <h1 className="stroke-outline-text text-[28vw]">
       {text}
     </h1>
@@ -88,15 +87,15 @@ const StackedCards = () => {
   useSmoothScroll();
 
   return (
-    <div className="bg-zinc-950 font-[Poppins]">
+    <div className=" font-[Poppins]">
       <CardSection
-        bg="bg-emerald-400"
+        bg=""
         color="text-black"
         text="Connect"
         zIndex={30}
       />
-      <CardSection bg="bg-red-400" text="Share" zIndex={20} />
-      <CardSection bg="bg-blue-400" text="Discover" zIndex={10} />
+      <CardSection bg="" text="Share" zIndex={20} />
+      <CardSection bg="" text="Discover" zIndex={10} />
     </div>
   );
 };

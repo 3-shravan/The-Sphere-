@@ -12,18 +12,17 @@ import {
    savePosts
 } from '../controllers/post.controller.js';
 import { authUser } from '../middlewares/authUser.js';
-import { uploadMiddleware } from '../config/multer.js'
+import { singleUpload } from '../config/multer.js'
 
 const router = express.Router();
 
 router.get('/', authUser, getAllPosts)
-router.post('/', authUser, uploadMiddleware, addNewPost)
+router.post('/', authUser, singleUpload('image'), addNewPost)
 router.get('/me', authUser, getMyPosts)
 router.delete('/:postId', authUser, deletePost)
 router.put('/:postId/like', authUser, likePost)
 router.put('/:postId/save', authUser, savePosts)
 router.get('/saved', authUser, getSavedPosts)
-
 router.get('/comments/:postId', getPostComments)
 router.put('/comments/:postId', authUser, commentPost)
 router.delete('/comments/:postId/:commentId', authUser, deleteComment)

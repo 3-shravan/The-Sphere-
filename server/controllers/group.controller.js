@@ -42,7 +42,7 @@ export const createGroupChat = catchAsyncError(async (req, res, next) => {
       .populate('groupCreatedBy', 'name profilePicture')
       .populate('admins', 'name profilePicture');
 
-   handleSuccessResponse(res, 201, "Group chat created successfully", populatedGroupChat);
+   handleSuccessResponse(res, 201, "Group chat created successfully", { populatedGroupChat });
 });
 
 
@@ -64,8 +64,9 @@ export const renameGroup = catchAsyncError(async (req, res, next) => {
       return next(new ErrorHandler(403, "You are not an admin of this group"))
 
    group.groupName = groupName
+
    await group.save()
-   handleSuccessResponse(res, 200, "Group name updated successfully", group.groupName)
+   handleSuccessResponse(res, 200, "Group name updated successfully", { groupName: group.groupName })
 })
 
 
@@ -87,7 +88,7 @@ export const changeDescription = catchAsyncError(async (req, res, next) => {
       return next(new ErrorHandler(403, "You are not an admin of this group"))
    group.groupDescription = groupDescription
    await group.save()
-   handleSuccessResponse(res, 200, "Group description updated successfully", group.groupDescription)
+   handleSuccessResponse(res, 200, "Group description updated successfully", { groupDescription: group.groupDescription })
 
 })
 
@@ -123,7 +124,7 @@ export const changeGroupPicture = catchAsyncError(async (req, res, next) => {
    group.groupPicturePublicId = publicId
    await group.save()
 
-   handleSuccessResponse(res, 200, "Group picture updated successfully", group.groupPicture)
+   handleSuccessResponse(res, 200, "Group picture updated successfully", { groupPicture: group.groupPicture })
 
 })
 
@@ -221,7 +222,7 @@ export const changeAdmin = catchAsyncError(async (req, res, next) => {
    }
    group.admins.push(userId);
    await group.save();
-   handleSuccessResponse(res, 200, "User added as admin successfully", group.admins);
+   handleSuccessResponse(res, 200, "User added as admin successfully", { admins: group.admins });
 
 })
 

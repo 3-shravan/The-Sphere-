@@ -41,14 +41,13 @@ const Login = () => {
       body: formData,
       redirectUrl: "/feeds",
     });
-    if (response.status === 200) {
-      setAuth({
-        token: response.data.token,
-        isAuthenticated: true,
-        profile: response.data.user,
-      });
-      setTokenAndAuthenticated(response.data.token, true);
-    }
+    if (response?.error) return;
+    setAuth({
+      token: response.data.token,
+      isAuthenticated: true,
+      profile: response.data.user,
+    });
+    setTokenAndAuthenticated(response.data.token, true);
   };
 
   return (

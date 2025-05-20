@@ -1,16 +1,9 @@
-/*--------------------------------------------------------------
-🌀 Tailwind Base Imports & Plugins
---------------------------------------------------------------*/
 @import "tailwindcss";
 @import "tw-animate-css";
-
-/*--------------------------------------------------------------
-🌗 Custom Dark Variant
---------------------------------------------------------------*/
 @custom-variant dark (&:is(.dark *));
 
 /*--------------------------------------------------------------
-🌍 Base Styles & Reset
+🌌 Global Styles
 --------------------------------------------------------------*/
 *,
 *::before,
@@ -19,25 +12,21 @@
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
-
 body {
-  background-color: var(--bg);
-  color: var(--text);
+  /* background-color: var(--bg);
+    color: var(--text); */
+  background-color: var(--background);
+  color: var(--foreground);
   min-height: 100vh;
   overflow-x: hidden;
 }
-
-/*--------------------------------------------------------------
-✍️ Utility Classes
---------------------------------------------------------------*/
 .stroke-outline-text {
   font-family: "Poppins", sans-serif;
   font-weight: 900;
   letter-spacing: -0.09em;
   color: transparent;
-  -webkit-text-stroke: 1px rgb(35, 35, 35);
+  -webkit-text-stroke: 1px rgb(129, 52, 245);
   user-select: none;
   white-space: nowrap;
   line-height: 1;
@@ -45,24 +34,18 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
 }
-
-/*--------------------------------------------------------------
-✍️ Utility Classes
---------------------------------------------------------------*/
-.stroke-outline-text {
-  font-family: "Poppins", sans-serif;
-  font-weight: 900;
-  letter-spacing: -0.09em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgb(35, 35, 35);
-  user-select: none;
-  white-space: nowrap;
-  line-height: 1;
-  pointer-events: none;
-  -webkit-background-clip: text;
-  background-clip: text;
+.home-native-scroll {
+  overflow-y: auto;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: auto !important;
+  will-change: auto !important;
 }
-
+.js-native-scroll {
+  overflow-y: auto;
+  max-height: 100vh;
+  scroll-behavior: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
 .heroSection {
   min-height: 100vh;
   background-color: #000000;
@@ -75,59 +58,22 @@ body {
 🌍 Root CSS Variables
 --------------------------------------------------------------*/
 :root {
-  /*--------------------------------------------------------------
-FONTS
---------------------------------------------------------------*/
-  --font-Gilroy: "Gilroy", sans-serif;
-  --font-Futura: "Futura", sans-serif;
-  --font-Poppins: "Poppins", sans-serif;
-  --font-sans: "Inter", sans-serif;
-  --font-heading: "Poppins", sans-serif;
-  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-
-  /*--------------------------------------------------------------
-SPECIAL FONTS
---------------------------------------------------------------*/
-  --font-blackout: "Blackout-Midnight", sans-serif;
-  --font-blackout-2am: "Blackout-2am", sans-serif;
-
-  /*--------------------------------------------------------------
-🌍GENERAL COLORS
---------------------------------------------------------------*/
   --bg: #fff;
   --bg-muted: #f5f5f5;
   --text: #000;
   --text-muted: #131313;
-  --font: #000;
 
   --color-primary: #dc143c;
-  --color-secondary: #007550;
+  --primary-500: #877eff;
   --color-accent: rgb(228, 228, 171);
-  --color-muted: var(--gray-500);
+  --primary-600: #5d5fef;
 
-  /*--------------------------------------------------------------
-TEXT STYLING
---------------------------------------------------------------*/
   --subtle-text: #6c6c6c;
   --subtle-text-hover: #3e3e3e;
 
-  /*--------------------------------------------------------------
-SEMANTIC COLORS
---------------------------------------------------------------*/
-  --success: #16a34a;
-  --error: #dc2626;
-  --warning: #facc15;
-  --info: #0ea5e9;
-
-  /*--------------------------------------------------------------
-  🌳 GREEN SHADES
---------------------------------------------------------------*/
   --green: #007550;
   --forest-green: #16483b;
   --forest-dark-green: #061f17;
-
   /*--------------------------------------------------------------
   NEUTRAL COLORS 
 --------------------------------------------------------------*/
@@ -135,7 +81,6 @@ SEMANTIC COLORS
   --black: #000000;
   --off-white: #c7c7c7;
   --off-black: #131313;
-  --dark-50: #0c0c0c;
   --dark-100: #131313;
   --dark-200: #1a1a1a;
   --dark-300: #414141;
@@ -147,6 +92,15 @@ SEMANTIC COLORS
   --light-200: #b8b8b8;
   --light-100: #c7c7c7;
 
+  --dark-1: #000000;
+  --dark-2: #09090a;
+  --dark-3: #101012;
+  --dark-4: #1f1f22;
+  --light-1: #ffffff;
+  --light-2: #efefef;
+  --light-3: #7878a3;
+  --light-4: #5c5c7b;
+
   /*--------------------------------------------------------------
   GRADIENTS
 --------------------------------------------------------------*/
@@ -154,39 +108,6 @@ SEMANTIC COLORS
   --gradient-bg-text: rgba(6, 27, 18, 0.194);
   /* --gradient-bg-green: rgba(183, 12, 80, 0.934);
   --gradient-bg-text: rgba(59, 10, 30, 0.231); */
-
-  /*--------------------------------------------------------------
-  RADIUS
---------------------------------------------------------------*/
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-full: 9999px;
-
-  /*--------------------------------------------------------------
-  SPACING
---------------------------------------------------------------*/
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-
-  /*--------------------------------------------------------------
-  SHADOWS
---------------------------------------------------------------*/
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
-
-  /*--------------------------------------------------------------
-TRANSITIONS
---------------------------------------------------------------*/
-  --transition-fast: 150ms ease-in-out;
-  --transition-base: 300ms ease-in-out;
-  --transition-slow: 500ms ease-in-out;
 
   /*--------------------------------------------------------------
   🌈 THEME COLORS e.g shadcn
@@ -210,19 +131,11 @@ TRANSITIONS
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-
-  /*--------------------------------------------------------------
-  CHART COLORS
---------------------------------------------------------------*/
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-
-  /*--------------------------------------------------------------
-  SIDEBAR TOKENS
---------------------------------------------------------------*/
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -234,18 +147,13 @@ TRANSITIONS
 }
 
 /*--------------------------------------------------------------
-🌒 Dark Mode Override (Scoped via `.dark`)
+🌒 Dark Mode 
 --------------------------------------------------------------*/
 .dark {
-  /*--------------------------------------------------------------
-  GENERAL COLORS
---------------------------------------------------------------*/
   --bg: #000;
   --bg-muted: #131313;
   --text: #000;
   --text-muted: #ececec;
-  --font: #fff;
-
   /*--------------------------------------------------------------
   THEME COLORS e.g shadcn
 --------------------------------------------------------------*/
@@ -267,20 +175,11 @@ TRANSITIONS
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-
-  /*--------------------------------------------------------------
-  CHART COLORS
---------------------------------------------------------------*/
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-
-  /*--------------------------------------------------------------
-  SIDEBAR TOKENS
---------------------------------------------------------------*/
-
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -291,24 +190,45 @@ TRANSITIONS
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-/*--------------------------------------------------------------
-🎨 Custom Theme Tokens
---------------------------------------------------------------*/
-
-@theme {
-  --color-bg: #00000;
-  --color-text: #fff;
-}
 @theme inline {
+
+  
   --font-Gilroy: "Gilroy", sans-serif;
   --font-Futura: "Futura", sans-serif;
-  --font-Poppins: "Poppins", sans-serif;
   --font-sans: "Inter", sans-serif;
+  --font-mono: monospace;
+  --font-blackout: "Blackout-Midnight", sans-serif;
+  --font-blackout-2am: "Blackout-2am", sans-serif;
+  /*--------------------------------------------------------------
+  MAINLAYOUT
+--------------------------------------------------------------*/
+  --color-crimson: #dc143c;
+  --color-dark-100: #131313;
+
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+  --color-secondary-500: var(--secondary-500);
+  --color-dark-1: var(--dark-1);
+  --color-dark-2: var(--dark-2);
+  --color-dark-3: var(--dark-3);
+  --color-dark-4: var(--dark-4);
+  --color-light-1: var(--light-1);
+  --color-light-2: var(--light-2);
+  --color-light-3: var(--light-3);
+  --color-light-4: var(--light-4);
+
+  --breakpoint-xs: var(--breakpoint-xs);
+
+  /*--------------------------------------------------------------
+  SHADCN
+--------------------------------------------------------------*/
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
+  --color-dark-4: var(--dark-4);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -341,30 +261,37 @@ TRANSITIONS
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/*--------------------------------------------------------------
-🌀 Tailwind Utility Layers
---------------------------------------------------------------*/
+@layer components {
+  .common-container {
+    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14;
+  }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+  .shad-form_label {
+    @apply text-white;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  .shad-form_message {
+    @apply text-red-500;
   }
-}
-@layer utilities {
-  @keyframes spin-slow {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+
+  .shad-input {
+    @apply h-12 bg-dark-4 border-none placeholder:text-light-4 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3;
   }
-  .animate-spin-slow {
-    animation: spin-slow 20s linear infinite;
-    transform-origin: center;
+
+  .shad-textarea {
+    @apply h-36 bg-dark-3 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3;
+  }
+
+  .shad-button_primary {
+    @apply bg-primary-500 hover:bg-primary-500 text-light-1 flex gap-2;
+  }
+
+  .shad-button_dark_4 {
+    @apply h-12 bg-dark-4 px-5 text-light-1 flex gap-2;
+  }
+
+  .shad-button_ghost {
+    @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white;
   }
 }
 
@@ -395,7 +322,6 @@ TRANSITIONS
   font-weight: 700;
   src: url("./assets/fonts/Gilroy-Bold.woff") format("woff");
 }
-
 @font-face {
   font-family: "Futura";
   font-style: normal;
@@ -449,31 +375,26 @@ WEBKIT STYLES
   background-color: #2e2e2e;
   color: #fbfbfb;
 }
-
 ::-webkit-scrollbar {
   display: none;
-  width: 6px;
-  height: 6px;
+  width: 2px;
+  height: 20px;
 }
 ::-webkit-scrollbar-track {
-  background: #131313;
+  background: var(--color-foreground);
 }
-
 ::-webkit-scrollbar-thumb {
-  background-color: #555555;
+  background-color: rgb(211, 204, 150);
   border-radius: 3px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background-color: #7a7a7a;
 }
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 .inputField:-webkit-autofill {
   font-family: "Gilroy Regular" !important;
   font-size: 0.9rem !important;
@@ -482,7 +403,6 @@ input::-webkit-inner-spin-button {
   -webkit-text-fill-color: rgb(255, 255, 255) !important;
   transition: background-color 9999s ease-in-out 0s;
 }
-
 .custom-scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -500,5 +420,23 @@ input::-webkit-inner-spin-button {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
   }
 }

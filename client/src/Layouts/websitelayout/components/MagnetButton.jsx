@@ -30,7 +30,7 @@ const MagnetButton = () => {
       >
         <Gradient />
         {/* Background Hover Circle */}
-        <div className="pointer-events-none absolute inset-0 z-0 scale-0 rounded-full bg-violet-600 transition-transform duration-500 ease-out group-hover:scale-100" />
+        <div className="pointer-events-none absolute inset-0 z-0 scale-0 rounded-full bg-pink-200 transition-transform duration-500 ease-out group-hover:scale-100" />
 
         {/* Arrow Icon*/}
 
@@ -108,7 +108,7 @@ const MagnetButton = () => {
               fill="black"
               className="text-lg font-bold uppercase tracking-widest opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
             >
-              •••••••••••••••••••••••••••••••••••
+              
             </textPath>
           </text>
         </svg>
