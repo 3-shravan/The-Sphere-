@@ -42,7 +42,7 @@ const Password = ({ handleNext, formData, handleChange, handlePrevious }) => {
           <input
             ref={inputRef}
             type="password"
-            placeholder=" ********"
+            placeholder=" • • • • • •"
             name="password"
             value={formData.password}
             onChange={(e) => handleChange(e)}

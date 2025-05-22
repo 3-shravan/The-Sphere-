@@ -62,25 +62,25 @@ const PostForm = ({ post, action }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-8 w-full  max-w-5xl"
+      className="flex flex-col gap-8 w-full  font-bold font-Gilroy text-foreground text-sm max-w-5xl"
     >
       <div className="flex flex-col gap-2">
-        <label className="font-medium text-sm ">Caption</label>
+        <label>Caption</label>
         <textarea
           name="caption"
           value={formState.caption}
           onChange={handleChange}
-          className="h-36 bg-neutral-900 p-4 rounded-xl outline-hidden border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-4"
+          className="h-20 bg-input p-4 rounded-xl outline-hidden border-border focus-visible:ring-1"
           rows={2}
         />
         {errors.caption && (
-          <p className="text-red-500 text-xs mt-1">{errors.caption}</p>
+          <p className="text-crimson text-xs mt-1">{errors.caption}</p>
         )}
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className="font-medium text-sm">Add Photos</label>
-        <div className="border-2 border-dashed border-gray-300 rounded-lg overflow-hidden">
+        <label>Add Photos</label>
+        <div className="border-3 border-dashed border-violet-400  rounded-lg overflow-hidden">
           {preview ? (
             <div className="relative h-52">
               <img
@@ -90,7 +90,7 @@ const PostForm = ({ post, action }) => {
               />
               <button
                 type="button"
-                className="absolute right-2 top-2 bg-black bg-opacity-60 text-white rounded px-3 py-1.5 text-xs"
+                className="absolute right-2 top-2 bg-background font-bold  bg-opacity-60 text-foreground rounded px-3 py-1.5 text-xs"
                 onClick={() => {
                   clearPreview();
                 }}
@@ -100,12 +100,13 @@ const PostForm = ({ post, action }) => {
             </div>
           ) : (
             <div
-              className="flex items-center justify-center h-52 cursor-pointer bg-neutral-900"
+              className="flex items-center justify-center h-52 cursor-pointer bg-input"
               onClick={() => fileInputRef.current.click()}
             >
               <div className="flex flex-col items-center gap-2 uppercase font-thin font-Gilroy  ">
                 <img
                   src="/assets/icons/add-post.svg"
+                  className="bg-violet-800 rounded-2xl p-1"
                   width={25}
                   height={25}
                   alt="add"
@@ -123,55 +124,51 @@ const PostForm = ({ post, action }) => {
           />
         </div>
         {errors.file && (
-          <p className="text-red-500 text-xs mt-1">{errors.file}</p>
+          <p className="text-crimson text-xs mt-1">{errors.file}</p>
         )}
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className="font-medium text-sm ">Add Location</label>
+        <label>Add Location</label>
         <input
           type="text"
           name="location"
           placeholder="e.g. New York, USA"
           value={formState.location}
           onChange={handleChange}
-          className="h-12 bg-neutral-900 px-2 rounded-lg  border-none placeholder:text-light-5 placeholder:text-sm focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3"
+          className="h-12 bg-input px-2 rounded-lg border-none placeholder:font-gilroy placeholder:font-light placeholder:text-muted-foreground placeholder:text-xs outline-hidden"
         />
         {errors.location && (
-          <p className="text-red-500 text-xs mt-1">{errors.location}</p>
+          <p className="text-crimson text-xs mt-1">{errors.location}</p>
         )}
       </div>
 
       <div className="flex flex-col gap-2">
-        <label className="font-medium text-sm">
-          Add Tags (separated by comma ",")
-        </label>
+        <label>Add Tags (separated by comma ",")</label>
         <input
           type="text"
           name="tags"
           value={formState.tags}
           onChange={handleChange}
           placeholder="Art, Expression, Learn"
-          className="h-12 bg-neutral-900 px-2 rounded-lg border-none placeholder:text-light-5 placeholder:text-sm focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3"
+          className="h-12 bg-input px-2 rounded-lg border-none placeholder:font-gilroy placeholder:font-light placeholder:text-muted-foreground placeholder:text-xs outline-hidden"
         />
         {errors.tags && (
-          <p className="text-red-500 text-xs mt-1">{errors.tags}</p>
+          <p className="text-crimson text-xs mt-1">{errors.tags}</p>
         )}
       </div>
-
-  
 
       <div className="flex gap-4 py-1 items-center justify-end ">
         <button
           type="button"
-          className="px-4 py-2.5 bg-gray-100 text-gray-900 rounded-lg font-medium text-sm"
+          className="px-4 py-2.5 bg-muted text-muted-foreground font-bold rounded-lg  text-sm"
           onClick={() => navigate(-1)}
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-4 py-2.5 cursor-pointer bg-primary-600 text-white font-semibold rounded-lg  text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
+          className="px-4 py-2.5 cursor-pointer bg-violet-300 text-violet-800 font-semibold rounded-lg  text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
           disabled={isLoading}
         >
           {isLoading ? (
@@ -181,7 +178,6 @@ const PostForm = ({ post, action }) => {
           )}
         </button>
       </div>
-  
     </form>
   );
 };

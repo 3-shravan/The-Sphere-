@@ -4,6 +4,7 @@ import Card from "./Card";
 import Loader from "./Loader";
 import { setPosts, setSavedPosts } from "../postSlice";
 import { useEffect } from "react";
+import { useSmoothScroll } from "@/hooks";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -15,30 +16,25 @@ const Feed = () => {
   }, [data, savedPosts, dispatch]);
 
   const { posts } = useSelector((state) => state.posts || []);
-  
+  useSmoothScroll(".home-native-scroll");
   return (
-    <div className="max-w-screen-sm flex flex-col items-center rounded-xl gap-6 md:gap-5">
-      <div className="flex gap-10 items-end  justify-start w-full">
-        <h2 className=" text-2xl px-2 font-bold leading-tight tracking-tighter md:text-2xl md:font-bold md:leading-tight md:tracking-tighter md:w-auto w-full  ">
-          Feeds
+    <div
+      className="js-native-scroll home-native-scroll
+     h-[90vh] pb-4 max-w-screen-sm flex flex-col items-center rounded-xl gap-6 md:gap-5 md:min-w-[50vw]  md:px-4   "
+    >
+      <div className="flex  gap-10 items-end  justify-start w-full">
+        <h2 className=" text-2xl px-2 font-extralight font-Futura leading-tight tracking-tighter md:text-xl md:font-light md:leading-tight md:tracking-tighter md:w-auto w-full  ">
+          your feed
         </h2>
-        <div className="flex gap-5 px-5 py-1  ">
-          <h4 className="text-xs cursor-pointer text-neutral-300 leading-tight tracking-tighter md:text-xs md:font-bold md:leading-tight md:tracking-tighter text-center w-full">
-            Friends
-          </h4>
-          <h4 className="text-xs cursor-pointer  text-neutral-700 leading-tight tracking-tighter md:text-xs md:font-bold md:leading-tight md:tracking-tighter text-center w-full">
-            Recents
-          </h4>
-        </div>
       </div>
       {isLoading && !posts ? (
         <Loader />
       ) : (
-        <ul className="flex flex-col flex-1 gap-9 w-full">
+        <div className="flex flex-col flex-1 rounded-4xl pt-2 pb-1 gap-4 w-full">
           {posts.map((post) => (
             <Card key={post._id} post={post} />
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

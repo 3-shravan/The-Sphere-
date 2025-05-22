@@ -2,18 +2,18 @@
   font-family: "Gilroy Regular" !important;
   font-size: 0.9rem !important;
   background-color: transparent !important;
-  -webkit-box-shadow: 0 0 0 50px var(--black) inset !important;
-  -webkit-text-fill-color: var(--white) !important;
+  -webkit-box-shadow: 0 0 0 50px black inset !important;
+  -webkit-text-fill-color: white !important;
   transition: background-color 9999s ease-in-out 0s;
 }
 
 .space4vh {
-  background-color: var(--black);
+  background-color: black;
   height: 5vh;
   z-index: -100;
 }
 .space1vh {
-  background-color: var(--black);
+  background-color: black;
   height: 1vh;
   z-index: -100;
 }
@@ -24,7 +24,7 @@
   padding: 4px;
   transition: 0.2s all ease-in-out;
   &:hover {
-    background-color: var(--dark-100);
+    background-color: #131313;
   }
 }
 
@@ -41,7 +41,7 @@
   line-height: 1.5rem;
   font-size: 1.5rem;
   font-family: "Gilroy Bold";
-  color: var(--dark-300);
+  color: #414141;
 }
 
 .inputName {
@@ -73,7 +73,7 @@
 
   border-radius: 50px;
   padding: 0.8rem 3rem;
-  border: 1px solid var(--dark-300);
+  border: 1px solid #414141;
   transition: all 0.3s ease-in-out;
 
   caret-color: var(--white);

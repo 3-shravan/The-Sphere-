@@ -4,7 +4,6 @@ import Bottombar from "./components/Bottombar";
 import { Outlet } from "react-router-dom";
 
 const FeedLayout = () => {
-
   return (
     <div className="bg-background text-foreground  w-full h-[101vh] md:flex    ">
       <Topbar />

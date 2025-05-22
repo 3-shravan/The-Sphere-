@@ -10,7 +10,7 @@
   transition: all 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 .authButton {
-  background-color: var(--color-primary);
+  background-color: crimson;
   &:hover {
     color: black;
     background-color: var(--color-accent);
@@ -28,8 +28,8 @@
 
   &:hover {
     color: var(--subtle-text);
-    background-color: var(--black);
-    border: 1px solid var(--dark-300);
+    background-color: black;
+    border: 1px solid #414141;
   }
 
   &:disabled {
@@ -38,7 +38,7 @@
 }
 
 .authLoader {
-  border: 7px solid var(--white);
+  border: 7px solid white;
   border-top: 10px solid var(--green);
   border-radius: 50%;
   width: 1rem;
@@ -48,8 +48,8 @@
   vertical-align: middle;
 }
 .loginAuthLoader {
-  border: 7px solid var(--white);
-  border-top: 10px solid var(--black);
+  border: 7px solid white;
+  border-top: 10px solid black;
   border-radius: 50%;
   width: 1rem;
   height: 1rem;

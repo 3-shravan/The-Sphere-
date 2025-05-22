@@ -20,7 +20,7 @@ createRoot(document.getElementById("root")).render(
             </MenuProvider>
           </ContextProvider>
         </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </Provider>
     </QueryClientProvider>
   </BrowserRouter>
