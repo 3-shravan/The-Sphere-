@@ -3,8 +3,7 @@ import { ReactLenis } from "lenis/react";
 import { PublicRoutes, ProtectedRoutes, NonExistRoutes } from "@components";
 import { CreatePost, Home, SavedPosts, Explore } from "@/features/posts";
 import { Routes, Route } from "@lib";
-import Layout from "@layouts/websitelayout/Layout";
-import FeedLayout from "@layouts/feedlayout/Layout";
+import { Layout, LandingPage } from "@layouts";
 import {
   Login,
   Register,
@@ -12,6 +11,7 @@ import {
   ResetPasswordViaEmail,
   ResetPasswordViaPhone,
 } from "@features/auth";
+import { Profile } from "@features/users";
 
 const App = () => {
   return (
@@ -21,7 +21,7 @@ const App = () => {
         <Routes>
           {/* Public Routes */}
           <Route element={<PublicRoutes />}>
-            <Route path="/" element={<Layout />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/forgetPassword" element={<ForgetPassword />} />
@@ -34,17 +34,17 @@ const App = () => {
               element={<ResetPasswordViaEmail />}
             />
           </Route>
+
           {/* Protected Routes */}
           <Route element={<ProtectedRoutes />}>
-            <Route element={<FeedLayout />}>
-              <Route path="/feeds" element={<Home />} />
-              <Route path="/saved" element={<SavedPosts />} />
-              <Route path="/create-post" element={<CreatePost />} />
-              <Route path="/explore" element={<Explore />} />
-
+            <Route path="/" element={<Layout />}>
+              <Route path="feeds" element={<Home />} />
+              <Route path="saved" element={<SavedPosts />} />
+              <Route path="create-post" element={<CreatePost />} />
+              <Route path="explore" element={<Explore />} />
+              <Route path="profile" element={<Profile />} />
             </Route>
           </Route>
-
           {/* Catch All */}
           <Route path="*" element={<NonExistRoutes />} />
         </Routes>

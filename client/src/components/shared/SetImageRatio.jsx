@@ -19,7 +19,9 @@ const SetImageRatio = ({ src }) => {
   };
 
   return (
-    <div className={` w-full  md:w-[45vw] overflow-hidden rounded-4xl  ${aspectClass}`}>
+    <div
+      className={` w-full md:max-w-[55vw] lg:w-[45vw] overflow-hidden rounded-xl  ${aspectClass}`}
+    >
       <img
         src={src}
         alt="post"

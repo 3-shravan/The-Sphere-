@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const commentSchema = new mongoose.Schema({
-   text: {
+   comment: {
       type: String,
       required: true
    },
@@ -15,6 +15,15 @@ const commentSchema = new mongoose.Schema({
       ref: 'Post',
       required: true
    },
+   parentComment: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment',
+      default: null
+   },
+   replies: [{
+      type: mongoose.Schema.Types.ObjectId,
+      red: 'Comment'
+   }],
    likedBy: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'

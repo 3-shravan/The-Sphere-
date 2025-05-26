@@ -3,6 +3,7 @@ import { fetcher } from "@services/fetcher";
 import { useDispatch } from "react-redux";
 import { updatePostLikes, updateSavedPosts } from "./postSlice";
 import { useAuth } from "@/context";
+import { errorToast, successToast } from "@/utils";
 
 const POSTS_QUERY_KEY = ["posts"];
 
@@ -55,7 +56,6 @@ export const useSavedPosts = () =>
       queryKey: ["savedPosts"],
       queryFn: () => fetcher({ endpoint: '/posts/saved' })
    })
-
 export const useToggleSavePost = () => {
    const queryClient = useQueryClient();
    const dispatch = useDispatch();
@@ -67,4 +67,43 @@ export const useToggleSavePost = () => {
       }
    })
 }
+export const useGetPostComments = (postId) => {
+   return useQuery({
+      queryKey: ['comments', postId],
+      queryFn: () => fetcher({ endpoint: `/posts/comments/${postId}` })
+   })
+}
+export const useCreateComment = () => {
+   const queryClient = useQueryClient();
+   return useMutation({
+      mutationFn: ({ comment, postId }) => fetcher({
+         endpoint: `/posts/comments/${postId}`, method: 'POST', data: { comment }
+      }),
+      onSuccess: (response, postId) => {
+         queryClient.invalidateQueries({ queryKey: ['comments', postId] })
+      },
+      onError: (error) => {
+         console.error(error.response);
+         errorToast(error?.response?.data?.message || "Error creating comment");
+      }
+   })
+}
+export const useDeleteComment = () => {
+   const queryClient = useQueryClient();
+   return useMutation({
+      mutationFn: ({ postId, commentId }) => fetcher({
+         endpoint: `/posts/comments/${postId}/${commentId} `, method: 'DELETE'
+      }),
+      onSuccess: (res, postId) => {
+         queryClient.invalidateQueries({ queryKey: ['comments', postId] });
+         successToast('Comment successfully deleted')
+      },
+      onError: (error) => {
+         errorToast(error?.response?.data?.message || "Error deleting comment");
+      }
+   })
+}
+
+
+
 

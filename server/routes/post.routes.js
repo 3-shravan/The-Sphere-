@@ -24,7 +24,7 @@ router.put('/:postId/like', authUser, likePost)
 router.put('/:postId/save', authUser, savePosts)
 router.get('/saved', authUser, getSavedPosts)
 router.get('/comments/:postId', getPostComments)
-router.put('/comments/:postId', authUser, commentPost)
+router.post('/comments/:postId', authUser, commentPost)
 router.delete('/comments/:postId/:commentId', authUser, deleteComment)
 
 export default router

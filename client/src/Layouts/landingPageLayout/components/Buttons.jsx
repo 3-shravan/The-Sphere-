@@ -1,11 +1,10 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Gradient from "./Gradient";
 
-const MagnetButton = () => {
+export const MagnetButton = () => {
   const navigate = useNavigate();
   const btnRef = useRef(null);
-
   const handleMouseMove = (e) => {
     const btn = btnRef.current;
     const rect = btn.getBoundingClientRect();
@@ -13,14 +12,12 @@ const MagnetButton = () => {
     const y = e.clientY - rect.top - rect.height / 2;
     btn.style.transform = `translate(${x * 1}px, ${y * 1}px)`;
   };
-
   const resetPosition = () => {
     const btn = btnRef.current;
     btn.style.transform = `translate(0px, 0px)`;
   };
-
   return (
-    <div className="grid min-h-[200px] place-content-end  p-4">
+    <div className="grid min-h-[200px] overflow-x-clip place-content-center md:place-content-end  p-4">
       <button
         ref={btnRef}
         onClick={() => navigate("/signup")}
@@ -33,7 +30,6 @@ const MagnetButton = () => {
         <div className="pointer-events-none absolute inset-0 z-0 scale-0 rounded-full bg-pink-200 transition-transform duration-500 ease-out group-hover:scale-100" />
 
         {/* Arrow Icon*/}
-
         <div className="z-10 pointer-events-none rotate-45 absolute flex items-center justify-center h-full w-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +43,6 @@ const MagnetButton = () => {
         </div>
 
         {/* Spinning Circular Text */}
-
         <svg
           width="200"
           height="200"
@@ -107,9 +102,7 @@ const MagnetButton = () => {
               startOffset="0"
               fill="black"
               className="text-lg font-bold uppercase tracking-widest opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
-            >
-              
-            </textPath>
+            ></textPath>
           </text>
         </svg>
       </button>
@@ -117,4 +110,36 @@ const MagnetButton = () => {
   );
 };
 
-export default MagnetButton;
+export const Button = () => {
+  const navigate = useNavigate();
+  return (
+    <button
+      className="group flex h-15 items-center gap-2 rounded-full text-black font-bold bg-green-300 pl-3 pr-4 transition-all duration-300 ease-in-out hover:bg-black hover:pl-2 hover:text-white active:bg-neutral-700"
+      onClick={() => {
+        navigate("/signup");
+      }}
+    >
+      <span className="rounded-full bg-black p-1 text-sm transition-colors duration-300 group-hover:bg-white">
+        <svg
+          stroke="currentColor"
+          fill="none"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="-translate-x-[200%] text-[0px] transition-all duration-300 group-hover:translate-x-0 group-hover:text-lg group-hover:text-black group-active:-rotate-45"
+          height="1em"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </span>
+      <span className="font-[Poppins]">
+        {" "}
+        <span className="font-thin">here we</span> SIGNUP
+      </span>
+    </button>
+  );
+};

@@ -20,7 +20,7 @@
 
 .marqueeBottom {
   position: sticky;
-  bottom: 0;
+  bottom: -0.5px;
   z-index: 10;
   background: black;
 }
@@ -53,7 +53,6 @@
   display: flex;
   justify-content: space-between;
   gap: 0.5rem;
-
 }
 
 .sectionRevealLinksInner {
@@ -65,13 +64,13 @@
   gap: 0.5rem;
 }
 
-
 .sectionGradient {
   position: relative;
-  height: 100vh;
-  padding: 1rem;
+  min-height: 100vh;
+  padding: 1vw;
+  margin-top: 5vh;
   padding-top: 9rem;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .sectionVelocityText {
@@ -80,9 +79,6 @@
 
 @media (max-width: 768px) {
   .sectionRevealLinksInner {
-   
     flex-direction: column;
-    
   }
 }
-

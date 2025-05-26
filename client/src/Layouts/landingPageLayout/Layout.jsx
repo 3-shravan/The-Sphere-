@@ -1,16 +1,15 @@
 import styles from "./layout.module.css";
-import { AnimatePresence, motion, useEffect } from "@lib";
+import { AnimatePresence, useEffect } from "@lib";
 import { useMenu } from "@context";
-import { Header, Menu } from "@components";
+import { Menu, Marquee } from "@components";
 import {
-  Bar,
-  Message,
-  Near,
-  Chat,
+  Notificaton,
+  UnreadMessage,
+  Nearby,
+  Chats,
   Connect,
   Post,
-  Marquee,
-  Signup,
+  Button,
   StackedCards,
   PhoneMockup,
   Gradient,
@@ -49,7 +48,7 @@ const Layout = () => {
             <RevealLinks />
             <div className={styles.sectionRevealLinksInner}>
               <Day />
-              <Signup />
+              <Button />
             </div>
           </section>
           <section className={styles.sectionMagnetButton}>
@@ -59,13 +58,13 @@ const Layout = () => {
           <section className={styles.sectionGradient}>
             <Gradient />
             <PhoneMockup />
-            <div className="  w-full overflow-hidden ">
-              <Bar />
-              <Message />
-              <Near />
-              <Chat />
+            <div className=" w-full flex flex-col items-center justify-center overflow-hidden ">
+              <Nearby />
+              <Notificaton />
               <Connect />
+              <UnreadMessage />
               <Post />
+              <Chats />
             </div>
           </section>
 

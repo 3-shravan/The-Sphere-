@@ -1,5 +1,4 @@
-import React from "react";
-import { cn } from "@utils";
+import { cn } from "@/lib/utils";
 
 const variants = {
   primary: "bg-blue-600 hover:bg-blue-700 text-white",

@@ -76,6 +76,8 @@ body {
   MainLayout
 --------------------------------------------------------------*/
 
+--primary:
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -103,6 +105,10 @@ body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  --first: oklch(0.9 0.2 270);
+  --second: oklch(0.7 0.3 270);
+  --third: oklch(0.5 0.4 270);
 }
 
 /*--------------------------------------------------------------
@@ -152,6 +158,10 @@ body {
   --color-dark-100: #131313;
   --breakpoint-xs: var(--breakpoint-xs);
 
+  --color-first: var(--first);
+  --color-second: var(--second);
+  --color-third: var(--third);
+
   /*--------------------------------------------------------------
   SHADCN
 --------------------------------------------------------------*/
@@ -185,6 +195,20 @@ body {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+}
+@layer utilities{
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+  .feed-resize{
+    @apply pb-8 md:pb-6 lg:pb-4 px-1  md:px-4 lg:min-w-[50vw]
+  }
+  .your-feed{
+    @apply text-xl p-2 md:pt-4 font-Futura tracking-tighter 
+  }
 }
 
 /*--------------------------------------------------------------

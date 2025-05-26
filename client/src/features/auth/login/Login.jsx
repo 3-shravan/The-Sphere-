@@ -41,7 +41,7 @@ const Login = () => {
       body: formData,
       redirectUrl: "/feeds",
     });
-    if (response?.error) return;
+    if (!response) return;
     setAuth({
       token: response.data.token,
       isAuthenticated: true,

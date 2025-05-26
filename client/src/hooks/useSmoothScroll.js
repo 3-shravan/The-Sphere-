@@ -1,7 +1,7 @@
 import Lenis from "@studio-freight/lenis";
 import { useEffect, useRef } from "react";
 
- const useLenisInsideDiv = (selector = ".js-native-scroll") => {
+const useLenisInsideDiv = (selector = ".js-native-scroll") => {
    const lenisRef = useRef(null);
 
    useEffect(() => {

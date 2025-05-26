@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "@lib";
 
-const ThemeContext = createContext("light");
+const ThemeContext = createContext("dark");
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("dark");
 

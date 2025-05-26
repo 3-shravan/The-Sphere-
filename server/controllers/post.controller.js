@@ -219,25 +219,32 @@ export const deletePost = catchAsyncError(async (req, res, next) => {
 export const commentPost = catchAsyncError(async (req, res, next) => {
    const { postId } = req.params
    const commentedBy = req.user._id
-   const { text } = req.body
-   if (!text) return next(new ErrorHandler(404, "Please enter a comment"))
+   const { comment, parentId } = req.body
+   if (!comment) return next(new ErrorHandler(404, "Please enter a comment"))
 
    const post = await Post.findById(postId)
    if (!post) return next(new ErrorHandler(404, "Post not found"))
-
 
    // Check if user is blocked
    if (await isBlocked(commentedBy, post.author)) {
       return next(new ErrorHandler(403, "You cannot like this post"));
    }
 
-   const comment = await Comment.create({ text, author: commentedBy, post: postId })
-   if (!comment) return next(new ErrorHandler(500, "Failed to create comment"))
+   const newComment =
+      await Comment.create({ comment, author: commentedBy, post: postId, parentComment: parentId || null })
+   if (!newComment) return next(new ErrorHandler(500, "Failed to create comment"))
 
-   await comment.populate({ path: "author", select: "name , profilePicture" })
-   post.comments.push(comment._id)
-   await post.save()
-   handleSuccessResponse(res, 200, "Comment added successfully", {comment})
+   await newComment.populate({ path: "author", select: "name , profilePicture" })
+   if (parentId) {
+      const parentComment = await Comment.findById(parentId)
+      if (!parentComment) return next(new ErrorHandler(404, "Parent comment not found"))
+      parentComment.replies.push(newComment._id)
+      await parentComment.save()
+   } else {
+      post.comments.push(newComment._id)
+      await post.save()
+   }
+   handleSuccessResponse(res, 200, "Comment added successfully", { comment: newComment })
 })
 
 
@@ -248,9 +255,7 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
 
 
 export const getPostComments = catchAsyncError(async (req, res, next) => {
-
    const { postId } = req.params
-
    const post = await Post.findById(postId)
    if (!post) return next(new ErrorHandler(404, "Post not found"))
 
@@ -258,9 +263,16 @@ export const getPostComments = catchAsyncError(async (req, res, next) => {
       .find({ post: postId })
       .populate({ path: "author", select: "name , profilePicture" })
       .sort({ createdAt: -1 })
-
    if (!comments) return next(new ErrorHandler(404, "No comments found"))
-   handleSuccessResponse(res, 200, "Comments fetched successfully", {comments})
+   const commentTree = (comments, parentId = null) => {
+      return comments.filter((comment) => String(comment.parentComment) === String(parentId))
+         .map(comment => ({
+            ...comment.toObject(),
+            replies: commentTree(comments, comment._id)
+         }))
+   }
+   const commentTreeData = commentTree(comments)
+   handleSuccessResponse(res, 200, "Comments fetched successfully", { comments: commentTreeData })
 
 })
 

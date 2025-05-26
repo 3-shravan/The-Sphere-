@@ -41,3 +41,27 @@ export const MarqueeItems = [
   "🎶 Explore Viral Content!",
   "💡 Get Inspired Every Day!",
 ];
+
+export const tabs = [
+  {
+    img: "/assets/icons/home.svg",
+    route: "/",
+    label: "Home",
+  },
+  {
+    img: "/assets/icons/wallpaper.svg",
+    route: "/explore",
+    label: "Explore",
+  },
+  {
+    img: "/assets/icons/bookmark.svg",
+    route: "/saved",
+    label: "Saved",
+  },
+  {
+    img: "/assets/icons/gallery-add.svg",
+    route: "/create-post",
+    label: "New Post",
+  },
+];
+

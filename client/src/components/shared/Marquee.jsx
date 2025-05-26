@@ -1,7 +1,7 @@
 import { motion } from "@lib";
 import { MarqueeItems } from "@utils";
 import { Asterisk } from "lucide-react";
-import "./marquee.css";
+import "@styles/marquee.css";
 
 const Marquee = ({ direction }) => {
   const animationX = direction === "left" ? ["0%", "-100%"] : ["-100%", "0%"];
@@ -21,11 +21,11 @@ const Marquee = ({ direction }) => {
           {MarqueeItems.map((text, index) => (
             <span key={index} className="marquee-item">
               {text}{" "}
-              <span className="px-20   ">
+              <span className="px-20">
                 <Asterisk
-                  size={50}
-                  color="#9a5ff2"
-                  strokeWidth={5.25}
+                  size={40}
+                  className="text-rose-400" 
+                  strokeWidth={7}
                   absoluteStrokeWidth
                 />
               </span>

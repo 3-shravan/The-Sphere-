@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { createContext } from "@lib";
-import { getIsAuthenticated, getToken } from "@utils";
+import {
+  getIsAuthenticated,
+  getToken,
+  errorToast,
+  removeTokenAndAuthenticated,
+} from "@utils";
 import { Loader } from "@/components";
-import { errorToast, removeTokenAndAuthenticated } from "@/utils";
 import { useApi } from "@/hooks";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -12,15 +16,27 @@ export const ContextProvider = ({ children }) => {
   const [auth, setAuth] = useState(() => ({
     isAuthenticated: getIsAuthenticated(),
     token: getToken(),
-    profile: JSON.parse(localStorage.getItem("profile")),
+    profile: null,
   }));
+
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { request } = useApi();
   const token = getToken();
 
+  const resetAuth = () => {
+    setAuth({
+      isAuthenticated: false,
+      token: null,
+      profile: null,
+    });
+    removeTokenAndAuthenticated();
+    navigate("/login");
+  };
+
   useEffect(() => {
     const fetchUserProfile = async () => {
-      if (!token) return;
+      if (!token) return resetAuth();
       setLoading(true);
       try {
         const { data } = await request({ endpoint: "auth/profile" });
@@ -30,14 +46,12 @@ export const ContextProvider = ({ children }) => {
           profile: data?.user,
         });
       } catch (error) {
-        removeTokenAndAuthenticated();
-        setAuth({ isAuthenticated: false, token: null, profile: null });
-        Navigate("/login");
+        errorToast("Failed to fetch user profile");
+        resetAuth();
       } finally {
         setLoading(false);
       }
     };
-
     fetchUserProfile();
   }, []);
 
@@ -45,13 +59,7 @@ export const ContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await request({ endpoint: "auth/logout" });
-      removeTokenAndAuthenticated();
-      setAuth({
-        isAuthenticated: false,
-        token: null,
-        profile: null,
-      });
-      Navigate("/login");
+      resetAuth();
       errorToast(response?.data?.message);
     } catch (error) {
       errorToast("Logout failed");
@@ -68,4 +76,4 @@ export const ContextProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => React.useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);

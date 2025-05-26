@@ -65,58 +65,52 @@ const Register = () => {
   };
 
   const resendHandler = async () => {
+    const validationError = validateForm(formData, stage);
+    if (validationError) {
+      return errorToast(validationError);
+    }
     if (!isResend) {
       return errorToast(
         `Please wait ${resendTimer} seconds before resending OTP.`
       );
     }
-
-    const validationError = validateForm(formData, stage);
-    if (validationError) {
-      return errorToast(validationError);
-    }
-
-    setIsResend(false);
-
     const response = await request({
       endpoint: "auth/register",
       method: "POST",
       body: formData,
     });
-    if (response.status === 200) {
+    if (!response) return setIsResend(true);
+    if (response.data.success) {
       handleNext();
       setResendTimer(RESEND_TIME);
-    } else {
-      setIsResend(true);
+      setIsResend(false);
     }
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    const validationError = validateForm(formData, stage);
+    if (validationError) {
+      return errorToast(validationError);
+    }
+
     if (!isResend) {
       return errorToast(
         `Please wait ${resendTimer} seconds before resending OTP.`
       );
     }
 
-    const validationError = validateForm(formData, stage);
-    if (validationError) {
-      return errorToast(validationError);
-    }
-
-    setIsResend(false);
-
     const response = await request({
       endpoint: "auth/register",
       method: "POST",
       body: formData,
     });
-    if (response.status === 200) {
+    if (!response) return setIsResend(true);
+    if (response.data.success) {
       handleNext();
       setResendTimer(RESEND_TIME);
-    } else {
-      setIsResend(true);
+      setIsResend(false);
     }
   };
 
@@ -168,7 +162,7 @@ const Register = () => {
                   handleNext={submitHandler}
                   type="submit"
                   text={isResend ? "Send OTP" : `Resend in ${resendTimer}s`}
-                  loading={!isResend && loading}
+                  loading={isResend && loading}
                   register={true}
                   icon={<PiArrowSquareInDuotone className="text-2xl pl-1" />}
                 />

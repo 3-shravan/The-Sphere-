@@ -1,38 +1,57 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@context";
-import { tabs } from "../index";
+import { tabs } from "@utils";
 import { BsArrowDownRightCircleFill } from "react-icons/bs";
 import { useTheme } from "@/context";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { useState } from "react";
+import {
+  Album,
+  BadgePlus,
+  Bookmark,
+  GalleryVerticalEnd,
+  Search,
+} from "lucide-react";
 
-export const LeftSidebar = () => {
+const Sidebar = () => {
   const { auth, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
+  const className = "w-4 ";
+  const icons = [
+    <GalleryVerticalEnd className={`${className}`} />,
+    <Search className={`${className}`} />,
+    <Album className={`${className}`} />,
+    <BadgePlus className={`${className}`} />,
+  ];
 
   return (
     <nav className="hidden md:flex p-4 flex-col justify-between max-w-[18vw] max-h-screen">
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-6.5">
         {/* Logo */}
-        <div className="flex gap-1 mt-3.5 px-2 items-center">
-          <img src="/favicon.svg" alt="" width={15} />
-          <span className="font-bold font-Futura">SPHERE</span>
+        <div className="flex gap-1 mt-3 px-2 items-center transition duration-200">
+          {theme === "dark" ? (
+            <img src="/favicon.svg" alt="" width={15} />
+          ) : (
+            <img src="/favicon-dark.svg" alt="" width={15} />
+          )}
+
+          <span className="font-bold font-Poppins">sphere</span>
         </div>
 
         <div className="flex flex-col gap-2 items-center w-full justify-center cursor-pointer">
           {/* You can add profile logic here if needed */}
         </div>
         {/* Sidebar Links */}
-        <ul className="flex flex-col items-start gap-3">
-          {tabs.map((tab) => (
+        <ul className="flex flex-col mt-3 items-start gap-3">
+          {tabs.map((tab, index) => (
             <li
-            key={tab.label}
-              className={`flex gap-2 w-full items-center cursor-pointer py-2 px-2 rounded-lg text-sm font-Gilroy font-bold transition
+              key={tab.label}
+              className={`flex gap-2 w-full items-center cursor-pointer py-2 px-2 rounded-md text-sm font-Gilroy font-bold transition
                   ${
                     tab === selectedTab
-                      ? "bg-violet-200 text-violet-600  "
+                      ? "bg-rose-300 text-rose-700  "
                       : "text-muted-foreground hover:text-foreground"
                   }`}
               onClick={() => {
@@ -40,7 +59,7 @@ export const LeftSidebar = () => {
                 navigate(tab.route);
               }}
             >
-              <img src={tab.img} alt="" width={16} />
+              {icons[index]}
               <span>{tab.label}</span>
             </li>
           ))}
@@ -75,3 +94,4 @@ export const LeftSidebar = () => {
     </nav>
   );
 };
+export default Sidebar;

@@ -8,7 +8,7 @@ const imgSrc = [
 ];
 const PhoneMockup = () => {
   return (
-    <div className="relative max-w-sm mx-auto mt-10">
+    <div className="relative hidden md:block max-w-sm mx-auto mt-10">
       {/* Phone frame */}
 
       <div className="bg-black rounded-[40px] border-2 h-[70vh] border-[#111]  shadow-4xl overflow-hidden">

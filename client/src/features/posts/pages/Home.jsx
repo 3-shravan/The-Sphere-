@@ -1,39 +1,49 @@
-import Feed from "../components/Feed";
+import { Feed } from "../components";
 import { useAuth } from "@/context";
-import SuggestedUsers from "../components/SuggestedUsers";
+import { useNavigate } from "react-router-dom";
+import { SuggestedUsers } from "@/features/users";
+
+import ChatList from "@/features/Chat/ChatList";
+import { ChevronDown } from "lucide-react";
 
 const Home = () => {
+  const navigate = useNavigate();
   const { auth } = useAuth();
   return (
-    <div 
-   
-    className="flex flex-col flex-1 overflow-hidden md:bg-muted rounded-4xl m-2 md:border-1 md:border-muted-foreground">
-      <div className="flex items-center  gap-10 px-2 md:px-3 pt-3 justify-between w-[95%]">
-        <span className="px-3 text-sm font-mono hidden md:block text-neutral-500">
+    <div className="flex flex-col flex-1 overflow-hidden md:bg-muted rounded  m-3 md:border-1 md:border-border">
+      <div className="flex-between md: py-1 pt-2 ">
+        {/* time */}
+        <span className="px-6 text-sm font-blackout hidden md:block text-rose-400">
           {" "}
-          11:11{" "}
+          11 : 11{" "}
         </span>
-        <span className=" md:hidden text-xs font-Poppins   text-neutral-200  ">
+        {/* Phone Heading */}
+        <span className=" md:hidden px-2 text-xs font-Poppins text-foreground  ">
           whats been up,{" "}
           <span className="text-indigo-200">{auth?.profile?.name}</span>
         </span>
-        <div className=" hidden md:block text-xl font-bold flex items-center  leading-tight font-mono tracking-tighter md:text-sm md:font-extralight md:leading-tight md:tracking-tighter md:px-4 md:py-2 md:w-auto w-full  ">
+        {/* profile tab */}
+        <div
+          className="hidden md:flex cursor-pointer tracking-tight rounded px-7 py-2 "
+          onClick={() => navigate("/profile")}
+        >
           <img
             src={auth?.profile?.profilePicture}
             alt=""
-            className="w-6 h-6 rounded-full inline "
+            className="w-5 h-5 rounded-full inline "
           />
-          <span className="font-Poppins font-semibold text-medium px-2 text-foreground  ">
-            {/* {auth?.profile?.name} */}
-            Shravan Yadav
+          <span className="font-Poppins text-sm font-bold  px-2 text-foreground ">
+            {auth?.profile?.name}
+            <ChevronDown className="inline w-5 h-4" />
           </span>
         </div>
       </div>
 
-      <div className=" flex justify-center items-center md:min-w-[50vw] ">
+      <div className="lg:flex">
         <Feed />
-        <div className=" hidden md:block rounded-3xl mr-4 w-full h-full ">
+        <div className=" hidden  rounded p-4 lg:flex flex-col gap-3 h-full ">
           <SuggestedUsers />
+          <ChatList />
         </div>
       </div>
     </div>
