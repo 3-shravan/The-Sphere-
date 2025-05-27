@@ -45,7 +45,7 @@ export const MarqueeItems = [
 export const tabs = [
   {
     img: "/assets/icons/home.svg",
-    route: "/",
+    route: "/feeds",
     label: "Home",
   },
   {

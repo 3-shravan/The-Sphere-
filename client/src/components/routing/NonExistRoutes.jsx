@@ -1,6 +1,6 @@
 import { useNavigate } from "@lib";
 import { motion } from "framer-motion";
-import { Button } from "@components";
+import { Button } from "../ui/button";
 
 const NonExistRoutes = () => {
   const navigate = useNavigate();

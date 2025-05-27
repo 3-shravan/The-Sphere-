@@ -85,31 +85,32 @@ const Card = ({ post }) => {
         </div>
       </div>
 
-      {/* <div className="flex justify-between items-center gap-3 mt-3">
-        <div>
-          <button
-            onClick={() => toggleLike(post._id)}
-            className="text-sm font-semibold text-light-1"
-          >
-            {isLiked ? "❤️" : "🤍"}
-          </button>
-          <span className="text-xs font-semibold ">
-            {updatedPost?.likes.length || 0}{" "}
-            {updatedPost?.likes.length === 1 ? "Like" : "Likes"}
-          </span>
-        </div>
-
-        <button
-          className="text-sm px-3 py-2"
-          onClick={() => toggleSave(post._id)}
-        >
-          {isSaved ? "Unsave" : "Save"}
-        </button>
-      </div> */}
-
       <Comments postId={post._id} />
     </div>
   );
 };
 
 export default Card;
+
+// const LikeButton = ({ postId, isLiked }) => {
+//   const { mutate: toggleLike } = useToggleLikePost();
+
+//   return (
+//     <button
+//       onClick={() => toggleLike(postId)}
+//       className="text-sm font-semibold text-light-1"
+//     >
+//       {isLiked ? "❤️" : "🤍"}
+//     </button>
+//   );
+// };
+
+// const SaveButton = ({ postId, isSaved }) => {
+//   const { mutate: toggleSave } = useToggleSavePost();
+
+//   return (
+//     <button className="text-sm px-3 py-2" onClick={() => toggleSave(postId)}>
+//       {isSaved ? "Unsave" : "Save"}
+//     </button>
+//   );
+// };

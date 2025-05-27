@@ -2,10 +2,10 @@ import React from "react";
 import styles from "./style.module.css";
 import authStyles from "../shared/auth.module.css";
 import { OtpVerify, ViaEmail, ViaPhone } from "./components";
-import { AuthButton } from "../shared";
+import { AuthButton,PrivacyTermsAndConditions } from "../shared";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
-import { PrivacyTermsAndConditions, Header, Menu } from "@components";
+import {  Header, Menu } from "@components";
 import {
   errorToast,
   validForgetEmail,

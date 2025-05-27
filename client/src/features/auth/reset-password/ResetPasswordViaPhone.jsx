@@ -1,9 +1,8 @@
 import styles from "./style.module.css";
 import authStyles from "@features/auth/shared/auth.module.css";
 import FormContainer from "./components/FormContainer";
-import {PrivacyTermsAndConditions} from "@components";
 import {Header} from "@components";
-import { AuthButton } from "../shared";
+import { AuthButton,PrivacyTermsAndConditions } from "../shared";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
 import {

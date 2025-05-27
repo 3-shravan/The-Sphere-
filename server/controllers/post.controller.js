@@ -23,14 +23,13 @@ const isBlocked = async (userId, targetId) => {
    return !!blocked;
 };
 
-
-
 {/***********  
      * @add_new_post
   *  *********** / */}
 export const addNewPost = catchAsyncError(async (req, res, next) => {
    const authorId = req.user._id
    const { caption, thoughts, location, tags } = req.body
+   console.log(caption, thoughts, location, tags)
    const image = req.file
 
    let post;
@@ -65,12 +64,52 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 201, "Post created successfully", { post })
 
 })
+// export const addNewPost = catchAsyncError(async (req, res, next) => {
+//    const authorId = req.user._id
+//    const { caption, thoughts, location } = req.body
+//    let { tags } = req.body
+//    if (typeof tags === "string") {
+//       try {
+//          tags = JSON.parse(tags);
+//       } catch (err) {
+//          tags = [tags];
+//       }
+//    }
 
+//    const image = req.file
+//    if (!image) return next(new ErrorHandler(400, "Please provide an image"))
+//    let post;
+//    if (image) {
+//       const optimizedImageBuffer = await sharp(image.buffer)
+//          .resize({ width: 800, height: 800, fit: "inside" })
+//          .toFormat('jpeg', { quality: 80 })
+//          .toBuffer()
 
+//       const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`
+//       const cloudResponse = await cloudinary.uploader.upload(fileUri)
+//       if (!cloudResponse) return next(new ErrorHandler(500, "Failed to upload image to cloudinary"))
+//       const media = {
+//          public_id: cloudResponse.public_id,
+//          url: cloudResponse.secure_url,
+//       }
+//       post = await createPost({ authorId, caption, thoughts, location, tags, media })
+//    } else {
+//       const media = {
+//          public_id: 'Not provided',
+//          url: 'Not provided',
+//       }
+//       post = await createPost({ authorId, caption, thoughts, location, tags, media })
+//    }
+//    if (!post) return next(new ErrorHandler(500, "Failed to create post"))
 
+//    const author = await User.findById(authorId)
+//    author.posts.push(post._id)
+//    await author.save()
 
+//    await post.populate({ path: "author", select: "name profilePicture" })
+//    handleSuccessResponse(res, 201, "Post created successfully", { post })
 
-
+// })
 
 
 {/***********  
@@ -106,14 +145,9 @@ export const getAllPosts = catchAsyncError(async (req, res, next) => {
 })
 
 
-
-
-
-
-
-{/***********  
-     * @Get_Own_Posts
-  *  *********** / */}
+{/** 
+   @Get_Own_Posts
+ */}
 export const getMyPosts = catchAsyncError(async (req, res, next) => {
    const authorId = req.user._id
    const posts = await Post
@@ -142,13 +176,9 @@ export const getMyPosts = catchAsyncError(async (req, res, next) => {
 
 
 
-
-
-
-
 {/***********  
      * @Like_and_dislike_Post
-  *  *********** / */}
+  *  ********** */}
 
 export const likePost = catchAsyncError(async (req, res, next) => {
    const { postId } = req.params
@@ -177,11 +207,6 @@ export const likePost = catchAsyncError(async (req, res, next) => {
 
 
 
-
-
-
-
-
 {/***********  
      * @Delete_Post
   *  *********** / */}
@@ -206,9 +231,6 @@ export const deletePost = catchAsyncError(async (req, res, next) => {
    await Comment.deleteMany({ post: postId })
    handleSuccessResponse(res, 200, "Post deleted successfully")
 })
-
-
-
 
 
 
@@ -247,12 +269,9 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 200, "Comment added successfully", { comment: newComment })
 })
 
-
-
 {/***********  
      * @get_post_comments
   *  *********** / */}
-
 
 export const getPostComments = catchAsyncError(async (req, res, next) => {
    const { postId } = req.params
@@ -275,8 +294,6 @@ export const getPostComments = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 200, "Comments fetched successfully", { comments: commentTreeData })
 
 })
-
-
 
 
 {/***********  

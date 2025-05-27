@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { usePosts, useSavedPosts } from "../services";
 import Card from "./Card";
-import Loader from "./Loader";
+import { usePosts, useSavedPosts } from "../services";
+import { Loader } from "@components";
 import { setPosts, setSavedPosts } from "../postSlice";
 import { useEffect } from "react";
 import { useSmoothScroll } from "@/hooks";

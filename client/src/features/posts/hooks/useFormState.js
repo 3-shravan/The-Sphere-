@@ -1,7 +1,6 @@
-
 import { useState, useRef } from "react";
 
- const usePostFormState = (initialPost) => {
+export const usePostFormState = (initialPost) => {
    const [formState, setFormState] = useState({
       caption: initialPost?.caption || "",
       file: null,
@@ -22,7 +21,6 @@ import { useState, useRef } from "react";
    const handleChange = (e) => {
       const { name, value } = e.target;
       setFormState((prev) => ({ ...prev, [name]: value }));
-
       if (errors[name]) {
          setErrors((prev) => ({ ...prev, [name]: "" }));
       }
@@ -48,7 +46,6 @@ import { useState, useRef } from "react";
 
    return {
       formState,
-      setFormState,
       errors,
       setErrors,
       preview,
@@ -60,4 +57,3 @@ import { useState, useRef } from "react";
    };
 };
 
-export default usePostFormState;

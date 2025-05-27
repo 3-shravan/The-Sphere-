@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
-import Container from "../components/ui/Container";
+import { Container } from "@/components";
 
 const Explore = () => {
   const [search, setSearch] = useState("");

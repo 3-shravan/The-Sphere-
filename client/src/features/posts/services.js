@@ -24,7 +24,6 @@ export const useCreatePost = () => {
 };
 export const useUpdatePost = () => {
    const queryClient = useQueryClient();
-
    return useMutation({
       mutationFn: (formData) => fetcher({ endpoint: '', method: 'PUT', data: formData }),
       onSuccess: () => {
@@ -54,8 +53,11 @@ export const useToggleLikePost = () => {
 export const useSavedPosts = () =>
    useQuery({
       queryKey: ["savedPosts"],
-      queryFn: () => fetcher({ endpoint: '/posts/saved' })
-   })
+      queryFn: () => fetcher({ endpoint: '/posts/saved' }),
+      onError: (error) => {
+         errorToast(error?.response?.data?.message || "Error fetching saved posts");
+      }
+   });
 export const useToggleSavePost = () => {
    const queryClient = useQueryClient();
    const dispatch = useDispatch();

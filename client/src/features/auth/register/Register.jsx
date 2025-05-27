@@ -1,11 +1,11 @@
 import styles from "./style.module.css";
 import React from "react";
 import { AnimatePresence, motion, PiArrowSquareInDuotone } from "@lib";
-import { Header, Menu, PrivacyTermsAndConditions } from "@components";
+import { Header, Menu } from "@components";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
 import { errorToast, RegisterInitialFormData, validateForm } from "@utils";
-import { AuthButton } from "@features/auth/shared";
+import { AuthButton,PrivacyTermsAndConditions } from "@features/auth/shared";
 import {
   Fullname,
   Password,

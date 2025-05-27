@@ -1,4 +1,3 @@
-import { usePostFormState } from "@/hooks";
 import {
   validatePostForm,
   formatTags,
@@ -7,12 +6,13 @@ import {
 } from "@/utils";
 import { useNavigate } from "react-router-dom";
 import { useCreatePost } from "../services";
+import { BadgePlus } from "lucide-react";
+import { usePostFormState } from "../hooks/useFormState";
 
 const PostForm = ({ post, action }) => {
   const navigate = useNavigate();
   const {
     formState,
-    setFormState,
     errors,
     setErrors,
     preview,
@@ -80,7 +80,7 @@ const PostForm = ({ post, action }) => {
 
       <div className="flex flex-col gap-2">
         <label>Add Photos</label>
-        <div className="border-3 border-dashed border-violet-400  rounded-lg overflow-hidden">
+        <div className="border-3 border-dashed border-border  rounded-lg overflow-hidden">
           {preview ? (
             <div className="relative h-52">
               <img
@@ -104,13 +104,7 @@ const PostForm = ({ post, action }) => {
               onClick={() => fileInputRef.current.click()}
             >
               <div className="flex flex-col items-center gap-2 uppercase font-thin font-Gilroy  ">
-                <img
-                  src="/assets/icons/add-post.svg"
-                  className="bg-violet-800 rounded-2xl p-1"
-                  width={25}
-                  height={25}
-                  alt="add"
-                />
+                <BadgePlus className="text-rose-400 " />
                 <p className="text-sm">Click to upload image</p>
               </div>
             </div>
@@ -168,7 +162,7 @@ const PostForm = ({ post, action }) => {
         </button>
         <button
           type="submit"
-          className="px-4 py-2.5 cursor-pointer bg-violet-300 text-violet-800 font-semibold rounded-lg  text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
+          className="px-4 py-2.5 cursor-pointer bg-rose-300 text-rose-800 font-semibold rounded-lg  text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
           disabled={isLoading}
         >
           {isLoading ? (

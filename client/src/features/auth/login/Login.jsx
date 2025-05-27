@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate, AnimatePresence, motion, IoLogIn } from "@lib";
-import { Menu, Header, PrivacyTermsAndConditions } from "@components";
+import { Menu, Header } from "@components";
 import { useApi } from "@hooks";
 import { useAuth, useMenu } from "@context";
 import { LoginInitialFormData, setTokenAndAuthenticated } from "@utils";
 import { ViaEmail, ViaPhone, RedirectToSignup } from "./components";
-import { AuthButton } from "../shared";
+import { AuthButton, PrivacyTermsAndConditions } from "../shared";
 import loginstyles from "./style.module.css";
 import styles from "@features/auth/shared/auth.module.css";
 
@@ -64,7 +64,7 @@ const Login = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1, ease: "linear" }}
           >
-            <form action="" className={loginstyles.formContainer}>
+            <form  className={loginstyles.formContainer}>
               <motion.h1
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
