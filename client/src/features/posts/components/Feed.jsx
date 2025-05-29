@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
+import { useDispatch, useSelector } from "react-redux";
 import { usePosts, useSavedPosts } from "../services";
 import { Loader } from "@components";
 import { setPosts, setSavedPosts } from "../postSlice";
@@ -16,9 +16,9 @@ const Feed = () => {
   }, [data, savedPosts, dispatch]);
 
   const { posts } = useSelector((state) => state.posts || []);
-  useSmoothScroll(".create-native-scroll");
+  useSmoothScroll(".smooth-scroll");
   return (
-    <div className=" overflow-y-scroll rounded create-native-scroll h-[90vh] flex flex-col feed-resize">
+    <div className="overflow-y-scroll smooth-scroll flex flex-col rounded feed ">
       <h2 className="your-feed">your feed</h2>
       {isLoading && !posts ? (
         <Loader />

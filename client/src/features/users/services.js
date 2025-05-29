@@ -30,7 +30,14 @@ export const useSuggestedUsers = () => {
    });
 };
 
-export const useGetUser = () => { }
+export const useGetUsers = () => {
+   return useMutation({
+      mutationFn: ({ query }) => fetcher({ endpoint: `/users?search=${query}` }),
+      onError: () => {
+         errorToast("Failed to fetch user. Please try again later.");
+      },
+   })
+}
 export const useFollowUser = () => { }
 export const useBlockUser = () => { }
 

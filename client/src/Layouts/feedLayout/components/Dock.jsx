@@ -18,7 +18,7 @@ const Dock = () => {
         const isActive = pathname === link.route;
         return (
           <Link
-            key={`bottombar-${link.label}`}
+            key={`dock-${link.label}`}
             to={link.route}
             className={`${
               isActive && "  text-rose-500   "

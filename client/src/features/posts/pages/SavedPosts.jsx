@@ -21,13 +21,15 @@ const SavedPosts = () => {
   return (
     <Container>
       <H2 text={"Saved Posts"} />
-      <PostGrid
-        posts={savedPosts}
-        emptyText="No Saved Posts"
-        fn={toggleSavePost}
-        state={saved}
-        toggleSave={true}
-      />
+      <div className="md:mt-7 lg:mt-5">
+        <PostGrid
+          posts={savedPosts}
+          emptyText="No Saved Posts"
+          fn={toggleSavePost}
+          state={saved}
+          toggleSave={true}
+        />
+      </div>
     </Container>
   );
 };

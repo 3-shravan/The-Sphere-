@@ -4,6 +4,7 @@ import {
   useDeleteComment,
   useGetPostComments,
 } from "../services";
+import { MessageSquare } from "lucide-react";
 
 const Comments = ({ postId }) => {
   const { data: commentsData, isLoading, error } = useGetPostComments(postId);
@@ -29,14 +30,13 @@ const Comments = ({ postId }) => {
   if (error) return <p>Error loading comments</p>;
 
   return (
-    <div className="py-2 px-1 text-xs text-muted-foreground">
-      <button className="px-2" onClick={handleCreate}>
-        Comment
+    <div className=" md:px-4 px-1 flex text-xs text-foreground">
+      <MessageSquare size={16} />
+      <button className="px-1" onClick={handleCreate}>
+        Comment (soon)
       </button>
 
-      <button onClick={() => handleDelete("6832f27b05d63d4e32c3c462")}>
-        Delete{" "}
-      </button>
+      <button onClick={() => handleDelete("6832f27b05d63d4e32c3c462")}></button>
     </div>
   );
 };

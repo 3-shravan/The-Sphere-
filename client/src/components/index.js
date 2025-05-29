@@ -10,3 +10,4 @@ export { default as SetImageRatio } from '../features/posts/components/SetImageR
 export { default as Marquee } from './shared/Marquee'
 export { default as Backdrop } from './shared/ui/Backdrop'
 export { default as PostGrid } from './shared/PostGrid'
+export { default as SmoothScroll } from './shared/ui/SmoothScrollContainer'   

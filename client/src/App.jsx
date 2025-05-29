@@ -2,10 +2,10 @@ import { Toast } from "@services/Toast";
 import { ReactLenis } from "lenis/react";
 import { Routes, Route } from "@lib";
 import { PublicRoutes, ProtectedRoutes, NonExistRoutes } from "@components";
-import { CreatePost, SavedPosts, Explore } from "@/features/posts";
+import { CreatePost, SavedPosts } from "@/features/posts";
 import { Profile } from "@features/users";
 import { FeedLayout } from "@layouts";
-import { HomePage, Sphere } from "@pages";
+import { HomePage, Sphere, Explore } from "@pages";
 import {
   Login,
   Register,
