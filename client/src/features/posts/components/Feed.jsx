@@ -18,7 +18,8 @@ const Feed = () => {
   const { posts } = useSelector((state) => state.posts || []);
   useSmoothScroll(".smooth-scroll");
   return (
-    <div className="overflow-y-scroll smooth-scroll flex flex-col rounded feed ">
+    <div className="overflow-y-scroll smooth-scroll flex flex-col rounded-lg feed ">
+      <WhatsOnYourMind />
       <h2 className="your-feed">your feed</h2>
       {isLoading && !posts ? (
         <Loader />
@@ -34,3 +35,17 @@ const Feed = () => {
 };
 
 export default Feed;
+
+const WhatsOnYourMind = () => (
+  <div className="w-full mt-4  bg-card p-4 lg:w-[42vw] font-Futura rounded-2xl md:rounded-lg   border md:border-2 border-border ">
+    <input
+      type="text"
+      className=" w-full rounded-full p-3 text-xs border border-border"
+      placeholder="have any thoughts ?"
+    />
+    <button className="w-full rounded-lg mt-2 p-1 text-rose-400 bg-muted">
+      {" "}
+      Post{" "}
+    </button>
+  </div>
+);

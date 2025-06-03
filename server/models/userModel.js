@@ -39,7 +39,6 @@ const userSchema = new mongoose.Schema({
    },
    age: {
       type: Number,
-      default: 18,
       min: [13, 'You must be at least 13 years old to register.'],
       max: [120, 'Please enter a valid age.'],
    },

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const ClickOutsideWrapper = ({ onClickOutside, children }) => {
+export const HandleClickOutsideWrapper = ({ onClickOutside, children }) => {
   const wrapperRef = useRef(null);
 
   useEffect(() => {
@@ -16,4 +16,3 @@ const ClickOutsideWrapper = ({ onClickOutside, children }) => {
   return <div ref={wrapperRef}>{children}</div>;
 };
 
-export default ClickOutsideWrapper;

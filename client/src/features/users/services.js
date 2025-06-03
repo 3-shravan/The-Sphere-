@@ -38,6 +38,14 @@ export const useGetUsers = () => {
       },
    })
 }
+
+export const useGetProfile = ({ username }) => {
+   return useQuery({
+      queryKey: ['profile'],
+      queryFn: () => fetcher({ endpoint: `/users/profile/${username}` }),
+      onError: (error) => console.log(error)
+   })
+}
 export const useFollowUser = () => { }
 export const useBlockUser = () => { }
 

@@ -36,9 +36,12 @@ const VelocityText = () => {
       <div className="sticky top-0 flex h-[50vh] items-center  overflow-hidden">
         <motion.p
           style={{ skewX, x }}
-          className="origin-bottom-left flex items-center justify-center whitespace-nowrap text-8xl font-black font-[Poppins] uppercase leading-[0.85] md:text-9xl md:leading-[0.85]"
+          className="origin-bottom-left flex items-center justify-center whitespace-nowrap text-8xl font-Futura text-rose-500 tracking-tighter leading-[0.85] md:text-9xl md:leading-[0.95]"
         >
-          &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Where moments meet trends
+          <span className="text-violet-200 font-light font-mono pr-8">
+            &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;
+          </span>{" "}
+          where moments meet trends
           <Asterisk
             size={150}
             color="blue"
@@ -54,7 +57,9 @@ const VelocityText = () => {
             strokeWidth={25}
             absoluteStrokeWidth
           />
-          &lt; &lt; &lt; &lt; &lt; &lt; &lt; &lt; &lt;
+          <span className="lg:hidden">
+            &lt; &lt; &lt; &lt; &lt; &lt; &lt; &lt; &lt;
+          </span>
         </motion.p>
       </div>
     </section>

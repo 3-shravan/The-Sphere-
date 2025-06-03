@@ -108,7 +108,7 @@ const LikePost = ({ postId, isLiked, toggleLike, updatedPost }) => {
 const SavePost = ({ postId, isSaved, toggleSave }) => {
   return (
     <button
-      className="text-xs  py-0.5 text-rose-300 hover:text-rose-500 cursor-pointer"
+      className="text-xs  py-0.5 text-rose-400 hover:text-rose-600 cursor-pointer"
       onClick={() => toggleSave(postId)}
     >
       {isSaved ? "Unsave" : "Save"}

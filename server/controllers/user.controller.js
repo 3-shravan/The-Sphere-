@@ -12,10 +12,8 @@ import { uploadImage, deleteImage } from "../config/cloudinary.js";
 {/***********  
      * @Update_Profile
   *  *********** / */}
-
-
 export const updateProfile = catchAsyncError(async (req, res, next) => {
-   const { name, bio, gender } = req.body
+   const { name, bio, gender, age } = req.body
    const userId = req.user._id
    const profilePicture = req.file
 
@@ -37,6 +35,7 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
    if (bio) user.bio = bio;
    if (gender) user.gender = gender;
    if (name) user.name = name;
+   if (age) user.age = age;
 
    await user.save()
    handleSuccessResponse(res, 200, "Profile updated successfully", { user })
@@ -59,22 +58,24 @@ export const deleteProfilePicture = catchAsyncError(async (req, res, next) => {
 })
 
 
-
-
-
-
 {/***********  
-     * @Get_Other_User_Profile
+     * @Get_User_Profile
   *  *********** / */}
-
 
 export const getProfile = catchAsyncError(async (req, res, next) => {
    const username = req.params.username
    const requesterId = req.user._id
-
    if (!username) return next(new ErrorHandler(400, 'Username is required'))
-   let user = await User.findOne({ name: username, accountVerified: true }).select('-password')
+   let user = await User.findOne({ name: username, accountVerified: true })
+      .select('-password')
+      .populate({
+         path: 'posts',
+         select: '-__v -updatedAt',
+         options: { sort: { createdAt: -1 } }
+      });
    if (!user) return next(new ErrorHandler(404, 'User not found'))
+
+
 
    const isBlocked = await Block.findOne({
       $or: [
@@ -94,7 +95,6 @@ export const getProfile = catchAsyncError(async (req, res, next) => {
 {/***********  
      * @Get_Suggested_Users
   *  *********** / */}
-
 
 export const getSuggestedUsers = catchAsyncError(async (req, res, next) => {
    const userId = req.user._id
@@ -119,12 +119,9 @@ export const getSuggestedUsers = catchAsyncError(async (req, res, next) => {
 })
 
 
-
-
 {/***********  
      * @Delete_Account
   *  *********** / */}
-
 export const deleteAccount = catchAsyncError(async (req, res, next) => {
    const userId = req.user._id
    const user = await User.deleteOne({ _id: userId })

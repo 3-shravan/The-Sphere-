@@ -72,7 +72,10 @@ const ToggleTheme = ({ theme, toggleTheme }) => (
 );
 
 const Profile = ({ auth }) => (
-  <Link to="/profile" className="flex items-center justify-center">
+  <Link
+    to={`/profile/${auth?.profile?.name}`}
+    className="flex items-center justify-center"
+  >
     {auth?.profile?.profilePicture ? (
       <img
         src={auth.profile.profilePicture}

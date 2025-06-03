@@ -29,7 +29,6 @@ const isBlocked = async (userId, targetId) => {
 export const addNewPost = catchAsyncError(async (req, res, next) => {
    const authorId = req.user._id
    const { caption, thoughts, location, tags } = req.body
-   console.log(caption, thoughts, location, tags)
    const image = req.file
 
    let post;

@@ -90,7 +90,6 @@ const Tags = ({ tags }) =>
       ))}
     </div>
   ) : null;
-
 const Footer = ({ createdAt, location, toggleSave, fn, id, state }) => (
   <div className="flex justify-between">
     <div className="flex items-center font-Gilroy pt-1">

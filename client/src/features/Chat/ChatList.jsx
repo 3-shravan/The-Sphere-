@@ -41,7 +41,7 @@ const ChatList = () => {
   const [expanded, setExpanded] = useState(true);
 
   return (
-    <div className="  p-4 font-Poppins lg:flex flex-col w-full  rounded-lg border-2 bg-card border-border lg:p-3 gap-2">
+    <div className="  p-4 font-Poppins lg:flex flex-col w-full   rounded-lg border-2 bg-card border-border lg:p-4 gap-2">
       {expanded ? (
         <div className="bg-neutral-900 text-white rounded-xl shadow-xl overflow-hidden border border-neutral-800">
           <div className="flex items-center justify-between px-4 py-3 bg-neutral-800 border-neutral-700">

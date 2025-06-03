@@ -43,7 +43,7 @@ const App = () => {
               <Route path="saved" element={<SavedPosts />} />
               <Route path="create-post" element={<CreatePost />} />
               <Route path="explore" element={<Explore />} />
-              <Route path="profile" element={<Profile />} />
+              <Route path="profile/:username" element={<Profile />} />
             </Route>
           </Route>
           {/* Catch All */}
