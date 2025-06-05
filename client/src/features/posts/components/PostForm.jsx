@@ -1,13 +1,9 @@
-import {
-  validatePostForm,
-  formatTags,
-  successToast,
-  errorToast,
-} from "@/utils";
+import { successToast, errorToast } from "@/utils";
 import { useNavigate } from "react-router-dom";
 import { useCreatePost } from "../services";
 import { BadgePlus } from "lucide-react";
 import { usePostFormState } from "../hooks/useFormState";
+import { formatTags, validatePostForm } from "../utils";
 
 const PostForm = ({ post, action }) => {
   const navigate = useNavigate();
@@ -70,7 +66,7 @@ const PostForm = ({ post, action }) => {
           name="caption"
           value={formState.caption}
           onChange={handleChange}
-          className="h-20 bg-input p-4 rounded-xl outline-hidden border-border focus-visible:ring-1"
+          className="h-18 bg-input p-4 rounded-xl outline-hidden border-hidden focus-visible:ring-2"
           rows={2}
         />
         {errors.caption && (

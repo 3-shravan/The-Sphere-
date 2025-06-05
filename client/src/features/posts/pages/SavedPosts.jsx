@@ -3,7 +3,7 @@ import { useSavedPosts, useToggleSavePost } from "../services";
 import { useDispatch, useSelector } from "react-redux";
 import { setSavedPosts } from "../postSlice";
 import { PostGrid } from "@components";
-import { H2, showLoading, Container } from "@/components";
+import { H2, Loading, Container } from "@/components";
 
 const SavedPosts = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const SavedPosts = () => {
   const { savedPosts } = useSelector((state) => state.posts);
   const saved = (id) => savedPosts.some((post) => id === post._id);
 
-  if (isLoading) return showLoading();
+  if (isLoading) return Loading();
 
   return (
     <Container>

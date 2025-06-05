@@ -35,16 +35,12 @@ export const validForgetPhone = (formData, byEmail) => {
 };
 
 
-// src/utils/formUtils.js
 
 export const validatePostForm = (formState, action, existingImage) => {
   let isValid = true;
   const newErrors = { caption: "", file: "", location: "", tags: "" };
 
-  if (!formState.caption.trim()) {
-    newErrors.caption = "Caption is required";
-    isValid = false;
-  } else if (formState.caption.length > 2200) {
+  if (formState.caption.length > 2200) {
     newErrors.caption = "Caption must be less than 2200 characters";
     isValid = false;
   }
@@ -64,7 +60,7 @@ export const validatePostForm = (formState, action, existingImage) => {
 
 export const formatTags = (tagsString) => {
   return tagsString
-    .split(",")
+    .split(" ")
     .map((tag) => tag.trim())
     .filter((tag) => tag !== "");
 };

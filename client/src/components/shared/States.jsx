@@ -1,16 +1,14 @@
 import { motion } from "@lib";
 
-export const showLoading = () => {
+export const Loading = () => {
   return (
-    <div className="text-center py-10 font-bold text-lg">
-      Loading saved posts...
-    </div>
+    <div className="text-center py-10 font-bold text-lg">Loading posts...</div>
   );
 };
 
-export const showError = () => {
+export const Error = () => {
   <div className="text-center py-10 font-bold text-rose-500">
-    Failed to load saved posts.
+    Failed to load posts.
   </div>;
 };
 

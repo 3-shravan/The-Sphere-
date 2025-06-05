@@ -1,5 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import Backdrop from "./ui/Backdrop";
+import { ThoughtsCard } from "..";
 
 const PostGrid = ({
   posts = [],
@@ -23,24 +24,34 @@ const PostGrid = ({
           >
             {/* Image */}
             <div className="relative w-full h-64">
-              <img
-                src={post.media}
-                alt="post"
-                className="w-full h-full object-cover"
-              />
+              {post.media && (
+                <img
+                  src={post.media}
+                  alt="post"
+                  className="w-full h-full object-cover"
+                />
+              )}
+              <ThoughtsCard thought={post.thoughts} />
 
               {/* Author */}
               {showAuthor && (
                 <Backdrop
-                  image={post?.author?.profilePicture}
+                  image={post.author.profilePicture}
                   position="top-left"
                 >
                   {post?.author?.name}
                 </Backdrop>
+
               )}
 
               {/* Gradient Overlay Content */}
-              <div className="absolute bottom-0 left-0 w-full px-4 pb-4 pt-16 bg-gradient-to-t from-neutral-900/90 to-transparent text-neutral-900">
+              <div
+                className={`absolute bottom-0 left-0 w-full px-4 pb-4 pt-16 text-neutral-900
+                  ${
+                    post.media &&
+                    " bg-gradient-to-t from-neutral-900/90 to-transparent"
+                  }`}
+              >
                 {showCaption && (
                   <h2 className="text-xs font-medium font-Poppins text-neutral-300 mb-1">
                     {post.caption}

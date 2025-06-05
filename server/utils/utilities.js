@@ -17,5 +17,21 @@ export const crpytPassword = (token) => {
    return resetPasswordToken;
 }
 
+// utils/parseTags.js
+
+export const parseTags = (tags) => {
+   if (!tags) return [];
+   if (typeof tags === "string") {
+      try {
+         const parsed = JSON.parse(tags);
+         return Array.isArray(parsed) ? parsed : [parsed];
+      } catch {
+         return [tags];
+      }
+   }
+   return Array.isArray(tags) ? tags : [tags];
+};
+
+
 
 

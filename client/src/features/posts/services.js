@@ -17,9 +17,11 @@ export const useCreatePost = () => {
 
    return useMutation({
       mutationFn: (formData) => fetcher({ endpoint: "/posts", method: "POST", data: formData }),
-      onSuccess: () => {
+      onSuccess: (response) => {
+         successToast(response?.message);
          queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
       },
+      onError: (error) => errorToast(error.response.data.message || 'Failed to share your thoughts')
    });
 };
 export const useUpdatePost = () => {
@@ -102,6 +104,21 @@ export const useDeleteComment = () => {
       },
       onError: (error) => {
          errorToast(error?.response?.data?.message || "Error deleting comment");
+      }
+   })
+}
+
+export const useDeletePost = () => {
+   const queryClient = useQueryClient()
+   return useMutation({
+      mutationFn: (postId) => fetcher({ endpoint: `/posts/${postId}`, method: 'DELETE' }),
+      onSuccess: (response, postId) => {
+         successToast(response.message)
+         queryClient.invalidateQueries(['posts', postId])
+      },
+      onError: (error) => {
+         console.log(error)
+         errorToast(error.response.data.message || 'Some error while deleting post.')
       }
    })
 }

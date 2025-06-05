@@ -71,8 +71,13 @@ export const getProfile = catchAsyncError(async (req, res, next) => {
       .populate({
          path: 'posts',
          select: '-__v -updatedAt',
-         options: { sort: { createdAt: -1 } }
-      });
+         options: { sort: { createdAt: -1 } },
+         populate: {
+            path: "author",
+            select: "name , profilePicture"
+         }
+      })
+
    if (!user) return next(new ErrorHandler(404, 'User not found'))
 
 

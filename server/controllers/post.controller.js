@@ -1,16 +1,16 @@
 import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
-import sharp from "sharp";
 import cloudinary from "../config/cloudinary.js";
+import { v4 as uuidv4 } from 'uuid';
 import { Post } from "../models/post.model.js";
 import { User } from "../models/userModel.js";
 import { Block } from "../models/block.model.js";
-import { uploadImage, deleteImage } from "../config/cloudinary.js";
 import { Comment } from "../models/comment.model.js";
 import { createPost } from "../services/post.services.js";
 import { handleSuccessResponse } from "../utils/responseHandler.js";
-
-
+import { processImageUpload } from "../services/processImageUpload.js";
+import { parseTags } from "../utils/utilities.js";
+import mongoose from "mongoose";
 
 
 const isBlocked = async (userId, targetId) => {
@@ -23,37 +23,23 @@ const isBlocked = async (userId, targetId) => {
    return !!blocked;
 };
 
+
 {/***********  
      * @add_new_post
   *  *********** / */}
 export const addNewPost = catchAsyncError(async (req, res, next) => {
    const authorId = req.user._id
-   const { caption, thoughts, location, tags } = req.body
+   const { caption, thoughts, location } = req.body
+   const tags = parseTags(req.body.tags)
    const image = req.file
+   if ((caption || location || tags) && !image && !thoughts) return next(new ErrorHandler(404, 'Upload a picture'))
+   if (!image && !thoughts) return next(new ErrorHandler(404, 'Share thoughts or upload a picture'))
 
-   let post;
-   if (image) {
-      const optimizedImageBuffer = await sharp(image.buffer)
-         .resize({ width: 800, height: 800, fit: "inside" })
-         .toFormat('jpeg', { quality: 80 })
-         .toBuffer()
-
-      const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`
-      const cloudResponse = await cloudinary.uploader.upload(fileUri)
-      if (!cloudResponse) return next(new ErrorHandler(500, "Failed to upload image to cloudinary"))
-      const media = {
-         public_id: cloudResponse.public_id,
-         url: cloudResponse.secure_url,
-      }
-      post = await createPost({ authorId, caption, thoughts, location, tags, media })
-   } else {
-      const media = {
-         public_id: 'Not provided',
-         url: 'Not provided',
-      }
-      post = await createPost({ authorId, caption, thoughts, location, tags, media })
-   }
-   if (!post) return next(new ErrorHandler(500, "Failed to create post"))
+   const publicId = `post_${uuidv4()}`;
+   const media = await processImageUpload(image, publicId, 'posts', next);
+   console.log(media)
+   const post = await createPost({ authorId, caption, thoughts, location, tags, media });
+   if (!post) return next(new ErrorHandler(500, "Failed to upload post"))
 
    const author = await User.findById(authorId)
    author.posts.push(post._id)
@@ -63,63 +49,13 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 201, "Post created successfully", { post })
 
 })
-// export const addNewPost = catchAsyncError(async (req, res, next) => {
-//    const authorId = req.user._id
-//    const { caption, thoughts, location } = req.body
-//    let { tags } = req.body
-//    if (typeof tags === "string") {
-//       try {
-//          tags = JSON.parse(tags);
-//       } catch (err) {
-//          tags = [tags];
-//       }
-//    }
-
-//    const image = req.file
-//    if (!image) return next(new ErrorHandler(400, "Please provide an image"))
-//    let post;
-//    if (image) {
-//       const optimizedImageBuffer = await sharp(image.buffer)
-//          .resize({ width: 800, height: 800, fit: "inside" })
-//          .toFormat('jpeg', { quality: 80 })
-//          .toBuffer()
-
-//       const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`
-//       const cloudResponse = await cloudinary.uploader.upload(fileUri)
-//       if (!cloudResponse) return next(new ErrorHandler(500, "Failed to upload image to cloudinary"))
-//       const media = {
-//          public_id: cloudResponse.public_id,
-//          url: cloudResponse.secure_url,
-//       }
-//       post = await createPost({ authorId, caption, thoughts, location, tags, media })
-//    } else {
-//       const media = {
-//          public_id: 'Not provided',
-//          url: 'Not provided',
-//       }
-//       post = await createPost({ authorId, caption, thoughts, location, tags, media })
-//    }
-//    if (!post) return next(new ErrorHandler(500, "Failed to create post"))
-
-//    const author = await User.findById(authorId)
-//    author.posts.push(post._id)
-//    await author.save()
-
-//    await post.populate({ path: "author", select: "name profilePicture" })
-//    handleSuccessResponse(res, 201, "Post created successfully", { post })
-
-// })
 
 
 {/***********  
-     * @Get_All_Posts
-  *  *********** / */}
-
-
+ * @Get_All_Posts
+  * *********** / */}
 export const getAllPosts = catchAsyncError(async (req, res, next) => {
-
    const userId = req.user._id;
-
    const blockedUsers = await Block.find({
       $or: [{ blockerId: userId }, { blockedId: userId }]
    }).distinct("blockedId");
@@ -137,16 +73,14 @@ export const getAllPosts = catchAsyncError(async (req, res, next) => {
             select: "name , profilePicture"
          }
       })
-
    if (!posts) return next(new ErrorHandler(404, "No posts found"))
    handleSuccessResponse(res, 200, "Posts fetched successfully", { posts })
-
 })
 
 
-{/** 
+{/********
    @Get_Own_Posts
- */}
+ ********/}
 export const getMyPosts = catchAsyncError(async (req, res, next) => {
    const authorId = req.user._id
    const posts = await Post
@@ -170,15 +104,12 @@ export const getMyPosts = catchAsyncError(async (req, res, next) => {
       })
    if (!posts) return next(new ErrorHandler(404, "No posts found"))
    handleSuccessResponse(res, 200, "Posts fetched successfully", { posts })
-
 })
 
 
-
 {/***********  
-     * @Like_and_dislike_Post
-  *  ********** */}
-
+   * @Like_and_dislike_Post
+  * ********** */}
 export const likePost = catchAsyncError(async (req, res, next) => {
    const { postId } = req.params
    const likedBy = req.user._id
@@ -190,7 +121,6 @@ export const likePost = catchAsyncError(async (req, res, next) => {
    if (await isBlocked(likedBy, post.author)) {
       return next(new ErrorHandler(403, "You cannot like this post"));
    }
-
    const isLiked = post.likes.includes(likedBy)
    if (isLiked) {
       post.likes.pull(likedBy)
@@ -204,12 +134,9 @@ export const likePost = catchAsyncError(async (req, res, next) => {
 
 })
 
-
-
 {/***********  
-     * @Delete_Post
-  *  *********** / */}
-
+  * @Delete_Post
+  * *********** / */}
 export const deletePost = catchAsyncError(async (req, res, next) => {
    const { postId } = req.params
    const authorID = req.user._id
@@ -220,23 +147,19 @@ export const deletePost = catchAsyncError(async (req, res, next) => {
    if (post.media && post.public_id) {
       await cloudinary.uploader.destroy(post.public_id);
    }
-
    //remove the post from the user's posts array.
    const user = await User.findById(authorID)
    user.posts.pull(post._id)
    await user.save()
-
    //delete all comments related to the post.
    await Comment.deleteMany({ post: postId })
    handleSuccessResponse(res, 200, "Post deleted successfully")
 })
 
 
-
 {/***********  
-     * @Add_Comment_On_Post
-  *  *********** / */}
-
+* @Comment
+*  ********* / */}
 export const commentPost = catchAsyncError(async (req, res, next) => {
    const { postId } = req.params
    const commentedBy = req.user._id
@@ -268,10 +191,6 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 200, "Comment added successfully", { comment: newComment })
 })
 
-{/***********  
-     * @get_post_comments
-  *  *********** / */}
-
 export const getPostComments = catchAsyncError(async (req, res, next) => {
    const { postId } = req.params
    const post = await Post.findById(postId)
@@ -293,11 +212,6 @@ export const getPostComments = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 200, "Comments fetched successfully", { comments: commentTreeData })
 
 })
-
-
-{/***********  
-     * @delete_comment
-  *  *********** / */}
 
 export const deleteComment = catchAsyncError(async (req, res, next) => {
 

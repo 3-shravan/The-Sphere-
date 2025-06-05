@@ -1,7 +1,8 @@
 import { Post } from "../models/post.model.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
 
-export const createPost = ({ authorId, caption,thoughts ,location, tags, media }) => {
+export const createPost = ({ authorId, caption, thoughts, location, tags, media }) => {
+   const { url = null, public_id = null } = media || {};
    try {
       const post = Post.create({
          author: authorId,
@@ -9,8 +10,8 @@ export const createPost = ({ authorId, caption,thoughts ,location, tags, media }
          thoughts,
          location,
          tags,
-         media: media.url,
-         public_id: media.public_id,
+         media: url,
+         public_id: public_id,
       })
       return post;
    } catch (error) {

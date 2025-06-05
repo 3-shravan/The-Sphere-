@@ -3,34 +3,29 @@ import { config } from 'dotenv'
 import getDataUri from "./dataUriParser.js";
 config({ path: './config/config.env' })
 
-
 cloudinary.config({
    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
    api_key: process.env.CLOUDINARY_API_KEY,
    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-export const uploadImage = async (file, publicId) => {
-   if (!file) return null;
-
+export const uploadImage = async (image, publicId, folderName) => {
+   if (!image) return null;
    try {
-      const fileUri = getDataUri(file);
-      const cloudResponse = await cloudinary.uploader.upload(fileUri, {
+      const imageUri = getDataUri(image);
+      const cloudResponse = await cloudinary.uploader.upload(imageUri, {
          public_id: publicId,
          overwrite: true,
-         folder: "profile_pictures",
+         folder: folderName
       });
-
-      return { url: cloudResponse.secure_url, publicId: cloudResponse.public_id };
+      return { url: cloudResponse.secure_url, public_id: cloudResponse.public_id };
    } catch (error) {
-      console.log(error)
-      throw new Error("Image upload failed");
+      throw new Error("Failed to upload image ");
    }
 };
 
 export const deleteImage = async (publicId) => {
    if (!publicId) return null;
-
    try {
       await cloudinary.uploader.destroy(publicId);
       return 'Image deleted successfully';
@@ -38,6 +33,4 @@ export const deleteImage = async (publicId) => {
       throw new Error("Image deletion failed");
    }
 };
-
-
 export default cloudinary;
