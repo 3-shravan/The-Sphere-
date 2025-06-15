@@ -1,6 +1,6 @@
 import { useSmoothScroll } from "@/hooks";
 
-const SmoothScrollContainer = ({ children, className = "" }) => {
+const SmoothScroll = ({ children, className = "" }) => {
   useSmoothScroll(".create-native-scroll");
   return (
     <div
@@ -11,4 +11,4 @@ const SmoothScrollContainer = ({ children, className = "" }) => {
   );
 };
 
-export default SmoothScrollContainer;
+export default SmoothScroll;

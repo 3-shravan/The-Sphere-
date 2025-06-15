@@ -13,10 +13,10 @@ export const SearchResults = ({ users, loading, query, isOpen }) => (
           duration: 0.3,
           delay: 0.7,
         }}
-        className="absolute mt-4 md:w-1/2 w-full p-1 z-50 bg-card border max-h-[500px] overflow-hidden font-Futura"
+        className="absolute mt-4 md:w-1/2 w-full p-1 z-50  max-h-[500px] overflow-hidden font-Futura"
       >
         {loading ? (
-          <p className="text-rose-400 px-5 font-Poppins text-xs py-2">
+          <p className="text-rose-400 px-5 font-Poppins m-1 text-xs py-2">
             Searching...
           </p>
         ) : (

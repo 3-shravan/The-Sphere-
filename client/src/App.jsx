@@ -17,7 +17,7 @@ import {
 const App = () => {
   return (
     <>
-      <ReactLenis root>
+      {/* <ReactLenis root> */}
         <Toast />
         <Routes>
           {/* Public Routes */}
@@ -49,7 +49,7 @@ const App = () => {
           {/* Catch All */}
           <Route path="*" element={<NonExistRoutes />} />
         </Routes>
-      </ReactLenis>
+      {/* </ReactLenis> */}
     </>
   );
 };

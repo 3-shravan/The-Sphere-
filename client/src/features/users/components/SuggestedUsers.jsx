@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useSuggestedUsers } from "../services";
 import { CircleSmall, UserRound } from "lucide-react";
 import { ProfilePicture, Error, Loading, SmoothScroll } from "@/components";
+import { Link } from "react-router-dom";
 
 const SuggestedUsers = () => {
   const { data, isLoading, error } = useSuggestedUsers();
@@ -28,9 +29,10 @@ export default SuggestedUsers;
 const ListUser = ({ users }) => (
   <div className="flex flex-col gap-2 pb-1 ">
     {users.map((user) => (
-      <div
+      <Link
+        to={`/profile/${user.name}`}
         key={user._id}
-        className="flex-between rounded-xl px-3 py-2 transition hover:bg-muted"
+        className="flex-between rounded-xl px-3 py-2 cursor-pointer transition hover:bg-muted"
       >
         <div className="flex items-center gap-2">
           <ProfilePicture profilePicture={user.profilePicture} />
@@ -39,7 +41,7 @@ const ListUser = ({ users }) => (
           </span>
         </div>
         <FollowButton />
-      </div>
+      </Link>
     ))}
   </div>
 );

@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from "@tanstack/react-query";
 import { fetcher } from "@services/fetcher";
 import { useDispatch } from "react-redux";
 import { updatePostLikes, updateSavedPosts } from "./postSlice";
@@ -7,11 +7,14 @@ import { errorToast, successToast } from "@/utils";
 
 const POSTS_QUERY_KEY = ["posts"];
 
-export const usePosts = () =>
-   useQuery({
-      queryKey: POSTS_QUERY_KEY,
-      queryFn: () => fetcher({ endpoint: "/posts" }),
-   });
+export const usePosts = (limit = 2) => {
+   return useInfiniteQuery({
+      queryKey: [POSTS_QUERY_KEY],
+      queryFn: async ({ pageParam = 1 }) =>
+         await fetcher({ endpoint: `/posts?page=${pageParam}&limit=${limit}` }),
+      getNextPageParam: (lastPage) => lastPage.hasMore ? lastPage.currentPage + 1 : undefined,
+   })
+}
 export const useCreatePost = () => {
    const queryClient = useQueryClient();
 

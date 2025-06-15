@@ -10,7 +10,6 @@ import { createPost } from "../services/post.services.js";
 import { handleSuccessResponse } from "../utils/responseHandler.js";
 import { processImageUpload } from "../services/processImageUpload.js";
 import { parseTags } from "../utils/utilities.js";
-import mongoose from "mongoose";
 
 
 const isBlocked = async (userId, targetId) => {
@@ -25,8 +24,8 @@ const isBlocked = async (userId, targetId) => {
 
 
 {/***********  
-     * @add_new_post
-  *  *********** / */}
+ * @add_new_post
+   ********* / */}
 export const addNewPost = catchAsyncError(async (req, res, next) => {
    const authorId = req.user._id
    const { caption, thoughts, location } = req.body
@@ -50,12 +49,14 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
 
 })
 
-
 {/***********  
  * @Get_All_Posts
   * *********** / */}
 export const getAllPosts = catchAsyncError(async (req, res, next) => {
    const userId = req.user._id;
+   const page = parseInt(req.query.page);
+   const limit = parseInt(req.query.limit);
+
    const blockedUsers = await Block.find({
       $or: [{ blockerId: userId }, { blockedId: userId }]
    }).distinct("blockedId");
@@ -63,6 +64,8 @@ export const getAllPosts = catchAsyncError(async (req, res, next) => {
    const posts = await Post
       .find({ author: { $nin: blockedUsers } })
       .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
       .populate({ path: "author", select: "name , profilePicture" })
       .populate({ path: "likes", select: "name , profilePicture" })
       .populate({
@@ -73,10 +76,19 @@ export const getAllPosts = catchAsyncError(async (req, res, next) => {
             select: "name , profilePicture"
          }
       })
-   if (!posts) return next(new ErrorHandler(404, "No posts found"))
-   handleSuccessResponse(res, 200, "Posts fetched successfully", { posts })
-})
 
+   if (!posts) return next(new ErrorHandler(404, "No posts found"))
+   const totalPosts = await Post.countDocuments()
+   const totalPages = Math.ceil(totalPosts / limit);
+   const hasMore = (page * limit) < totalPosts;
+   const data = {
+      currentPage: page,
+      totalPages,
+      hasMore,
+      posts,
+   }
+   handleSuccessResponse(res, 200, "Posts fetched successfully", data)
+})
 
 {/********
    @Get_Own_Posts
@@ -105,8 +117,6 @@ export const getMyPosts = catchAsyncError(async (req, res, next) => {
    if (!posts) return next(new ErrorHandler(404, "No posts found"))
    handleSuccessResponse(res, 200, "Posts fetched successfully", { posts })
 })
-
-
 {/***********  
    * @Like_and_dislike_Post
   * ********** */}
@@ -133,7 +143,6 @@ export const likePost = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 200, "Post liked successfully")
 
 })
-
 {/***********  
   * @Delete_Post
   * *********** / */}
@@ -190,7 +199,6 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
    }
    handleSuccessResponse(res, 200, "Comment added successfully", { comment: newComment })
 })
-
 export const getPostComments = catchAsyncError(async (req, res, next) => {
    const { postId } = req.params
    const post = await Post.findById(postId)
@@ -212,7 +220,6 @@ export const getPostComments = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 200, "Comments fetched successfully", { comments: commentTreeData })
 
 })
-
 export const deleteComment = catchAsyncError(async (req, res, next) => {
 
    const { commentId, postId } = req.params

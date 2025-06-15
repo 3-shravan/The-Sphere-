@@ -108,18 +108,10 @@ export const register = catchAsyncError(
 );
 
 
-
-
-
-
-
-
 {/***********  
      * @Verify_OTP
   *  *********** / */}
-
 export const verifyOTP = catchAsyncError(async (req, res, next) => {
-
    const { email, phone, otp } = req.body
    if (!otp) return next(new ErrorHandler(400, 'OTP is required.'))
    if (!phone && !email) return next(new ErrorHandler(400, 'Either phone number or email is required for verification'))
@@ -168,21 +160,16 @@ export const verifyOTP = catchAsyncError(async (req, res, next) => {
 })
 
 
-
-
 {/***********  
      * @Login
   *  *********** / */}
 export const login = catchAsyncError(async (req, res, next) => {
-
    const { email, phone, password } = req.body
    //user can only login with either phone number or email address
    if ((!email && !phone) || !password)
       return next(new ErrorHandler(400, "Credentials are required."))
    if (email && phone)
       return next(new ErrorHandler(400, "  Please provide either email or phone number."));
-
-
    let user;
    if (phone) {
       user = await User.findOne({ phone, accountVerified: true }).select("+password")
@@ -192,7 +179,6 @@ export const login = catchAsyncError(async (req, res, next) => {
       user = await User.findOne({ email, accountVerified: true }).select("+password")
       if (!user) return next(new ErrorHandler(404, "No user found with this email address or account is not verified."))
    }
-
    //Validate the password 
    const isMatch = await user.comparePassword(password);
    if (!isMatch) return next(new ErrorHandler(400, 'Incorrect password. Please try again.'))
@@ -201,14 +187,10 @@ export const login = catchAsyncError(async (req, res, next) => {
 })
 
 
-
-
-
 {/***********  
      * @Logout
   *  *********** / */}
 export const logout = catchAsyncError(async (req, res, next) => {
-
    const token = req.headers.authorization?.split(" ")[1] || req.cookies.token
    try {
       await ExpiredToken.create({ token })
@@ -221,11 +203,6 @@ export const logout = catchAsyncError(async (req, res, next) => {
 })
 
 
-
-
-
-
-
 {/***********  
      * @Get_User
   *  *********** / */}
@@ -234,15 +211,10 @@ export const getUser = catchAsyncError(async (req, res, next) => {
 })
 
 
-
-
-
-
 {/***********  
      * @Forget_Password
   *  *********** / */}
 export const forgetPassword = catchAsyncError(async (req, res, next) => {
-
    const { email, phone } = req.body
 
    if (!phone && !email) return next(new ErrorHandler(400, "Either provide registered email or phone number"));
@@ -298,10 +270,6 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
 })
 
 
-
-
-
-
 {/***********  
      * @Verify_Reset_Password_OTP_via_Phone
   *  *********** / */}
@@ -318,11 +286,6 @@ export const verifyResetPasswordOTP = catchAsyncError(async (req, res, next) => 
    await user.save({ validateBeforeSave: false })
    handleSuccessResponse(res, 200, 'OTP Verified.')
 })
-
-
-
-
-
 
 {/***********  
      * @Reset_Password

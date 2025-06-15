@@ -6,9 +6,6 @@ import { handleErrorResponse, handleSuccessResponse } from "../utils/responseHan
 import { uploadImage, deleteImage } from "../config/cloudinary.js";
 
 
-
-
-
 {/***********  
      * @Update_Profile
   *  *********** / */}
@@ -57,11 +54,9 @@ export const deleteProfilePicture = catchAsyncError(async (req, res, next) => {
 
 })
 
-
 {/***********  
      * @Get_User_Profile
   *  *********** / */}
-
 export const getProfile = catchAsyncError(async (req, res, next) => {
    const username = req.params.username
    const requesterId = req.user._id
@@ -100,7 +95,6 @@ export const getProfile = catchAsyncError(async (req, res, next) => {
 {/***********  
      * @Get_Suggested_Users
   *  *********** / */}
-
 export const getSuggestedUsers = catchAsyncError(async (req, res, next) => {
    const userId = req.user._id
 
@@ -138,7 +132,6 @@ export const deleteAccount = catchAsyncError(async (req, res, next) => {
 {/***********  
      * @Follow_Unfollow
   *  *********** / */}
-
 export const followUnfollow = catchAsyncError(async (req, res, next) => {
    const toFollow = req.params.id;
    const followedBy = req.user._id;
