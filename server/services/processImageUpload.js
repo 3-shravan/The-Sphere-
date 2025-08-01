@@ -1,6 +1,6 @@
 import ErrorHandler from "../middlewares/errorHandler.js";
 import { uploadImage } from "../config/cloudinary.js";
-import { optimizeImageBuffer } from "../utils/optimizeImageBuffer.js";
+import { optimizeImageBuffer } from "./optimizeImageBuffer.js";
 
 export const processImageUpload = async (image, publicId, folderName, next) => {
    if (!image) return { public_id: null, url: null };

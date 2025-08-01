@@ -32,7 +32,7 @@ const VerifyOTP = ({
     };
 
     const response = await request({
-      endpoint: "auth/verifyOtp",
+      endpoint: "auth/verify-otp",
       method: "POST",
       body: requestData,
       redirectUrl: "/feeds",

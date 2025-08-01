@@ -18,37 +18,37 @@ const App = () => {
   return (
     <>
       {/* <ReactLenis root> */}
-        <Toast />
-        <Routes>
-          {/* Public Routes */}
-          <Route element={<PublicRoutes />}>
-            <Route path="/" element={<Sphere />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Register />} />
-            <Route path="/forgetPassword" element={<ForgetPassword />} />
-            <Route
-              path="/resetPassword/phone/:phoneNumber"
-              element={<ResetPasswordViaPhone />}
-            />
-            <Route
-              path="/resetPassword/email/:token"
-              element={<ResetPasswordViaEmail />}
-            />
-          </Route>
+      <Toast />
+      <Routes>
+        {/* Public Routes */}
+        <Route element={<PublicRoutes />}>
+          <Route path="/" element={<Sphere />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
+          <Route
+            path="/reset-password/phone/:phoneNumber"
+            element={<ResetPasswordViaPhone />}
+          />
+          <Route
+            path="/reset-password/email/:token"
+            element={<ResetPasswordViaEmail />}
+          />
+        </Route>
 
-          {/* Protected Routes */}
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/" element={<FeedLayout />}>
-              <Route path="feeds" element={<HomePage />} />
-              <Route path="saved" element={<SavedPosts />} />
-              <Route path="create-post" element={<CreatePost />} />
-              <Route path="explore" element={<Explore />} />
-              <Route path="profile/:username" element={<Profile />} />
-            </Route>
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/" element={<FeedLayout />}>
+            <Route path="feeds" element={<HomePage />} />
+            <Route path="saved" element={<SavedPosts />} />
+            <Route path="create-post" element={<CreatePost />} />
+            <Route path="explore" element={<Explore />} />
+            <Route path="profile/:username" element={<Profile />} />
           </Route>
-          {/* Catch All */}
-          <Route path="*" element={<NonExistRoutes />} />
-        </Routes>
+        </Route>
+        {/* Catch All */}
+        <Route path="*" element={<NonExistRoutes />} />
+      </Routes>
       {/* </ReactLenis> */}
     </>
   );

@@ -9,9 +9,9 @@ const Thoughts = () => {
     setThoughts("");
   };
   return (
-    <div className="w-full bg-card p-4 font-Poppins border ">
+    <div className="w-full bg-card p-4 font-Poppins rounded-2xl">
       <textarea
-        className="w-full rounded-xl p-4 text-xs focus-visible:ring-1 outline-hidden focus-visible:ring-muted shadow"
+        className="w-full rounded-xl p-4 text-xs bg-background focus-visible:ring-1 outline-hidden focus-visible:ring-rose-300 placeholder:text-muted-foreground placeholder:font-Futura shadow"
         placeholder="have any thoughts... ?"
         onChange={(e) => setThoughts(e.target.value)}
         value={thoughts}

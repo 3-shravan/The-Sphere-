@@ -1,8 +1,8 @@
 import styles from "./style.module.css";
 import authStyles from "@features/auth/shared/auth.module.css";
 import FormContainer from "./components/FormContainer";
-import {Header} from "@components";
-import { AuthButton,PrivacyTermsAndConditions } from "../shared";
+import { Header } from "@components";
+import { AuthButton, PrivacyTermsAndConditions } from "../shared";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
 import {
@@ -13,11 +13,12 @@ import {
   motion,
   RiRestartFill,
 } from "@lib";
+import { ResetPasswordFormData } from "@/utils";
 
 const ResetPasswordViaPhone = () => {
   const { disableMenu, enableMenu } = useMenu();
-  const [formData, setFormData] = useState(ResetPasswordFormDataPhone);
-  const params = useParams();
+  const [formData, setFormData] = useState(ResetPasswordFormData);
+  const { phoneNumber } = useParams();
   const { request, loading } = useApi();
 
   useEffect(() => {
@@ -27,18 +28,17 @@ const ResetPasswordViaPhone = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    let reqData = { ...formData, phone: params.phoneNumber };
 
     await request({
-      endpoint: "/auth/resetPassword/phone",
+      endpoint: `/auth/reset-password/phone/${phoneNumber}`,
       method: "PUT",
-      body: reqData,
+      body: formData,
       redirectUrl: "/login",
     });
   };
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

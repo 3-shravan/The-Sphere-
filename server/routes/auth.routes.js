@@ -1,27 +1,30 @@
-import express from 'express'
-import { authUser } from '../middlewares/authUser.js'
+import express from "express";
+import { authUser } from "../middlewares/authUser.js";
 import {
-   forgetPassword,
-   getUser,
-   login,
-   logout,
-   register,
-   resetPassword,
-   verifyOTP,
-   verifyResetPasswordOTP
-} from '../controllers/auth.controller.js'
+  forgetPassword,
+  getUser,
+  login,
+  logout,
+  register,
+  // resetPassword,
+  resetPasswordWithEmailToken,
+  resetPasswordWithPhone,
+  verifyOTP,
+  verifyResetPasswordOTP,
+} from "../controllers/auth.controller.js";
 
+const router = express.Router();
 
-const router = express.Router()
+router.post("/register", register);
+router.post("/verify-otp", verifyOTP);
+router.post("/login", login);
+router.get("/logout", authUser, logout);
+router.get("/profile", authUser, getUser);
 
-router.post('/register', register)
-router.post('/verifyotp', verifyOTP)
-router.post('/login', login)
-router.get('/logout', authUser, logout)
-router.get('/profile', authUser, getUser)
-router.post('/forgetPassword', forgetPassword)
-router.post('/forgetPassword/verifyOTP', verifyResetPasswordOTP)
-router.put('/resetPassword/email/:token', resetPassword)
-router.put('/resetPassword/phone', resetPassword)
+router.post("/forget-password", forgetPassword);
+router.post("/forget-password/verify-otp", verifyResetPasswordOTP);
 
-export default router
+router.put("/reset-password/email/:token", resetPasswordWithEmailToken);
+router.put("/reset-password/phone/:phone", resetPasswordWithPhone);
+
+export default router;

@@ -81,11 +81,11 @@ const ForgetPassword = () => {
     setIsResend(false);
 
     const response = await request({
-      endpoint: "auth/forgetPassword",
+      endpoint: "auth/forget-password",
       method: "POST",
       body: formData,
     });
-    if (response.status === 200) {
+    if (response?.status === 200) {
       setResendTimer(RESEND_TIME);
       !byEmail && setStage(1);
     } else setIsResend(true);
@@ -109,11 +109,11 @@ const ForgetPassword = () => {
     setIsResend(false);
 
     const response = await request({
-      endpoint: "auth/forgetPassword",
+      endpoint: "auth/forget-password",
       method: "POST",
       body: formData,
     });
-    if (response.status === 200) {
+    if (response?.status === 200) {
       setResendTimer(RESEND_TIME);
       !byEmail && setStage(1);
     } else setIsResend(true);

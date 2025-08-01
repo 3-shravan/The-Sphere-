@@ -1,14 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 
- const RevealLinks = () => {
+const RevealLinks = () => {
   return (
-    <section className="grid place-content-center gap-2 bg-black md:px-10 font-[Gilroy] py-14 text-green-200 overflow-hidden">
+    <section className="grid place-content-center gap-2 bg-black md:px-10 font-Poppins font-thin py-14 text-emerald-200 overflow-hidden">
       <FlipLink href="#">#Connect</FlipLink>
       <FlipLink href="#">Share</FlipLink>
       <FlipLink href="#">#Post</FlipLink>
       <FlipLink href="#">Message</FlipLink>
-      <div className="text-violet-300 font-extrabold">
+      <div className="text-rose-300 font-Gilroy">
         <FlipLink href="/login">&gt;Login</FlipLink>
       </div>
     </section>
@@ -24,7 +24,7 @@ const FlipLink = ({ children, href }) => {
       initial="initial"
       whileHover="hovered"
       href={href}
-      className="relative block overflow-hidden whitespace-nowrap text-3xl font-thin uppercase sm:text-3xl md:text-2xl lg:text-2xl"
+      className="relative block overflow-hidden whitespace-nowrap text-3xl  uppercase sm:text-3xl md:text-2xl lg:text-2xl"
       style={{
         lineHeight: 0.75,
       }}

@@ -1,27 +1,19 @@
-import { useEffect } from "react";
 import { useSavedPosts, useToggleSavePost } from "../services";
-import { useDispatch, useSelector } from "react-redux";
-import { setSavedPosts } from "../postSlice";
 import { PostGrid } from "@components";
 import { H2, Loading, Container } from "@/components";
 
 const SavedPosts = () => {
-  const dispatch = useDispatch();
   const { data, isLoading } = useSavedPosts();
-  const { mutate: toggleSavePost } = useToggleSavePost();
+  const savedPosts = data?.savedPosts || [];
 
-  useEffect(() => {
-    dispatch(setSavedPosts(data?.savedPosts));
-  }, [data]);
-  const { savedPosts } = useSelector((state) => state.posts);
+  const { mutate: toggleSavePost } = useToggleSavePost();
   const saved = (id) => savedPosts.some((post) => id === post._id);
 
   if (isLoading) return Loading();
-
   return (
     <Container>
       <H2 text={"Saved Posts"} />
-      <div className="md:mt-7 lg:mt-5">
+      <div className="md:mt-7 w-full lg:mt-5">
         <PostGrid
           posts={savedPosts}
           emptyText="No Saved Posts"

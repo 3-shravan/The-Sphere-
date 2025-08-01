@@ -87,9 +87,9 @@ const Menu = () => {
       </div>
 
       <div className="flex flex-col gap-1 items-center mt-10">
-        <AnimatedText text="Contact Us." />
+        {/* <AnimatedText text="Contact Us." />
         <AnimatedText text="About Us." />
-        <AnimatedText text="Privacy Policy." />
+        <AnimatedText text="Privacy Policy." /> */}
       </div>
 
       <span className="absolute bottom-1 text-xs text-yellow-100">

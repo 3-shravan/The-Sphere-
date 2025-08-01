@@ -7,7 +7,8 @@ const chatSchema = new mongoose.Schema({
    }],
    lastMessage: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Message"
+      ref: "Message",
+      default: null
    },
    lastSeen: [{
       user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

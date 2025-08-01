@@ -2,17 +2,19 @@ import { motion } from "@lib";
 
 export const Loading = () => {
   return (
-    <div className="text-center py-10 font-bold text-lg">Loading posts...</div>
+    <div className="text-center py-10 font-bold text-sm font-Futura">
+      fetching...
+    </div>
   );
 };
 
 export const Error = () => {
   <div className="text-center py-10 font-bold text-rose-500">
-    Failed to load posts.
+    Failed to fetch posts.
   </div>;
 };
 
-export const Spinner = ({ text, radius, fontSize, letterSpacing }) => {
+const Spinner = ({ text, radius, fontSize, letterSpacing }) => {
   const characters = text.split("");
   return (
     <motion.div

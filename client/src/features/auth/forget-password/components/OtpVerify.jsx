@@ -2,6 +2,7 @@ import styles from "@features/auth/shared/auth.module.css";
 import { InputOtp } from "@features/auth/shared";
 import { useApi } from "@hooks";
 import { motion, IoIosArrowBack } from "@lib";
+import { redirect } from "react-router-dom";
 
 const OtpVerify = ({
   formData,
@@ -14,11 +15,7 @@ const OtpVerify = ({
 }) => {
   const phone = `${formData.phone}`;
 
-  const { execute, loading } = useApi(
-    "/forgetPassword/verifyOTP",
-    "POST",
-    `/resetPassword/phone/${formData.phone}`
-  );
+  const { request, loading } = useApi();
 
   const handleResendOtp = () => {
     isResend ? resendHandler() : showError();
@@ -29,7 +26,13 @@ const OtpVerify = ({
       phone: formData.phone,
       otp,
     };
-    await execute(requestData);
+    const response = await request({
+      endpoint: "/auth/forget-password/verify-otp",
+      method: "POST",
+      body: requestData,
+      redirectUrl: `/reset-password/phone/${formData.phone}`,
+    });
+    // response logic ....
   };
 
   return (

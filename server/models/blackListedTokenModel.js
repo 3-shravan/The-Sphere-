@@ -10,4 +10,4 @@ const blackListTokenSchema = new mongoose.Schema({
    }
 })
 
-export const ExpiredToken = mongoose.model("ExpiredTokens", blackListTokenSchema)
+export const ExpiredToken = mongoose.model("ExpiredToken", blackListTokenSchema)

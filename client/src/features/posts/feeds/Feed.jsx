@@ -8,7 +8,9 @@ import { useRef } from "react";
 const Feed = () => {
   const { posts, status, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useFeed();
+
   const scrollRef = useRef(null);
+
   useFeedInfiniteScroll({
     scrollRef,
     hasNextPage,

@@ -1,5 +1,12 @@
 import crypto from 'crypto'
 
+export const isAtLeast13YearsOld = (dateOfBirth) => {
+   const thirteenYearsAgo = new Date();
+   thirteenYearsAgo.setFullYear(thirteenYearsAgo.getFullYear() - 13);
+   return dateOfBirth <= thirteenYearsAgo;
+ };
+ 
+
 //function to validate correct format for indian phone number
 export const validatePhoneNo = (phoneNumber) => {
    const phoneRegex = /^(\+91|91)?[-\s]?[6-9]\d{9}$/;

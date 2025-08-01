@@ -8,9 +8,7 @@ import { MessageSquare } from "lucide-react";
 
 const Comments = ({ postId }) => {
   const { data: commentsData, isLoading, error } = useGetPostComments(postId);
-  // console.log(commentsData);
   const [comment, setComment] = useState("how are you doing?");
-
   const { mutateAsync: createComment } = useCreateComment(postId);
   const { mutateAsync: deleteComment } = useDeleteComment();
 

@@ -7,11 +7,11 @@ import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
-  const { auth, logout } = useAuth();
+  const { auth, logout } = useAuth?.();
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-999 md:hidden bg-card w-full">
+    <header className="sticky top-0 z-50 md:hidden bg-card w-full">
       <div className="flex-between py-1 pl-5 pr-4 items-center">
         {/*  Logo */}
         <div className="flex items-center gap-x-3">

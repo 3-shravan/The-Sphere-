@@ -21,7 +21,7 @@
 .container::before {
   content: "Reset Password";
   position: absolute;
-  top: 24.5%;
+  top: 19.5%;
   left: 50%;
   width: 100%;
   transform: translate(-50%, -50%);

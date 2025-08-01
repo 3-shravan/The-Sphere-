@@ -22,13 +22,6 @@ export const ResetPasswordFormData = {
   confirmPassword: "",
 };
 
-export const ResetPassowrdViaEmail = {
-  newPassword: "",
-  confirmPassword: "",
-  phone: "",
-};
-
-
 export const MarqueeItems = [
   "👥 Connect with Like-Minded People!",
   "🔥 Trending Now: #SocialBuzz",
@@ -44,24 +37,23 @@ export const MarqueeItems = [
 
 export const tabs = [
   {
-    img: "/assets/icons/home.svg",
     route: "/feeds",
     label: "Home",
   },
   {
-    img: "/assets/icons/wallpaper.svg",
     route: "/explore",
     label: "Explore",
   },
   {
-    img: "/assets/icons/bookmark.svg",
     route: "/saved",
     label: "Saved",
   },
   {
-    img: "/assets/icons/gallery-add.svg",
     route: "/create-post",
     label: "New Post",
   },
+  // {
+  //   route: "/profile",
+  //   label: "Profile",
+  // },
 ];
-

@@ -1,24 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { usePosts, useSavedPosts } from "../services";
-import { setPosts, setSavedPosts } from "../postSlice";
+import { setSavedPosts } from "../postSlice";
 import { useEffect } from "react";
 
 const useFeed = () => {
-   const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } = usePosts();
-   const { data: savedPosts } = useSavedPosts();
+  const dispatch = useDispatch();
+  const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    usePosts();
+  const posts = data?.pages.flatMap((page) => page.posts);
+  const { data: savedPosts } = useSavedPosts();
+  useEffect(() => {
+    if (savedPosts?.savedPosts) dispatch(setSavedPosts(savedPosts.savedPosts));
+  }, [savedPosts]);
 
-   const dispatch = useDispatch();
-   useEffect(() => {
-      if (data?.pages) {
-         const allPosts = data.pages.flatMap((page) => page.posts);
-         dispatch(setPosts(allPosts));
-      }
-      if (savedPosts?.savedPosts) dispatch(setSavedPosts(savedPosts.savedPosts));
-   }, [data, savedPosts, dispatch]);
+  return { posts, status, hasNextPage, fetchNextPage, isFetchingNextPage };
+};
 
-   // Extract posts from the Redux state
-   const { posts } = useSelector((state) => state.posts || []);
-   return { posts, status, hasNextPage, fetchNextPage, isFetchingNextPage };
-}
-
-export default useFeed
+export default useFeed;

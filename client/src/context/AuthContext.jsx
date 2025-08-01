@@ -9,13 +9,14 @@ import {
 import { Loader } from "@/components";
 import { useApi } from "@/hooks";
 import { useNavigate } from "react-router-dom";
+import { current } from "@reduxjs/toolkit";
 
 const AuthContext = createContext();
 
 export const ContextProvider = ({ children }) => {
   const [auth, setAuth] = useState(() => ({
-    isAuthenticated: getIsAuthenticated(),
-    token: getToken(),
+    isAuthenticated: getIsAuthenticated() ?? false,
+    token: getToken() || null,
     profile: null,
   }));
 
@@ -23,6 +24,7 @@ export const ContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const { request } = useApi();
   const token = getToken();
+  const currentUserId = auth?.profile?._id;
 
   const resetAuth = () => {
     setAuth({
@@ -31,7 +33,7 @@ export const ContextProvider = ({ children }) => {
       profile: null,
     });
     removeTokenAndAuthenticated();
-    navigate("/login");
+    // navigate("/login");
   };
 
   useEffect(() => {
@@ -70,10 +72,16 @@ export const ContextProvider = ({ children }) => {
 
   if (loading) return <Loader />;
   return (
-    <AuthContext.Provider value={{ auth, setAuth, logout }}>
+    <AuthContext.Provider value={{ auth, setAuth, currentUserId, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within a ContextProvider");
+  }
+  return context;
+};

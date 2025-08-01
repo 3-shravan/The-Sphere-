@@ -6,7 +6,6 @@ export const handleSuccessResponse = (res, statusCode, responseMessage, data = u
    if (data !== undefined) {
       response = { ...response, ...data };
    }
-
    return res.status(statusCode).json(response);
 }
 export const handleErrorResponse = (res, statusCode, responseMessage) => {

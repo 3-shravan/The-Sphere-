@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import authStyles from "@features/auth/shared/auth.module.css";
 import FormContainer from "./components/FormContainer";
 import { Header } from "@components";
-import { AuthButton,PrivacyTermsAndConditions } from "../shared";
+import { AuthButton, PrivacyTermsAndConditions } from "../shared";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
 import { Link, useParams, motion, RiRestartFill } from "@lib";
@@ -25,16 +25,15 @@ const ResetPassowrdViaEmail = () => {
     e.preventDefault();
 
     await request({
-      endpoint: `auth/resetPassword/email/${token}`,
+      endpoint: `auth/reset-password/email/${token}`,
       method: "PUT",
       body: formData,
       redirectUrl: "/login",
     });
   };
-
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

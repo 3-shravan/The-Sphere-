@@ -11,17 +11,17 @@ import { Provider } from "react-redux";
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <ThemeProvider>
-          <ContextProvider>
+    <ContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <ThemeProvider>
             <MenuProvider>
               <App />
             </MenuProvider>
-          </ContextProvider>
-        </ThemeProvider>
-        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-      </Provider>
-    </QueryClientProvider>
+          </ThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Provider>
+      </QueryClientProvider>
+    </ContextProvider>
   </BrowserRouter>
 );

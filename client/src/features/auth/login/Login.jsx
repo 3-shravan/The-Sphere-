@@ -10,7 +10,7 @@ import loginstyles from "./style.module.css";
 import styles from "@features/auth/shared/auth.module.css";
 
 const Login = () => {
-  const { setAuth } = useAuth();
+  const { setAuth } = useAuth?.();
   const { menu } = useMenu();
 
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ const Login = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1, ease: "linear" }}
           >
-            <form  className={loginstyles.formContainer}>
+            <form className={loginstyles.formContainer}>
               <motion.h1
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -99,7 +99,9 @@ const Login = () => {
                 />
                 <button
                   className={styles.secondaryButton}
-                  onClick={() => navigate("/forgetPassword", { replace: true })}
+                  onClick={() =>
+                    navigate("/forget-password", { replace: true })
+                  }
                   type="button"
                 >
                   Forget Password ?

@@ -153,7 +153,7 @@ export const Button = () => {
   const navigate = useNavigate();
   return (
     <button
-      className="group flex h-15 items-center gap-2 rounded-full text-black font-bold bg-green-300 pl-3 pr-4 transition-all duration-300 ease-in-out hover:bg-black hover:pl-2 hover:text-white active:bg-neutral-700"
+      className="group flex h-15 items-center gap-2 rounded-full text-black font-bold bg-emerald-400 pl-3 pr-4 transition-all duration-300 ease-in-out hover:bg-black hover:pl-2 hover:text-white active:bg-neutral-700 cursor-pointer"
       onClick={() => {
         navigate("/signup");
       }}

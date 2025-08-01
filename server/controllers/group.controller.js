@@ -1,10 +1,8 @@
-import { deleteImage, uploadImage } from '../config/cloudinary.js';
 import catchAsyncError from '../middlewares/catchAsyncError.js';
 import ErrorHandler from '../middlewares/errorHandler.js';
+import { deleteImage, uploadImage } from '../config/cloudinary.js';
 import { Chat } from '../models/chat.model.js';
 import { handleSuccessResponse } from '../utils/responseHandler.js';
-
-
 
 
 export const createGroupChat = catchAsyncError(async (req, res, next) => {
@@ -46,11 +44,6 @@ export const createGroupChat = catchAsyncError(async (req, res, next) => {
 });
 
 
-
-
-
-
-
 export const renameGroup = catchAsyncError(async (req, res, next) => {
    const { groupId } = req.params
    const { groupName } = req.body
@@ -70,10 +63,6 @@ export const renameGroup = catchAsyncError(async (req, res, next) => {
 })
 
 
-
-
-
-
 export const changeDescription = catchAsyncError(async (req, res, next) => {
    const { groupId } = req.params
 
@@ -91,10 +80,6 @@ export const changeDescription = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 200, "Group description updated successfully", { groupDescription: group.groupDescription })
 
 })
-
-
-
-
 
 
 export const changeGroupPicture = catchAsyncError(async (req, res, next) => {
@@ -129,7 +114,6 @@ export const changeGroupPicture = catchAsyncError(async (req, res, next) => {
 })
 
 
-
 export const addToGroup = catchAsyncError(async (req, res, next) => {
    const { groupId } = req.params
    const { users } = req.body
@@ -145,11 +129,6 @@ export const addToGroup = catchAsyncError(async (req, res, next) => {
    handleSuccessResponse(res, 200, "Users added to group successfully")
 
 })
-
-
-
-
-
 
 
 export const removeFromGroup = catchAsyncError(async (req, res, next) => {
@@ -194,8 +173,6 @@ export const removeFromGroup = catchAsyncError(async (req, res, next) => {
 
    handleSuccessResponse(res, 200, "User removed from group successfully");
 });
-
-
 
 
 export const changeAdmin = catchAsyncError(async (req, res, next) => {

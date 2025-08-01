@@ -8,12 +8,12 @@
 }
 
 .space4vh {
-  background-color: black;
-  height: 5vh;
+  background-color: transparent;
+  height: 1vh;
   z-index: -100;
 }
 .space1vh {
-  background-color: black;
+  background-color: transparent;
   height: 1vh;
   z-index: -100;
 }
@@ -70,12 +70,10 @@
   justify-content: center;
   font-family: "Gilroy Regular";
   width: 100%;
-
   border-radius: 50px;
   padding: 0.8rem 3rem;
   border: 1px solid #414141;
   transition: all 0.3s ease-in-out;
-
   caret-color: var(--white);
 }
 

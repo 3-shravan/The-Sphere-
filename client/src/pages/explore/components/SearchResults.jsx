@@ -6,12 +6,12 @@ export const SearchResults = ({ users, loading, query, isOpen }) => (
     {isOpen && (
       <motion.div
         key="dropdown"
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 9 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 10 }}
+        exit={{ opacity: 0, y: 7 }}
         transition={{
-          duration: 0.3,
-          delay: 0.7,
+          duration: 0.6,
+          delay: 0.3,
         }}
         className="absolute mt-4 md:w-1/2 w-full p-1 z-50  max-h-[500px] overflow-hidden font-Futura"
       >

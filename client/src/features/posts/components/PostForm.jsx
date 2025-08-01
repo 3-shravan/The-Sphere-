@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCreatePost } from "../services";
 import { BadgePlus } from "lucide-react";
 import { usePostFormState } from "../hooks/useFormState";
-import { formatTags, validatePostForm } from "../utils";
+import { formatTags, validatePostForm } from "@utils";
 
 const PostForm = ({ post, action }) => {
   const navigate = useNavigate();

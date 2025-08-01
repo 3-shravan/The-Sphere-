@@ -1,5 +1,5 @@
-import { formatDistanceToNow } from "date-fns";
 import Backdrop from "./ui/Backdrop";
+import { formatDistanceToNow } from "date-fns";
 import { ThoughtsCard } from "..";
 
 const PostGrid = ({
@@ -13,9 +13,9 @@ const PostGrid = ({
   toggleSave = false,
 }) => {
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid md:grid-cols-2 w-full lg:grid-cols-3 gap-6">
       {posts.length === 0 ? (
-        <span className="font-semibold font-Poppins">{emptyText}</span>
+        <span className="font-semibold pl-2.5 font-Poppins">{emptyText}</span>
       ) : (
         posts.map((post) => (
           <div
@@ -24,24 +24,23 @@ const PostGrid = ({
           >
             {/* Image */}
             <div className="relative w-full h-64">
-              {post.media && (
+              {post?.media && (
                 <img
                   src={post.media}
                   alt="post"
                   className="w-full h-full object-cover"
                 />
               )}
-              <ThoughtsCard thought={post.thoughts} />
+              <ThoughtsCard thought={post?.thoughts} />
 
               {/* Author */}
               {showAuthor && (
                 <Backdrop
-                  image={post.author.profilePicture}
+                  image={post?.author?.profilePicture}
                   position="top-left"
                 >
                   {post?.author?.name}
                 </Backdrop>
-
               )}
 
               {/* Gradient Overlay Content */}

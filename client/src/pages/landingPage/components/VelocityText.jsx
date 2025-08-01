@@ -36,24 +36,24 @@ const VelocityText = () => {
       <div className="sticky top-0 flex h-[50vh] items-center  overflow-hidden">
         <motion.p
           style={{ skewX, x }}
-          className="origin-bottom-left flex items-center justify-center whitespace-nowrap text-8xl font-Futura text-rose-500 tracking-tighter leading-[0.85] md:text-9xl md:leading-[0.95]"
+          className="origin-bottom-left flex items-center justify-center whitespace-nowrap text-8xl font-Futura text-neutral-900 tracking-tighter leading-[0.85] md:text-9xl md:leading-[0.95]"
         >
-          <span className="text-violet-200 font-light font-mono pr-8">
-            &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;
+          <span className="text-neutral-800 font-light font-mono pr-8">
+            &gt;&gt;&gt;&gt;
           </span>{" "}
           where moments meet trends
           <Asterisk
             size={150}
-            color="blue"
+            color="grey"
             strokeWidth={25}
             absoluteStrokeWidth
           />
-          <span className="text-emerald-400 font-Futura lowercase">
+          <span className="text-rose-400 font-Futura lowercase">
             Join us today
           </span>
           <Asterisk
             size={150}
-            color="blue"
+            color="grey"
             strokeWidth={25}
             absoluteStrokeWidth
           />
