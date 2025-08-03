@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { usePosts, useSavedPosts } from "../services";
-import { setSavedPosts } from "../postSlice";
+import { setPosts, setSavedPosts } from "../postSlice";
 import { useEffect } from "react";
 
 const useFeed = () => {
@@ -9,7 +9,9 @@ const useFeed = () => {
     usePosts();
   const posts = data?.pages.flatMap((page) => page.posts);
   const { data: savedPosts } = useSavedPosts();
+  
   useEffect(() => {
+    if (posts) dispatch(setPosts(posts));
     if (savedPosts?.savedPosts) dispatch(setSavedPosts(savedPosts.savedPosts));
   }, [savedPosts]);
 

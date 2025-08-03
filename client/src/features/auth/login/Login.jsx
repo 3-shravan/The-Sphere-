@@ -1,31 +1,23 @@
 import React from "react";
 import { useNavigate, AnimatePresence, motion, IoLogIn } from "@lib";
 import { Menu, Header } from "@components";
-import { useApi } from "@hooks";
+import { useApi } from "@/hooks";
 import { useAuth, useMenu } from "@context";
 import { LoginInitialFormData, setTokenAndAuthenticated } from "@utils";
 import { ViaEmail, ViaPhone, RedirectToSignup } from "./components";
 import { AuthButton, PrivacyTermsAndConditions } from "../shared";
 import loginstyles from "./style.module.css";
 import styles from "@features/auth/shared/auth.module.css";
+import { useForm } from "@/hooks";
 
 const Login = () => {
   const { setAuth } = useAuth?.();
   const { menu } = useMenu();
-
   const navigate = useNavigate();
-
-  const [formData, setFormData] = React.useState(LoginInitialFormData);
+  const { formData, setFormData, handleChange, resetForm } =
+    useForm(LoginInitialFormData);
   const [loginByEmail, setLoginByEmail] = React.useState(true);
   const { request, loading } = useApi();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const handleMethod = () => {
     setFormData(LoginInitialFormData);
@@ -48,6 +40,7 @@ const Login = () => {
       profile: response.data.user,
     });
     setTokenAndAuthenticated(response.data.token, true);
+    resetForm();
   };
 
   return (

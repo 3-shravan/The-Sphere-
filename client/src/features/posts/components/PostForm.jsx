@@ -1,82 +1,55 @@
-import { successToast, errorToast } from "@/utils";
 import { useNavigate } from "react-router-dom";
 import { useCreatePost } from "../services";
 import { BadgePlus } from "lucide-react";
 import { usePostFormState } from "../hooks/useFormState";
-import { formatTags, validatePostForm } from "@utils";
+import { formatTags, infoToast, validatePostForm } from "@/utils";
+import { errorToast } from "@/utils";
 
-const PostForm = ({ post, action }) => {
+const PostForm = () => {
   const navigate = useNavigate();
-  const {
-    formState,
-    errors,
-    setErrors,
-    preview,
-    fileInputRef,
-    handleChange,
-    handleFileChange,
-    clearPreview,
-  } = usePostFormState(post);
+  const { preview, image, fileInputRef, handleImageChange, clearPreview } =
+    usePostFormState();
 
-  const createPostMutation = useCreatePost();
+  const { mutateAsync: createPost, isPending } = useCreatePost();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { isValid, newErrors } = validatePostForm(
-      formState,
-      action,
-      post?.imageUrl
-    );
-    if (!isValid) {
-      setErrors(newErrors);
-      return;
-    }
-    try {
-      const tagsArray = formatTags(formState.tags);
-      const formData = new FormData();
-      formData.append("caption", formState.caption);
-      formData.append("location", formState.location);
-      formData.append("tags", JSON.stringify(tagsArray));
-      if (formState.file) formData.append("image", formState.file);
+    const formData = new FormData(e.target);
+    if (image) formData.append("image", image);
 
-      if (action === "Create") {
-        for (let [key, value] of formData.entries()) {
-          console.log(`${key}:`, value);
-        }
-        await createPostMutation.mutateAsync(formData);
-        successToast("Post created successfully");
+    const tags = formData.get("tags");
+    const formattedTags = formatTags(tags);
+    formData.set("tags", JSON.stringify(formattedTags));
+
+    const error = validatePostForm(formData);
+    if (error) return errorToast(error);
+
+    const response = await createPost(formData);
+    if (response?.success) {
+      setTimeout(() => {
         navigate("/feeds");
-      }
-    } catch (error) {
-      console.log(error || error.message);
-      errorToast("Failed to create post");
+      }, 500);
     }
   };
-
-  const isLoading = createPostMutation.isPending;
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-8 w-full  font-bold font-Gilroy text-foreground text-sm max-w-5xl"
+      className="flex flex-col gap-8 w-full font-bold font-Gilroy text-foreground text-sm max-w-5xl"
     >
+      {/* Caption */}
       <div className="flex flex-col gap-2">
         <label>Caption</label>
         <textarea
           name="caption"
-          value={formState.caption}
-          onChange={handleChange}
-          className="h-18 bg-input p-4 rounded-xl outline-hidden border-hidden focus-visible:ring-2"
-          rows={2}
+          className="resize-none h-18 bg-input p-4 rounded-xl focus-visible:ring-2"
         />
-        {errors.caption && (
-          <p className="text-crimson text-xs mt-1">{errors.caption}</p>
-        )}
       </div>
 
+      {/* Image Upload */}
       <div className="flex flex-col gap-2">
         <label>Add Photos</label>
-        <div className="border-3 border-dashed border-border  rounded-lg overflow-hidden">
+        <div className="border-3 border-dashed border-border rounded-lg overflow-hidden">
           {preview ? (
             <div className="relative h-52">
               <img
@@ -86,10 +59,8 @@ const PostForm = ({ post, action }) => {
               />
               <button
                 type="button"
-                className="absolute right-2 top-2 bg-background font-bold  bg-opacity-60 text-foreground rounded px-3 py-1.5 text-xs"
-                onClick={() => {
-                  clearPreview();
-                }}
+                onClick={clearPreview}
+                className="absolute right-2 top-2 bg-background font-bold bg-opacity-60 text-foreground rounded px-3 py-1.5 text-xs"
               >
                 Remove
               </button>
@@ -97,10 +68,10 @@ const PostForm = ({ post, action }) => {
           ) : (
             <div
               className="flex items-center justify-center h-52 cursor-pointer bg-input"
-              onClick={() => fileInputRef.current.click()}
+              onClick={() => fileInputRef.current?.click()}
             >
-              <div className="flex flex-col items-center gap-2 uppercase font-thin font-Gilroy  ">
-                <BadgePlus className="text-rose-400 " />
+              <div className="flex flex-col items-center gap-2 uppercase font-thin font-Gilroy">
+                <BadgePlus className="text-rose-400" />
                 <p className="text-sm">Click to upload image</p>
               </div>
             </div>
@@ -108,63 +79,53 @@ const PostForm = ({ post, action }) => {
           <input
             type="file"
             ref={fileInputRef}
-            onChange={handleFileChange}
+            onChange={handleImageChange}
             accept="image/*"
             className="hidden"
           />
         </div>
-        {errors.file && (
-          <p className="text-crimson text-xs mt-1">{errors.file}</p>
-        )}
       </div>
 
+      {/* Location */}
       <div className="flex flex-col gap-2">
         <label>Add Location</label>
         <input
           type="text"
           name="location"
           placeholder="e.g. New York, USA"
-          value={formState.location}
-          onChange={handleChange}
-          className="h-12 bg-input px-2 rounded-lg border-none placeholder:font-gilroy placeholder:font-light placeholder:text-muted-foreground placeholder:text-xs outline-hidden"
+          className="h-12 bg-input px-2 rounded-lg placeholder:text-xs"
         />
-        {errors.location && (
-          <p className="text-crimson text-xs mt-1">{errors.location}</p>
-        )}
       </div>
 
+      {/* Tags */}
       <div className="flex flex-col gap-2">
-        <label>Add Tags (separated by comma ",")</label>
+        <label>Add Tags (comma-separated)</label>
         <input
           type="text"
           name="tags"
-          value={formState.tags}
-          onChange={handleChange}
           placeholder="Art, Expression, Learn"
-          className="h-12 bg-input px-2 rounded-lg border-none placeholder:font-gilroy placeholder:font-light placeholder:text-muted-foreground placeholder:text-xs outline-hidden"
+          className="h-12 bg-input px-2 rounded-lg placeholder:text-xs"
         />
-        {errors.tags && (
-          <p className="text-crimson text-xs mt-1">{errors.tags}</p>
-        )}
       </div>
 
-      <div className="flex gap-4 py-1 items-center justify-end ">
+      {/* Buttons */}
+      <div className="flex gap-4 py-1 items-center justify-end">
         <button
           type="button"
-          className="px-4 py-2.5 bg-muted text-muted-foreground font-bold rounded-lg  text-sm"
+          className="px-4 py-2.5 bg-muted text-muted-foreground font-bold rounded-lg text-sm"
           onClick={() => navigate(-1)}
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-4 py-2.5 cursor-pointer bg-rose-300 text-rose-800 font-semibold rounded-lg  text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
-          disabled={isLoading}
+          disabled={isPending}
+          className="px-4 py-2.5 bg-rose-300 text-rose-800 font-semibold rounded-lg text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
         >
-          {isLoading ? (
-            <span className="inline-block  w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+          {isPending ? (
+            <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
           ) : (
-            `${action} Post`
+            "Create Post"
           )}
         </button>
       </div>

@@ -9,7 +9,7 @@ import { Comment } from "../models/comment.model.js";
 import { createPost } from "../services/post.services.js";
 import { handleSuccessResponse } from "../utils/responseHandler.js";
 import { processImageUpload } from "../services/processImageUpload.js";
-import { parseTags } from "../utils/utilities.js";
+import { postChanges } from "../utils/validations.js";
 
 const isBlocked = async (userId, targetId) => {
   const blocked = await Block.findOne({
@@ -21,24 +21,29 @@ const isBlocked = async (userId, targetId) => {
   return !!blocked;
 };
 
-{
-  /***********
-   * @add_new_post
-   ********* / */
-}
+/*******************************************
+ * @add_new_post
+ ******************************************** / */
 export const addNewPost = catchAsyncError(async (req, res, next) => {
   const authorId = req.user._id;
-  const { caption, thoughts, location } = req.body;
-  const tags = parseTags(req.body.tags);
   const image = req.file;
+  const { caption, thoughts, location } = req.body;
+
+  let tags = [];
+  try {
+    tags = JSON.parse(req.body.tags || "[]");
+  } catch {
+    return next(new ErrorHandler(400, "Invalid tags format"));
+  }
+
   if ((caption || location || tags) && !image && !thoughts)
-    return next(new ErrorHandler(404, "Upload a picture"));
+    return next(new ErrorHandler(404, "Share thoughts or upload a picture"));
   if (!image && !thoughts)
     return next(new ErrorHandler(404, "Share thoughts or upload a picture"));
 
   const publicId = `post_${uuidv4()}`;
   const media = await processImageUpload(image, publicId, "posts", next);
-  console.log(media);
+
   const post = await createPost({
     authorId,
     caption,
@@ -57,11 +62,46 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
   handleSuccessResponse(res, 201, "Post created successfully", { post });
 });
 
-{
-  /***********
-   * @Get_All_Posts
-   * *********** / */
-}
+/*********************************************
+ * @Update_Post
+ * *******************************************/
+export const updatePost = catchAsyncError(async (req, res, next) => {
+  const authorId = req.user._id;
+  const { postId } = req.params;
+  const { caption, location } = req.body;
+
+  if (!postId || postId === "undefined") {
+    return next(new ErrorHandler(400, "Post ID is required"));
+  }
+
+  let tags = [];
+  try {
+    tags = JSON.parse(req.body.tags || "[]");
+  } catch {
+    return next(new ErrorHandler(400, "Invalid tags format"));
+  }
+
+  const post = await Post.findOne({ _id: postId, author: authorId });
+  if (!post) return next(new ErrorHandler(404, "Post not found"));
+
+  const { isUnchanged, isCaptionSame, isLocationSame, isTagsSame } =
+    postChanges(post, { caption, location, tags });
+  if (isUnchanged)
+    return handleSuccessResponse(res, 200, "You made no changes.", { post });
+
+  if (!isCaptionSame) post.caption = caption;
+  if (!isLocationSame) post.location = location;
+  if (!isTagsSame) post.tags = tags;
+
+  await post.save();
+  await post.populate({ path: "author", select: "name profilePicture" });
+
+  handleSuccessResponse(res, 200, "Post updated successfully", { post });
+});
+
+/***********************************************
+ * @Get_All_Posts
+ * ********************************************* / */
 export const getAllPosts = catchAsyncError(async (req, res, next) => {
   const userId = req.user._id;
   const page = parseInt(req.query.page);
@@ -141,11 +181,9 @@ export const getFollowingPosts = catchAsyncError(async (req, res, next) => {
   handleSuccessResponse(res, 200, "Posts fetched successfully", data);
 });
 
-{
-  /***********
-   * @Get_Post_By_Id
-   * *********** / */
-}
+/***********
+ * @Get_Post_By_Id
+ * *********** / */
 export const getPostById = catchAsyncError(async (req, res, next) => {
   const { postId } = req.params;
   const userId = req.user._id;
@@ -158,11 +196,9 @@ export const getPostById = catchAsyncError(async (req, res, next) => {
   handleSuccessResponse(res, 200, "Post fetched successfully", { post });
 });
 
-{
-  /********
+/**********************************
    @Get_Own_Posts
- ********/
-}
+ ************************************8*/
 export const getMyPosts = catchAsyncError(async (req, res, next) => {
   const authorId = req.user._id;
   const posts = await Post.find({ author: authorId })
@@ -187,11 +223,9 @@ export const getMyPosts = catchAsyncError(async (req, res, next) => {
   handleSuccessResponse(res, 200, "Posts fetched successfully", { posts });
 });
 
-{
-  /***********
-   * @Like_and_dislike_Post
-   * ********** */
-}
+/****************************************
+ * @Like_and_dislike_Post
+ * ***************************************/
 export const likePost = catchAsyncError(async (req, res, next) => {
   const { postId } = req.params;
   const likedBy = req.user._id;
@@ -215,12 +249,9 @@ export const likePost = catchAsyncError(async (req, res, next) => {
   handleSuccessResponse(res, 200, "Post liked successfully");
 });
 
-{
-  /***********
-   * @Delete_Post
-   * *********** / */
-}
-
+/*****************************************
+ * @Delete_Post
+ * **************************************** */
 export const deletePost = catchAsyncError(async (req, res, next) => {
   const { postId } = req.params;
   const authorID = req.user._id;
@@ -240,12 +271,9 @@ export const deletePost = catchAsyncError(async (req, res, next) => {
   handleSuccessResponse(res, 200, "Post deleted successfully");
 });
 
-{
-  /***********
-   * @Save_and_unsave_Post
-   *  *********** / */
-}
-
+/************************************
+ * @Save_and_unsave_Post
+ *  ******************************** / */
 export const savePosts = catchAsyncError(async (req, res, next) => {
   const { postId } = req.params;
   const savedBy = req.user._id;
@@ -264,11 +292,9 @@ export const savePosts = catchAsyncError(async (req, res, next) => {
   handleSuccessResponse(res, 200, "Post saved successfully");
 });
 
-{
-  /***********
-   * @Get_Saved_Posts
-   *  *********** / */
-}
+/*********************************************
+ * @Get_Saved_Posts
+ *  ******************************************* / */
 export const getSavedPosts = catchAsyncError(async (req, res, next) => {
   const savedBy = req.user._id;
   const user = await User.findById(savedBy);

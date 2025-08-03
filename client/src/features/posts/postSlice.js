@@ -13,13 +13,9 @@ const postSlice = createSlice({
     setSavedPosts: (state, action) => {
       state.savedPosts = action.payload;
     },
-    updateSavedPosts: (state, action) => {
-      const { postId } = action.payload;
-      const post = state.savedPosts.find((post) => post._id === postId);
-      if (!post) return;
-      if (savedPosts.includes(postId))
-        savedPosts.filter((post) => post._id !== postId);
-      else savedPosts.push(postId);
+    singlePost: (state, action) => {
+      const post = state.posts.find((post) => post._id === action.payload);
+      return post || null;
     },
   },
 });

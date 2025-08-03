@@ -7,6 +7,7 @@ const sizeMap = {
   md: "w-7 h-7",
   lg: "w-10 h-10",
   xl: "w-12 h-12",
+  32: "w-32 h-32",
 };
 const ProfilePicture = ({
   profilePicture,
@@ -28,7 +29,7 @@ const ProfilePicture = ({
       {profilePicture ? (
         <img
           src={profilePicture}
-          alt="profile picture"
+          alt="Profile"
           className={`${sizeClass} rounded-full object-cover border-1 border-border border-full`}
         />
       ) : (

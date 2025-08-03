@@ -1,43 +1,68 @@
 import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
 import { User } from "../models/user.model.js";
+import { uploadImage, deleteImage } from "../config/cloudinary.js";
+import { isAtLeast13YearsOld } from "../utils/utilities.js";
 import { Block } from "../models/block.model.js";
 import {
   handleErrorResponse,
   handleSuccessResponse,
 } from "../utils/responseHandler.js";
-import { uploadImage, deleteImage } from "../config/cloudinary.js";
-import { isAtLeast13YearsOld } from "../utils/utilities.js";
+import { profileChanges } from "../utils/validations.js";
 
 export const updateProfile = catchAsyncError(async (req, res, next) => {
   const userId = req.user._id;
-
   const { name, fullName, bio, gender, dob: birthday } = req.body;
+  if (!name) return next(new ErrorHandler(400, "username is required."));
   const profilePicture = req.file;
 
   const dob = birthday ? new Date(birthday) : null;
-  if (!isAtLeast13YearsOld(dob))
+
+  if (dob && !isAtLeast13YearsOld(dob)) {
     return next(new ErrorHandler(400, "You must be at least 13 years old."));
+  }
 
   const user = await User.findById(userId);
   if (!user) return next(new ErrorHandler(404, "User not found"));
 
-  if (profilePicture) {
-    const newPublicId = `user_${userId}_profile`;
-    if (user.profilePicturePublicId)
-      await deleteImage(user.profilePicturePublicId);
+  const {
+    isUnchanged,
+    isNameSame,
+    isFullNameSame,
+    isBioSame,
+    isGenderSame,
+    isDobSame,
+  } = profileChanges(
+    user,
+    { name, fullName, bio, gender, dob: birthday },
+    !!profilePicture
+  );
 
-    const { url, publicId } = await uploadImage(profilePicture, newPublicId);
+  if (isUnchanged) {
+    return handleSuccessResponse(res, 200, "No changes were made", { user });
+  }
+
+  if (profilePicture) {
+    const public_id = `user_${userId}_profile`;
+
+    if (user.profilePicturePublicId) {
+      await deleteImage(user.profilePicturePublicId);
+    }
+
+    const { url, publicId } = await uploadImage(profilePicture, public_id);
+    if (!url || !publicId) {
+      return next(new ErrorHandler(500, "Failed to upload profile picture"));
+    }
+
     user.profilePicture = url;
     user.profilePicturePublicId = publicId;
   }
 
-  if (bio && bio.trim() !== user.bio.trim()) user.bio = bio.trim();
-  if (gender && gender !== user.gender) user.gender = gender;
-  if (name && name.trim() !== user.name.trim()) user.name = name.trim();
-  if (fullName && fullName.trim() !== user.fullName.trim())
-    user.fullName = fullName;
-  if (dob instanceof Date && !isNaN(dob)) user.dob = dob;
+  if (!isNameSame) user.name = name.trim();
+  if (!isFullNameSame) user.fullName = fullName.trim();
+  if (!isBioSame) user.bio = bio.trim();
+  if (!isGenderSame) user.gender = gender;
+  if (dob instanceof Date && !isDobSame) user.dob = dob;
 
   await user.save();
   handleSuccessResponse(res, 200, "Profile updated successfully", { user });
@@ -46,15 +71,18 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
 export const deleteProfilePicture = catchAsyncError(async (req, res, next) => {
   const userId = req.user._id;
   const user = await User.findById(userId);
+
   if (!user) return next(new ErrorHandler(404, "User not found"));
 
-  if (user.profilePicturePublicId) {
-    await deleteImage(user.profilePicturePublicId);
-    user.profilePicture = undefined;
-    user.profilePicturePublicId = undefined;
-    await user.save();
-  }
-  handleSuccessResponse(res, 200, "Profile picture deleted.", { user });
+  if (!user.profilePicturePublicId)
+    return next(new ErrorHandler(400, "No profile picture to delete"));
+
+  await deleteImage(user.profilePicturePublicId);
+  user.profilePicture = undefined;
+  user.profilePicturePublicId = undefined;
+  await user.save();
+
+  handleSuccessResponse(res, 200, "Profile picture removed.", { user });
 });
 
 export const getProfile = catchAsyncError(async (req, res, next) => {

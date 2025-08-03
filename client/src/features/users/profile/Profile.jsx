@@ -1,5 +1,5 @@
 import { useGetProfile } from "../services";
-import { Backdrop, Container, NonExistRoutes, PostGrid } from "@/components";
+import { Container, NonExistRoutes, PostGrid } from "@/components";
 import { useParams } from "react-router-dom";
 import { ProfileCard } from "../profile/ProfileCard";
 import { useAuth } from "@/context";

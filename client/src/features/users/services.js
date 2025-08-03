@@ -3,12 +3,6 @@ import { errorToast, successToast } from "@/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-// export const useMyPosts = () =>
-//   useQuery({
-//     queryKey: ["myposts", "profile"],
-//     queryFn: () => fetcher({ endpoint: "/posts/me" }),
-//   });
-
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
   const naviagte = useNavigate();
@@ -16,8 +10,8 @@ export const useUpdateProfile = () => {
     mutationFn: (formData) =>
       fetcher({ endpoint: "/users/update", method: "PUT", data: formData }),
     onSuccess: (data) => {
+      successToast(data.message || "Profile updated Successfully");
       const updatedUsername = data?.user?.name;
-      successToast("Profile updated successfully.");
       if (updatedUsername) {
         naviagte(`/profile/${updatedUsername}`);
         queryClient.invalidateQueries({

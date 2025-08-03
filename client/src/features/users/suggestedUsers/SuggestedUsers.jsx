@@ -32,7 +32,7 @@ const SuggestedUsers = () => {
   if (error) return Error();
 
   return (
-    <SmoothScroll className="h-[215px]">
+    <SmoothScroll className="max-h-[215px]">
       <div className="hidden lg:flex flex-col gap-2  p-2">
         <h2 className="px-3 text-rose-400 dark:text-rose-300 tracking-tight font-Futura">
           <CircleSmall className="inline text-rose-400" />

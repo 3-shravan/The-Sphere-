@@ -11,10 +11,7 @@ const genders = ["Male", "Female", "Other"];
 const SelectGender = ({ gender, setGender }) => {
   return (
     <div>
-      <label
-        htmlFor="gender"
-        className="px-1 text-xs text-muted-foreground md:text-sm"
-      >
+      <label htmlFor="gender" className="px-1 text-xs text-muted-foreground ">
         Gender
       </label>
       <Select value={gender} onValueChange={setGender} name="gender">

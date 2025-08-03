@@ -20,8 +20,8 @@ const DateOfBirth = ({ dob, setDob }) => {
   }, [date, setDob]);
 
   return (
-    <div className="flex flex-col gap-1">
-      <Label htmlFor="dob" className="px-1 text-xs text-muted-foreground md:text-sm">
+    <div className="flex flex-col gap-1 mt-1.5">
+      <Label htmlFor="dob" className="px-1 text-xs text-muted-foreground">
         Birthday
       </Label>
 

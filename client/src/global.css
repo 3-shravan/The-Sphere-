@@ -184,8 +184,19 @@ body {
   .image-max {
     @apply md:max-w-[48vw] lg:max-w-[35vw];
   }
+  
   .btn-base {
     @apply flex items-center p-1 cursor-pointer transition hover:scale-90 duration-200  gap-1 pr-3 rounded-full;
+  }
+  .update-input-label {
+    @apply text-xs text-rose-400 font-Gilroy font-semibold px-1;
+  }
+
+  .caption {
+    @apply text-xs font-Futura text-rose-400 dark:text-rose-300 px-3 mt-6 cursor-pointer;
+  }
+  .tags {
+    @apply inline-block mr-1 font-Gilroy  text-muted-foreground px-2 py-1 bg-muted-foreground/10 rounded-full text-xs;
   }
 }
 

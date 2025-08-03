@@ -30,7 +30,11 @@ export const ProfileCard = ({ user }) => {
           <div>{following.length} following</div>
         </div>
 
-        {bio && <span className="italic mt-2 font-mono">“{bio}”</span>}
+        {bio && (
+          <span className="italic mt-2 text-foreground max-w-sm font-mono">
+            “{bio}”
+          </span>
+        )}
 
         {me ? (
           <React.Fragment key="edit">

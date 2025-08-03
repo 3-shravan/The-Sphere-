@@ -33,6 +33,7 @@ const usePostCardActions = (postId, likes) => {
   const isSaved = savedPosts.some((p) => postId === p._id);
 
   // Delete Post--->
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const { mutate: deletePost } = useDeletePost();
 
   return {
@@ -45,6 +46,8 @@ const usePostCardActions = (postId, likes) => {
     isSaved,
     likeIsPending,
     saveIsPending,
+    confirmDelete,
+    setConfirmDelete,
   };
 };
 

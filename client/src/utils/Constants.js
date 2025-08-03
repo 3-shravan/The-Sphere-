@@ -22,6 +22,15 @@ export const ResetPasswordFormData = {
   confirmPassword: "",
 };
 
+export const setAllFieldsNull = (formData) => {
+  for (let key in formData) {
+    if (formData.hasOwnProperty(key)) {
+      formData[key] = "";
+    }
+  }
+  return formData;
+};
+
 export const MarqueeItems = [
   "👥 Connect with Like-Minded People!",
   "🔥 Trending Now: #SocialBuzz",

@@ -7,8 +7,6 @@ export const setAllFieldsNull = (formData) => {
   return formData;
 };
 
-// Converts file to object URL
-export const convertFileToUrl = (file) => URL.createObjectURL(file);
 
 // Formats a date string to "MMM DD, YYYY at HH:MM AM/PM"
 export function formatDateString(dateString) {

@@ -1,16 +1,16 @@
-export * from './shared/States'
-export * from './shared/ui/H2'
-export * from './shared/ui/Container'
-export { default as Header } from './shared/Header'
-export { default as Menu } from './shared/Menu'
-export { default as NonExistRoutes } from './routing/NonExistRoutes'
-export { default as ProtectedRoutes } from './routing/ProtectedRoutes'
-export { default as PublicRoutes } from './routing/PublicRoutes'
-export { default as SetImageRatio } from '../features/posts/components/SetImageRatio'
-export { default as Marquee } from './shared/Marquee'
-export { default as Backdrop } from './shared/ui/Backdrop'
-export { default as PostGrid } from './shared/PostGrid'
-export { default as SmoothScroll } from './shared/ui/SmoothScroll'
-export { default as ThoughtsCard } from './shared/ThoughtsCard'
-export { default as ProfilePicture } from './shared/ui/ProfilePicture'
-
+export * from "./shared/States";
+export * from "./shared/ui/H2";
+export * from "./shared/ui/Container";
+export { default as Header } from "./shared/Header";
+export { default as Menu } from "./shared/Menu";
+export { default as Confirm } from "./shared/Confirm";
+export { default as NonExistRoutes } from "./routing/NonExistRoutes";
+export { default as ProtectedRoutes } from "./routing/ProtectedRoutes";
+export { default as PublicRoutes } from "./routing/PublicRoutes";
+export { default as SetImageRatio } from "../features/posts/components/SetImageRatio";
+export { default as Marquee } from "./shared/Marquee";
+export { default as Backdrop } from "./shared/ui/Backdrop";
+export { default as PostGrid } from "./shared/PostGrid";
+export { default as SmoothScroll } from "./shared/ui/SmoothScroll";
+export { default as ThoughtsCard } from "./shared/ThoughtsCard";
+export { default as ProfilePicture } from "./shared/ui/ProfilePicture";

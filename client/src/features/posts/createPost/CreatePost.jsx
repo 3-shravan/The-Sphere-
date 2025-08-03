@@ -5,9 +5,9 @@ const CreatePost = () => {
   return (
     <Container>
       <H2 text={"Create Post"} />
-     <div className=" md:mt-7 lg:mt-5 w-full">
-     <PostForm action="Create" />
-     </div>
+      <div className=" md:mt-7 lg:mt-5 w-full">
+        <PostForm />
+      </div>
     </Container>
   );
 };

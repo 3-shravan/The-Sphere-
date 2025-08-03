@@ -1,0 +1,65 @@
+export const postChanges = (post, newPost) => {
+  const { caption, location, tags } = newPost;
+  const isCaptionSame = caption === post.caption;
+  const isLocationSame = location === post.location;
+  const isTagsSame =
+    Array.isArray(post.tags) &&
+    Array.isArray(tags) &&
+    post.tags.length === tags.length &&
+    post.tags.every((tag, index) => tag === tags[index]);
+
+  const isUnchanged = isCaptionSame && isLocationSame && isTagsSame;
+  return {
+    isUnchanged,
+    isCaptionSame,
+    isLocationSame,
+    isTagsSame,
+  };
+};
+
+export const profileChanges = (
+  currentUser,
+  newData,
+  hasNewProfilePicture = false
+) => {
+  const { name, fullName, bio, gender, dob: birthday } = newData;
+
+  const newDob = birthday ? new Date(birthday) : null;
+
+  const isNameSame = currentUser.name === name.trim();
+  const isFullNameSame = currentUser.fullName === fullName.trim();
+  const isBioSame = currentUser.bio === bio.trim();
+  const isGenderSame = currentUser.gender === gender;
+
+  let isDobSame = true;
+  if (newDob instanceof Date && !isNaN(newDob)) {
+    const currentDob = currentUser.dob ? new Date(currentUser.dob) : null;
+    isDobSame = currentDob && currentDob.getTime() === newDob.getTime();
+  } else if (!newDob && !currentUser.dob) {
+    isDobSame = true;
+  } else if (!newDob && currentUser.dob) {
+    isDobSame = true;
+  } else {
+    isDobSame = false;
+  }
+
+  const isProfilePictureSame = !hasNewProfilePicture;
+
+  const isUnchanged =
+    isNameSame &&
+    isFullNameSame &&
+    isBioSame &&
+    isGenderSame &&
+    isDobSame &&
+    isProfilePictureSame;
+
+  return {
+    isUnchanged,
+    isNameSame,
+    isFullNameSame,
+    isBioSame,
+    isGenderSame,
+    isDobSame,
+    isProfilePictureSame,
+  };
+};

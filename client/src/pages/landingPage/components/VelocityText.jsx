@@ -57,9 +57,6 @@ const VelocityText = () => {
             strokeWidth={25}
             absoluteStrokeWidth
           />
-          <span className="lg:hidden">
-            &lt; &lt; &lt; &lt; &lt; &lt; &lt; &lt; &lt;
-          </span>
         </motion.p>
       </div>
     </section>

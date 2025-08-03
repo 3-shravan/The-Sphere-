@@ -1,11 +1,13 @@
-import { Upload, Trash2 } from "lucide-react";
+import { Upload, Trash2, UserCheck, X, Trash } from "lucide-react";
 import { useDeleteProfilePicture } from "../../services";
 import { Button } from "@/components/ui/button";
+import { ProfilePicture } from "@/components";
 
 const ProfileImageUploader = ({
   previewImage,
   profilePicture,
   handleImageChange,
+  setPreviewImage,
 }) => {
   const { mutate: deleteProfilePicture, isPending } = useDeleteProfilePicture();
 
@@ -14,16 +16,22 @@ const ProfileImageUploader = ({
   };
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-primary">
-        <img
-          src={previewImage || profilePicture}
-          alt="Profile"
-          className="w-full h-full object-cover"
+    <div className="relative flex flex-col items-center gap-2 md:mt-4 ">
+      <div className=" rounded-full overflow-hidden  border-primary">
+        {previewImage && (
+          <X
+            className="w-4 h-4 absolute mt-2 bg-neutral-700 rounded p-0.5 cursor-pointer"
+            color="gray"
+            onClick={() => setPreviewImage("")}
+          />
+        )}
+        <ProfilePicture
+          profilePicture={previewImage || profilePicture}
+          size="32"
         />
       </div>
 
-      <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-primary">
+      <label className="flex items-center gap-2  p-2 cursor-pointer text-xs font-medium  border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50">
         <Upload className="w-4 h-4" />
         Upload New
         <input
@@ -40,10 +48,15 @@ const ProfileImageUploader = ({
         size="sm"
         onClick={handleDelete}
         disabled={isPending}
-        className="text-xs text-rose-500 flex items-center gap-2 hover:bg-muted border border-rose-400 px-3 py-1.5 rounded"
+        className="text-xs text-rose-500 flex items-center gap-2 hover:bg-muted hover:text-rose-500 border cursor-pointer"
       >
-        <Trash2 className="w-3 h-3" />
-        {isPending ? "Removing..." : "Remove Profile Picture"}
+        <Trash className="w-3 h-3" />
+
+        {isPending
+          ? "Removing..."
+          : profilePicture
+          ? "Remove Profile Picture"
+          : "No Profile Picture"}
       </Button>
     </div>
   );

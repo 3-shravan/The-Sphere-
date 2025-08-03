@@ -5,7 +5,7 @@ import React from "react";
 
 const PublicRoutes = () => {
   const navigate = useNavigate();
-  const { auth } = useAuth();
+  const { auth } = useAuth?.();
 
   React.useEffect(() => {
     if (auth.isAuthenticated) {

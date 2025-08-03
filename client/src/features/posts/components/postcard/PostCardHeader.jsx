@@ -2,15 +2,16 @@ import { ProfilePicture } from "@/components";
 import { useAuth } from "@/context";
 import { multiFormatDateString } from "@/utils";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import PostOptions from "./PostOptions";
+import EditPost from "../../post/EditPost";
 
-const PostCardHeader = ({ post, deletePost }) => {
+const PostCardHeader = ({ post, setConfirmDelete }) => {
   if (!post) return null;
-  const { auth } = useAuth();
-  const { _id, author, createdAt, location } = post;
-  const handleDeletePost = () => {
-    if (deletePost && _id) deletePost(_id);
-  };
+  const { currentUserId } = useAuth();
+  const [editOpen, setEditOpen] = useState(false);
+  const { author, createdAt, location } = post;
+
   return (
     <div className="flex-between mx-auto pl-2">
       <div className="flex items-center gap-3">
@@ -31,9 +32,13 @@ const PostCardHeader = ({ post, deletePost }) => {
           </div>
         </div>
       </div>
-      {auth?.profile?._id === author._id && (
-        <PostOptions handleDeletePost={handleDeletePost} />
+      {currentUserId === author._id && (
+        <PostOptions
+          setConfirmDelete={setConfirmDelete}
+          setOpen={setEditOpen}
+        />
       )}
+      {editOpen && <EditPost open={open} setOpen={setEditOpen} post={post} />}
     </div>
   );
 };

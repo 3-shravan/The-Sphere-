@@ -17,7 +17,6 @@ const userSchema = new mongoose.Schema(
     fullName: {
       type: String,
       maxLength: [32, `your full name should be less than 32 characters.`],
-      minLength: [3, `your full name should be atlest 3 characters long.`],
     },
     email: {
       type: String,

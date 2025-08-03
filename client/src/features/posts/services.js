@@ -6,8 +6,8 @@ import {
 } from "@tanstack/react-query";
 import { fetcher } from "@services/fetcher";
 import { errorToast, successToast } from "@/utils";
+
 const POSTS_QUERY_KEY = ["posts"];
-const MY_POSTS_QUERY_KEY = ["myposts"];
 const SAVED_POSTS_QUERY_KEY = ["savedPosts"];
 const COMMENTS_QUERY_KEY = (postId) => ["comments", postId];
 
@@ -25,6 +25,7 @@ export const usePosts = (limit = 2) => {
 // 🟢 CREATE POST
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (formData) =>
       fetcher({ endpoint: "/posts", method: "POST", data: formData }),
@@ -33,30 +34,24 @@ export const useCreatePost = () => {
       queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
     },
     onError: (error) =>
-      errorToast(
-        error.response?.data?.message || "Failed to share your thoughts"
-      ),
+      errorToast(error.response?.data?.message || "Failed to upload your post"),
   });
 };
 
 // 🟢 UPDATE POST
-export const useUpdatePost = () => {
+export const useUpdatePost = (postId) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (formData) =>
-      fetcher({ endpoint: "", method: "PUT", data: formData }),
-    onSuccess: () => {
+      fetcher({ endpoint: `/posts/${postId}`, method: "PUT", data: formData }),
+    onSuccess: (data) => {
+      successToast(data?.message || "Post updated successfully");
       queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
     },
+    onError: (error) =>
+      errorToast(error.response?.data?.message || "Failed to update post"),
   });
 };
-
-// 🟢 GET MY POSTS
-export const useMyPosts = () =>
-  useQuery({
-    queryKey: MY_POSTS_QUERY_KEY,
-    queryFn: () => fetcher({ endpoint: "/posts/me" }),
-  });
 
 // 🟢 TOGGLE LIKE POST
 export const useToggleLikePost = ({ onMutate, onError } = {}) => {
