@@ -1,7 +1,7 @@
 import { useGetProfile } from "../services";
 import { Container, NonExistRoutes, PostGrid } from "@/components";
 import { useParams } from "react-router-dom";
-import { ProfileCard } from "../profile/ProfileCard";
+import { ProfileCard } from "./components/ProfileCard";
 import { useAuth } from "@/context";
 
 const Profile = () => {

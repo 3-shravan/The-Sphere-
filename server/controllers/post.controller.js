@@ -1,6 +1,6 @@
 import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
-import cloudinary from "../config/cloudinary.js";
+import cloudinary, { deleteImage } from "../config/cloudinary.js";
 import { v4 as uuidv4 } from "uuid";
 import { Post } from "../models/post.model.js";
 import { User } from "../models/user.model.js";
@@ -83,6 +83,10 @@ export const updatePost = catchAsyncError(async (req, res, next) => {
 
   const post = await Post.findOne({ _id: postId, author: authorId });
   if (!post) return next(new ErrorHandler(404, "Post not found"));
+  if (post.thoughts)
+    return next(
+      new ErrorHandler(400, "You cannot update a post with thoughts")
+    );
 
   const { isUnchanged, isCaptionSame, isLocationSame, isTagsSame } =
     postChanges(post, { caption, location, tags });
@@ -259,9 +263,8 @@ export const deletePost = catchAsyncError(async (req, res, next) => {
   const post = await Post.findOneAndDelete({ _id: postId, author: authorID });
   if (!post) return next(new ErrorHandler(404, "Post not found"));
 
-  if (post.media && post.public_id) {
-    await cloudinary.uploader.destroy(post.public_id);
-  }
+  if (post.media) await deleteImage(post.public_id);
+
   //remove the post from the user's posts array.
   const user = await User.findById(authorID);
   user.posts.pull(post._id);

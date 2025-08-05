@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useFollowUser } from "../../services";
 import { useAuth } from "@/context";
+import { useFollowUser } from "@/shared/services";
 
 const useProfile = (user) => {
   const { _id, followers } = user;

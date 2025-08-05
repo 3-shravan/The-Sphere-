@@ -36,6 +36,7 @@ const EditPost = ({ open, setOpen, post }) => {
     const data = await updatePost(formData);
     if (data?.success) setOpen(false);
   };
+
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerContent className="border-none font-Gilroy flex flex-col">

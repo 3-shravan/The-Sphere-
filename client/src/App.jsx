@@ -1,11 +1,11 @@
-import { Toast } from "@services/Toast";
 import { ReactLenis } from "lenis/react";
+import { Toast } from "@lib/Toast";
 import { Routes, Route } from "@lib";
 import { PublicRoutes, ProtectedRoutes, NonExistRoutes } from "@components";
+import { FeedLayout, HomePage, LandingPage } from "@/layouts";
 import { CreatePost, SavedPosts } from "@/features/posts";
+import Explore from "@features/explore/Explore";
 import { Profile } from "@features/users";
-import { FeedLayout } from "@layouts";
-import { HomePage, Sphere, Explore } from "@pages";
 import {
   Login,
   Register,
@@ -22,7 +22,7 @@ const App = () => {
       <Routes>
         {/* Public Routes */}
         <Route element={<PublicRoutes />}>
-          <Route path="/" element={<Sphere />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/forget-password" element={<ForgetPassword />} />

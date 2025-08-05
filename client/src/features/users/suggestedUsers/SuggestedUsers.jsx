@@ -1,10 +1,11 @@
-import { useFollowUser, useSuggestedUsers } from "../services";
-import { CircleSmall, UserRound } from "lucide-react";
+import { useSuggestedUsers } from "../services";
+import { CircleSmall } from "lucide-react";
 import { Error, Loading, SmoothScroll } from "@/components";
 import { useAuth } from "@/context";
 import { useEffect } from "react";
-import { ListUsers } from "./ListUsers";
 import { useState } from "react";
+import { ListUsers } from "./components/ListUsers";
+import { useFollowUser } from "@/shared/services";
 
 const SuggestedUsers = () => {
   const { data, isLoading, error } = useSuggestedUsers();

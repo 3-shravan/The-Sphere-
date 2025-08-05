@@ -178,7 +178,7 @@ body {
   }
 
   .post-card {
-    @apply p-4 md:px-6 lg:p-4 lg:max-w-[47vw] space-y-1;
+    @apply bg-card text-card-foreground rounded-2xl p-4 md:px-6 lg:p-4 lg:max-w-[47vw] space-y-1;
   }
 
   .image-max {

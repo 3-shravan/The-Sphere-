@@ -9,7 +9,6 @@ import {
 import { Loader } from "@/components";
 import { useApi } from "@/hooks";
 import { useNavigate } from "react-router-dom";
-import { current } from "@reduxjs/toolkit";
 
 const AuthContext = createContext();
 

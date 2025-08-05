@@ -1,4 +1,4 @@
-import { fetcher } from "@/services/fetcher";
+import { fetcher } from "@/lib/fetcher";
 import { errorToast, successToast } from "@/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
@@ -34,15 +34,6 @@ export const useSuggestedUsers = () => {
   });
 };
 
-export const useGetUsers = () => {
-  return useMutation({
-    mutationFn: ({ query }) => fetcher({ endpoint: `/users?search=${query}` }),
-    onError: () => {
-      errorToast("Failed to fetch user. Please try again later.");
-    },
-  });
-};
-
 export const useGetProfile = (username) => {
   return useQuery({
     queryKey: ["profile", username],
@@ -56,27 +47,6 @@ export const useGetProfile = (username) => {
   });
 };
 
-export const useFollowUser = ({ onMutate, onError }) => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (userId) =>
-      fetcher({ endpoint: `/users/${userId}/follow`, method: "PUT" }),
-    onMutate: () => {
-      onMutate?.();
-    },
-    onError: (error) => {
-      onError?.();
-      errorToast(
-        error.response?.data?.message ||
-          "Failed to follow user. Please try again later."
-      );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["profile"] });
-      queryClient.invalidateQueries({ queryKey: ["suggestedUsers"] });
-    },
-  });
-};
 
 export const useDeleteProfilePicture = () => {
   const queryClient = useQueryClient();

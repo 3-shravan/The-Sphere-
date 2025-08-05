@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import { uploadImage, deleteImage } from "../config/cloudinary.js";
 import { isAtLeast13YearsOld } from "../utils/utilities.js";
 import { Block } from "../models/block.model.js";
+import { v4 as uuidv4 } from "uuid";
 import {
   handleErrorResponse,
   handleSuccessResponse,
@@ -43,13 +44,14 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
   }
 
   if (profilePicture) {
-    const public_id = `user_${userId}_profile`;
+    const id = uuidv4();
+    const public_id = `avatar_${id}`;
 
     if (user.profilePicturePublicId) {
       await deleteImage(user.profilePicturePublicId);
     }
 
-    const { url, publicId } = await uploadImage(profilePicture, public_id);
+    const { url, publicId } = await uploadImage(profilePicture, public_id,"avatars");
     if (!url || !publicId) {
       return next(new ErrorHandler(500, "Failed to upload profile picture"));
     }

@@ -1,11 +1,8 @@
 import { useAuth } from "@/context";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import {
-  useDeletePost,
-  useToggleLikePost,
-  useToggleSavePost,
-} from "../services";
+import { useDeletePost } from "../services";
+import { useToggleLikePost, useToggleSavePost } from "@/shared/services";
 
 const usePostCardActions = (postId, likes) => {
   const { auth } = useAuth();

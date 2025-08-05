@@ -1,6 +1,6 @@
 import { useNavigate, useState, useCallback } from "@lib";
 import { errorToast, successToast } from "@utils";
-import axios from "@services/axios";
+import axios from "@lib/axios";
 
 const useApi = () => {
   const navigate = useNavigate();
@@ -22,10 +22,7 @@ const useApi = () => {
         }
       } catch (err) {
         console.log(err);
-        const msg =
-          err.message ||
-          err.response?.data?.message ||
-          "Server failed to respond";
+        const msg = err.response?.data?.message || "Server failed to respond";
         errorToast(msg);
       } finally {
         setLoading(false);

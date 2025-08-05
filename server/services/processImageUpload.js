@@ -6,7 +6,6 @@ export const processImageUpload = async (image, publicId, folderName, next) => {
    if (!image) return { public_id: null, url: null };
    try {
       const optimizedImageBuffer = await optimizeImageBuffer(image);
-      // const fileUri = `data:image/jpeg;base64,${optimizedImageBuffer.toString('base64')}`
       const optimizedImage = {
          originalname: image.originalname,
          mimetype: "image/jpeg",

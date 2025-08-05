@@ -7,7 +7,6 @@ export { default as Confirm } from "./shared/Confirm";
 export { default as NonExistRoutes } from "./routing/NonExistRoutes";
 export { default as ProtectedRoutes } from "./routing/ProtectedRoutes";
 export { default as PublicRoutes } from "./routing/PublicRoutes";
-export { default as SetImageRatio } from "../features/posts/components/SetImageRatio";
 export { default as Marquee } from "./shared/Marquee";
 export { default as Backdrop } from "./shared/ui/Backdrop";
 export { default as PostGrid } from "./shared/PostGrid";

@@ -13,7 +13,7 @@ const PostGrid = ({
   toggleSave = false,
 }) => {
   return (
-    <div className="grid md:grid-cols-2 w-full lg:grid-cols-3 gap-6">
+    <div className="grid md:grid-cols-2 w-full lg:grid-cols-3 gap-4 lg:gap-6">
       {posts.length === 0 ? (
         <span className="font-semibold pl-2.5 font-Poppins">{emptyText}</span>
       ) : (
@@ -31,7 +31,7 @@ const PostGrid = ({
                   className="w-full h-full object-cover"
                 />
               )}
-              <ThoughtsCard thought={post?.thoughts} />
+              <ThoughtsCard thought={post?.thoughts} redirect />
 
               {/* Author */}
               {showAuthor && (
@@ -45,10 +45,10 @@ const PostGrid = ({
 
               {/* Gradient Overlay Content */}
               <div
-                className={`absolute bottom-0 left-0 w-full px-4 pb-4 pt-16 text-neutral-900
+                className={`absolute bottom-0 left-0 w-full px-4 pb-4 text-neutral-900
                   ${
                     post.media &&
-                    " bg-gradient-to-t from-neutral-900/90 to-transparent"
+                    " pt-14 bg-gradient-to-t from-neutral-900/90 to-transparent"
                   }`}
               >
                 {showCaption && (
