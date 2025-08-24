@@ -1,11 +1,17 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
-const ThoughtsCard = ({ thought, redirect = false, className = "" }) => {
-  const [expanded, setExpanded] = useState(false);
+const ThoughtsCard = ({
+  thought,
+  postId,
+  redirect = false,
+  className = "",
+}) => {
+  const navigate = useNavigate();
   const isLong = thought.trim().length > 300;
-
+  const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => setExpanded((prev) => !prev);
 
   return (
@@ -20,9 +26,9 @@ const ThoughtsCard = ({ thought, redirect = false, className = "" }) => {
           {expanded ? thought : `${thought.slice(0, 300)} `}
           <button
             onClick={
-              redirect ? () => (window.location.href = "feeds") : toggleExpanded
+              redirect ? () => navigate(`/post/${postId}`) : toggleExpanded
             }
-            className="text-rose-400 font-Poppins hover:underline hover:text-muted-foreground/40 cursor-pointer"
+            className="text-second font-Poppins hover:underline hover:text-muted-foreground/40 cursor-pointer"
           >
             {expanded ? (
               <span>
@@ -32,8 +38,7 @@ const ThoughtsCard = ({ thought, redirect = false, className = "" }) => {
               </span>
             ) : (
               <span>
-                {" "}
-                ..show more
+                show more
                 <ChevronDown className="inline w-3 " />
               </span>
             )}

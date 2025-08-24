@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext } from "react";
-import { createContext } from "@lib";
+import { useState, useEffect, useContext, createContext } from "react";
 import {
   getIsAuthenticated,
   getToken,
   errorToast,
   removeTokenAndAuthenticated,
 } from "@utils";
-import { Loader } from "@/components";
 import { useApi } from "@/hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -54,7 +52,7 @@ export const ContextProvider = ({ children }) => {
       }
     };
     fetchUserProfile();
-  }, []);
+  }, [navigate]);
 
   const logout = async () => {
     setLoading(true);
@@ -69,7 +67,7 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
-  if (loading) return <Loader />;
+  if (loading) return null;
   return (
     <AuthContext.Provider value={{ auth, setAuth, currentUserId, logout }}>
       {children}

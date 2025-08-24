@@ -1,11 +1,12 @@
-import styles from "./style.module.css";
+// import styles from "./style.module.css";
+import "@styles/auth.css";
 import React from "react";
 import { AnimatePresence, motion, PiArrowSquareInDuotone } from "@lib";
 import { Header, Menu } from "@components";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
 import { errorToast, RegisterInitialFormData, validateForm } from "@utils";
-import { AuthButton,PrivacyTermsAndConditions } from "@features/auth/shared";
+import { AuthButton, PrivacyTermsAndConditions } from "@features/auth/shared";
 import {
   Fullname,
   Password,
@@ -115,14 +116,14 @@ const Register = () => {
   };
 
   return (
-    <div className="heroSection">
+    <div className="main">
       <Header />
 
       <AnimatePresence>{menu && <Menu />}</AnimatePresence>
 
       {!menu && (
         <motion.div
-          className={styles.container}
+          className="auth-container register"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1, ease: "linear" }}
@@ -130,7 +131,7 @@ const Register = () => {
           <form
             action=""
             onSubmit={(e) => submitHandler(e)}
-            className={styles.formContainer}
+            className="auth-form auth-form-transparent"
           >
             {stage === 1 && (
               <Fullname
@@ -172,7 +173,7 @@ const Register = () => {
           </form>
 
           {stage === 4 && (
-            <div className={styles.formContainer}>
+            <div className="auth-form">
               <VerifyOTP
                 text={isResend ? "Resend OTP" : `Resend in ${resendTimer}s`}
                 resendLoading={loading}

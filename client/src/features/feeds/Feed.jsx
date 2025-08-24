@@ -1,7 +1,7 @@
 import { Loading } from "@/components";
+import { useRef } from "react";
 import Thoughts from "@/features/posts/post/Thoughts";
 import useFeedInfiniteScroll from "./hooks/useFeedInfiniteScroll";
-import { useRef } from "react";
 import useFeed from "./hooks/useFeed";
 import FeedList from "./components/FeedList";
 

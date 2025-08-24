@@ -1,6 +1,8 @@
+import useFeed from "../hooks/useFeed";
 import PostCard from "./postcard/PostCard";
 
-const FeedList = ({ posts, isFetchingNextPage }) => {
+const FeedList = () => {
+  const { posts, isFetchingNextPage } = useFeed();
   return (
     <div className="flex flex-col gap-3 w-full">
       {posts?.length === 0 ? (

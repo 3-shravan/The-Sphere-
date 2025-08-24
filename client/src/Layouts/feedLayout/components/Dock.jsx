@@ -21,7 +21,7 @@ const Dock = () => {
             key={`dock-${link.label}`}
             to={link.route}
             className={`${
-              isActive && "  text-rose-500   "
+              isActive && "  text-third   "
             } flex-center flex-col w-full py-1.5 transition`}
           >
             {icons[index]}

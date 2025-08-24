@@ -17,7 +17,7 @@ const Confirm = ({ heading, disclaimer, onCancel, onConfirm }) => {
             Cancel
           </button>
           <button
-            className="px-4 py-2 rounded-md text-sm font-semibold bg-rose-400 text-black hover:bg-rose-600 transition cursor-pointer"
+            className="px-4 py-2 rounded-md text-sm font-semibold bg-second text-black hover:bg-rose-600 transition cursor-pointer"
             onClick={onConfirm}
           >
             Confirm

@@ -8,7 +8,7 @@ const RevealLinks = () => {
       <FlipLink href="#">Share</FlipLink>
       <FlipLink href="#">#Post</FlipLink>
       <FlipLink href="#">Message</FlipLink>
-      <div className="text-rose-300 font-Gilroy">
+      <div className="text-first font-Gilroy">
         <FlipLink href="/login">&gt;Login</FlipLink>
       </div>
     </section>

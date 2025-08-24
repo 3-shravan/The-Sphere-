@@ -14,7 +14,7 @@ const PhoneMockup = () => {
       <div className="bg-black rounded-[40px] border-2 h-[70vh] border-[#111]  shadow-4xl overflow-hidden">
         {/* Status bar */}
         <div className=" text-white flex justify-between items-center pt-2 px-6 pb-1">
-          <span className="text-xs pt-3 font-sans font-semibold">
+          <span className="text-xs pt-3 font-Poppins font-semibold">
             9<span className="text-gray-400">:</span>41
           </span>
 

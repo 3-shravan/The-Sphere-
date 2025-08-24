@@ -1,11 +1,11 @@
 .sonner-container {
-  width: 26%;
-  font-family: "Gilroy Bold";
+  width: 32%;
+  font-family: "Gilroy-Bold", "Gilroy", "Poppins";
 }
 
 @media screen and (max-width: 486px) {
   .sonner-container {
     width: 100%;
-    font-family: "Gilroy Bold";
+    font-family: "Gilroy-Bold", "Gilroy", "Poppins";
   }
 }

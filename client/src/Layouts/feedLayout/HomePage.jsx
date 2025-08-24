@@ -14,7 +14,7 @@ const HomePage = () => {
       <HomePageHeader auth={auth} navigate={navigate} />
       <main className="md:flex md:justify-center">
         <Feed />
-        <section className="hidden lg:flex flex-col gap-5 pt-2 pl-0 mr-4.5 w-full">
+        <section className="hidden lg:flex ml-2 flex-col gap-5 pt-2 pl-0 mr-4.5 w-full">
           <Thoughts />
           <SuggestedUsers />
           <Birthdays />

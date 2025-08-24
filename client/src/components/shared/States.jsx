@@ -9,7 +9,7 @@ export const Loading = () => {
 };
 
 export const Error = () => {
-  <div className="text-center py-10 font-bold text-rose-500">
+  <div className="text-center py-10 font-bold text-third">
     Failed to fetch posts.
   </div>;
 };
@@ -29,12 +29,11 @@ const Spinner = ({ text, radius, fontSize, letterSpacing }) => {
         {characters.map((ch, i) => (
           <motion.span
             key={i}
-            className="absolute left-1/2 top-0 font-['Gilroy_Bold']"
+            className="absolute left-1/2 top-0 font-Gilroy font-bold"
             style={{
               transformOrigin: `0 ${radius}px`,
               transform: `rotate(${i * letterSpacing}deg)`,
               fontSize,
-              color: "var(--font)",
             }}
           >
             {ch}
@@ -47,7 +46,7 @@ const Spinner = ({ text, radius, fontSize, letterSpacing }) => {
 
 export const Loader = () => {
   return (
-    <div className="absolute inset-0 w-screen h-full bg-[var(--background)] flex items-center justify-center overflow-hidden">
+    <div className="absolute inset-0 w-screen h-full bg-background flex items-center justify-center overflow-hidden">
       {/* Spinner 1 */}
       <motion.div
         className="absolute -right-[535px] -bottom-[840px]"

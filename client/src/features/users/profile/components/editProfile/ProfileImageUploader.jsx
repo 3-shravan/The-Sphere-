@@ -48,7 +48,7 @@ const ProfileImageUploader = ({
         size="sm"
         onClick={handleDelete}
         disabled={isPending}
-        className="text-xs text-rose-500 flex items-center gap-2 hover:bg-muted hover:text-rose-500 border cursor-pointer"
+        className="text-xs text-third flex items-center gap-2 hover:bg-muted hover:text-third border cursor-pointer"
       >
         <Trash className="w-3 h-3" />
 

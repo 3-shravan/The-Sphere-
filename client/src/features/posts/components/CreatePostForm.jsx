@@ -71,7 +71,7 @@ const CreatePostForm = () => {
               onClick={() => fileInputRef.current?.click()}
             >
               <div className="flex flex-col items-center gap-2 uppercase font-thin font-Gilroy">
-                <BadgePlus className="text-rose-400" />
+                <BadgePlus className="text-second" />
                 <p className="text-sm">Click to upload image</p>
               </div>
             </div>
@@ -120,7 +120,7 @@ const CreatePostForm = () => {
         <button
           type="submit"
           disabled={isPending}
-          className="px-4 py-2.5 bg-rose-300 text-rose-800 font-semibold rounded-lg text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
+          className="px-4 py-2.5 bg-first text-rose-800 font-semibold rounded-lg text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
         >
           {isPending ? (
             <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />

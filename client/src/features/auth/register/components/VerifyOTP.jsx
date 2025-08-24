@@ -1,4 +1,4 @@
-import styles from "@features/auth/shared/auth.module.css";
+import styles from "@/features/auth/shared/auth.module.css";
 import RedirectToLogin from "./RedirectToLogin";
 import { motion, IoIosArrowBack } from "@lib";
 import { InputOtp } from "../../shared";

@@ -51,7 +51,11 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
       await deleteImage(user.profilePicturePublicId);
     }
 
-    const { url, publicId } = await uploadImage(profilePicture, public_id,"avatars");
+    const { url, publicId } = await uploadImage(
+      profilePicture,
+      public_id,
+      "avatars"
+    );
     if (!url || !publicId) {
       return next(new ErrorHandler(500, "Failed to upload profile picture"));
     }
@@ -97,14 +101,20 @@ export const getProfile = catchAsyncError(async (req, res, next) => {
       path: "posts",
       select: "-__v -updatedAt",
       options: { sort: { createdAt: -1 } },
-      populate: {
-        path: "author",
-        select: "name , profilePicture",
-      },
+      populate: [
+        {
+          path: "author",
+          select: "name profilePicture",
+        },
+        {
+          path: "likes",
+          select: "name profilePicture",
+        },
+      ],
     })
     .populate({
       path: "followers following",
-      select: "name profilePicture ",
+      select: "name profilePicture",
     });
 
   if (!user) return next(new ErrorHandler(404, "User not found"));

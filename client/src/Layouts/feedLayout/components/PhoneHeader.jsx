@@ -7,7 +7,7 @@ import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 
 const PhoneHeader = () => {
-  const { auth, logout } = useAuth?.();
+  const { auth, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -20,7 +20,7 @@ const PhoneHeader = () => {
 
         <div className="flex items-center gap-x-3">
           <Button variant="ghost" onClick={logout}>
-            <LogOut className="text-rose-500 w-5 h-5" />
+            <LogOut className="text-third w-5 h-5" />
           </Button>
 
           <ToggleTheme theme={theme} toggleTheme={toggleTheme} />
@@ -33,7 +33,6 @@ const PhoneHeader = () => {
 };
 
 export default PhoneHeader;
-
 
 const Logo = ({ theme }) => (
   <Link to="/" className="flex gap-1 items-center">
@@ -56,7 +55,7 @@ const ToggleTheme = ({ theme, toggleTheme }) => (
     <motion.div
       layout
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
-      className="w-5 h-5 rounded-full flex items-center justify-center shadow-md bg-rose-400"
+      className="w-5 h-5 rounded-full flex items-center justify-center shadow-md bg-second"
       style={{
         marginLeft: theme === "dark" ? "calc(100% - 20px)" : "2px",
       }}
@@ -82,7 +81,7 @@ const Profile = ({ auth }) => (
         className="w-5 h-5 rounded-full inline"
       />
     ) : (
-      <UserRound className="text-rose-400 w-4" />
+      <UserRound className="text-second w-4" />
     )}
   </Link>
 );

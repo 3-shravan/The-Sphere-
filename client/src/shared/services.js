@@ -20,6 +20,17 @@ export const useGetUsers = () => {
   });
 };
 
+export const useGetSinglePost = (postId) => {
+  return useQuery({
+    queryKey: ["posts", postId],
+    queryFn: () => fetcher({ endpoint: `/posts/${postId}` }),
+    enabled: !!postId,
+    onError: (error) => {
+      errorToast(error?.response?.data?.message || "Error fetching the post");
+    },
+  });
+};
+
 export const useToggleLikePost = ({ onMutate, onError } = {}) => {
   const queryClient = useQueryClient();
   return useMutation({

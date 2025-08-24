@@ -9,7 +9,7 @@ export { default as ProtectedRoutes } from "./routing/ProtectedRoutes";
 export { default as PublicRoutes } from "./routing/PublicRoutes";
 export { default as Marquee } from "./shared/Marquee";
 export { default as Backdrop } from "./shared/ui/Backdrop";
-export { default as PostGrid } from "./shared/PostGrid";
 export { default as SmoothScroll } from "./shared/ui/SmoothScroll";
 export { default as ThoughtsCard } from "./shared/ThoughtsCard";
 export { default as ProfilePicture } from "./shared/ui/ProfilePicture";
+export { default as H2 } from "./shared/ui/H2";

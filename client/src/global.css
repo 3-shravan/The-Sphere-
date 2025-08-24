@@ -13,6 +13,8 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
+  font-family: "Poppins", "Gilroy", "Gill Sans", "Gill Sans MT", Calibri,
+    "Trebuchet MS", sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -57,10 +59,15 @@ body {
   --forest-green: #16483b;
   --forest-dark-green: #061f17;
 
+  --first: oklch(0.81 0.117 11.638);
+  --second: oklch(0.712 0.194 13.428);
+  --third: oklch(0.645 0.246 16.439);
+
   --gradient-bg-green: rgba(19, 133, 105, 0.788);
   --gradient-bg-text: rgba(6, 27, 18, 0.194);
   /* --gradient-bg-green: rgba(183, 12, 80, 0.934);
   --gradient-bg-text: rgba(59, 10, 30, 0.231); */
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -78,12 +85,11 @@ body {
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-
-  --first: oklch(0.9 0.2 270);
-  --second: oklch(0.7 0.3 270);
-  --third: oklch(0.5 0.4 270);
 }
 .dark {
+  /* --first: oklch(0.81 0.117 11.638);
+  --second: oklch(0.712 0.194 13.428);
+  --third: oklch(0.645 0.246 16.439); */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.2 0 0);
@@ -105,22 +111,15 @@ body {
 @theme inline {
   --font-Gilroy: "Gilroy", sans-serif;
   --font-Futura: "Futura", sans-serif;
-  --font-sans: "Inter", sans-serif;
   --font-mono: monospace;
   --font-blackout: "Blackout-Midnight", sans-serif;
-  --font-blackout-2am: "Blackout-2am", sans-serif;
   --font-Poppins: "Poppins", sans-serif;
   /*--------------------------------------------------------------
   MAINLAYOUT
 --------------------------------------------------------------*/
-  --color-crimson: #dc143c;
-  --color-dark-100: #131313;
-  --breakpoint-xs: var(--breakpoint-xs);
-
   --color-first: var(--first);
   --color-second: var(--second);
   --color-third: var(--third);
-
   /*--------------------------------------------------------------
   SHADCN
 --------------------------------------------------------------*/
@@ -146,13 +145,6 @@ body {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer utilities {
@@ -171,7 +163,7 @@ body {
   }
 
   .feed {
-    @apply h-[90vh] pb-20 md:pb-8 lg:pb-5 px-1 md:pl-4.5 lg:min-w-[50vw];
+    @apply h-[90vh] pb-20 md:pb-8 lg:pb-5 px-1 md:pl-4.5 lg:min-w-[49vw];
   }
   .your-feed {
     @apply text-xl p-2 md:pt-4 font-Futura tracking-tighter;
@@ -184,7 +176,7 @@ body {
   .image-max {
     @apply md:max-w-[48vw] lg:max-w-[35vw];
   }
-  
+
   .btn-base {
     @apply flex items-center p-1 cursor-pointer transition hover:scale-90 duration-200  gap-1 pr-3 rounded-full;
   }
@@ -193,7 +185,7 @@ body {
   }
 
   .caption {
-    @apply text-xs font-Futura text-rose-400 dark:text-rose-300 px-3 mt-6 cursor-pointer;
+    @apply text-xs font-Futura text-rose-400 dark:text-first px-3 mt-6 cursor-pointer;
   }
   .tags {
     @apply inline-block mr-1 font-Gilroy  text-muted-foreground px-2 py-1 bg-muted-foreground/10 rounded-full text-xs;
@@ -203,66 +195,25 @@ body {
 @font-face {
   font-family: "Gilroy";
   font-style: normal;
-  font-weight: 300;
-  src: url("./assets/fonts/Gilroy-Light.woff") format("woff");
+  font-weight: 400;
+  src: url("/fonts/Gilroy-Regular.woff") format("woff");
 }
-@font-face {
-  font-family: "Gilroy";
-  font-style: normal;
-  font-weight: 500;
-  src: url("./assets/fonts/Gilroy-Regular.woff") format("woff");
-}
-
 @font-face {
   font-family: "Gilroy";
   font-style: normal;
   font-weight: 700;
-  src: url("./assets/fonts/Gilroy-Bold.woff") format("woff");
+  src: url("/fonts/Gilroy-Bold.woff") format("woff");
 }
 @font-face {
   font-family: "Futura";
   font-style: normal;
   font-weight: 700;
-  src: url("./assets/fonts/Futura-Bold.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Gilroy Light";
-  font-style: normal;
-  font-weight: 300;
-  src: url("./assets/fonts/Gilroy-Light.woff") format("woff");
-}
-@font-face {
-  font-family: "Gilroy Bold";
-  font-style: normal;
-  font-weight: 700;
-  src: url("./assets/fonts/Gilroy-Bold.woff") format("woff");
-}
-@font-face {
-  font-family: "Gilroy Medium";
-  font-style: normal;
-  font-weight: 500;
-  src: url("./assets/fonts/Gilroy-Medium.woff") format("woff");
-}
-@font-face {
-  font-family: "Gilroy Regular";
-  font-style: normal;
-  font-weight: 400;
-  src: url("./assets/fonts/Gilroy-Regular.woff") format("woff");
+  src: url("/fonts/Futura-Bold.woff2") format("woff2");
 }
 @font-face {
   font-family: "Blackout-Midnight";
-  src: url("./assets/fonts/Blackout-Midnight.woff2") format("woff2"),
-    url("./assets/fonts/Blackout-Midnight.woff") format("woff");
-}
-@font-face {
-  font-family: "Blackout-2am";
-  src: url("./assets/fonts/Blackout-2AM.woff2") format("woff2"),
-    url("./assets/fonts/Blackout-2AM.woff2") format("woff");
-}
-@font-face {
-  font-family: "Sans";
-  src: url("./assets/fonts/DM-Sans-regular.woff2") format("woff2"),
-    url("./assets/fonts/DM-Sans-regular.woff") format("woff");
+  src: url("/fonts/Blackout-Midnight.woff2") format("woff2"),
+    url("/fonts/Blackout-Midnight.woff") format("woff");
 }
 
 /*--------------------------------------------------------------
@@ -272,36 +223,41 @@ WEBKIT STYLES
   background-color: #2e2e2e;
   color: #fbfbfb;
 }
+
 ::-webkit-scrollbar {
-  display: none;
-  width: 2px;
+  /* display: none; */
+  width: 1px;
   height: 20px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-foreground);
 }
 ::-webkit-scrollbar-thumb {
-  background-color: rgb(211, 204, 150);
-  border-radius: 3px;
+  background-color: rgb(218, 116, 136);
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background-color: #7a7a7a;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 .inputField:-webkit-autofill {
-  font-family: "Gilroy Regular" !important;
+  font-family: "Gilroy" !important;
+  font-weight: 400 !important;
   font-size: 0.9rem !important;
   background-color: transparent !important;
   -webkit-box-shadow: 0 0 0 50px rgb(0, 0, 0) inset !important;
   -webkit-text-fill-color: rgb(255, 255, 255) !important;
   transition: background-color 9999s ease-in-out 0s;
 }
+
 .custom-scrollbar-hide::-webkit-scrollbar {
-  display: none;
+  /* display: none; */
 }
 .custom-scrollbar-hide {
   -ms-overflow-style: none;

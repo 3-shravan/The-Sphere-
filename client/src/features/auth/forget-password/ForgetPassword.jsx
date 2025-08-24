@@ -1,11 +1,11 @@
 import React from "react";
-import styles from "./style.module.css";
+import "@styles/auth.css";
 import authStyles from "../shared/auth.module.css";
 import { OtpVerify, ViaEmail, ViaPhone } from "./components";
-import { AuthButton,PrivacyTermsAndConditions } from "../shared";
+import { AuthButton, PrivacyTermsAndConditions } from "../shared";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
-import {  Header, Menu } from "@components";
+import { Header, Menu } from "@components";
 import {
   errorToast,
   validForgetEmail,
@@ -120,14 +120,14 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className="heroSection">
+    <div className="main">
       <Header />
 
       <AnimatePresence>{menu && <Menu />}</AnimatePresence>
 
       {!menu && (
         <motion.div
-          className={styles.container}
+          className="auth-container forget"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1, ease: "linear" }}
@@ -135,7 +135,7 @@ const ForgetPassword = () => {
           <form
             action=""
             onSubmit={(e) => submitHandler(e)}
-            className={styles.formContainer}
+            className="auth-form auth-form-transparent"
           >
             <h1 className={authStyles.heading1}>
               <Link to={"/login"}>
@@ -181,7 +181,7 @@ const ForgetPassword = () => {
               initial={{ opacity: 5 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1, ease: "linear" }}
-              className={styles.formContainer}
+              className="auth-form auth-form-transparent"
             >
               <OtpVerify
                 text={isResend ? "Resend OTP" : `Resend in ${resendTimer}s`}

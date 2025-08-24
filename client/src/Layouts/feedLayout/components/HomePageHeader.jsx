@@ -4,7 +4,7 @@ const HomePageHeader = ({ auth, navigate }) => {
   return (
     <div className="flex-between md:py- 1 md:mt-1 pt-2 ">
       {/* TIME  */}
-      <span className="px-6 text-xs font-blackout hidden tracking-widest md:block text-rose-400">
+      <span className="px-6 text-xs font-blackout hidden tracking-widest md:block text-second">
         {new Date().toLocaleTimeString([], {
           hour: "2-digit",
           minute: "2-digit",
@@ -23,7 +23,7 @@ const HomePageHeader = ({ auth, navigate }) => {
             className="w-5 h-5 rounded-full inline "
           />
         ) : (
-          <UserRound className="text-rose-400  w-4" />
+          <UserRound className="text-second  w-4" />
         )}
         <span className="font-Poppins text-sm font-bold  px-2 text-foreground ">
           {auth?.profile?.name}

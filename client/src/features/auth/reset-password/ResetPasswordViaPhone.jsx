@@ -1,7 +1,6 @@
-import styles from "./style.module.css";
+import "@styles/auth.css";
 import authStyles from "@features/auth/shared/auth.module.css";
 import FormContainer from "./components/FormContainer";
-import { Header } from "@components";
 import { AuthButton, PrivacyTermsAndConditions } from "../shared";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
@@ -37,17 +36,16 @@ const ResetPasswordViaPhone = () => {
     });
   };
   return (
-    <>
-      {/* <Header /> */}
+    <div className="main">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1, ease: "linear" }}
-        className={styles.container}
+        className="auth-container reset"
       >
         <form
           action=""
-          className={styles.formContainer}
+          className="auth-form auth-form-transparent"
           onSubmit={(e) => submitHandler(e)}
         >
           <motion.h1
@@ -75,7 +73,7 @@ const ResetPasswordViaPhone = () => {
         </form>
         <PrivacyTermsAndConditions />
       </motion.div>
-    </>
+    </div>
   );
 };
 

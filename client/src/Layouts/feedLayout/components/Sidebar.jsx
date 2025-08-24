@@ -40,7 +40,7 @@ const Sidebar = () => {
             alt="logo"
             width={15}
           />
-          <span className="font-bold font-Poppins">sphere</span>
+          <span className="font-bold text-lg  font-Gilroy ">sphere</span>
         </div>
 
         {/* Sidebar Links */}

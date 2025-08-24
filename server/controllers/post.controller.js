@@ -190,12 +190,19 @@ export const getFollowingPosts = catchAsyncError(async (req, res, next) => {
  * *********** / */
 export const getPostById = catchAsyncError(async (req, res, next) => {
   const { postId } = req.params;
-  const userId = req.user._id;
+  const post = await Post.findById(postId)
+    .populate({
+      path: "author",
+      select: "name profilePicture",
+    })
+    // .populate({
+    //   path: "comments",
+    // })
+    .populate({
+      path: "likes",
+      select: "name profilePicture",
+    });
 
-  const post = await Post.findById(postId).populate({
-    path: "author",
-    select: "name profilePicture",
-  });
   if (!post) return next(new ErrorHandler(404, "Post not found"));
   handleSuccessResponse(res, 200, "Post fetched successfully", { post });
 });

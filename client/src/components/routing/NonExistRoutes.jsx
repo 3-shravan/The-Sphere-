@@ -6,7 +6,7 @@ const NonExistRoutes = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen w-full flex flex-col font-blackout justify-center items-center  text-rose-500 px-4">
+    <div className="min-h-screen w-full flex flex-col font-blackout justify-center items-center  text-third px-4">
       <motion.h1
         className="text-6xl font-bold mb-4"
         initial={{ opacity: 0, y: -20 }}
@@ -28,8 +28,8 @@ const NonExistRoutes = () => {
         transition={{ delay: 0.4 }}
       >
         <Button
-          onClick={() => navigate("/")}
-          className=" bg-rose-300 text-rose-700 font-Futura cursor-pointer text-sm hover:bg-amber-50 px-6 py-2 rounded-md"
+          onClick={() => navigate(-1)}
+          className=" bg-first text-rose-700 font-Futura cursor-pointer text-sm hover:bg-rose-200 px-6 py-2 rounded-md"
         >
           Go Home
         </Button>

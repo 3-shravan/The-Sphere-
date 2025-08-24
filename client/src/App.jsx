@@ -1,6 +1,6 @@
 import { ReactLenis } from "lenis/react";
 import { Toast } from "@lib/Toast";
-import { Routes, Route } from "@lib";
+import { Routes, Route } from "react-router-dom";
 import { PublicRoutes, ProtectedRoutes, NonExistRoutes } from "@components";
 import { FeedLayout, HomePage, LandingPage } from "@/layouts";
 import { CreatePost, SavedPosts } from "@/features/posts";
@@ -13,6 +13,7 @@ import {
   ResetPasswordViaEmail,
   ResetPasswordViaPhone,
 } from "@features/auth";
+import ViewPost from "./shared/pages/ViewPost";
 
 const App = () => {
   return (
@@ -35,6 +36,8 @@ const App = () => {
             element={<ResetPasswordViaEmail />}
           />
         </Route>
+
+        <Route path="/post/:postId" element={<ViewPost />} />
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoutes />}>

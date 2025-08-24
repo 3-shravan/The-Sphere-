@@ -1,7 +1,7 @@
 import { useInfiniteScroll } from "@/hooks";
 import { useEffect } from "react";
 
-const THRESOLD_VALUE = 70;
+const THRESOLD_VALUE = 80;
 const useFeedInfiniteScroll = ({
   scrollRef,
   hasNextPage,

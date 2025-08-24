@@ -48,7 +48,7 @@ const VelocityText = () => {
             strokeWidth={25}
             absoluteStrokeWidth
           />
-          <span className="text-rose-400 font-Futura lowercase">
+          <span className="text-second font-Futura lowercase">
             Join us today
           </span>
           <Asterisk

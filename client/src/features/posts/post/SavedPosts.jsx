@@ -1,14 +1,10 @@
-import { PostGrid } from "@components";
 import { H2, Loading, Container } from "@/components";
-import { useSavedPosts, useToggleSavePost } from "@/shared/services";
+import { PostGrid } from "@/shared";
+import { useSavedPosts } from "@/shared/services";
 
 const SavedPosts = () => {
   const { data, isLoading } = useSavedPosts();
   const savedPosts = data?.savedPosts || [];
-
-  const { mutate: toggleSavePost } = useToggleSavePost();
-  const saved = (id) => savedPosts.some((post) => id === post._id);
-
   if (isLoading) return Loading();
   return (
     <Container>
@@ -16,9 +12,8 @@ const SavedPosts = () => {
       <div className="md:mt-7 w-full lg:mt-5">
         <PostGrid
           posts={savedPosts}
-          emptyText="No Saved Posts"
-          fn={toggleSavePost}
-          state={saved}
+          emptyText="You have'nt saved any post yet."
+          showTags={true}
           toggleSave={true}
         />
       </div>

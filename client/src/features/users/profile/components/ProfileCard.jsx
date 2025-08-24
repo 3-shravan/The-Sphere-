@@ -16,7 +16,7 @@ export const ProfileCard = ({ user }) => {
       <ProfileImage profilePicture={profilePicture} name={name} />
 
       <div className=" flex flex-col justify-center items-center w-full text-neutral-600">
-        <h2 className="text-2xl text-rose-400 font-Futura font-bold text-center ">
+        <h2 className="text-2xl text-second font-Futura font-bold text-center ">
           {name}
         </h2>
         {fullName && <h2 className="text-base ">{fullName}</h2>}
@@ -69,7 +69,7 @@ const ProfileImage = ({ profilePicture }) => (
         className="w-50 h-50 rounded-full object-cover border-2 border-border shadow-md"
       />
     ) : (
-      <UserCircle2 className="w-50 h-50 rounded-full text-rose-300" />
+      <UserCircle2 className="w-50 h-50 rounded-full text-first" />
     )}
   </div>
 );

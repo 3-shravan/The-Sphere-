@@ -9,7 +9,7 @@
   width: 3rem;
   height: 3rem;
   text-align: center;
-  color: var(--color-primary);
+  color: crimson;
   font-family: "Futura";
   border: 0.1px solid var(--forest-green);
   border-radius: 8px;
@@ -29,7 +29,8 @@
   width: 100%;
   margin: 0.8vh 0 1.5vh 0;
   font-size: 0.8rem;
-  font-family: "Gilroy Bold";
+  font-family: "Gilroy";
+  font-weight: bold;
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.2s ease-in-out, box-shadow 0.2s ease-in-out;

@@ -13,7 +13,7 @@ const postSchema = new mongoose.Schema(
     thoughts: {
       type: String,
       default: "",
-      maxLength: [1000, "Thoughts cannot exceed 1000 characters"],
+      maxLength: [2000, "Thoughts cannot exceed 2000 characters"],
     },
     media: {
       type: String,

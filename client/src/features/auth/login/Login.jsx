@@ -1,3 +1,4 @@
+// import loginstyles from "./style.module.css";
 import React from "react";
 import { useNavigate, AnimatePresence, motion, IoLogIn } from "@lib";
 import { Menu, Header } from "@components";
@@ -6,8 +7,8 @@ import { useAuth, useMenu } from "@context";
 import { LoginInitialFormData, setTokenAndAuthenticated } from "@utils";
 import { ViaEmail, ViaPhone, RedirectToSignup } from "./components";
 import { AuthButton, PrivacyTermsAndConditions } from "../shared";
-import loginstyles from "./style.module.css";
 import styles from "@features/auth/shared/auth.module.css";
+import "@styles/auth.css";
 import { useForm } from "@/hooks";
 
 const Login = () => {
@@ -45,19 +46,19 @@ const Login = () => {
 
   return (
     <>
-      <div className="heroSection">
+      <div className="main">
         <Header />
 
         <AnimatePresence>{menu && <Menu />}</AnimatePresence>
 
         {!menu && (
           <motion.div
-            className={loginstyles.container}
+            className="auth-container login"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1, ease: "linear" }}
           >
-            <form className={loginstyles.formContainer}>
+            <form className="auth-form">
               <motion.h1
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

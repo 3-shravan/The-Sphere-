@@ -20,7 +20,7 @@ router.get("/", authUser, getAllPosts);
 router.get("/following", authUser, getFollowingPosts);
 router.get("/me", authUser, getMyPosts);
 router.get("/saved", authUser, getSavedPosts);
-router.get("/:postId", authUser, getPostById);
+router.get("/:postId", getPostById);
 router.post("/", authUser, singleUpload("image"), addNewPost);
 router.put("/:postId", authUser, singleUpload("image"), updatePost);
 router.put("/:postId/like", authUser, likePost);

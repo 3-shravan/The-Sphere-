@@ -1,8 +1,9 @@
 import { useGetProfile } from "../services";
-import { Container, NonExistRoutes, PostGrid } from "@/components";
+import { Container, NonExistRoutes } from "@/components";
 import { useParams } from "react-router-dom";
 import { ProfileCard } from "./components/ProfileCard";
 import { useAuth } from "@/context";
+import { PostGrid } from "@/shared";
 
 const Profile = () => {
   const { username } = useParams();
@@ -19,11 +20,8 @@ const Profile = () => {
       <ProfileCard user={user} />
       <div className="font-Futura text-left w-full px-2 text-neutral-600">
         <span className="border-b-2 py-1 border-border">
-          {me ? "your" : "there"} posts .
-          <span className=" text-rose-400 font-blackout">
-            {" "}
-            {posts?.length || 0}
-          </span>
+          {me ? "your" : "there"} posts {" "}
+          <span className="text-second font-blackout">{posts?.length}</span>
         </span>
       </div>
       <PostGrid posts={posts} />

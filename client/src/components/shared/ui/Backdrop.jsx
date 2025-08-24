@@ -1,5 +1,5 @@
 import clsx from "clsx";
-
+import { useNavigate } from "react-router-dom";
 const positionClasses = {
   "top-left": "top-3 left-3",
   "top-right": "top-3 right-3",
@@ -11,6 +11,7 @@ const positionClasses = {
 };
 
 const Backdrop = ({
+  fn,
   children,
   image = null,
   position = "top-left",
@@ -18,6 +19,7 @@ const Backdrop = ({
 }) => {
   return (
     <div
+      onClick={fn}
       className={clsx(
         "absolute z-50 backdrop-blur-md bg-white/20 dark:bg-neutral-800/30 text-sm p-1 rounded-full font-medium text-neutral-800 dark:text-neutral-100 shadow-sm",
         positionClasses[position]

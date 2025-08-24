@@ -1,6 +1,9 @@
-import Backdrop from "./ui/Backdrop";
 import { formatDistanceToNow } from "date-fns";
-import { ThoughtsCard } from "..";
+import { SavePost, ShowTags } from "@/shared";
+import { H2, Backdrop, ThoughtsCard } from "@/components";
+import { useNavigate } from "react-router-dom";
+
+const WORDS = 70;
 
 const PostGrid = ({
   posts = [],
@@ -8,65 +11,79 @@ const PostGrid = ({
   showAuthor = true,
   showCaption = true,
   showTags = false,
-  fn,
-  state,
   toggleSave = false,
 }) => {
+  if (!posts) return null;
+  const navigate = useNavigate();
+  const isExpanded = (caption, WORDS) => caption.length > WORDS;
+  const toViewPost = (postId) => navigate(`/post/${postId}`);
+  const toProfile = (username) => navigate(`/profile/${username}`);
+
   return (
     <div className="grid md:grid-cols-2 w-full lg:grid-cols-3 gap-4 lg:gap-6">
       {posts.length === 0 ? (
-        <span className="font-semibold pl-2.5 font-Poppins">{emptyText}</span>
+        <H2>{emptyText}</H2>
       ) : (
         posts.map((post) => (
           <div
             key={post._id}
-            className="relative rounded-3xl overflow-hidden shadow border border-border"
+            className="relative rounded-4xl overflow-hidden shadow border cursor-pointer"
           >
-            {/* Image */}
             <div className="relative w-full h-64">
               {post?.media && (
                 <img
+                  onClick={() => toViewPost(post._id)}
                   src={post.media}
                   alt="post"
-                  className="w-full h-full object-cover"
+                  className="w-full absolute z-0 h-full object-cover"
                 />
               )}
-              <ThoughtsCard thought={post?.thoughts} redirect />
 
-              {/* Author */}
+              <div
+                className="absolute h-full w-full"
+                onClick={() => toViewPost(post._id)}
+              >
+                <ThoughtsCard thought={post?.thoughts} postId={post._id} />
+              </div>
+
               {showAuthor && (
                 <Backdrop
+                  fn={() => toProfile(post?.author?.name)}
                   image={post?.author?.profilePicture}
                   position="top-left"
                 >
                   {post?.author?.name}
                 </Backdrop>
               )}
-
               {/* Gradient Overlay Content */}
               <div
-                className={`absolute bottom-0 left-0 w-full px-4 pb-4 text-neutral-900
+                className={`absolute bottom-0 left-0 w-full px-4  pb-4 text-neutral-900
                   ${
                     post.media &&
-                    " pt-14 bg-gradient-to-t from-neutral-900/90 to-transparent"
+                    "bg-gradient-to-t from-neutral-900/95 to-transparent"
                   }`}
               >
                 {showCaption && (
                   <h2 className="text-xs font-medium font-Poppins text-neutral-300 mb-1">
-                    {post.caption}
+                    {isExpanded(post.caption, WORDS) ? (
+                      <>
+                        {post?.caption.slice(0, WORDS)}
+                        <span className="text-second text-xs font-semibold font-Poppins">
+                          ...more
+                        </span>
+                      </>
+                    ) : (
+                      post?.caption
+                    )}
                   </h2>
                 )}
 
-                {showTags && <Tags tags={post.tags} />}
-
-                {/* Footer */}
+                {showTags && <ShowTags tags={post.tags} count={2} />}
                 <Footer
                   createdAt={post.createdAt}
                   location={post.location}
                   id={post._id}
                   toggleSave={toggleSave}
-                  fn={fn}
-                  state={state}
                 />
               </div>
             </div>
@@ -79,28 +96,7 @@ const PostGrid = ({
 
 export default PostGrid;
 
-const SavePost = ({ id, fn, saved }) => (
-  <button
-    onClick={() => fn(id)}
-    className="text-xs text-rose-300 hover:text-rose-500"
-  >
-    {saved ? "Unsave" : "Save"}
-  </button>
-);
-const Tags = ({ tags }) =>
-  tags?.length > 0 ? (
-    <div className="flex flex-wrap gap-2 mt-2">
-      {tags.map((tag) => (
-        <span
-          key={tag}
-          className="bg-violet-100 text-rose-400 font-semibold text-xs px-2 py-1 rounded-full"
-        >
-          {tag}
-        </span>
-      ))}
-    </div>
-  ) : null;
-const Footer = ({ createdAt, location, toggleSave, fn, id, state }) => (
+const Footer = ({ createdAt, location, toggleSave, id }) => (
   <div className="flex justify-between">
     <div className="flex items-center font-Gilroy pt-1">
       <p className="text-[10px] text-neutral-400">
@@ -114,6 +110,6 @@ const Footer = ({ createdAt, location, toggleSave, fn, id, state }) => (
         </p>
       )}
     </div>
-    {toggleSave && <SavePost id={id} fn={fn} saved={state(id)} />}
+    {toggleSave && <SavePost postId={id} force={true} />}
   </div>
 );

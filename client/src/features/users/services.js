@@ -47,7 +47,6 @@ export const useGetProfile = (username) => {
   });
 };
 
-
 export const useDeleteProfilePicture = () => {
   const queryClient = useQueryClient();
   return useMutation({

@@ -24,7 +24,7 @@ const Marquee = ({ direction }) => {
               <span className="px-20">
                 <Asterisk
                   size={40}
-                  className="text-rose-400" 
+                  className="text-second"
                   strokeWidth={7}
                   absoluteStrokeWidth
                 />

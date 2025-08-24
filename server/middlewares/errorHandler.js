@@ -2,13 +2,20 @@ class ErrorHandler extends Error {
   constructor(statusCode, message) {
     super(message);
     this.statusCode = statusCode;
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
-export const errorMiddleware = (err, req, res, next) => {
+export const errorMiddleware = (err, _, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || "Internal Server Error";
 
+  if (err.message && err.message.includes("buffering timed out")) {
+    err = new ErrorHandler(
+      503,
+      "Database is not responding. Please try again later."
+    );
+  }
   if (err.name === "CastError") {
     const message = `Invalid ${err.path}: ${err.value}`;
     err = new ErrorHandler(400, message);

@@ -33,7 +33,7 @@ const EditProfile = ({ user }) => {
           className="mt-4 text-xs text-foreground cursor-pointer"
         >
           edit profile
-          <Settings2 className="w-3 h-3 text-rose-500 inline" />
+          <Settings2 className="w-3 h-3 text-third inline" />
         </Button>
       </DrawerTrigger>
 
