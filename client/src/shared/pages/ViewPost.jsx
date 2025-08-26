@@ -9,7 +9,6 @@ const ViewPost = () => {
   const { postId } = useParams();
   const { data, isLoading, isError } = useGetSinglePost(postId);
   const post = data?.post;
-
   if (isLoading) {
     return (
       <div className="fixed inset-0 bg-background bg-opacity-50 flex items-center justify-center z-50">
@@ -33,8 +32,10 @@ const ViewPost = () => {
     likes = [],
     comments = [],
     tags,
+    isSaved,
     createdAt,
   } = post;
+  console.log(isSaved);
   return (
     <div className="fixed inset-0 bg-background flex items-center justify-center z-50 p-2 md:p-4">
       <div className="bg-background rounded-xl border shadow-xl w-full max-w-6xl h-full md:h-[90vh] flex flex-col md:flex-row overflow-hidden">

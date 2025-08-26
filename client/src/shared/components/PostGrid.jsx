@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
-import { SavePost, ShowTags } from "@/shared";
+import { LikePost, SavePost, ShowTags } from "@/shared";
 import { H2, Backdrop, ThoughtsCard } from "@/components";
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,8 @@ const PostGrid = ({
   showAuthor = true,
   showCaption = true,
   showTags = false,
-  toggleSave = false,
+  savePost = false,
+  likePost = false,
 }) => {
   if (!posts) return null;
   const navigate = useNavigate();
@@ -83,7 +84,9 @@ const PostGrid = ({
                   createdAt={post.createdAt}
                   location={post.location}
                   id={post._id}
-                  toggleSave={toggleSave}
+                  savePost={savePost}
+                  likePost={likePost}
+                  likes={post.likes}
                 />
               </div>
             </div>
@@ -96,7 +99,7 @@ const PostGrid = ({
 
 export default PostGrid;
 
-const Footer = ({ createdAt, location, toggleSave, id }) => (
+const Footer = ({ createdAt, location, savePost, likePost, id, likes }) => (
   <div className="flex justify-between">
     <div className="flex items-center font-Gilroy pt-1">
       <p className="text-[10px] text-neutral-400">
@@ -110,6 +113,9 @@ const Footer = ({ createdAt, location, toggleSave, id }) => (
         </p>
       )}
     </div>
-    {toggleSave && <SavePost postId={id} force={true} />}
+    <div className="flex gap-2">
+      {savePost && <SavePost postId={id} />}
+      {likePost && <LikePost postId={id} likes={likes} likedBy={false} />}
+    </div>
   </div>
 );

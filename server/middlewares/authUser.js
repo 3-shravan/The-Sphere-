@@ -9,7 +9,7 @@ export const authUser = catchAsyncError(async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1] || req.cookies.token;
 
   if (!token) {
-    return next(new ErrorHandler(401, "Please log in again."));
+    return next(new ErrorHandler(401, "login to get access."));
   }
   //check whether user trying to acces data with expire or unauthorize token
   const isBlackListed = await ExpiredToken.findOne({ token });
@@ -18,7 +18,7 @@ export const authUser = catchAsyncError(async (req, res, next) => {
 
   let decoded;
   try {
-    decoded = await jwt.verify(token, process.env.JWT_SECRET);
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
     return next(
       new ErrorHandler(

@@ -14,7 +14,7 @@ const SavedPosts = () => {
           posts={savedPosts}
           emptyText="You have'nt saved any post yet."
           showTags={true}
-          toggleSave={true}
+          savePost={true}
         />
       </div>
     </Container>

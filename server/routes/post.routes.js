@@ -12,6 +12,7 @@ import {
   updatePost,
 } from "../controllers/post.controller.js";
 import { authUser } from "../middlewares/authUser.js";
+import { grantUnknownAccess } from "../middlewares/grantUnknownAccess.js";
 import { singleUpload } from "../config/multer.js";
 
 const router = express.Router();
@@ -20,7 +21,7 @@ router.get("/", authUser, getAllPosts);
 router.get("/following", authUser, getFollowingPosts);
 router.get("/me", authUser, getMyPosts);
 router.get("/saved", authUser, getSavedPosts);
-router.get("/:postId", getPostById);
+router.get("/:postId", grantUnknownAccess, getPostById);
 router.post("/", authUser, singleUpload("image"), addNewPost);
 router.put("/:postId", authUser, singleUpload("image"), updatePost);
 router.put("/:postId/like", authUser, likePost);

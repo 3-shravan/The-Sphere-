@@ -20,11 +20,11 @@ const Profile = () => {
       <ProfileCard user={user} />
       <div className="font-Futura text-left w-full px-2 text-neutral-600">
         <span className="border-b-2 py-1 border-border">
-          {me ? "your" : "there"} posts {" "}
+          {me ? "your" : "there"} posts{" "}
           <span className="text-second font-blackout">{posts?.length}</span>
         </span>
       </div>
-      <PostGrid posts={posts} />
+      <PostGrid posts={posts} likePost={true} savePost={true} />
     </Container>
   );
 };

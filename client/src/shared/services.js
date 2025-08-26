@@ -36,29 +36,29 @@ export const useToggleLikePost = ({ onMutate, onError } = {}) => {
   return useMutation({
     mutationFn: (postId) =>
       fetcher({ endpoint: `/posts/${postId}/like`, method: "PUT" }),
-    onMutate: () => {
-      onMutate?.();
-    },
+    onMutate: () => onMutate?.(),
     onError: (error) => {
       onError?.();
       errorToast(error?.response?.data?.message || "Error liking post");
     },
-    onSuccess: (_, postId) => {
-      queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
-    },
+    onSuccess: (_, postId) =>
+      queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY }),
   });
 };
 
-export const useToggleSavePost = () => {
+export const useToggleSavePost = ({ onMutate, onError } = {}) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (postId) =>
       fetcher({ endpoint: `/posts/${postId}/save`, method: "PUT" }),
-    onSuccess: (_, postId) => {
-      queryClient.invalidateQueries({ queryKey: SAVED_POSTS_QUERY_KEY });
-    },
+    onMutate: () => onMutate?.(),
+    onSuccess: (_, postId) =>
+      queryClient.invalidateQueries({ queryKey: SAVED_POSTS_QUERY_KEY }),
     onError: (error) => {
-      errorToast(error?.response?.data?.message || "Error saving post");
+      onError?.();
+      errorToast(
+        error?.response?.data?.message || "You cannot save the post. be login"
+      );
     },
   });
 };

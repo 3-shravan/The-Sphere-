@@ -33,7 +33,7 @@ const SuggestedUsers = () => {
   if (error) return Error();
 
   return (
-    <SmoothScroll className="max-h-[215px]">
+    <SmoothScroll className="max-h-[215px] custom-scrollbar-hide">
       <div className="hidden lg:flex flex-col gap-2  p-2">
         <h2 className="px-3 text-second dark:text-first tracking-tight font-Futura">
           <CircleSmall className="inline text-second" />
