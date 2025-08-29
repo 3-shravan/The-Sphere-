@@ -4,4 +4,13 @@ import SavePost from "./components/functional/SavePost";
 import ShowTags from "./components/ui/ShowTags";
 import ViewPost from "./pages/ViewPost";
 import PostGrid from "./components/PostGrid";
-export { FollowUser, LikePost, SavePost, ShowTags, ViewPost, PostGrid };
+import usePostFromCache from "./hooks/usePostFromCache";
+export {
+  FollowUser,
+  LikePost,
+  SavePost,
+  ShowTags,
+  ViewPost,
+  PostGrid,
+  usePostFromCache,
+};

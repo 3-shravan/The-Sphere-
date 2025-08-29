@@ -7,7 +7,6 @@ export const setAllFieldsNull = (formData) => {
   return formData;
 };
 
-
 // Formats a date string to "MMM DD, YYYY at HH:MM AM/PM"
 export function formatDateString(dateString) {
   const options = {
@@ -23,11 +22,9 @@ export function formatDateString(dateString) {
     hour: "numeric",
     minute: "2-digit",
   });
-
   return `${formattedDate} at ${time}`;
 }
 
-// Converts a timestamp into relative or formatted date string
 export const multiFormatDateString = (timestamp = "") => {
   const timestampNum = Math.round(new Date(timestamp).getTime() / 1000);
   const date = new Date(timestampNum * 1000);
@@ -57,7 +54,7 @@ export const multiFormatDateString = (timestamp = "") => {
 
 export function formatDateToLocalISO(date) {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // month is 0-indexed
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`; // returns yyyy-mm-dd
+  return `${year}-${month}-${day}`;
 }

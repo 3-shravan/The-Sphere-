@@ -1,40 +1,50 @@
+import useComment from "./hooks/useComment";
+import AddComment from "./components/AddComment";
+import Comment from "./components/Comment";
 import { useState } from "react";
-import { MessageSquare } from "lucide-react";
-import {
-  useCreateComment,
-  useDeleteComment,
-  useGetPostComments,
-} from "./services";
+import { ProfilePicture } from "@/components";
 
-const Comments = ({ postId }) => {
-  const { data: commentsData, isLoading, error } = useGetPostComments(postId);
-  const [comment, setComment] = useState("how are you doing?");
-  const { mutateAsync: createComment } = useCreateComment(postId);
-  const { mutateAsync: deleteComment } = useDeleteComment();
-
-  const handleCreate = async () => {
-    if (!comment.trim()) return;
-    await createComment({ comment, postId });
-    setComment("");
-  };
-
-  const handleDelete = async (commentId) => {
-    if (!postId || !commentId)
-      return console.warn("Missing postId or commentId", postId, commentId);
-    await deleteComment({ postId, commentId });
-  };
+const Comments = ({ postId, expanded }) => {
+  const { comments, isLoading, topComment } = useComment(postId);
+  const [expand, setExpand] = useState(expanded | false);
 
   if (isLoading) return <p>Loading comments...</p>;
-  if (error) return <p>Error loading comments</p>;
-
   return (
-    <div className=" md:px-4 px-1 flex text-xs text-foreground">
-      <MessageSquare size={16} />
-      <button className="px-1" onClick={handleCreate}>
-        Comment (soon)
-      </button>
+    <div className="md:px-2.5 px-2 text-sm max-h-[60vh] transition-all duration-200 overflow-y-auto font-Poppins text-foreground">
+      <div className="mt-2">
+        <h3
+          className="font-Futura text-sm mb-2 cursor-pointer"
+          onClick={() => setExpand((prev) => !prev)}
+        >
+          Comments {comments.comments.length}
+        </h3>
 
-      <button onClick={() => handleDelete()}></button>
+        {comments?.comments?.length === 0 ? (
+          <p className="text-sm font-Gilroy  text-muted-foreground">
+            No comments yet. Be the first to comment!
+          </p>
+        ) : expand ? (
+          <div className="space-y-3">
+            {comments?.comments.map((comment) => (
+              <Comment
+                key={comment._id}
+                comment={comment}
+                postId={postId}
+                parentId={comment._id}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex gap-2 my-1 -ml-1">
+            <ProfilePicture
+              profilePicture={topComment?.author?.profilePicture}
+              size="sm"
+            />
+            <span>{topComment?.comment}</span>
+          </div>
+        )}
+      </div>
+      <AddComment postId={postId} />
     </div>
   );
 };

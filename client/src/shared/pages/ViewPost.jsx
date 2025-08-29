@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import { useGetSinglePost } from "../services";
 import { LikePost, SavePost, ShowTags } from "..";
+import Comments from "@/features/comments/Comments";
 
 const ViewPost = () => {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ const ViewPost = () => {
     tags,
     isSaved,
     createdAt,
+    _id,
   } = post;
   console.log(isSaved);
   return (
@@ -97,26 +99,7 @@ const ViewPost = () => {
             <div className="-ml-1">
               <ShowTags tags={tags} />
             </div>
-            {/* Comments */}
-            <div className="mt-5">
-              <h3 className="font-Futura">Comments</h3>
-              {comments.length === 0 ? (
-                <p className="text-xs font-Gilroy text-muted-foreground">
-                  &times; no comments
-                </p>
-              ) : (
-                <ul className="space-y-2">
-                  {comments.map((comment) => (
-                    <li
-                      key={comment._id}
-                      className="text-sm text-foreground border pb-1"
-                    >
-                      {comment?.comment}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+            <Comments postId={_id} expanded={true} />
           </div>
         </div>
       </div>

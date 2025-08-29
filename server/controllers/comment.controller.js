@@ -14,9 +14,9 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
   if (!post) return next(new ErrorHandler(404, "Post not found"));
 
   // Check if user is blocked
-  if (await isBlocked(commentedBy, post.author)) {
-    return next(new ErrorHandler(403, "You cannot like this post"));
-  }
+  // if (await isBlocked(commentedBy, post.author)) {
+  //   return next(new ErrorHandler(403, "You cannot like this post"));
+  // }
 
   const newComment = await Comment.create({
     comment,

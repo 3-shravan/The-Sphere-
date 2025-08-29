@@ -3,9 +3,8 @@ import { useSavedPosts, useToggleSavePost } from "../services";
 import { useState } from "react";
 
 const useSavePost = (postId) => {
-  const { data } = useSavedPosts();
   // const { savedPosts } = useSelector((state) => state.posts);
-  // console.log(data?.savedPosts);
+  const { data } = useSavedPosts();
   const [isSaved, setIsSaved] = useState(
     data?.savedPosts.some((p) => p._id === postId)
   );

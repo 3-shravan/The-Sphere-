@@ -1,11 +1,5 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetcher } from "@lib/fetcher";
-import { errorToast, successToast } from "@/utils";
 
 const POSTS_QUERY_KEY = ["posts"];
 

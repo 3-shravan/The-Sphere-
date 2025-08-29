@@ -8,41 +8,51 @@ export const useGetPostComments = (postId) => {
   return useQuery({
     queryKey: COMMENTS_QUERY_KEY(postId),
     queryFn: () => fetcher({ endpoint: `/comments/${postId}` }),
+    onError: (err) => {
+      errorToast(
+        err?.response?.data?.message || "Error while getting the comments."
+      );
+    },
   });
 };
 
-export const useCreateComment = () => {
+export const useCreateComment = (postId) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ comment, postId }) =>
+    mutationFn: ({ comment, parentId = null }) =>
       fetcher({
         endpoint: `/comments/${postId}`,
         method: "POST",
-        data: { comment },
+        data: { comment, parentId },
       }),
-    onSuccess: (response, postId) => {
+    onSuccess: (data) => {
+      successToast(data.message);
       queryClient.invalidateQueries({ queryKey: COMMENTS_QUERY_KEY(postId) });
     },
     onError: (error) => {
-      errorToast(error?.response?.data?.message || "Error creating comment");
+      errorToast(
+        error?.response?.data?.message || "Error while creating comment"
+      );
     },
   });
 };
 
-export const useDeleteComment = () => {
+export const useDeleteComment = (postId) => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ postId, commentId }) =>
+    mutationFn: ({ commentId }) =>
       fetcher({
         endpoint: `/comments/${postId}/${commentId}`,
         method: "DELETE",
       }),
-    onSuccess: (res, postId) => {
+    onSuccess: (data) => {
+      successToast(data.message)
       queryClient.invalidateQueries({ queryKey: COMMENTS_QUERY_KEY(postId) });
-      successToast("Comment successfully deleted");
     },
     onError: (error) => {
-      errorToast(error?.response?.data?.message || "Error deleting comment");
+      errorToast(
+        error?.response?.data?.message || "Error while deleting comment"
+      );
     },
   });
 };

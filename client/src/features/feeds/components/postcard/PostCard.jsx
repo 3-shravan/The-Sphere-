@@ -1,13 +1,13 @@
 import { Confirm } from "@/components";
 import PostCardHeader from "./PostCardHeader";
 import PostCardMedia from "./PostCardMedia";
-import { LikePost, SavePost, ShowTags } from "@/shared";
+import { LikePost, SavePost, ShowTags, usePostFromCache } from "@/shared";
 import { useDeletePost } from "@/features/posts/services";
 import { useState } from "react";
+import Comments from "@/features/comments/Comments";
 
 const PostCard = ({ post }) => {
   if (!post) return null;
-
   const [confirmDelete, setConfirmDelete] = useState(false);
   const { mutate: deletePost } = useDeletePost();
 
@@ -43,6 +43,7 @@ const PostCard = ({ post }) => {
       </div>
 
       {/* COMMENTS ----------> */}
+      <Comments postId={post._id} />
     </div>
   );
 };
