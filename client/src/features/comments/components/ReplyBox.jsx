@@ -1,3 +1,6 @@
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { SendHorizontalIcon } from "lucide-react";
 import { useState } from "react";
 
 const ReplyBox = ({ handleCreateReply, parentId, setReplyInput }) => {
@@ -8,16 +11,16 @@ const ReplyBox = ({ handleCreateReply, parentId, setReplyInput }) => {
     setReply("");
   };
   return (
-    <div className="my-1 flex w-[50%] gap-2">
-      <input
-        type="text"
+    <div className="my-1 gap-1 items-center pb-2 ml-8 justify-end flex md:w-[50%]">
+      <Textarea
         value={reply}
+        variant="reply"
         onChange={(e) => setReply(e.target.value)}
-        className="flex-1 border rounded-md ml-10 px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-emerald-200"
+        placeholder="reply. ."
       />
-      <button className="text-xs" onClick={createReply}>
-        Reply
-      </button>
+      <Button variant="outline" size="sm" onClick={createReply}>
+        <SendHorizontalIcon size={12} />
+      </Button>
     </div>
   );
 };

@@ -24,20 +24,16 @@ const ViewPost = () => {
       </div>
     );
   }
-
   const {
     author,
     media,
     caption,
     thoughts,
     likes = [],
-    comments = [],
     tags,
-    isSaved,
     createdAt,
     _id,
   } = post;
-  console.log(isSaved);
   return (
     <div className="fixed inset-0 bg-background flex items-center justify-center z-50 p-2 md:p-4">
       <div className="bg-background rounded-xl border shadow-xl w-full max-w-6xl h-full md:h-[90vh] flex flex-col md:flex-row overflow-hidden">
@@ -83,7 +79,7 @@ const ViewPost = () => {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto mt-2 md:mt-4 px-2 space-y-4">
+          <div className="flex-1 mt-2 md:mt-4 px-2 space-y-2">
             {/* Caption  */}
             {caption && media && (
               <p className="text-sm font-Futura border-b-1 py-2 border-muted">
@@ -91,15 +87,17 @@ const ViewPost = () => {
               </p>
             )}
 
+            <div className="-ml-1">
+              <ShowTags tags={tags} />
+            </div>
             <div className="flex items-center gap-4">
               <LikePost postId={post._id} likes={likes} />
               <SavePost postId={post._id} />
               <span className="text-xs">Share</span>
             </div>
-            <div className="-ml-1">
-              <ShowTags tags={tags} />
+            <div className="-ml-[9px]">
+              <Comments postId={_id} expanded={true} />
             </div>
-            <Comments postId={_id} expanded={true} />
           </div>
         </div>
       </div>

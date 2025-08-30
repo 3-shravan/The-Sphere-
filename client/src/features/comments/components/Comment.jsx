@@ -9,7 +9,7 @@ const Comment = ({ comment, postId, parentId }) => {
   const [showReplies, setShowReplies] = useState(false);
 
   return (
-    <div>
+    <div className="rounded-lg">
       <CommentBox
         comment={comment}
         handleDelete={handleDelete}
@@ -36,7 +36,7 @@ const Comment = ({ comment, postId, parentId }) => {
         ))}
       {comment.replies.length > 0 && showReplies && (
         <div
-          className="flex items-center text-[10px] gap-1 pl-10 hover:text-primary transition"
+          className="flex items-center text-[10px] cursor-pointer text-rose-300 gap-1 pl-10 hover:text-second transition"
           onClick={() => setShowReplies((prev) => !prev)}
         >
           ........Hide Replies

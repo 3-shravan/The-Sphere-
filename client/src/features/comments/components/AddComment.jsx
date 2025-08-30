@@ -1,26 +1,23 @@
 import { Button } from "@/components/ui/button";
 import useComment from "../hooks/useComment";
-import { MessageSquare } from "lucide-react";
+import { BsSendFill } from "react-icons/bs";
+import { Textarea } from "@/components/ui/textarea";
 
 const AddComment = ({ postId }) => {
   const { comment, setComment, handleCreate } = useComment(postId);
   return (
     <div className="mt-4 pb-1 flex items-center space-x-2">
-      <MessageSquare size={22} className="text-muted-foreground" />
-      <textarea
+      <Textarea
         type="text"
         value={comment}
+        variant="reply"
         onChange={(e) => setComment(e.target.value)}
-        placeholder="Write a comment..."
-        className="flex-1 resize-none h-9 border px-2 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-muted"
+        placeholder="whats your thought on this ? "
+        className="flex-1 resize-none h-9 custom-scrollbar-hide border px-2 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-muted"
         rows={1}
       />
-      <Button
-        variant="outline"
-        className=" text-second px-3 py-2  text-xs hover:bg-muted"
-        onClick={() => handleCreate()}
-      >
-        Comment
+      <Button variant="outline" onClick={() => handleCreate()}>
+        <BsSendFill />
       </Button>
     </div>
   );

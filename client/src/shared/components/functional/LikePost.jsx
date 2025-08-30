@@ -40,14 +40,23 @@ const LikePost = ({ postId, likes, likedBy = true }) => {
                 onClick={() => setShowModal(true)}
               >
                 <div className="flex -space-x-2">
-                  {likes.slice(0, 3).map((user) => (
-                    <img
-                      key={user._id}
-                      src={user.profilePicture}
-                      alt={user.name}
-                      className="w-5 h-5 rounded-full border-2 border-rose-200"
-                    />
-                  ))}
+                  {likes.slice(0, 3).map((user) =>
+                    user?.profilePicture ? (
+                      <img
+                        key={user._id}
+                        src={user.profilePicture}
+                        alt={user.name}
+                        className="w-5 h-5 rounded-full border-2 border-rose-200"
+                      />
+                    ) : (
+                      <div
+                        key={user._id}
+                        className="w-5 h-5 rounded-full border-2 border-white bg-gradient-to-r from-rose-300 to-rose-400 flex items-center justify-center text-muted text-xs font-Futura font-bold"
+                      >
+                        {user?.name?.[0]?.toUpperCase() || "U"}
+                      </div>
+                    )
+                  )}
                 </div>
                 <span className="text-xs text-muted-foreground hover:text-foreground">
                   liked by {likes[0]?.name}{" "}

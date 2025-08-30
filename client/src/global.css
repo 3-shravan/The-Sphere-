@@ -192,6 +192,9 @@ body {
   .tags {
     @apply inline-block mr-1 font-Gilroy  text-muted-foreground px-2 py-1 bg-muted-foreground/10 rounded-full text-xs;
   }
+  .reply-action-btn {
+    @apply font-Gilroy flex cursor-pointer items-center gap-1 justify-center text-muted-foreground px-2 py-1 bg-muted-foreground/10 rounded-full text-[10px] hover:bg-muted-foreground/20 transition;
+  }
 }
 
 @font-face {
