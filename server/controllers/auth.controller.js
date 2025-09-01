@@ -1,15 +1,17 @@
 import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
 import { User } from "../models/user.model.js";
-import { createUser } from "../services/user.services.js";
-import { validatePhoneNo, crpytPassword } from "../utils/utilities.js";
-import { sendVerificationCode } from "../services/sendVerificationCode.js";
-import { sendToken } from "../services/sendToken.js";
+import { validatePhoneNo } from "../utils/validations.js";
 import { ExpiredToken } from "../models/blackListedTokenModel.js";
-import { sendEmail } from "../services/sendEmail.js";
 import { handleSuccessResponse } from "../utils/responseHandler.js";
 import { generateResetEmailTemplate } from "../utils/emailTemplate.js";
-import { makePhoneCall } from "../services/phoneCall.js";
+import {
+  sendVerificationCode,
+  makePhoneCall,
+  sendEmail,
+  sendToken,
+  crpytPassword,
+} from "../services/auth.services.js";
 
 export const register = catchAsyncError(async (req, res, next) => {
   try {
@@ -98,9 +100,15 @@ export const register = catchAsyncError(async (req, res, next) => {
       );
       return handleSuccessResponse(res, 200, message);
     }
-
     // If no user exists, create a new user
-    const user = await createUser({ name, phone, email, password });
+    const user = await User.create({
+      name,
+      phone,
+      email,
+      password,
+    });
+    if (!user) return next(new ErrorHandler(500, "Failed to create user."));
+
     const verificationCode = await user.generateVerificationCode();
     await User.findOneAndUpdate(
       { _id: user._id },

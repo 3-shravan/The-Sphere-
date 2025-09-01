@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { generateFiveDigitRandomNumber } from "../utils/utilities.js";
+import { generateFiveDigitRandomNumber } from "../services/auth.services.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -130,20 +130,19 @@ userSchema.methods.comparePassword = async function (password) {
 };
 
 userSchema.methods.generateVerificationCode = async function () {
-  const verificationCode = await generateFiveDigitRandomNumber();
+  const verificationCode = generateFiveDigitRandomNumber();
   this.verificationCode = verificationCode;
   this.verificationCodeExpire = Date.now() + 10 * 60 * 1000;
   return verificationCode;
 };
 
 userSchema.methods.generateAuthToken = async function () {
-  const token = await jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
   return token;
 };
 
-//generate token to verify the user for reseting the password
 userSchema.methods.generateResetPasswordToken = async function () {
   const resetToken = crypto.randomBytes(20).toString("hex");
   this.resetPasswordToken = crypto

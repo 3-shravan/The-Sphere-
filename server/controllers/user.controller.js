@@ -1,15 +1,15 @@
 import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
 import { User } from "../models/user.model.js";
-import { uploadImage, deleteImage } from "../config/cloudinary.js";
-import { isAtLeast13YearsOld } from "../utils/utilities.js";
 import { Block } from "../models/block.model.js";
+import { uploadImage, deleteImage } from "../config/cloudinary.js";
+import { isAtLeast13YearsOld } from "../utils/validations.js";
 import { v4 as uuidv4 } from "uuid";
+import { profileChanges } from "../utils/validations.js";
 import {
   handleErrorResponse,
   handleSuccessResponse,
 } from "../utils/responseHandler.js";
-import { profileChanges } from "../utils/validations.js";
 
 export const updateProfile = catchAsyncError(async (req, res, next) => {
   const userId = req.user._id;

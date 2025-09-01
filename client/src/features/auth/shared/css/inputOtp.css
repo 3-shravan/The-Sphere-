@@ -8,9 +8,10 @@
 .inputOtp {
   width: 3rem;
   height: 3rem;
+  font-size: 2vh;
   text-align: center;
-  color: crimson;
-  font-family: "Futura";
+  color: var(--color-second);
+  font-family: "Gilroy";
   border: 0.1px solid var(--forest-green);
   border-radius: 8px;
   cursor: default;

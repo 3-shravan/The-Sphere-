@@ -1,34 +1,39 @@
-import mongoose from 'mongoose'
-const messageSchema = new mongoose.Schema({
-
-   chat: {
+import mongoose from "mongoose";
+const messageSchema = new mongoose.Schema(
+  {
+    chat: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Chat",
-   },
-
-   sender: {
+    },
+    sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-   },
-   content: {
+    },
+    content: {
       type: String,
-      required: true,
-      trim: true
-   },
-   media: {
+      trim: true,
+    },
+    media: {
       type: String,
-      default: null
-   },
-   isLiked: {
+      default: null,
+    },
+    public_id: {
+      type: String,
+      default: null,
+    },
+    isLiked: {
       type: Boolean,
-      default: false
-   },
-   readBy: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-   }],
+      default: false,
+    },
+    //  seenBy: [
+    //    {
+    //      type: mongoose.Schema.Types.ObjectId,
+    //      ref: "User",
+    //      seenAt: { type: Date, default: Date.now() },
+    //    },
+    //  ],
+  },
+  { timestamps: true }
+);
 
-
-}, { timestamps: true })
-
-export const Message = mongoose.model('Message', messageSchema)
+export const Message = mongoose.model("Message", messageSchema);

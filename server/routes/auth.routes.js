@@ -6,7 +6,6 @@ import {
   login,
   logout,
   register,
-  // resetPassword,
   resetPasswordWithEmailToken,
   resetPasswordWithPhone,
   verifyOTP,

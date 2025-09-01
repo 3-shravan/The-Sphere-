@@ -1,6 +1,9 @@
 import { v2 as cloudinary } from "cloudinary";
 import { config } from "dotenv";
-import getDataUri from "./dataUriParser.js";
+import DataUriParser from "datauri/parser.js";
+import path from "path";
+const parser = new DataUriParser();
+
 config({ path: "./config/config.env" });
 
 cloudinary.config({
@@ -8,6 +11,11 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+const getDataUri = (file) => {
+  const extensionName = path.extname(file.originalname).toString();
+  return parser.format(extensionName, file.buffer).content;
+};
 
 export const uploadImage = async (image, public_id, folderName) => {
   if (!image) return null;

@@ -1,4 +1,5 @@
-import { ThoughtsCard } from "@/components";
+import ThoughtsCard from "@/shared/components/ui/ThoughtsCard";
+
 const PostCardMedia = ({ media, thoughts }) => {
   if (media) {
     return (

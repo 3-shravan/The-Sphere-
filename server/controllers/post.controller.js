@@ -1,6 +1,6 @@
 import catchAsyncError from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/errorHandler.js";
-import cloudinary, { deleteImage } from "../config/cloudinary.js";
+import { deleteImage } from "../config/cloudinary.js";
 import { v4 as uuidv4 } from "uuid";
 import { Post } from "../models/post.model.js";
 import { User } from "../models/user.model.js";
@@ -8,7 +8,7 @@ import { Block } from "../models/block.model.js";
 import { Comment } from "../models/comment.model.js";
 import { createPost } from "../services/post.services.js";
 import { handleSuccessResponse } from "../utils/responseHandler.js";
-import { processImageUpload } from "../services/processImageUpload.js";
+import { processImageUpload } from "../services/file.services.js";
 import { postChanges } from "../utils/validations.js";
 
 const isBlocked = async (userId, targetId) => {
@@ -203,7 +203,7 @@ export const getPostById = catchAsyncError(async (req, res, next) => {
     })
     .lean();
   if (!post) return next(new ErrorHandler(404, "Post not found"));
-  
+
   let isSaved = false;
   if (userId) {
     const user = await User.findById(userId).select("saved");

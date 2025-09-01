@@ -13,7 +13,7 @@ import {
 } from "../controllers/post.controller.js";
 import { authUser } from "../middlewares/authUser.js";
 import { grantUnknownAccess } from "../middlewares/grantUnknownAccess.js";
-import { singleUpload } from "../config/multer.js";
+import { singleUpload } from "../middlewares/multer.js";
 
 const router = express.Router();
 

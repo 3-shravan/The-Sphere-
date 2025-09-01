@@ -1,6 +1,6 @@
 import express from "express";
 import { authUser } from "../middlewares/authUser.js";
-import { singleUpload } from "../config/multer.js";
+import { singleUpload } from "../middlewares/multer.js";
 import {
   blockUnblockUser,
   deleteAccount,

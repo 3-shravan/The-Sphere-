@@ -1,7 +1,8 @@
 import { formatDistanceToNow } from "date-fns";
 import { LikePost, SavePost, ShowTags } from "@/shared";
-import { H2, Backdrop, ThoughtsCard } from "@/components";
+import { H2, Backdrop } from "@/components";
 import { useNavigate } from "react-router-dom";
+import ThoughtsCard from "./ui/ThoughtsCard";
 
 const WORDS = 70;
 

@@ -1,3 +1,14 @@
+export const validatePhoneNo = (phoneNumber) => {
+  const phoneRegex = /^(\+91|91)?[-\s]?[6-9]\d{9}$/;
+  return phoneRegex.test(phoneNumber);
+};
+
+export const isAtLeast13YearsOld = (dateOfBirth) => {
+  const thirteenYearsAgo = new Date();
+  thirteenYearsAgo.setFullYear(thirteenYearsAgo.getFullYear() - 13);
+  return dateOfBirth <= thirteenYearsAgo;
+};
+
 export const postChanges = (post, newPost) => {
   const { caption, location, tags } = newPost;
   const isCaptionSame = caption === post.caption;
