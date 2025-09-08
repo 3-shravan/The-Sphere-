@@ -18,7 +18,7 @@ const EditProfile = ({ user }) => {
     gender,
     setGender,
     previewImage,
-    setPreviewImage,
+    clearProfileImage,
     handleImageChange,
     handleSubmit,
     isPending,
@@ -51,7 +51,7 @@ const EditProfile = ({ user }) => {
             gender={gender}
             setGender={setGender}
             previewImage={previewImage}
-            setPreviewImage={setPreviewImage}
+            clearProfileImage={clearProfileImage}
             handleImageChange={handleImageChange}
             handleSubmit={handleSubmit}
             isPending={isPending}

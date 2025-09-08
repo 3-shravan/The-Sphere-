@@ -1,3 +1,4 @@
+import { useErrorToast, useSuccessToast } from "@/hooks";
 import { fetcher } from "@/lib/fetcher";
 import { errorToast, successToast } from "@/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -53,13 +54,9 @@ export const useDeleteProfilePicture = () => {
     mutationFn: () =>
       fetcher({ endpoint: "/users/profile-picture", method: "DELETE" }),
     onSuccess: (data) => {
-      successToast(data.message || "Profile picture removed.");
+      useSuccessToast(data);
       queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
-    onError: (error) => {
-      const errorMsg =
-        error.response?.data?.message || "Failed to remove profile picture.";
-      errorToast(errorMsg);
-    },
+    onError: (error) => useErrorToast(error),
   });
 };

@@ -16,8 +16,8 @@ const app = express();
 
 const allowedOrigins = [
   process.env.CLIENT_URL,
-  process.env.LOCAL_HOST_URL,
-  process.env.PREVIEW_PWA_URL,
+  process.env.LOCALHOST_URL,
+  process.env.BUILD_PREVIEW_URL,
 ];
 app.use(
   cors({

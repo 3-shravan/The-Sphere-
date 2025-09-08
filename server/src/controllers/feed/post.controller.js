@@ -58,7 +58,6 @@ export const getAllPosts = catchAsyncError(async (req, res, next) => {
     parseInt(limit),
     POST_POPULATE
   );
-  if (!data.posts.length) return next(new ErrorHandler(404, "No posts found"));
   return handleSuccessResponse(res, 200, "Posts fetched successfully", data);
 });
 /****************************

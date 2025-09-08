@@ -15,7 +15,7 @@ const EditProfileForm = ({
   gender,
   setGender,
   previewImage,
-  setPreviewImage,
+  clearProfileImage,
   handleImageChange,
   handleSubmit,
   isPending,
@@ -30,7 +30,7 @@ const EditProfileForm = ({
       <div className="flex flex-col items-center justify-center gap-4 md:px-8">
         <ProfileImageUploader
           previewImage={previewImage}
-          setPreviewImage={setPreviewImage}
+          clearProfileImage={clearProfileImage}
           profilePicture={user?.profilePicture}
           handleImageChange={handleImageChange}
         />

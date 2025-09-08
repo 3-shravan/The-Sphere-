@@ -35,6 +35,11 @@ const useEditProfile = (user) => {
     if (data?.success) drawerRef?.current?.click();
   };
 
+  const clearProfileImage = () => {
+    setProfileImage(null);
+    setPreviewImage(null);
+  };
+
   return {
     dob,
     setDob,
@@ -42,6 +47,7 @@ const useEditProfile = (user) => {
     setGender,
     previewImage,
     setPreviewImage,
+    clearProfileImage,
     handleImageChange,
     handleSubmit,
     isPending,
