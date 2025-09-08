@@ -11,14 +11,14 @@ const Comments = ({ postId, expanded }) => {
 
   if (isLoading) return <p>Loading comments...</p>;
   return (
-    <div className="md:px-2.5 px-2 text-sm max-h-[60vh] transition-all duration-200 overflow-y-auto font-Poppins text-foreground">
+    <div className="md:px-2 px-2 text-sm max-h-[60vh] transition-all duration-200 overflow-y-auto font-Poppins text-foreground">
       <div className="mt-2">
         <div
           className="font-Gilroy flex text-xs text-muted-foreground gap-2 mb-2 cursor-pointer"
           onClick={() => setExpand((prev) => !prev)}
         >
-          <span>
-            <MessageSquare size={17} className="-ml-0.5 inline" />
+          <span className="min-w-8">
+            <MessageSquare size={16} className=" inline" />
             <span className="text-foreground font-bold ml-1">
               {comments.comments.length}
             </span>

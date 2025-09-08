@@ -5,10 +5,10 @@ const FeedList = () => {
   const { posts, isFetchingNextPage } = useFeed();
   return (
     <div className="flex flex-col gap-3 w-full">
-      {posts?.length === 0 ? (
-        <span className="text-center text-xs ">No posts</span>
+      {posts?.length === 0 || (posts && !posts[0]) ? (
+        <span className="text-center text-xs pt-12">No posts</span>
       ) : (
-        posts.map((post) => <PostCard key={post._id} post={post} />)
+        posts?.map((post) => <PostCard key={post?._id} post={post} />)
       )}
       {isFetchingNextPage && (
         <div className=" text-center font-Poppins  text-xl mb-6 ">

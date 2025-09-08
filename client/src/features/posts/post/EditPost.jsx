@@ -28,7 +28,11 @@ const EditPost = ({ open, setOpen, post }) => {
 
     const tags = formData.get("tags");
     const formattedTags = formatTags(tags);
-    formData.set("tags", JSON.stringify(formattedTags));
+    formData.delete("tags");
+    // formData.set("tags", JSON.stringify(formattedTags));
+    formattedTags.forEach((tag) => {
+      formData.append("tags", tag);
+    });
 
     const errors = validatePostForm(formData, false);
     if (errors) return errorToast(errors);

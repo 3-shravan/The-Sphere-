@@ -1,7 +1,7 @@
 import { ReactLenis } from "lenis/react";
 import { Toast } from "@lib/Toast";
 import { Routes, Route } from "react-router-dom";
-import { PublicRoutes, ProtectedRoutes, NonExistRoutes } from "@components";
+import { PublicRoutes, ProtectedRoutes, NonExistRoutes } from "@/components";
 import { FeedLayout, HomePage, LandingPage } from "@/layouts";
 import { CreatePost, SavedPosts } from "@/features/posts";
 import Explore from "@features/explore/Explore";

@@ -22,7 +22,10 @@ const useApi = () => {
         }
       } catch (err) {
         console.log(err);
-        const msg = err.response?.data?.message || "Server failed to respond";
+        const msg =
+          err.response?.data?.errors[0] ||
+          err.response?.data?.message ||
+          "Server failed to respond";
         errorToast(msg);
       } finally {
         setLoading(false);

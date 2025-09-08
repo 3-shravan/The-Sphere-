@@ -52,8 +52,8 @@ export const useDeleteProfilePicture = () => {
   return useMutation({
     mutationFn: () =>
       fetcher({ endpoint: "/users/profile-picture", method: "DELETE" }),
-    onSuccess: () => {
-      successToast("Profile picture removed successfully.");
+    onSuccess: (data) => {
+      successToast(data.message || "Profile picture removed.");
       queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
     onError: (error) => {

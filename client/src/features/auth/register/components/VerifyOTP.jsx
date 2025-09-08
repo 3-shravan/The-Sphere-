@@ -25,11 +25,10 @@ const VerifyOTP = ({
   };
 
   const handleOtpSubmit = async (otp) => {
-    const requestData = {
-      email: formData.email,
-      phone: formData.phone,
-      otp,
-    };
+    let requestData = { otp };
+    formData.verificationMethod === "email"
+      ? (requestData.email = formData.email)
+      : (requestData.phone = formData.phone);
 
     const response = await request({
       endpoint: "auth/verify-otp",

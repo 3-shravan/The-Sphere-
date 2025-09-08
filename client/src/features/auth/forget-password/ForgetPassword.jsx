@@ -11,7 +11,7 @@ import {
   validForgetEmail,
   validForgetPhone,
   ForgetPasswordFormData,
-} from "@utils";
+} from "@/utils";
 import {
   MdMotionPhotosOn,
   IoIosArrowBack,
@@ -44,19 +44,17 @@ const ForgetPassword = () => {
     }
   }, [resendTimer]);
 
-  const showError = async () => {
-    return errorToast(
-      `Please wait ${resendTimer} seconds before resending OTP.`
-    );
+  const showError = () =>
+    errorToast(`Please wait ${resendTimer} seconds before resending OTP.`);
+
+  const getPayload = () => {
+    const payload = { ...formData };
+    if (byEmail) delete payload.phone;
+    else delete payload.email;
+    return payload;
   };
 
-  const handleMethod = () => {
-    if (byEmail) {
-      formData.email = "";
-    } else formData.phone = "";
-
-    setByEmail(!byEmail);
-  };
+  const handleMethod = () => setByEmail(!byEmail);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -83,7 +81,7 @@ const ForgetPassword = () => {
     const response = await request({
       endpoint: "auth/forget-password",
       method: "POST",
-      body: formData,
+      body: getPayload(),
     });
     if (response?.status === 200) {
       setResendTimer(RESEND_TIME);
@@ -99,19 +97,17 @@ const ForgetPassword = () => {
         `Please wait ${resendTimer} seconds before resending OTP.`
       );
 
-    if (validForgetEmail(formData, byEmail)) {
+    if (validForgetEmail(formData, byEmail))
       return errorToast("Provide a valid Email address");
-    }
 
     if (validForgetPhone(formData, byEmail)) {
       return errorToast("Provide a valid Phone number");
     }
     setIsResend(false);
-
     const response = await request({
       endpoint: "auth/forget-password",
       method: "POST",
-      body: formData,
+      body: getPayload(),
     });
     if (response?.status === 200) {
       setResendTimer(RESEND_TIME);

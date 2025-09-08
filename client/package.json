@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-pwa-assets": "pwa-asset-generator public/favicon-dark.svg public --icon-only --favicon --background 'transparent' --padding '10%' --type png --path-override icon && pwa-asset-generator public/favicon-dark.svg public --splash-only --background '#ffffff' --padding '20%' --type png --path-override apple"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
@@ -53,7 +54,10 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
+    "pwa-asset-generator": "^8.1.1",
+    "sharp": "^0.34.3",
     "tw-animate-css": "^1.2.8",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "vite-plugin-pwa": "^1.0.3"
   }
 }

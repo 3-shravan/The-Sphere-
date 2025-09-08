@@ -1,14 +1,8 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetcher } from "@lib/fetcher";
-import { errorToast, successToast } from "@/utils";
+import { useErrorToast, useSuccessToast } from "@/hooks";
 
 const POSTS_QUERY_KEY = ["posts"];
-const SAVED_POSTS_QUERY_KEY = ["savedPosts"];
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
@@ -17,11 +11,23 @@ export const useCreatePost = () => {
     mutationFn: (formData) =>
       fetcher({ endpoint: "/posts", method: "POST", data: formData }),
     onSuccess: (response) => {
-      successToast(response?.message);
+      useSuccessToast(response);
       queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
     },
-    onError: (error) =>
-      errorToast(error.response?.data?.message || "Failed to upload your post"),
+    onError: (error) => useErrorToast(error),
+  });
+};
+
+export const useCreateThought = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (formData) =>
+      fetcher({ endpoint: "/posts/thought", method: "POST", data: formData }),
+    onSuccess: (response) => {
+      useSuccessToast(response);
+      queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
+    },
+    onError: (error) => useErrorToast(error),
   });
 };
 
@@ -30,12 +36,11 @@ export const useUpdatePost = (postId) => {
   return useMutation({
     mutationFn: (formData) =>
       fetcher({ endpoint: `/posts/${postId}`, method: "PUT", data: formData }),
-    onSuccess: (data) => {
-      successToast(data?.message || "Post updated successfully");
+    onSuccess: (response) => {
+      useSuccessToast(response);
       queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
     },
-    onError: (error) =>
-      errorToast(error.response?.data?.message || "Failed to update post"),
+    onError: (error) => useErrorToast(error),
   });
 };
 
@@ -45,13 +50,9 @@ export const useDeletePost = () => {
     mutationFn: (postId) =>
       fetcher({ endpoint: `/posts/${postId}`, method: "DELETE" }),
     onSuccess: (response) => {
-      successToast(response.message);
+      useSuccessToast(response);
       queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
     },
-    onError: (error) => {
-      errorToast(
-        error.response?.data?.message || "Some error while deleting post."
-      );
-    },
+    onError: (error) => useErrorToast(error),
   });
 };

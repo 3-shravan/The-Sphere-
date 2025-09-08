@@ -1,5 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetcher } from "@lib/fetcher";
+import { fetcher } from "@/lib/fetcher";
+import { errorToast } from "@/utils";
 
 const POSTS_QUERY_KEY = ["posts"];
 
@@ -9,6 +10,9 @@ export const usePosts = (limit = 2) => {
     queryFn: async ({ pageParam = 1 }) =>
       await fetcher({ endpoint: `/posts?page=${pageParam}&limit=${limit}` }),
     getNextPageParam: (lastPage) =>
-      lastPage.hasMore ? lastPage.currentPage + 1 : undefined,
+      lastPage?.hasMore ? lastPage?.currentPage + 1 : undefined,
+    onError: (error) => {
+      errorToast(error.message);
+    },
   });
 };

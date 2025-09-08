@@ -1,4 +1,5 @@
 import axios from "@lib/axios";
+
 export const fetcher = async ({
   endpoint,
   method = "GET",

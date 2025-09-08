@@ -1,0 +1,159 @@
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import crypto from "crypto";
+import { generateFiveDigitRandomNumber } from "../../services/auth.services.js";
+
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      require: true,
+      trim: true,
+      maxLength: [32, `username should be less than 32 characters.`],
+      minLength: [3, `username should be atlest 3 characters long.`],
+    },
+    fullName: {
+      type: String,
+      maxLength: [32, `your full name should be less than 32 characters.`],
+    },
+    email: {
+      type: String,
+      trim: true,
+      minLength: [5, `Email should be atlest 5 characters long.`],
+      maxLength: [32, `Email should be less than 32 characters.`],
+    },
+    phone: {
+      type: String,
+      trim: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      minLength: [3, `Password should be atlest 3 characters long.`],
+      maxLength: [50, `Password should be less than 50 characters.`],
+      select: false,
+    },
+    dob: {
+      type: Date,
+    },
+    profilePicture: {
+      type: String,
+    },
+    profilePicturePublicId: {
+      type: String,
+    },
+    bio: {
+      type: String,
+      default: "",
+      maxLength: [220, "Bio should be less than 220 characters."],
+    },
+    gender: {
+      type: String,
+      enum: ["Male", "Female", "Other"],
+    },
+    followers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    following: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    posts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
+    saved: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
+    accountVerified: {
+      type: Boolean,
+      default: false,
+    },
+    attempts: {
+      type: Number,
+      default: 0,
+    },
+    lastAttempt: {
+      type: Date,
+    },
+    verificationCode: {
+      type: Number,
+    },
+    verificationCodeExpire: {
+      type: Date,
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordTokenExpire: {
+      type: Date,
+    },
+    resetPassword: {
+      type: Boolean,
+      default: false,
+    },
+    resetPasswordOTP: {
+      type: Number,
+    },
+    resetPasswordOTPExpire: {
+      type: Date,
+    },
+  },
+  { timestamps: true }
+);
+
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+  this.password = await bcrypt.hash(this.password, 10);
+});
+
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.generateVerificationCode = async function () {
+  const verificationCode = generateFiveDigitRandomNumber();
+  this.verificationCode = verificationCode;
+  this.verificationCodeExpire = Date.now() + 10 * 60 * 1000;
+  return verificationCode;
+};
+
+userSchema.methods.generateAuthToken = async function () {
+  const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
+  });
+  return token;
+};
+
+userSchema.methods.generateResetPasswordToken = async function () {
+  const resetToken = crypto.randomBytes(20).toString("hex");
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  this.resetPasswordTokenExpire = Date.now() + 10 * 60 * 1000;
+  return resetToken;
+};
+
+// //generate verification code to validate the user for reseting the password by phone OTP
+userSchema.methods.generateResetPasswordOTP = async function () {
+  const resetPasswordOTP = await generateFiveDigitRandomNumber();
+  this.resetPasswordOTP = resetPasswordOTP;
+  this.resetPasswordOTPExpire = Date.now() + 10 * 60 * 1000;
+  return resetPasswordOTP;
+};
+
+export const User = mongoose.model("User", userSchema);

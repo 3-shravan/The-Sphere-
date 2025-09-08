@@ -37,7 +37,7 @@ const PostCard = ({ post }) => {
 
       <PostCardMedia media={post?.media} thoughts={post?.thoughts} />
 
-      <div className="flex-between px-2.5">
+      <div className="flex-between px-2">
         <LikePost postId={post._id} likes={post.likes} />
         <SavePost postId={post._id} />
       </div>

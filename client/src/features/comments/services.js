@@ -7,7 +7,7 @@ const COMMENTS_QUERY_KEY = (postId) => ["comments", postId];
 export const useGetPostComments = (postId) => {
   return useQuery({
     queryKey: COMMENTS_QUERY_KEY(postId),
-    queryFn: () => fetcher({ endpoint: `/comments/${postId}` }),
+    queryFn: () => fetcher({ endpoint: `/posts/${postId}/comments` }),
     onError: (err) => {
       errorToast(
         err?.response?.data?.message || "Error while getting the comments."
@@ -21,7 +21,7 @@ export const useCreateComment = (postId) => {
   return useMutation({
     mutationFn: ({ comment, parentId = null }) =>
       fetcher({
-        endpoint: `/comments/${postId}`,
+        endpoint: `/posts/${postId}/comments`,
         method: "POST",
         data: { comment, parentId },
       }),
@@ -42,11 +42,11 @@ export const useDeleteComment = (postId) => {
   return useMutation({
     mutationFn: ({ commentId }) =>
       fetcher({
-        endpoint: `/comments/${postId}/${commentId}`,
+        endpoint: `/posts/${postId}/comments/${commentId}`,
         method: "DELETE",
       }),
     onSuccess: (data) => {
-      successToast(data.message)
+      successToast(data.message);
       queryClient.invalidateQueries({ queryKey: COMMENTS_QUERY_KEY(postId) });
     },
     onError: (error) => {

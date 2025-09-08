@@ -1,10 +1,10 @@
 import { infoToast, validateThoughtsForm } from "@/utils";
 import { Send } from "lucide-react";
 import { useState } from "react";
-import { useCreatePost } from "../services";
+import { useCreatePost, useCreateThought } from "../services";
 const Thoughts = () => {
   const [thoughts, setThoughts] = useState("");
-  const { mutateAsync, isPending } = useCreatePost();
+  const { mutateAsync, isPending } = useCreateThought();
 
   const submitHandler = () => {
     const error = validateThoughtsForm(thoughts);

@@ -6,7 +6,7 @@ import { usePosts } from "../services";
 const useFeed = () => {
   const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
     usePosts();
-  const posts = data?.pages.flatMap((page) => page.posts);
+  const posts = data?.pages?.flatMap((page) => page?.posts);
 
   // const dispatch = useDispatch();
   // useEffect(() => {

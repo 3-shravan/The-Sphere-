@@ -19,7 +19,11 @@ const CreatePostForm = () => {
 
     const tags = formData.get("tags");
     const formattedTags = formatTags(tags);
-    formData.set("tags", JSON.stringify(formattedTags));
+    formData.delete("tags");
+    // formData.set("tags", JSON.stringify(formattedTags));
+    formattedTags.forEach((tag) => {
+      formData.append("tags", tag);
+    });
 
     const error = validatePostForm(formData);
     if (error) return errorToast(error);

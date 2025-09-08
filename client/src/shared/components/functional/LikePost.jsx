@@ -13,7 +13,7 @@ const LikePost = ({ postId, likes, likedBy = true }) => {
       <div className="flex font-Gilroy items-center gap-2 text-sm">
         <button
           onClick={() => !likeIsPending && toggleLike(postId)}
-          className="cursor-pointer flex items-center gap-1"
+          className="cursor-pointer  min-w-8 flex items-center gap-1"
         >
           {isLiked ? (
             <FaHeart className="text-third w-4 h-4" />

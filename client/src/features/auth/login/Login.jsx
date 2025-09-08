@@ -4,7 +4,7 @@ import { useNavigate, AnimatePresence, motion, IoLogIn } from "@lib";
 import { Menu, Header } from "@components";
 import { useApi } from "@/hooks";
 import { useAuth, useMenu } from "@context";
-import { LoginInitialFormData, setTokenAndAuthenticated } from "@utils";
+import { LoginInitialFormData, setTokenAndAuthenticated } from "@/utils";
 import { ViaEmail, ViaPhone, RedirectToSignup } from "./components";
 import { AuthButton, PrivacyTermsAndConditions } from "../shared";
 import styles from "@features/auth/shared/auth.module.css";
@@ -20,9 +20,15 @@ const Login = () => {
   const [loginByEmail, setLoginByEmail] = React.useState(true);
   const { request, loading } = useApi();
 
-  const handleMethod = () => {
-    setFormData(LoginInitialFormData);
-    setLoginByEmail(!loginByEmail);
+  const handleMethod = () => setLoginByEmail(!loginByEmail);
+
+  const getPayload = (formData) => {
+    const payload = { ...formData };
+    if (loginByEmail) delete payload.phone;
+    else {
+      delete payload.email;
+    }
+    return payload;
   };
 
   const submitHandler = async (e) => {
@@ -31,7 +37,7 @@ const Login = () => {
     const response = await request({
       endpoint: "auth/login",
       method: "POST",
-      body: formData,
+      body: getPayload(formData),
       redirectUrl: "/feeds",
     });
     if (!response) return;

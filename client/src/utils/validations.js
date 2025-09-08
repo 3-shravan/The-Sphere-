@@ -19,7 +19,12 @@ export const validateForm = (formData, stage) => {
     )
       return "Please provide a valid phone number.";
 
-    if (!formData.email.trim() && !formData.phone.trim())
+    if (
+      formData.email &&
+      !formData.email.trim() &&
+      formData.phone &&
+      !formData.phone.trim()
+    )
       return "Please provide either phone or email for verification.";
 
     return null;

@@ -5,7 +5,7 @@ import { AnimatePresence, motion, PiArrowSquareInDuotone } from "@lib";
 import { Header, Menu } from "@components";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
-import { errorToast, RegisterInitialFormData, validateForm } from "@utils";
+import { errorToast, RegisterInitialFormData, validateForm } from "@/utils";
 import { AuthButton, PrivacyTermsAndConditions } from "@features/auth/shared";
 import {
   Fullname,
@@ -92,15 +92,16 @@ const Register = () => {
     e.preventDefault();
 
     const validationError = validateForm(formData, stage);
-    if (validationError) {
-      return errorToast(validationError);
-    }
+    if (validationError) return errorToast(validationError);
 
-    if (!isResend) {
+    if (!isResend)
       return errorToast(
         `Please wait ${resendTimer} seconds before resending OTP.`
       );
-    }
+
+    formData.verificationMethod === "phone"
+      ? delete formData.email
+      : delete formData.phone;
 
     const response = await request({
       endpoint: "auth/register",

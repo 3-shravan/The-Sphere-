@@ -10,7 +10,7 @@ const ThoughtsCard = ({
   className = "",
 }) => {
   const navigate = useNavigate();
-  const isLong = thought.trim().length > 300;
+  const isLong = thought?.trim().length > 300;
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = () => setExpanded((prev) => !prev);
 
