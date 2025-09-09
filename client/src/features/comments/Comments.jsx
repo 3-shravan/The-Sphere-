@@ -49,7 +49,7 @@ const Comments = ({ postId, expanded }) => {
         ) : (
           topComment && (
             <div
-              className="flex gap-2 cursor-default text-xs my-1 -ml-1"
+              className="flex gap-2 cursor-default text-xs my-1 "
               onClick={() => setExpand((prev) => !prev)}
             >
               <ProfilePicture
@@ -57,10 +57,13 @@ const Comments = ({ postId, expanded }) => {
                 size="sm"
               />
               <span>
-                <span className="text-muted-foreground/80">
+                <span className="font-mono ml-1 font-bold text-muted-foreground/80">
                   {topComment?.author.name} commented{" "}
                 </span>
-                <span className="italic"> "{topComment?.comment}"</span>
+                <span className="font-mono italic">
+                  {" "}
+                  "{topComment?.comment}"
+                </span>
               </span>
             </div>
           )

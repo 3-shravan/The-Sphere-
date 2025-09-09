@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useCreatePost } from "../services";
-import { BadgePlus } from "lucide-react";
+import { BadgePlus, Upload } from "lucide-react";
 import { usePostFormState } from "../hooks/useFormState";
 import { formatTags, validatePostForm } from "@/utils";
 import { errorToast } from "@/utils";
+import { BsPostage } from "react-icons/bs";
 
 const CreatePostForm = () => {
   const navigate = useNavigate();
@@ -39,47 +40,49 @@ const CreatePostForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-8 w-full font-bold font-Gilroy text-foreground text-sm max-w-5xl"
+      className="flex flex-col gap-8 w-full font-bold font-Gilroy text-foreground text-sm max-w-6xl"
     >
-      {/* Caption */}
-      <div className="flex flex-col gap-2">
-        <label>Caption</label>
-        <textarea
-          name="caption"
-          className="resize-none h-18 bg-input p-4 rounded-xl focus-visible:ring-2"
-        />
-      </div>
+      {/* Grid Layout for Caption + Image */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="flex flex-col gap-2">
+          <label>Caption</label>
+          <textarea
+            name="caption"
+            placeholder="🗽"
+            className="resize-none min-h-[200px] bg-input/30 p-4 rounded-xl focus-visible:ring-2"
+          />
+        </div>
 
-      {/* Image Upload */}
-      <div className="flex flex-col gap-2">
-        <label>Add Photos</label>
-        <div className="border-3 border-dashed border-border rounded-lg overflow-hidden">
+        {/* Image Upload */}
+        <div className="flex flex-col gap-2">
           {preview ? (
-            <div className="relative h-52">
+            <div className="relative w-full aspect-[4/3] md:aspect-[16/9] rounded-xl overflow-hidden">
               <img
                 src={preview}
                 alt="Preview"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain bg-background"
               />
               <button
                 type="button"
                 onClick={clearPreview}
-                className="absolute right-2 top-2 bg-background font-bold bg-opacity-60 text-foreground rounded px-3 py-1.5 text-xs"
+                className="absolute top-1 right-3 bg-input px-2 backdrop-blur-md hover:text-third text-foreground text-xl rounded-full shadow-md cursor-pointer transition"
               >
-                Remove
+                &times;
               </button>
             </div>
           ) : (
             <div
-              className="flex items-center justify-center h-52 cursor-pointer bg-input"
+              className="flex flex-col bg-input/30 items-center justify-center w-full aspect-[4/3] md:aspect-[16/9] border-2 border-dashed border-border rounded-xl cursor-pointer transition hover:bg-muted/20"
               onClick={() => fileInputRef.current?.click()}
             >
-              <div className="flex flex-col items-center gap-2 uppercase font-thin font-Gilroy">
-                <BadgePlus className="text-second" />
-                <p className="text-sm">Click to upload image</p>
-              </div>
+              <BadgePlus className="w-10 h-10 text-second" />
+              <p className="mt-2 text-sm text-muted-foreground">
+                Click to upload image
+              </p>
+              <p className="text-xs text-muted-foreground">PNG, JPG, JPEG</p>
             </div>
           )}
+
           <input
             type="file"
             ref={fileInputRef}
@@ -97,7 +100,7 @@ const CreatePostForm = () => {
           type="text"
           name="location"
           placeholder="e.g. New York, USA"
-          className="h-12 bg-input px-2 rounded-lg placeholder:text-xs"
+          className="h-12 bg-muted/40 px-2 rounded-lg placeholder:text-xs"
         />
       </div>
 
@@ -108,7 +111,7 @@ const CreatePostForm = () => {
           type="text"
           name="tags"
           placeholder="Art, Expression, Learn"
-          className="h-12 bg-input px-2 rounded-lg placeholder:text-xs"
+          className="h-12 bg-input/40 px-2 rounded-lg placeholder:text-xs"
         />
       </div>
 
@@ -124,12 +127,15 @@ const CreatePostForm = () => {
         <button
           type="submit"
           disabled={isPending}
-          className="px-4 py-2.5 bg-first text-rose-800 font-semibold rounded-lg text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
+          className="px-4 py-2.5 text-black/80 font-Poppins bg-emerald-300 cursor-pointer hover:scale-102 transition-all duration-200 font-semibold rounded-lg text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
         >
           {isPending ? (
             <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
           ) : (
-            "Create Post"
+            <span className="flex items-center gap-1">
+              {" "}
+              <BsPostage className="inline" /> Upload
+            </span>
           )}
         </button>
       </div>

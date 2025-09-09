@@ -1,4 +1,6 @@
 import { motion, FaUserAstronaut, FaGithub, FaLinkedin, FaTwitter } from "@lib";
+import { HeartIcon } from "lucide-react";
+import { FaInstagram } from "react-icons/fa";
 
 const textVariants = {
   initial: { opacity: 1 },
@@ -49,12 +51,13 @@ const Menu = () => {
       className="relative flex flex-col justify-center items-center bg-[#131313] min-h-[100vh] w-screen text-white/35 font-[Gilroy] z-10 px-5"
     >
       <div className="flex flex-col items-center justify-center  text-center h-[65vh] ">
-        <FaUserAstronaut className="text-6xl text-emerald-500 animate-pulse mb-4" />
-        <div className="text-xl text-white font-bold tracking-wide drop-shadow-lg">
-          developer by{" "}
-          <span className="font-[Blackout-Midnight] lea">Shravan Yadav</span>
+        <FaUserAstronaut className="text-9xl text-emerald-600 animate-pulse mb-4" />
+        <div className="text-lg text-white tracking-wide drop-shadow-lg">
+          developer by <HeartIcon className="inline " size={17} color="red" />{" "}
+          <br />
+          <span className="font-bold text-xl">Shravan </span>
         </div>
-        <p className="text-sm text-emerald-300 mt-2">
+        <p className="text-sm text-neutral-700 font-medium mt-2">
           Crafting with code & creativity
         </p>
 
@@ -76,12 +79,20 @@ const Menu = () => {
             <FaLinkedin size={24} />
           </a>
           <a
-            href="https://twitter.com/shravan"
+            href="https://x.com/__9teen_"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-emerald-400 transition duration-200"
           >
             <FaTwitter size={24} />
+          </a>
+          <a
+            href="https://instagram.com/03_shravan"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-emerald-400 transition duration-200"
+          >
+            <FaInstagram size={24} />
           </a>
         </div>
       </div>

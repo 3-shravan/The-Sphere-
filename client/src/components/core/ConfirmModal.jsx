@@ -1,4 +1,4 @@
-const Confirm = ({ heading, disclaimer, onCancel, onConfirm }) => {
+const ConfirmModal = ({ heading, disclaimer, onCancel, onConfirm }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
       <div className="bg-background rounded-lg shadow-lg p-6 w-[90%] max-w-md">
@@ -17,7 +17,7 @@ const Confirm = ({ heading, disclaimer, onCancel, onConfirm }) => {
             Cancel
           </button>
           <button
-            className="px-4 py-2 rounded-md text-sm font-semibold bg-second text-black hover:bg-rose-600 transition cursor-pointer"
+            className="px-4 py-2 rounded-md text-sm font-semibold bg-third text-black hover:bg-rose-600 transition cursor-pointer"
             onClick={onConfirm}
           >
             Confirm
@@ -28,4 +28,4 @@ const Confirm = ({ heading, disclaimer, onCancel, onConfirm }) => {
   );
 };
 
-export default Confirm;
+export default ConfirmModal;

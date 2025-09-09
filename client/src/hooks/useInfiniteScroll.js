@@ -12,9 +12,7 @@ const useInfiniteScroll = ({ thresold = 50, scrollRef }) => {
     const remScroll = scrollHeight - (scrollTop + clientHeight);
     setRemainingScroll(remScroll);
 
-    if (remScroll < thresold && !loading) {
-      setLoading(true);
-    }
+    if (remScroll < thresold && !loading) setLoading(true);
   };
 
   useEffect(() => {

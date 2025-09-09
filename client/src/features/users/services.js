@@ -1,11 +1,13 @@
-import { useErrorToast, useSuccessToast } from "@/hooks";
+import { useApi, useErrorToast, useSuccessToast } from "@/hooks";
 import { fetcher } from "@/lib/fetcher";
+
 import { errorToast, successToast } from "@/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
+  const { fetcher } = useApi();
   const naviagte = useNavigate();
   return useMutation({
     mutationFn: (formData) =>
@@ -29,6 +31,7 @@ export const useUpdateProfile = () => {
 };
 
 export const useSuggestedUsers = () => {
+  const { fetcher } = useApi();
   return useQuery({
     queryKey: ["suggestedUsers"],
     queryFn: () => fetcher({ endpoint: "/users/suggested" }),

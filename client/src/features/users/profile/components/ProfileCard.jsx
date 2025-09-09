@@ -1,4 +1,4 @@
-import { UserCircle2 } from "lucide-react";
+import { Activity, UserCircle2 } from "lucide-react";
 import useProfile from "../hooks/useProfile";
 import EditProfile from "../EditProfile";
 import React from "react";
@@ -12,7 +12,7 @@ export const ProfileCard = ({ user }) => {
     useProfile(user);
 
   return (
-    <div className="flex flex-col items-center font-Gilroy  w-full  justify-center backdrop-blur-md">
+    <div className="flex flex-col items-center font-Gilroy w-full justify-center backdrop-blur-md">
       <ProfileImage profilePicture={profilePicture} name={name} />
 
       <div className=" flex flex-col justify-center items-center w-full text-neutral-600">
@@ -23,11 +23,11 @@ export const ProfileCard = ({ user }) => {
         {dob && (
           <span className="text-xs ">{new Date(dob).toLocaleDateString()}</span>
         )}
-
-        <div className="flex gap-5 mt-4 cursor-context-menu font-blackout font-bold md:text-sm text-xs">
+        <div className="flex gap-2 mt-3 items-center cursor-context-menu font-bold md:text-sm text-xs">
           {/* <div>{posts.length} posts</div> */}
-          <div>{followersCount} followers</div>
-          <div>{following.length} following</div>
+          followers <Activity className=" w-3 -mx-1 inline" /> {followersCount}{" "}
+          <span className="text-red-200">·</span>
+          following <Activity className=" w-3 -mx-1 inline" /> {following.length}
         </div>
 
         {bio && (

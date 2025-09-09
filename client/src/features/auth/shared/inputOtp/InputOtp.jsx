@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "@lib";
-import "./css/inputOtp.css";
+import "./inputOtp.css";
 
 const length = 5;
 const InputOtp = ({ handleOtpSubmit, loading }) => {

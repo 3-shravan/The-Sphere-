@@ -1,4 +1,4 @@
-import "./css/authButton.css";
+import "./authButton.css";
 
 const AuthButton = ({ handleNext, text, type, loading, register, icon }) => {
   return (

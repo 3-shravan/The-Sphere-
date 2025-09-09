@@ -46,7 +46,7 @@ const ViewPost = () => {
               className="max-w-full max-h-full object-contain p-4 rounded-lg"
             />
           ) : (
-            <div className="flex-1 overflow-y-auto p-3 text-sm w-full h-[60vh] md:h-full font-Gilroy text-neutral-600 leading-5 md:leading-8 ">
+            <div className="flex-1 overflow-y-auto flex items-center justify-center p-4 font-medium  text-sm w-full h-[60vh] md:h-full font-Poppins uppercase text-neutral-600 leading-5 md:leading-8 ">
               {thoughts}
             </div>
           )}

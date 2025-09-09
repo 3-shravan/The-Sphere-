@@ -1,10 +1,10 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { fetcher } from "@/lib/fetcher";
 import { errorToast } from "@/utils";
-
+import { useApi } from "@/hooks";
 const POSTS_QUERY_KEY = ["posts"];
 
 export const usePosts = (limit = 2) => {
+  const { fetcher } = useApi();
   return useInfiniteQuery({
     queryKey: POSTS_QUERY_KEY,
     queryFn: async ({ pageParam = 1 }) =>

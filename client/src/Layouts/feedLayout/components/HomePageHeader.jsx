@@ -1,3 +1,4 @@
+import { ProfilePicture } from "@/components";
 import { ChevronDown, UserRound } from "lucide-react";
 
 const HomePageHeader = ({ auth, navigate }) => {
@@ -16,15 +17,11 @@ const HomePageHeader = ({ auth, navigate }) => {
         className="hidden md:flex items-center  cursor-pointer tracking-tight rounded px-7 py-2 "
         onClick={() => navigate(`/profile/${auth.profile.name}`)}
       >
-        {auth?.profile?.profilePicture ? (
-          <img
-            src={auth?.profile?.profilePicture}
-            alt=""
-            className="w-5 h-5 rounded-full inline "
-          />
-        ) : (
-          <UserRound className="text-second  w-4" />
-        )}
+        <ProfilePicture
+          profilePicture={auth?.profile?.profilePicture}
+          size="sm"
+        />
+
         <span className="font-Poppins text-sm font-bold  px-2 text-foreground ">
           {auth?.profile?.name}
           <ChevronDown className="inline w-5 h-4" />

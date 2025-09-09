@@ -1,3 +1,4 @@
+import { ProfilePicture } from "@/components";
 import { multiFormatDateString } from "@/utils";
 import { Eye, MessageSquare, Trash, Trash2 } from "lucide-react";
 
@@ -12,11 +13,11 @@ const CommentBox = ({
 }) => {
   return (
     <div className="rounded-2xl py-1">
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-4">
         {comment.author.profilePicture ? (
-          <img
-            src={comment.author.profilePicture}
-            className="w-6 rounded-full"
+          <ProfilePicture
+            profilePicture={comment.author.profilePicture}
+            size="md"
           />
         ) : (
           <div className="w-6 h-6 rounded-full bg-gradient-to-r from-rose-300 to-rose-400 flex items-center justify-center text-muted text-xs font-Futura font-bold">

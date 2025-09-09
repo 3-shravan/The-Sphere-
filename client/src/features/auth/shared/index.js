@@ -1,4 +1,3 @@
-export { default as AuthButton } from "./Button";
-export { default as InputOtp } from "./InputOtp";
-export { default as PrivacyTermsAndConditions } from './TermsAndConditions'
-
+export { default as AuthButton } from "./authButton/AuthButton";
+export { default as InputOtp } from "./inputOtp/InputOtp";
+export { default as TermsCond } from "./TermsCond";

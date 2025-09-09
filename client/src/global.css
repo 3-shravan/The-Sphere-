@@ -43,10 +43,7 @@ body {
   scroll-behavior: auto !important;
   -webkit-overflow-scrolling: touch;
 }
-.heroSection {
-  min-height: 100vh;
-  background-color: #000000;
-}
+
 .animate-spin-slow {
   animation: spin-slow 20s linear infinite;
 }
@@ -94,6 +91,7 @@ body {
   /* --first: oklch(0.81 0.117 11.638);
   --second: oklch(0.712 0.194 13.428);
   --third: oklch(0.645 0.246 16.439); */
+
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.2 0 0);

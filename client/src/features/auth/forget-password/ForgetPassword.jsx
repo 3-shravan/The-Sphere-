@@ -2,7 +2,7 @@ import React from "react";
 import "@styles/auth.css";
 import authStyles from "../shared/auth.module.css";
 import { OtpVerify, ViaEmail, ViaPhone } from "./components";
-import { AuthButton, PrivacyTermsAndConditions } from "../shared";
+import { AuthButton, TermsCond } from "../shared";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
 import { Header, Menu } from "@components";
@@ -190,7 +190,7 @@ const ForgetPassword = () => {
               />
             </motion.div>
           )}
-          <PrivacyTermsAndConditions />
+          <TermsCond />
         </motion.div>
       )}
     </div>

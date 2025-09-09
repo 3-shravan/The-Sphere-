@@ -15,7 +15,7 @@ import { ProfilePicture } from "@/components";
 const Sidebar = () => {
   const { logout, auth } = useAuth();
   const username = auth?.profile?.name;
-  const media = auth?.profile?.media;
+  const profilePicture = auth?.profile?.profilePicture;
   const { theme, toggleTheme } = useTheme();
 
   const navigate = useNavigate();
@@ -67,15 +67,13 @@ const Sidebar = () => {
       {/* Bottom Section */}
       <div className="flex flex-col m-2 gap-2 font-mono text-xs font-bold ">
         <button
-          className={` btn-base w-[80%] border-[1.5px] border-emerald-600/20   ${
-            isProfile
-              ? "bg-emerald-300 text-emerald-800 border-emerald-400 "
-              : "text-muted-foreground hover:text-foreground"
+          className={` btn-base w-[80%]  border-[1.5px] border-emerald-500/70   ${
+            isProfile && "bg-emerald-500  border-emerald-400 "
           }`}
           onClick={() => navigate(`/profile/${username}`)}
         >
           <ProfilePicture
-            profilePicture={media}
+            profilePicture={profilePicture}
             username={username}
             size="sm"
             color={true}

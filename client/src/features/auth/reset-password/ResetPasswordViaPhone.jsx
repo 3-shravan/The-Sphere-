@@ -1,7 +1,7 @@
 import "@styles/auth.css";
 import authStyles from "@features/auth/shared/auth.module.css";
 import FormContainer from "./components/FormContainer";
-import { AuthButton, PrivacyTermsAndConditions } from "../shared";
+import { AuthButton, TermsCond } from "../shared";
 import { useApi } from "@hooks";
 import { useMenu } from "@context";
 import {
@@ -71,7 +71,7 @@ const ResetPasswordViaPhone = () => {
             Want to login ?
           </Link>
         </form>
-        <PrivacyTermsAndConditions />
+        <TermsCond />
       </motion.div>
     </div>
   );

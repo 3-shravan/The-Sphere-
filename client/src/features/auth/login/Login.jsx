@@ -1,4 +1,3 @@
-// import loginstyles from "./style.module.css";
 import React from "react";
 import { useNavigate, AnimatePresence, motion, IoLogIn } from "@lib";
 import { Menu, Header } from "@components";
@@ -6,7 +5,7 @@ import { useApi } from "@/hooks";
 import { useAuth, useMenu } from "@context";
 import { LoginInitialFormData, setTokenAndAuthenticated } from "@/utils";
 import { ViaEmail, ViaPhone, RedirectToSignup } from "./components";
-import { AuthButton, PrivacyTermsAndConditions } from "../shared";
+import { AuthButton, TermsCond } from "../shared";
 import styles from "@features/auth/shared/auth.module.css";
 import "@styles/auth.css";
 import { useForm } from "@/hooks";
@@ -15,7 +14,7 @@ const Login = () => {
   const { setAuth } = useAuth?.();
   const { menu } = useMenu();
   const navigate = useNavigate();
-  const { formData, setFormData, handleChange, resetForm } =
+  const { formData, handleChange, resetForm } =
     useForm(LoginInitialFormData);
   const [loginByEmail, setLoginByEmail] = React.useState(true);
   const { request, loading } = useApi();
@@ -109,7 +108,7 @@ const Login = () => {
                 <RedirectToSignup />
               </motion.div>
             </form>
-            <PrivacyTermsAndConditions />
+            <TermsCond />
           </motion.div>
         )}
       </div>
