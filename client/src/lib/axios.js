@@ -2,13 +2,10 @@ import axios from "axios";
 import { getToken } from "@utils";
 import { removeTokenAndAuthenticated } from "@/utils";
 import { useAuth } from "@/context";
-
-const BASE_URL =
-  import.meta.env.VITE_LOCALHOST_URL ||
-  import.meta.env.VITE_PRODUCTON_SERVER_URL;
+import { API_URL } from "./api";
 
 const axiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: API_URL,
   withCredentials: true,
 });
 

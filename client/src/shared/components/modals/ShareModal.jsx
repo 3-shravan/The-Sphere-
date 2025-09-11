@@ -1,4 +1,5 @@
 import { useErrorToast, useSuccessToast } from "@/hooks";
+import { CLIENT_URL } from "@/lib/api";
 import {
   Facebook,
   Instagram,
@@ -11,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 
 const ShareModal = ({ postId }) => {
-  const postUrl = `${import.meta.env.VITE_CLIENT_URL}/post/${postId}`;
+  const postUrl = `${CLIENT_URL}/post/${postId}`;
 
   const handleCopy = async () => {
     try {
