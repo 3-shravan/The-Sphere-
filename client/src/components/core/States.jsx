@@ -1,20 +1,94 @@
-import { motion } from "@lib";
+import { motion, AnimatePresence } from "framer-motion";
 
-export const Loading = () => {
+export default function LoadingScreen({ show }) {
   return (
-    <div className="text-center py-10 font-bold text-sm font-Futura">
-      fetching...
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          className="fixed inset-0 flex items-center justify-center bg-background z-[9999]"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="animate-spin rounded-full h-14 w-14 border-t-2 border-b-2 border-neutral-600"></div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+export function Spinner({ size = "6", color = "neutral-700" }) {
+  return (
+    <div
+      className={`animate-spin rounded-full h-${size} w-${size} border-2 border-t-transparent border-${color}`}
+    />
+  );
+}
+
+export const Loading = ({ message = "fetching...", spinner = true }) => {
+  return (
+    <div className="flex-center py-10 w-full uppercase gap-2 font-bold text-sm font-Futura">
+      {spinner && <Spinner size="4" />}
+      {message}
     </div>
   );
 };
 
-export const Error = () => {
-  <div className="text-center py-10 font-bold text-third">
-    Failed to fetch posts.
-  </div>;
+export const Error = ({ message = "❗ Failed to fetch" }) => {
+  <div className="text-center py-10 font-bold text-third">{message}</div>;
 };
 
-const Spinner = ({ text, radius, fontSize, letterSpacing }) => {
+export const Loader = () => {
+  return (
+    <div className="absolute inset-0 w-screen h-full bg-background flex items-center justify-center overflow-hidden">
+      {/* Spinner 1 */}
+      <motion.div
+        className="absolute -right-[535px] -bottom-[840px]"
+        initial={{ rotate: 45 }}
+        animate={{ rotate: -315 }}
+        transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
+      >
+        <Spin
+          text="LOADING  LOADING  LOADING  LOADING  LOADING"
+          radius={800}
+          fontSize="180px"
+          letterSpacing={8}
+        />
+      </motion.div>
+
+      {/* Spinner 2 */}
+      <motion.div
+        className="absolute -right-[385px] -bottom-[695px]"
+        initial={{ rotate: 0 }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
+      >
+        <Spin
+          text="LOADING  LOADING  LOADING  LOADING"
+          radius={650}
+          fontSize="180px"
+          letterSpacing={10}
+        />
+      </motion.div>
+
+      {/* Spinner 3 */}
+      <motion.div
+        className="absolute -right-[200px] -bottom-[510px]"
+        initial={{ rotate: -5 }}
+        animate={{ rotate: -365 }}
+        transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
+      >
+        <Spin
+          text="LOADING LOADING LOADING"
+          radius={480}
+          fontSize="180px"
+          letterSpacing={15}
+        />
+      </motion.div>
+    </div>
+  );
+};
+const Spin = ({ text, radius, fontSize, letterSpacing }) => {
   const characters = text.split("");
   return (
     <motion.div
@@ -41,56 +115,5 @@ const Spinner = ({ text, radius, fontSize, letterSpacing }) => {
         ))}
       </p>
     </motion.div>
-  );
-};
-
-export const Loader = () => {
-  return (
-    <div className="absolute inset-0 w-screen h-full bg-background flex items-center justify-center overflow-hidden">
-      {/* Spinner 1 */}
-      <motion.div
-        className="absolute -right-[535px] -bottom-[840px]"
-        initial={{ rotate: 45 }}
-        animate={{ rotate: -315 }}
-        transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
-      >
-        <Spinner
-          text="LOADING  LOADING  LOADING  LOADING  LOADING"
-          radius={800}
-          fontSize="180px"
-          letterSpacing={8}
-        />
-      </motion.div>
-
-      {/* Spinner 2 */}
-      <motion.div
-        className="absolute -right-[385px] -bottom-[695px]"
-        initial={{ rotate: 0 }}
-        animate={{ rotate: 360 }}
-        transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
-      >
-        <Spinner
-          text="LOADING  LOADING  LOADING  LOADING"
-          radius={650}
-          fontSize="180px"
-          letterSpacing={10}
-        />
-      </motion.div>
-
-      {/* Spinner 3 */}
-      <motion.div
-        className="absolute -right-[200px] -bottom-[510px]"
-        initial={{ rotate: -5 }}
-        animate={{ rotate: -365 }}
-        transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
-      >
-        <Spinner
-          text="LOADING LOADING LOADING"
-          radius={480}
-          fontSize="180px"
-          letterSpacing={15}
-        />
-      </motion.div>
-    </div>
   );
 };

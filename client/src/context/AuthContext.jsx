@@ -7,6 +7,7 @@ import {
 } from "@utils";
 import { useApi } from "@/hooks";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "@/components/core/States";
 
 const AuthContext = createContext();
 
@@ -67,10 +68,10 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
-  if (loading) return null;
   return (
     <AuthContext.Provider value={{ auth, setAuth, currentUserId, logout }}>
-      {children}
+      <LoadingScreen show={loading} />
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

@@ -1,7 +1,12 @@
 import { ReactLenis } from "lenis/react";
 import { Toast } from "@lib/Toast";
 import { Routes, Route } from "react-router-dom";
-import { PublicRoutes, ProtectedRoutes, NonExistRoutes } from "@/components";
+import {
+  PublicRoutes,
+  ProtectedRoutes,
+  NonExistRoutes,
+  Offline,
+} from "@/components";
 import { FeedLayout, HomePage, LandingPage } from "@/layouts";
 import { CreatePost, SavedPosts } from "@/features/posts";
 import Explore from "@features/explore/Explore";
@@ -14,8 +19,11 @@ import {
   ResetPasswordViaPhone,
 } from "@features/auth";
 import ViewPost from "./shared/pages/ViewPost";
+import useNetworkStatus from "./hooks/useNetworkStatus";
 
 const App = () => {
+  const isOnline = useNetworkStatus();
+  if (!isOnline) return <Offline />;
   return (
     <>
       {/* <ReactLenis root> */}

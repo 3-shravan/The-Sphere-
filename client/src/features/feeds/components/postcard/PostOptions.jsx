@@ -1,40 +1,56 @@
+import { useState } from "react";
+import { Tally2 } from "lucide-react";
+import { Modal } from "@/components";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { infoToast } from "@/utils";
-import { Tally2 } from "lucide-react";
+import { Copy, Facebook, Instagram, Link, MessageCircle } from "lucide-react";
+import { ShareModal } from "@/shared";
 
-const PostOptions = ({ setConfirmDelete, setOpen, isThoughts }) => {
-  const handleShare = () => infoToast("soon you will be able to share posts");
+const PostOptions = ({ setConfirmDelete, setOpen, isThoughts, postId }) => {
+  const [showModal, setShowModal] = useState(false);
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="cursor-pointer outline-hidden">
-        <Tally2 />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="font-Poppins bg-card cursor-pointer">
-        {!isThoughts && (
+    <>
+      {/* Dropdown Menu */}
+      <DropdownMenu>
+        <DropdownMenuTrigger className="cursor-pointer outline-hidden">
+          <Tally2 />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="font-Poppins bg-card cursor-pointer">
+          {!isThoughts && (
+            <DropdownMenuItem
+              className="cursor-pointer px-3"
+              onClick={() => setOpen(true)}
+            >
+              ⚙ Edit
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem
-            className="cursor-pointer px-3"
-            onClick={() => setOpen(true)}
+            className="cursor-pointer"
+            onClick={() => setConfirmDelete(true)}
           >
-            ⚙ Edit
+            ❌ Delete
           </DropdownMenuItem>
-        )}
-        <DropdownMenuItem
-          className="cursor-pointer"
-          onClick={() => setConfirmDelete(true)}
-        >
-          ❌ Delete
-        </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer" onClick={handleShare}>
-          🚀 Share
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => setShowModal(true)}
+          >
+            🚀 Share
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Share Modal */}
+      {showModal && (
+        <Modal onCancel={() => setShowModal(false)} title="Share Post">
+          <ShareModal postId={postId} />
+        </Modal>
+      )}
+    </>
   );
 };
 

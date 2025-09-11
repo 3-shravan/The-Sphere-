@@ -1,3 +1,4 @@
+import { Spinner } from "@/components";
 import useFeed from "../hooks/useFeed";
 import PostCard from "./postcard/PostCard";
 
@@ -11,8 +12,8 @@ const FeedList = () => {
         posts?.map((post) => <PostCard key={post?._id} post={post} />)
       )}
       {isFetchingNextPage && (
-        <div className=" text-center font-Poppins  text-xl mb-6 ">
-          Loading...
+        <div className="flex-center mb-6">
+          <Spinner />
         </div>
       )}
     </div>

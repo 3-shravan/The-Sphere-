@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
 import useComment from "../hooks/useComment";
-import { BsSendFill } from "react-icons/bs";
+import { BiSend } from "react-icons/bi";
 import { Textarea } from "@/components/ui/textarea";
 
 const AddComment = ({ postId }) => {
   const { comment, setComment, handleCreate } = useComment(postId);
   return (
-    <div className="mt-4 pb-1 flex items-center space-x-2">
+    <div className="-mb-2 pb-1 flex items-center space-x-2">
       <Textarea
         type="text"
         value={comment}
@@ -17,7 +17,7 @@ const AddComment = ({ postId }) => {
         rows={1}
       />
       <Button variant="outline" onClick={() => handleCreate()}>
-        <BsSendFill />
+      <BiSend />
       </Button>
     </div>
   );

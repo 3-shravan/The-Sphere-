@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Provider } from "react-redux";
 
 import { registerSW } from "virtual:pwa-register";
+import ErrorBoundary from "./components/routing/ErrorBoundary";
 registerSW({
   onNeedRefresh() {
     console.log("New content available. Refresh!");
@@ -17,21 +18,23 @@ registerSW({
     console.log("App ready to work offline.");
   },
 });
-
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <ContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <Provider store={store}>
-          <ThemeProvider>
-            <MenuProvider>
-              <App />
-            </MenuProvider>
-          </ThemeProvider>
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-        </Provider>
-      </QueryClientProvider>
-    </ContextProvider>
+    <ErrorBoundary>
+      <ContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>
+            <ThemeProvider>
+              <MenuProvider>
+                <App />
+              </MenuProvider>
+            </ThemeProvider>
+            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          </Provider>
+        </QueryClientProvider>
+      </ContextProvider>
+    </ErrorBoundary>
   </BrowserRouter>
 );
+// document.getElementById("initial-loader")?.remove();

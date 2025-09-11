@@ -3,7 +3,7 @@ import { errorToast } from "@/utils";
 import { useApi } from "@/hooks";
 const POSTS_QUERY_KEY = ["posts"];
 
-export const usePosts = (limit = 2) => {
+export const usePosts = (limit = 10) => {
   const { fetcher } = useApi();
   return useInfiniteQuery({
     queryKey: POSTS_QUERY_KEY,

@@ -29,8 +29,8 @@ const SuggestedUsers = () => {
     }
   }, [suggestedUsers, currentUser]);
 
-  if (isLoading) return Loading();
-  if (error) return Error();
+  if (isLoading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <SmoothScroll className="max-h-[215px] custom-scrollbar-hide">

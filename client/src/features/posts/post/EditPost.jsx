@@ -106,8 +106,8 @@ const EditPost = ({ open, setOpen, post }) => {
               <Button
                 type="submit"
                 disabled={isPending}
-                variant="primary"
-                className="w-full flex items-center justify-center gap-2 rounded-xl border bg-emerald-400 text-black font-bold text-xs hover:bg-emerald-500 cursor-pointer"
+                variant="ghost"
+                className="w-full flex items-center justify-center gap-2 rounded-xl border bg-emerald-400 text-black font-bold text-xs  cursor-pointer"
               >
                 <CgVercel className="w-4 h-4" />
                 {isPending ? "Updating..." : "Update Post"}

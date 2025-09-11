@@ -74,8 +74,8 @@ const EditProfileForm = ({
         <Button
           type="submit"
           disabled={isPending}
-          variant="primary"
-          className="w-full md:w-[30%] flex gap-1 rounded-xl border mx-auto bg-emerald-400 text-black font-bold text-xs  cursor-pointer  hover:bg-emerald-500 "
+          variant="ghost"
+          className="w-full md:w-[30%] flex gap-1 rounded-xl border mx-auto bg-emerald-400 text-black font-bold text-xs cursor-pointer"
         >
           <CgVercel className="w-4 h-4" />
           {isPending ? "Updating..." : "Update Profile"}

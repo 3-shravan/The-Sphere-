@@ -36,6 +36,7 @@ const PostCardHeader = ({ post, setConfirmDelete }) => {
           isThoughts={!!thoughts}
           setConfirmDelete={setConfirmDelete}
           setOpen={setEditOpen}
+          postId={post._id}
         />
       )}
       {editOpen && <EditPost open={open} setOpen={setEditOpen} post={post} />}

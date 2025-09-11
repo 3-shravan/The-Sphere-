@@ -5,6 +5,7 @@ import ShowTags from "./components/ui/ShowTags";
 import ViewPost from "./pages/ViewPost";
 import PostGrid from "./components/PostGrid";
 import usePostFromCache from "./hooks/usePostFromCache";
+import ShareModal from "./components/modals/ShareModal";
 export {
   FollowUser,
   LikePost,
@@ -13,4 +14,5 @@ export {
   ViewPost,
   PostGrid,
   usePostFromCache,
+  ShareModal,
 };

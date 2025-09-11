@@ -1,7 +1,8 @@
 import { infoToast, validateThoughtsForm } from "@/utils";
-import { Send } from "lucide-react";
 import { useState } from "react";
-import { useCreatePost, useCreateThought } from "../services";
+import { useCreateThought } from "../services";
+import { BiSend } from "react-icons/bi";
+import { Button } from "@/components/ui/button";
 const Thoughts = () => {
   const [thoughts, setThoughts] = useState("");
   const { mutateAsync, isPending } = useCreateThought();
@@ -25,15 +26,16 @@ const Thoughts = () => {
         value={thoughts}
       />
 
-      <button
-        className="w-full rounded-lg text-xs hover:scale-[1.01] cursor-pointer transition duration-300 mt-2 py-2 flex items-center justify-center font-Futura text-black border bg-emerald-500"
+      <Button
+        className="w-full rounded-lg text-xs gap-1 hover:scale-[1.01] cursor-pointer transition duration-300 mt-2 py-2 flex items-center justify-center font-Futura text-black border bg-emerald-500"
         type="submit"
+        variant="ghost"
         onClick={submitHandler}
         disabled={isPending}
       >
         {isPending ? "Posting..." : "Post"}
-        <Send className="inline w-3 mx-1 h-3" />
-      </button>
+        <BiSend className="inline w-4 h-4" />
+      </Button>
     </div>
   );
 };

@@ -6,7 +6,7 @@ const NonExistRoutes = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen w-full flex flex-col font-blackout justify-center items-center  text-third px-4">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center  text-third px-4">
       <motion.h1
         className="text-6xl font-bold mb-4"
         initial={{ opacity: 0, y: -20 }}
@@ -15,7 +15,7 @@ const NonExistRoutes = () => {
         404
       </motion.h1>
       <motion.p
-        className="text-4xl mb-8  text-neutral-700 font-blackout leading-8 text-center max-w-md"
+        className="text-3xl mb-8 font-medium  text-neutral-700 font-Poppins uppercase leading-8 text-center max-w-xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
@@ -27,10 +27,7 @@ const NonExistRoutes = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
       >
-        <Button
-          onClick={() => navigate(-1)}
-          className=" bg-first text-rose-700 font-Futura cursor-pointer text-sm hover:bg-rose-200 px-6 py-2 rounded-md"
-        >
+        <Button onClick={() => navigate(-1)} variant="outline">
           Go Home
         </Button>
       </motion.div>

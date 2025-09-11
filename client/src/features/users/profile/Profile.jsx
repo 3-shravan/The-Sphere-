@@ -1,5 +1,5 @@
 import { useGetProfile } from "../services";
-import { Container, NonExistRoutes } from "@/components";
+import { Container, Loading, NonExistRoutes } from "@/components";
 import { useParams } from "react-router-dom";
 import { ProfileCard } from "./components/ProfileCard";
 import { useAuth } from "@/context";
@@ -8,11 +8,12 @@ import { PostGrid } from "@/shared";
 const Profile = () => {
   const { username } = useParams();
   const { currentUserId } = useAuth();
-  const { data: profile } = useGetProfile(username);
+  const { data: profile, isLoading } = useGetProfile(username);
 
   const user = profile?.user;
   const me = user?._id === currentUserId;
   const posts = profile?.user?.posts;
+  if (isLoading) return <Loading />;
   if (!user) return <NonExistRoutes />;
 
   return (

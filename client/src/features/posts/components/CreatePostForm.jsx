@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useCreatePost } from "../services";
-import { BadgePlus, Upload } from "lucide-react";
+import { BadgePlus } from "lucide-react";
 import { usePostFormState } from "../hooks/useFormState";
 import { formatTags, validatePostForm } from "@/utils";
 import { errorToast } from "@/utils";
-import { BsPostage } from "react-icons/bs";
+import { SiSparkpost } from "react-icons/si";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components";
 
 const CreatePostForm = () => {
   const navigate = useNavigate();
@@ -117,27 +119,28 @@ const CreatePostForm = () => {
 
       {/* Buttons */}
       <div className="flex gap-4 py-1 items-center justify-end">
-        <button
-          type="button"
-          className="px-4 py-2.5 bg-muted text-muted-foreground font-bold rounded-lg text-sm"
+        <Button
+          variant="ghost"
+          disabled={isPending}
+          className="border"
           onClick={() => navigate(-1)}
         >
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
           type="submit"
           disabled={isPending}
-          className="px-4 py-2.5 text-black/80 font-Poppins bg-emerald-300 cursor-pointer hover:scale-102 transition-all duration-200 font-semibold rounded-lg text-sm min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-not-allowed"
+          variant="ghost"
+          className=" text-black/80 rounded-xl border  bg-emerald-400 cursor-pointer  transition-all duration-200 font-semibold min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-progress"
         >
           {isPending ? (
-            <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            <Spinner color="emerald-400" />
           ) : (
             <span className="flex items-center gap-1">
-              {" "}
-              <BsPostage className="inline" /> Upload
+              <SiSparkpost className="inline" /> Upload
             </span>
           )}
-        </button>
+        </Button>
       </div>
     </form>
   );
