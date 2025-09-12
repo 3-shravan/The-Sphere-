@@ -1,2 +1,2 @@
 export { default as SavedPosts } from "./post/SavedPosts";
-export { default as CreatePost } from "./post/createPost";
+export { default as CreatePost } from "./post/CreatePost";
