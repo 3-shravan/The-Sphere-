@@ -14,8 +14,7 @@ const Login = () => {
   const { setAuth } = useAuth?.();
   const { menu } = useMenu();
   const navigate = useNavigate();
-  const { formData, handleChange, resetForm } =
-    useForm(LoginInitialFormData);
+  const { formData, handleChange, resetForm } = useForm(LoginInitialFormData);
   const [loginByEmail, setLoginByEmail] = React.useState(true);
   const { request, loading } = useApi();
 

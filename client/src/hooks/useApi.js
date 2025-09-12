@@ -22,7 +22,7 @@ const useApi = () => {
           return response;
         }
       } catch (err) {
-        console.log(err);
+        if (import.meta.env.VITE_MODE == "development") console.error(err);
         useErrorToast(err, "⚙ Server failed to respond");
       } finally {
         setLoading(false);

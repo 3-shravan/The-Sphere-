@@ -18,7 +18,7 @@ import {
   VelocityText,
   RevealLinks,
   Footer,
-} from "./components";
+} from "../../layouts/components";
 
 const Page = () => {
   const { menu } = useMenu();

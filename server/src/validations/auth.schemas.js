@@ -56,7 +56,7 @@ export const loginSchema = Joi.object({
       return value;
     })
     .optional(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().required(),
 })
   .xor("email", "phone")
   .messages({
