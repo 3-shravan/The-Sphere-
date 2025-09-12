@@ -18,10 +18,10 @@ const ViewPost = () => {
   const { media, thoughts, _id } = post;
 
   return (
-    <div className=" inset-0 bg-background flex items-center justify-center z-50 p-2 md:p-4">
+    <div className=" inset-0 bg-background flex items-center h-screen justify-center z-50 p-2 md:p-4">
       <main className="bg-background rounded-xl border  shadow-xl w-full max-w-6xl h-full md:h-[95vh] flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
         <ViewPostMedia media={media} thoughts={thoughts} />
-        <ViewPostInfo postId={_id} setShowModal={setShowModal} />
+        <ViewPostInfo postId={_id} post={post} setShowModal={setShowModal} />
 
         {showModal && (
           <Modal onCancel={() => setShowModal(false)} title="Share Post">

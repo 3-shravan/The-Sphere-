@@ -5,9 +5,9 @@ import { useToggleLikePost } from "../services";
 const useLikePost = (likes) => {
   const { currentUserId } = useAuth();
 
-  const [likesCount, setLikesCount] = useState(likes.length );
+  const [likesCount, setLikesCount] = useState(likes?.length );
   const [isLiked, setIsLiked] = useState(
-    likes.some((u) => u._id === currentUserId)
+    likes?.some((u) => u._id === currentUserId)
   );
 
   const { mutate: toggleLike, isPending: likeIsPending } = useToggleLikePost({

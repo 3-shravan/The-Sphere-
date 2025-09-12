@@ -14,11 +14,7 @@ import chatRouter from "./routes/chat.routes.js";
 
 const app = express();
 
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  process.env.LOCALHOST_URL,
-  process.env.BUILD_PREVIEW_URL,
-];
+const allowedOrigins = [process.env.CLIENT_URL, process.env.LOCALHOST_URL];
 app.use(
   cors({
     origin: (origin, callback) => {

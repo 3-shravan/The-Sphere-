@@ -12,7 +12,7 @@ const HomePage = () => {
   const { auth } = useAuth();
   useSavedPosts();
   return (
-    <div className="flex flex-col w-full flex-1 overflow-hidden rounded-3xl m-3 md:border-[1.5px] md:border-border">
+    <div className="flex flex-col w-full flex-1 overflow-hidden rounded-3xl m-1.5 md:m-3 md:border-[1.5px] md:border-border">
       <HomePageHeader auth={auth} navigate={navigate} />
       <main className="md:flex md:justify-center">
         <Feed />

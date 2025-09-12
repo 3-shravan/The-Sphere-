@@ -12,7 +12,7 @@ const PostCardMedia = ({ media, thoughts }) => {
       </div>
     );
   } else {
-    return <ThoughtsCard thought={thoughts} className="pt-0" />;
+    return <ThoughtsCard thought={thoughts} className="pt-0 px-2.5" />;
   }
 };
 

@@ -15,15 +15,15 @@ const Comments = ({ postId, expanded }) => {
   if (isLoading) return <Loading />;
   return (
     <>
-      <div className="md:px-2 px-2 text-sm max-h-[55vh] md:max-h-[65vh] transition-all duration-200 overflow-y-auto font-Poppins text-foreground">
+      <div className="md:px-2 px-2 text-sm max-h-[50vh] md:max-h-[70vh] transition-all duration-200 overflow-y-auto font-Poppins text-foreground">
         <div className="mt-2">
           <CommentsCount
-            count={comments.comments.length}
+            count={comments?.comments?.length}
             expand={expand}
             onToggle={() => setExpand((prev) => !prev)}
           />
           {expand ? (
-            <CommentList comments={comments.comments} postId={postId} />
+            <CommentList comments={comments?.comments} postId={postId} />
           ) : (
             topComment && (
               <TopCommentPreview

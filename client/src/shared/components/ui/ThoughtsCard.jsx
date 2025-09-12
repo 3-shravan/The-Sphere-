@@ -17,7 +17,7 @@ const ThoughtsCard = ({
   return (
     <div
       className={twMerge(
-        "px-4 pt-14 pb-4 text-xs font-Poppins text-foreground",
+        "px-5 pt-14 pb-4 text-xs font-Poppins text-foreground",
         className
       )}
     >

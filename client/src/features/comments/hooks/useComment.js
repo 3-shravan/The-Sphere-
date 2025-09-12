@@ -11,8 +11,8 @@ const useComment = (postId) => {
   const { data: comments, isLoading } = useGetPostComments(postId);
   const topComment = comments?.comments[0];
 
-  const { mutateAsync: createComment } = useCreateComment(postId);
-  const { mutateAsync: deleteComment } = useDeleteComment(postId);
+  const { mutateAsync: createComment,isPending:commenting } = useCreateComment(postId);
+  const { mutateAsync: deleteComment,isPending:deleting } = useDeleteComment(postId);
 
   const handleCreate = async (parentId = null) => {
     if (!comment.trim()) return;
@@ -41,6 +41,8 @@ const useComment = (postId) => {
     handleDelete,
     canDelete,
     isLoading,
+    commenting,
+    deleting
   };
 };
 export default useComment;

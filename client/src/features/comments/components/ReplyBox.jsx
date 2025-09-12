@@ -1,9 +1,16 @@
+import { Spinner } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { SendHorizontalIcon } from "lucide-react";
 import { useState } from "react";
 
-const ReplyBox = ({ handleCreateReply, parentId, setReplyInput }) => {
+const ReplyBox = ({
+  handleCreateReply,
+  parentId,
+  setReplyInput,
+  commenting,
+  setShowReplies,
+}) => {
   const [reply, setReply] = useState("");
   const createReply = () => {
     handleCreateReply(parentId, reply);
@@ -18,8 +25,15 @@ const ReplyBox = ({ handleCreateReply, parentId, setReplyInput }) => {
         onChange={(e) => setReply(e.target.value)}
         placeholder="reply. ."
       />
-      <Button variant="outline" size="sm" onClick={createReply}>
-        <SendHorizontalIcon size={12} />
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={() => {
+          if (!commenting) createReply();
+          setShowReplies(true);
+        }}
+      >
+        {commenting ? <Spinner /> : <SendHorizontalIcon size={12} />}
       </Button>
     </div>
   );

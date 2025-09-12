@@ -24,7 +24,7 @@ const Feed = () => {
       className="overflow-y-scroll flex flex-col rounded-lg feed "
     >
       <h2 className="your-feed">your feed</h2>
-      <div className=" md:hidden mb-4">
+      <div className="md:hidden mb-4">
         <Thoughts />
       </div>
       {status === "pending" ? (

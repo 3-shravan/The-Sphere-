@@ -5,7 +5,7 @@ const Layout = () => {
     <div className="w-full h-[100vh] md:flex">
       <Header />
       <Sidebar />
-      <main className="flex flex-1 md:min-w-[70vw] h-screen">
+      <main className="flex flex-1 md:min-w-[70vw]  h-screen">
         <Outlet />
       </main>
       <Dock />

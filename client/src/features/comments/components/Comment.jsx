@@ -4,7 +4,8 @@ import ReplyBox from "./ReplyBox";
 import { useState } from "react";
 
 const Comment = ({ comment, postId, parentId }) => {
-  const { handleCreateReply, handleDelete, canDelete } = useComment(postId);
+  const { handleCreateReply, handleDelete, canDelete, deleting, commenting } =
+    useComment(postId);
   const [replyInput, setReplyInput] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
 
@@ -18,6 +19,8 @@ const Comment = ({ comment, postId, parentId }) => {
         canDelete={canDelete}
         showReplies={showReplies}
         setShowReplies={setShowReplies}
+        deleting={deleting}
+        commenting={commenting}
       />
 
       {replyInput && (
@@ -25,12 +28,14 @@ const Comment = ({ comment, postId, parentId }) => {
           handleCreateReply={handleCreateReply}
           parentId={parentId}
           setReplyInput={setReplyInput}
+          commenting={commenting}
+          setShowReplies={setShowReplies}
         />
       )}
       {showReplies &&
         comment?.replies?.length > 0 &&
         comment.replies.map((c) => (
-          <div key={c._id} className="ml-8">
+          <div key={c._id} className="ml-10 my-1">
             <Comment comment={c} parentId={c._id} postId={postId} />
           </div>
         ))}

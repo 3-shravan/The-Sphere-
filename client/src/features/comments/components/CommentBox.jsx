@@ -1,4 +1,4 @@
-import { ProfilePicture } from "@/components";
+import { ProfilePicture, Spinner } from "@/components";
 import { multiFormatDateString } from "@/utils";
 import { Eye, MessageSquare, Trash, Trash2 } from "lucide-react";
 
@@ -10,6 +10,8 @@ const CommentBox = ({
   canDelete,
   showReplies,
   setShowReplies,
+  deleting,
+  commenting,
 }) => {
   return (
     <div className="rounded-2xl py-1">
@@ -39,34 +41,42 @@ const CommentBox = ({
           <p className="text-xs mt-1 text-foreground">{comment.comment}</p>
 
           {/* Actions */}
-          <div className="flex gap-2 mt-2 -ml-1 text-[10px] text-muted-foreground">
-            <button
-              onClick={() => setReplyInput((prev) => !prev)}
-              className="reply-action-btn"
-            >
-              <MessageSquare size={12} />
-              {replyInput ? "Cancel" : "Reply"}
-            </button>
-
-            {comment.replies.length > 0 && (
-              <div
-                className="reply-action-btn"
-                onClick={() => setShowReplies((prev) => !prev)}
-              >
-                <Eye size={13} />{" "}
-                {showReplies ? "Hide replies" : "Show Replies"}
-              </div>
-            )}
-
-            {canDelete(comment.author._id) && (
+          {commenting ? (
+            <Spinner size="4" />
+          ) : (
+            <div className="flex gap-2 mt-2 -ml-1 text-[10px] text-muted-foreground">
               <button
-                onClick={() => handleDelete(comment._id)}
-                className="flex items-center cursor-pointer gap-0.5 bg-muted-foreground/10 rounded-full px-2 py-1 text-rose-400 hover:bg-black/10 transition"
+                onClick={() => setReplyInput((prev) => !prev)}
+                className="reply-action-btn"
               >
-                <Trash size={12} />
+                <MessageSquare size={12} />
+                {replyInput ? "Cancel" : "Reply"}
               </button>
-            )}
-          </div>
+
+              {comment.replies.length > 0 && (
+                <div
+                  className="reply-action-btn"
+                  onClick={() => setShowReplies((prev) => !prev)}
+                >
+                  <Eye size={13} />{" "}
+                  {showReplies ? "Hide replies" : "Show Replies"}
+                </div>
+              )}
+
+              {canDelete(comment.author._id) && (
+                <button
+                  onClick={() => !deleting && handleDelete(comment._id)}
+                  className="flex items-center cursor-pointer gap-0.5 bg-muted-foreground/10 rounded-full px-2 py-1 text-rose-400 hover:bg-black/10 transition"
+                >
+                  {deleting ? (
+                    <Trash2 size={12} className="animate-spin" />
+                  ) : (
+                    <Trash size={12} />
+                  )}
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
