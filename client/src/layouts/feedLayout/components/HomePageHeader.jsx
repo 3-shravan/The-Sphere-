@@ -31,7 +31,7 @@ const HomePageHeader = ({ auth, navigate }) => {
       {/* Phone Header Line  */}
       <span className=" md:hidden px-2.5 text-xs font-Poppins text-foreground  ">
         whats been up,{" "}
-        <span className="text-indigo-200">{auth?.profile?.name}</span>
+        <span className="text-rose-400">{auth?.profile?.name}</span>
       </span>
     </div>
   );
