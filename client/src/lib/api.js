@@ -1,4 +1,4 @@
-// const isLocalhost = window.location.hostname === "localhost";
+const isLocalhost = window.location.hostname === "localhost";
 export const API_URL = `${import.meta.env.VITE_API_URL}/api/v1`;
 // || "http://localhost:8000/api/v1";
 
