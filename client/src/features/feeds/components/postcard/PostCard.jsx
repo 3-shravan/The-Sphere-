@@ -1,16 +1,18 @@
 import { Confirm } from "@/components";
 import PostCardHeader from "./PostCardHeader";
 import PostCardMedia from "./PostCardMedia";
-import { LikePost, SavePost, ShowTags, usePostFromCache } from "@/shared";
+import { LikePost, SavePost, ShowTags } from "@/shared";
 import { useDeletePost } from "@/features/posts/services";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Comments from "@/features/comments/Comments";
 
 const PostCard = ({ post }) => {
   if (!post) return null;
-  const [confirmDelete, setConfirmDelete] = useState(false);
-  const { mutate: deletePost } = useDeletePost();
 
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const likePostRef = useRef(null);
+
+  const { mutate: deletePost } = useDeletePost();
   const handledeletePost = () => {
     deletePost(post._id);
     setConfirmDelete(false);
@@ -35,10 +37,14 @@ const PostCard = ({ post }) => {
         <ShowTags tags={post.tags} />
       </div>
 
-      <PostCardMedia media={post?.media} thoughts={post?.thoughts} />
+      <PostCardMedia
+        media={post?.media}
+        thoughts={post?.thoughts}
+        likePostRef={likePostRef}
+      />
 
       <div className="flex-between px-2">
-        <LikePost postId={post._id} likes={post.likes} />
+        <LikePost postId={post._id} likes={post.likes} ref={likePostRef} />
         <SavePost postId={post._id} />
       </div>
 

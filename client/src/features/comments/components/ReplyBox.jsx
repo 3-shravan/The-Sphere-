@@ -18,12 +18,12 @@ const ReplyBox = ({
     setReply("");
   };
   return (
-    <div className="my-1 gap-1 items-center pb-2 ml-8 justify-end flex md:w-[50%]">
+    <div className="my-1 gap-1 items-center pb-2 ml-10 justify-end flex md:w-[50%]">
       <Textarea
         value={reply}
         variant="reply"
         onChange={(e) => setReply(e.target.value)}
-        placeholder="reply. ."
+        placeholder="reply 🗽"
       />
       <Button
         variant="outline"

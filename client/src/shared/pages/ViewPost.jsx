@@ -13,7 +13,12 @@ const ViewPost = () => {
 
   const post = data?.post;
 
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <div className="mt-8">
+        <Loading />
+      </div>
+    );
   if (isError || !post) return <Error />;
   const { media, thoughts, _id } = post;
 

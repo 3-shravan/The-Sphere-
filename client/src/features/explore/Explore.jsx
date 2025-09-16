@@ -4,6 +4,8 @@ import { Container, H2 } from "@/components";
 import { HandleClickOutsideWrapper } from "./components/HandleClickOutsideWrapper";
 import { SearchBar } from "./components/SearchBar";
 import { SearchResults } from "./components/SearchResults";
+import { SuggestedUsers } from "../users";
+import Birthdays from "../birthdays/Birthdays";
 
 const Explore = () => {
   const [query, setQuery] = useState("");
@@ -21,7 +23,7 @@ const Explore = () => {
   return (
     <Container>
       <H2 text={"Explore"} />
-      <main className="relative w-full ">
+      <header className="relative w-full ">
         <HandleClickOutsideWrapper
           onClickOutside={() => setIsDropdownOpen(false)}
         >
@@ -33,7 +35,11 @@ const Explore = () => {
             query={query}
           />
         </HandleClickOutsideWrapper>
-      </main>
+      </header>
+      <div className="flex flex-col gap-6 w-full md:hidden ">
+        <SuggestedUsers />
+        <Birthdays />
+      </div>
     </Container>
   );
 };

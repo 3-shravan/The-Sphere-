@@ -10,7 +10,7 @@ function Textarea({ className, variant = "default", ...props }) {
         variant === "outlined" && "border-2 border-gray-500",
         variant === "filled" && "bg-gray-200 dark:bg-gray-700",
         variant === "reply" &&
-          "flex-1 custom-scrollbar-hide resize-none h-8 rounded-full px-3 py-1 md:text-xs",
+          "flex-1 custom-scrollbar-hide resize-none h-10 font-bold placeholder:font-light font-Gilroy rounded-full px-3 py-1 md:text-xs",
         className
       )}
       {...props}

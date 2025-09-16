@@ -9,6 +9,7 @@ import EditPost from "@/features/posts/post/EditPost";
 const PostCardHeader = ({ post, setConfirmDelete }) => {
   if (!post) return null;
   const { currentUserId } = useAuth();
+
   const [editOpen, setEditOpen] = useState(false);
   const { author, createdAt, location, thoughts } = post;
   return (
@@ -31,14 +32,15 @@ const PostCardHeader = ({ post, setConfirmDelete }) => {
           </div>
         </div>
       </div>
-      {currentUserId === author._id && (
-        <PostOptions
-          isThoughts={!!thoughts}
-          setConfirmDelete={setConfirmDelete}
-          setOpen={setEditOpen}
-          postId={post._id}
-        />
-      )}
+
+      <PostOptions
+        isThoughts={!!thoughts}
+        setConfirmDelete={setConfirmDelete}
+        setOpen={setEditOpen}
+        postId={post._id}
+        authorized={currentUserId === author?._id}
+      />
+
       {editOpen && <EditPost open={open} setOpen={setEditOpen} post={post} />}
     </div>
   );

@@ -5,7 +5,7 @@ import {
   errorToast,
   removeTokenAndAuthenticated,
 } from "@utils";
-import { useApi } from "@/hooks";
+import { useApi, useErrorToast, useSuccessToast } from "@/hooks";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "@/components/core/States";
 
@@ -19,8 +19,8 @@ export const ContextProvider = ({ children }) => {
   }));
 
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const { request } = useApi();
+  // const [loading, setLoading] = useState(false);
+  const { request, loading } = useApi();
   const token = getToken();
   const currentUserId = auth?.profile?._id;
 
@@ -37,7 +37,6 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!token) return resetAuth();
-      setLoading(true);
       try {
         const { data } = await request({ endpoint: "auth/profile" });
         setAuth({
@@ -46,32 +45,29 @@ export const ContextProvider = ({ children }) => {
           profile: data?.user,
         });
       } catch (error) {
-        errorToast("Failed to fetch user profile");
+        useErrorToast(error, "Failed to fetch user profile");
         resetAuth();
-      } finally {
-        setLoading(false);
       }
     };
     fetchUserProfile();
   }, [navigate]);
 
   const logout = async () => {
-    setLoading(true);
     try {
       const response = await request({ endpoint: "auth/logout" });
       resetAuth();
-      errorToast(response?.data?.message);
+      useSuccessToast(response, "Logged out 😢");
     } catch (error) {
-      errorToast("Logout failed");
-    } finally {
-      setLoading(false);
+      useErrorToast(error, "Logout failed");
     }
   };
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, currentUserId, logout }}>
-      <LoadingScreen show={loading} />
-      {!loading && children}
+    <AuthContext.Provider
+      value={{ auth, setAuth, currentUserId, logout, globalLoading: loading }}
+    >
+      {/* <LoadingScreen show={loading} /> */}
+      {children}
     </AuthContext.Provider>
   );
 };

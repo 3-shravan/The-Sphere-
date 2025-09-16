@@ -10,7 +10,7 @@ export default function LoadingScreen({ show }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <div className="animate-spin rounded-full h-14 w-14 border-t-2 border-b-2 border-neutral-600"></div>
+          <div className="animate-spin rounded-full h-15 w-15 border-t-2 border-l-2 border-rose-500"></div>
         </motion.div>
       )}
     </AnimatePresence>
@@ -25,10 +25,10 @@ export function Spinner({ size = "6", color = "neutral-700" }) {
   );
 }
 
-export const Loading = ({ message = "fetching...", spinner = true }) => {
+export const Loading = ({ message = "", size, spinner = true }) => {
   return (
-    <div className="flex-center py-10 w-full uppercase gap-2 font-bold text-sm font-Futura">
-      {spinner && <Spinner size="4" />}
+    <div className="flex-center  w-full uppercase gap-2 font-bold text-sm font-Futura">
+      {spinner && <Spinner size={size} />}
       {message}
     </div>
   );

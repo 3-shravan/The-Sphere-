@@ -5,13 +5,14 @@ import { LogOut, UserRound } from "lucide-react";
 import { motion } from "framer-motion";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components";
 
 const PhoneHeader = () => {
-  const { auth, logout } = useAuth();
+  const { auth, logout, globalLoading } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-50 md:hidden bg-card w-full">
+    <header className="sticky z-50 md:hidden bg-background border-b border-muted w-full">
       <div className="flex-between py-1 pl-5 pr-4 items-center">
         {/*  Logo */}
         <div className="flex items-center gap-x-3">
@@ -20,7 +21,11 @@ const PhoneHeader = () => {
 
         <div className="flex items-center gap-x-3">
           <Button variant="ghost" onClick={logout}>
-            <LogOut className="text-third w-5 h-5" />
+            {globalLoading ? (
+              <Spinner size="3" />
+            ) : (
+              <LogOut className="text-third w-6 h-6" />
+            )}
           </Button>
 
           <ToggleTheme theme={theme} toggleTheme={toggleTheme} />
@@ -78,10 +83,10 @@ const Profile = ({ auth }) => (
       <img
         src={auth.profile.profilePicture}
         alt="profile"
-        className="w-5 h-5 rounded-full inline"
+        className="w-6 h-6 rounded-full inline"
       />
     ) : (
-      <UserRound className="text-second w-4" />
+      <UserRound className="text-second w-5" />
     )}
   </Link>
 );

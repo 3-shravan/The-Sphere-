@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate-pwa-assets": "pwa-asset-generator public/favicon-dark.svg public --icon-only --favicon --background 'transparent' --padding '10%' --type png --path-override icon && pwa-asset-generator public/favicon-dark.svg public --splash-only --background '#ffffff' --padding '20%' --type png --path-override apple"
+    "generate-pwa-assets": "npx pwa-assets-generator"
+ 
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -47,6 +48,7 @@
     "@eslint/js": "^9.17.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "@vite-pwa/assets-generator": "^1.0.1",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.17.0",

@@ -13,6 +13,7 @@ const Profile = () => {
   const user = profile?.user;
   const me = user?._id === currentUserId;
   const posts = profile?.user?.posts;
+  
   if (isLoading) return <Loading />;
   if (!user) return <NonExistRoutes />;
 

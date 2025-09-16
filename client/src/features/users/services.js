@@ -22,11 +22,7 @@ export const useUpdateProfile = () => {
         });
       }
     },
-    onError: (error) => {
-      const errorMsg =
-        error.response?.data?.message || "Failed to update profile.";
-      errorToast(errorMsg);
-    },
+    onError: (error) => useErrorToast(error),
   });
 };
 
@@ -43,11 +39,7 @@ export const useGetProfile = (username) => {
     queryKey: ["profile", username],
     queryFn: () => fetcher({ endpoint: `/users/profile/${username}` }),
     enabled: !!username,
-    onError: (error) => {
-      const errorMsg =
-        error.response.message || "Failed to fetch profile data.";
-      errorToast(errorMsg);
-    },
+    onError: (error) => useErrorToast(error),
   });
 };
 

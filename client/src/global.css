@@ -163,11 +163,15 @@ body {
   .flex-between {
     @apply flex justify-between items-center;
   }
+
+  .input{
+    @apply font-Gilroy font-bold bg-input/30;
+  }
   .sidebar {
     @apply md:w-full lg:w-auto lg:min-w-[14vw] lg:max-w-[24vw];
   }
   .feed {
-    @apply h-[90vh] pb-6 md:pb-8 lg:pb-5 px-1 md:pl-4.5 lg:min-w-[49vw];
+    @apply h-[90vh] pb-18 md:pb-8 lg:pb-5 px-1 md:pl-4.5 lg:min-w-[49vw];
   }
   .your-feed {
     @apply text-xl p-2 md:pt-4 font-Futura tracking-tighter;
@@ -271,4 +275,29 @@ input::-webkit-inner-spin-button {
   100% {
     transform: rotate(360deg);
   }
+}
+
+@keyframes popBounce {
+  0% {
+    transform: scale(0) rotate(-20deg);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.8) rotate(10deg);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.4) rotate(-5deg);
+  }
+  80% {
+    transform: scale(1.6) rotate(3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0;
+  }
+}
+
+.animate-[popBounce_1s_ease-out] {
+  animation: popBounce 1s ease-out forwards;
 }

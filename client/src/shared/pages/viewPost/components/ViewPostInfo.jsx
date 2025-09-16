@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import Comments from "@/features/comments/Comments";
-import { Spinner } from "@/components";
+import { ProfilePicture, Spinner } from "@/components";
 import { Button } from "@/components/ui/button";
 
 export default function ViewPostInfo({ postId, post, setShowModal }) {
@@ -18,10 +18,10 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
     <div className="w-full md:px-6 md:w-1/2  flex flex-col p-3 overflow-y-auto custom-scrollbar-hide h-screen md:p-4 border-border ">
       <header className="flex px-1 items-center justify-between">
         <div className="flex items-center gap-3">
-          <img
-            src={post?.author?.profilePicture}
-            alt={post?.author?.name}
-            className="w-8 h-8 rounded-full object-cover"
+          <ProfilePicture
+            profilePicture={post?.author?.profilePicture}
+            username={post?.author?.name}
+            size={"md"}
           />
           <div>
             <h2 className="text-sm">{post?.author?.name}</h2>

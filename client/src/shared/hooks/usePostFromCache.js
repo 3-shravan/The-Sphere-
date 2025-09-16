@@ -5,7 +5,6 @@ const usePostFromCache = (postId) => {
   const cache = queryClient.getQueryData(["posts"]);
 
   if (!cache) return undefined;
-  // flatten all pages into one array
   const allPosts = cache.pages.flatMap((page) => page.posts);
   return allPosts.find((p) => p._id === postId);
 };

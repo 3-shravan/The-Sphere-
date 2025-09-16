@@ -1,4 +1,3 @@
-import { UserCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const sizeMap = {
@@ -15,6 +14,7 @@ const ProfilePicture = ({
   alt = "Profile",
   size = "md",
   color = false,
+  firstLetter = false,
 }) => {
   const navigate = useNavigate();
   const handleClick = () => {
@@ -34,14 +34,22 @@ const ProfilePicture = ({
           className={`${sizeClass} rounded-full object-cover border-1 border-border border-full`}
         />
       ) : (
-        <UserCircle2
-          className={`${sizeClass} rounded-full 
-        ${color ? "text-emerald-700" : "text-neutral-600"}`}
-          strokeWidth={2}
-        />
+        <div
+          className={`${sizeClass} rounded-full border-2 border-first bg-gradient-to-r from-rose-300 to-rose-400 flex items-center justify-center text-muted text-xs font-Futura font-bold`}
+        >
+          {username?.[0]?.toUpperCase()}
+        </div>
       )}
     </div>
   );
 };
 
 export default ProfilePicture;
+
+export function FirstLetterProfilePicture({ profilePicture, username }) {
+  return (
+    <div className="w-5 h-5 rounded-full border-2 border-white bg-gradient-to-r from-rose-300 to-rose-400 flex items-center justify-center text-muted text-xs font-Futura font-bold">
+      {user?.name?.[0]?.toUpperCase() || "U"}
+    </div>
+  );
+}

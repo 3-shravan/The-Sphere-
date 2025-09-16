@@ -28,7 +28,9 @@ const Feed = () => {
         <Thoughts />
       </div>
       {status === "pending" ? (
-        <Loading />
+        <div className=" mt-30">
+          <Loading size={6} />
+        </div>
       ) : (
         <FeedList posts={posts} isFetchingNextPage={isFetchingNextPage} />
       )}

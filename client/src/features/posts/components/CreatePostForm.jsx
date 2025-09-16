@@ -7,6 +7,7 @@ import { errorToast } from "@/utils";
 import { SiSparkpost } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components";
+import { Input } from "@/components/ui/input";
 
 const CreatePostForm = () => {
   const navigate = useNavigate();
@@ -98,22 +99,22 @@ const CreatePostForm = () => {
       {/* Location */}
       <div className="flex flex-col gap-2">
         <label>Add Location</label>
-        <input
+        <Input
           type="text"
           name="location"
           placeholder="e.g. New York, USA"
-          className="h-12 bg-muted/40 px-2 rounded-lg placeholder:text-xs"
+          className="h-12 input px-4 border-0  placeholder:text-xs"
         />
       </div>
 
       {/* Tags */}
       <div className="flex flex-col gap-2">
         <label>Add Tags (comma-separated)</label>
-        <input
+        <Input
           type="text"
           name="tags"
           placeholder="Art, Expression, Learn"
-          className="h-12 bg-input/40 px-2 rounded-lg placeholder:text-xs"
+          className="h-12 input px-4 border-0  placeholder:text-xs"
         />
       </div>
 

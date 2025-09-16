@@ -8,7 +8,7 @@ export default function CommentsCount({ count, expand, onToggle }) {
       onClick={onToggle}
     >
       <span className="min-w-8">
-        <MessageSquare size={16} className=" inline" />
+        <MessageSquare size={16} className=" text-foreground inline" />
         <span className="text-foreground font-bold ml-1">{count}</span>
       </span>
       <span className="font-bold">·</span>

@@ -25,7 +25,7 @@ const DateOfBirth = ({ dob, setDob }) => {
         Birthday
       </Label>
 
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover open={open} onOpenChange={setOpen} modal={true}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"

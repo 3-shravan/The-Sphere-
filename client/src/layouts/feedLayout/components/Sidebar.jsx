@@ -10,10 +10,10 @@ import {
   UserCircleIcon,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { ProfilePicture } from "@/components";
+import { ProfilePicture, Spinner } from "@/components";
 
 const Sidebar = () => {
-  const { logout, auth } = useAuth();
+  const { logout, auth, globalLoading } = useAuth();
   const username = auth?.profile?.name;
   const profilePicture = auth?.profile?.profilePicture;
   const { theme, toggleTheme } = useTheme();
@@ -93,11 +93,18 @@ const Sidebar = () => {
         </button>
 
         <button
-          className="btn-base  group w-[60%] border-[1.5px] border-rose-400/30  text-rose-400"
+          className="btn-base group w-[60%] border-[1.5px] border-rose-400/40  text-rose-500"
           onClick={logout}
+          disabled={globalLoading}
         >
-          <BsArrowDownRightCircleFill className="text-lg  rounded-full cursor-pointer transition group-hover:bg-rose-900 group-hover:scale-95 duration-200" />
-          Logout
+          <BsArrowDownRightCircleFill className="text-lg rounded-full cursor-pointer transition group-hover:bg-rose-900 group-hover:scale-95 duration-200" />
+          {globalLoading ? (
+            <div className="w-full flex-center">
+              <Spinner size="3" />
+            </div>
+          ) : (
+            "Logout"
+          )}
         </button>
       </div>
     </nav>

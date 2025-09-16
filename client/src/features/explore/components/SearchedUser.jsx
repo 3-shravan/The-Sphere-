@@ -8,7 +8,10 @@ export const SearchedUser = ({ user }) => {
       onClick={() => navigate(`/profile/${user?.name}`)}
     >
       <div className=" flex gap-2 ">
-        <ProfilePicture profilePicture={user.profilePicture} />
+        <ProfilePicture
+          profilePicture={user.profilePicture}
+          username={user.name}
+        />
         <h3 className="font-medium text-foreground text-sm">{user.name}</h3>
       </div>
       <span className="text-[8px] px-9 font-bold font-Gilroy uppercase text-muted-foreground">

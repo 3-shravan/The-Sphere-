@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 const RevealLinks = () => {
   return (
     <section className="grid place-content-center gap-2 bg-black md:px-10 font-Poppins font-thin py-14 text-emerald-200 overflow-hidden">
-      <FlipLink href="#">#Connect</FlipLink>
+      {/* <FlipLink href="#">#Connect</FlipLink>
       <FlipLink href="#">Share</FlipLink>
       <FlipLink href="#">#Post</FlipLink>
-      <FlipLink href="#">Message</FlipLink>
-      <div className="text-first font-Gilroy">
+      <FlipLink href="#">Message</FlipLink> */}
+      <div className="text-second tracking-widest font-Gilroy font-bold">
         <FlipLink href="/login">&gt;Login</FlipLink>
       </div>
     </section>

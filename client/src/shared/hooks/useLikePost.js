@@ -2,31 +2,64 @@ import { useAuth } from "@/context";
 import { useState } from "react";
 import { useToggleLikePost } from "../services";
 
-const useLikePost = (likes) => {
-  const { currentUserId } = useAuth();
+const useLikePost = (initialLikes = []) => {
+  const { currentUserId, auth } = useAuth();
 
-  const [likesCount, setLikesCount] = useState(likes?.length );
+  const [likes, setLikes] = useState(initialLikes);
+  const [likesCount, setLikesCount] = useState(initialLikes.length);
   const [isLiked, setIsLiked] = useState(
-    likes?.some((u) => u._id === currentUserId)
+    initialLikes.some((u) => u._id === currentUserId)
   );
+
+  const newUser = {
+    _id: currentUserId,
+    name: auth?.profile?.name,
+    profilePicture: auth?.profile?.profilePicture,
+  };
 
   const { mutate: toggleLike, isPending: likeIsPending } = useToggleLikePost({
     onMutate: () => {
       setIsLiked((prev) => !prev);
-      setLikesCount((count) => (isLiked ? count - 1 : count + 1));
+
+      if (isLiked) {
+        // Remove current user
+        setLikes((prev) => prev.filter((u) => u._id !== currentUserId));
+        setLikesCount((count) => count - 1);
+      } else {
+        // Add current user at the start
+        setLikes((prev) => [
+          newUser,
+          ...prev.filter((u) => u._id !== currentUserId),
+        ]);
+        setLikesCount((count) => count + 1);
+      }
     },
     onError: () => {
+      // Rollback on error
       setIsLiked((prev) => !prev);
-      setLikesCount((count) => (isLiked ? count + 1 : count - 1));
+
+      if (isLiked) {
+        setLikes((prev) => [
+          newUser,
+          ...prev.filter((u) => u._id !== currentUserId),
+        ]);
+        setLikesCount((count) => count + 1);
+      } else {
+        // Was not liked, rollback add
+        setLikes((prev) => prev.filter((u) => u._id !== currentUserId));
+        setLikesCount((count) => count - 1);
+      }
     },
   });
 
   return {
     toggleLike,
+    likes,
     likesCount,
-    setLikesCount,
     isLiked,
     likeIsPending,
+    setLikes,
+    setLikesCount,
   };
 };
 

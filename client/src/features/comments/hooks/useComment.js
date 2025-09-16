@@ -5,21 +5,30 @@ import {
   useGetPostComments,
 } from "../services";
 import { useAuth } from "@/context";
+import { useErrorToast } from "@/hooks";
 
 const useComment = (postId) => {
   const [comment, setComment] = useState("");
   const { data: comments, isLoading } = useGetPostComments(postId);
   const topComment = comments?.comments[0];
 
-  const { mutateAsync: createComment,isPending:commenting } = useCreateComment(postId);
-  const { mutateAsync: deleteComment,isPending:deleting } = useDeleteComment(postId);
+  const { mutateAsync: createComment, isPending: commenting } =
+    useCreateComment(postId);
+  const { mutateAsync: deleteComment, isPending: deleting } =
+    useDeleteComment(postId);
+
+  const { auth } = useAuth();
 
   const handleCreate = async (parentId = null) => {
+    if (!auth.isAuthenticated)
+      return useErrorToast({}, "Please login to comment");
     if (!comment.trim()) return;
     await createComment({ comment, parentId });
     setComment("");
   };
   const handleCreateReply = async (parentId, reply) => {
+    if (!auth.isAuthenticated)
+      return useErrorToast({}, "Please login to reply");
     if (!reply.trim()) return;
     const comment = reply;
     await createComment({ comment, parentId });
@@ -42,7 +51,7 @@ const useComment = (postId) => {
     canDelete,
     isLoading,
     commenting,
-    deleting
+    deleting,
   };
 };
 export default useComment;

@@ -1,15 +1,11 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  useInfiniteQuery,
-} from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetcher } from "@lib/fetcher";
+import { useAuth } from "@/context";
 import { errorToast, successToast } from "@/utils";
+import { useErrorToast } from "@/hooks";
 
 const POSTS_QUERY_KEY = ["posts"];
 const SAVED_POSTS_QUERY_KEY = ["savedPosts"];
-const COMMENTS_QUERY_KEY = (postId) => ["comments", postId];
 
 export const useGetUsers = () => {
   return useMutation({
@@ -39,7 +35,7 @@ export const useToggleLikePost = ({ onMutate, onError } = {}) => {
     onMutate: () => onMutate?.(),
     onError: (error) => {
       onError?.();
-      errorToast(error?.response?.data?.message || "Error liking post");
+      useErrorToast(error, "Error liking post");
     },
     onSuccess: (_, postId) =>
       queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY }),
@@ -56,9 +52,7 @@ export const useToggleSavePost = ({ onMutate, onError } = {}) => {
       queryClient.invalidateQueries({ queryKey: SAVED_POSTS_QUERY_KEY }),
     onError: (error) => {
       onError?.();
-      errorToast(
-        error?.response?.data?.message || "You cannot save the post. be login"
-      );
+      useErrorToast(error, "Error saving post");
     },
   });
 };
@@ -73,10 +67,7 @@ export const useFollowUser = ({ onMutate, onError }) => {
     },
     onError: (error) => {
       onError?.();
-      errorToast(
-        error.response?.data?.message ||
-          "Failed to follow user. Please try again later."
-      );
+      useErrorToast(error, "Error while following user");
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profile"] });
@@ -95,3 +86,57 @@ export const useSavedPosts = () =>
       );
     },
   });
+
+// export const useToggleLikePostCache = () => {
+//   const queryClient = useQueryClient();
+//   const { currentUserId, auth } = useAuth();
+
+//   return useMutation({
+//     mutationFn: (postId) =>
+//       fetcher({ endpoint: `/posts/${postId}/like`, method: "PUT" }),
+
+//     onMutate: async (postId) => {
+//       await queryClient.cancelQueries({ queryKey: POSTS_QUERY_KEY });
+//       const prevPosts = queryClient.getQueryData(POSTS_QUERY_KEY);
+
+//       queryClient.setQueryData(POSTS_QUERY_KEY, (old) => {
+//         if (!old) return old;
+//         return {
+//           ...old,
+//           pages: old.pages.map((page) => ({
+//             ...page,
+//             posts: page.posts.map((p) => {
+//               if (String(p._id) !== String(postId)) return p;
+
+//               const alreadyLiked = p.likes.some((u) => u._id === currentUserId);
+
+//               const newLikes = alreadyLiked
+//                 ? p.likes.filter((u) => u._id !== currentUserId)
+//                 : [
+//                     {
+//                       _id: currentUserId,
+//                       name: auth?.profile?.name,
+//                       profilePicture: auth?.profile?.profilePicture,
+//                     },
+//                     ...p.likes.filter((u) => u._id !== currentUserId), // remove duplicates
+//                   ];
+
+//               return { ...p, likes: newLikes };
+//             }),
+//           })),
+//         };
+//       });
+//       return { prevPosts };
+//     },
+
+//     onError: (err, postId, context) => {
+//       if (context?.prevPosts) {
+//         queryClient.setQueryData(POSTS_QUERY_KEY, context.prevPosts);
+//       }
+//       errorToast(err?.response?.data?.message || "Error liking post");
+//     },
+//     onSettled: () => {
+//       queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
+//     },
+//   });
+// };

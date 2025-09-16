@@ -6,7 +6,7 @@ export const useSuccessMessage = (response, customErrMessage) => {
     response?.message ||
     response ||
     customErrMessage ||
-    "Request successful"
+    "Request successful 🗽"
   );
 };
 export const useSuccessToast = (response, customErrMessage) => {
@@ -20,7 +20,7 @@ export const useErrorMessage = (error, customErrMessage) => {
     error?.response?.data?.errors[0] ||
     error?.message ||
     customErrMessage ||
-    "Unexpected error occurred"
+    "An Error while doing so 😢"
   );
 };
 

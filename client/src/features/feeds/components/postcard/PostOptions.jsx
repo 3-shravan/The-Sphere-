@@ -7,10 +7,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Copy, Facebook, Instagram, Link, MessageCircle } from "lucide-react";
 import { ShareModal } from "@/shared";
 
-const PostOptions = ({ setConfirmDelete, setOpen, isThoughts, postId }) => {
+const PostOptions = ({
+  setConfirmDelete,
+  setOpen,
+  isThoughts,
+  postId,
+  authorized,
+}) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -21,7 +26,7 @@ const PostOptions = ({ setConfirmDelete, setOpen, isThoughts, postId }) => {
           <Tally2 />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="font-Poppins bg-card cursor-pointer">
-          {!isThoughts && (
+          {authorized && !isThoughts && (
             <DropdownMenuItem
               className="cursor-pointer px-3"
               onClick={() => setOpen(true)}
@@ -29,12 +34,16 @@ const PostOptions = ({ setConfirmDelete, setOpen, isThoughts, postId }) => {
               ⚙ Edit
             </DropdownMenuItem>
           )}
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={() => setConfirmDelete(true)}
-          >
-            ❌ Delete
-          </DropdownMenuItem>
+          {authorized && (
+            <>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => setConfirmDelete(true)}
+              >
+                ❌ Delete
+              </DropdownMenuItem>
+            </>
+          )}
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => setShowModal(true)}

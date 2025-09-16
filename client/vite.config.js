@@ -18,9 +18,13 @@ export default defineConfig({
         "favicon-dark.svg",
         "apple-*.png",
         "manifest-*.png",
+        "pwa-*.png",
+        "maskable-icon-*.png",
+        "screenshot-*.png",
+        
       ],
       manifest: {
-        name: "sphere",
+        name: "Sphere",
         short_name: "Sphere",
         description: "A social media app designed with ❤",
         theme_color: "#0a0a0a",
@@ -32,30 +36,31 @@ export default defineConfig({
         id: "/",
         icons: [
           {
-            src: "/manifest-icon-192.maskable.png",
-            sizes: "192x192",
+            src: "pwa-64x64.png",
+            sizes: "64x64",
             type: "image/png",
-            purpose: "any",
           },
           {
-            src: "/manifest-icon-192.maskable.png",
+            src: "pwa-192x192.png",
             sizes: "192x192",
             type: "image/png",
-            purpose: "maskable",
           },
           {
-            src: "/manifest-icon-512.maskable.png",
+            src: "pwa-512x512.png",
             sizes: "512x512",
             type: "image/png",
-            purpose: "any",
           },
           {
-            src: "/manifest-icon-512.maskable.png",
+            src: "maskable-icon-512x512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable",
           },
-          { src: "/apple-icon-180.png", sizes: "180x180", type: "image/png" },
+          {
+            src: "apple-touch-icon-180x180.png",
+            sizes: "180x180",
+            type: "image/png",
+          },
         ],
 
         // screenshots: [
@@ -88,21 +93,14 @@ export default defineConfig({
             short_name: "Feed",
             description: "View your social feed",
             url: "/feeds",
-            icons: [{ src: "/favicon.svg", sizes: "192x192" }],
+            icons: [{ src: "maskable-icon-512x512.png", sizes: "192x192" }],
           },
           {
             name: "Create Post",
             short_name: "Create Post",
             description: "Create a new post",
             url: "/create-post",
-            icons: [{ src: "/favicon.svg", sizes: "192x192" }],
-          },
-          {
-            name: "Profile",
-            short_name: "Profile",
-            description: "View and edit your profile",
-            url: "/profile/me",
-            icons: [{ src: "/favicon.svg", sizes: "192x192" }],
+            icons: [{ src: "pwa-192x192.png", sizes: "192x192" }],
           },
           {
             name: "Saved Posts",
@@ -116,12 +114,12 @@ export default defineConfig({
             short_name: "Explore",
             description: "Discover new content",
             url: "/explore",
-            icons: [{ src: "/favicon.svg", sizes: "192x192" }],
+            icons: [{ src: "/favicon-dark.svg", sizes: "192x192" }],
           },
         ],
       },
       workbox: {
-        // globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,woff,woff2}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,woff,woff2}"],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,

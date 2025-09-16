@@ -5,7 +5,8 @@ import { useSavedPosts } from "@/shared/services";
 const SavedPosts = () => {
   const { data, isLoading } = useSavedPosts();
   const savedPosts = data?.savedPosts || [];
-  if (isLoading) return Loading();
+
+  if (isLoading) return <Loading />;
   return (
     <Container>
       <H2 text={"Saved Posts"} />

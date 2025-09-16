@@ -70,8 +70,8 @@ const EditPost = ({ open, setOpen, post }) => {
               <Textarea
                 name="caption"
                 defaultValue={post?.caption}
-                placeholder="what's your idea about this new picture 💫"
-                className="resize-none h-24 font-mono text-sm"
+                placeholder="🗽"
+                className="resize-none h-24 input text-sm"
               />
             </div>
 
@@ -84,7 +84,7 @@ const EditPost = ({ open, setOpen, post }) => {
                 name="location"
                 placeholder="e.g. Paris, France"
                 defaultValue={post?.location}
-                className="w-1/2"
+                className="w-1/2 input "
               />
             </div>
 
@@ -96,8 +96,8 @@ const EditPost = ({ open, setOpen, post }) => {
               <Input
                 name="tags"
                 defaultValue={stringifyTags(post?.tags)}
-                placeholder="e.g. nature, photography, travel"
-                className="placeholder:text-xs font-mono font-bold"
+                placeholder="e.g. Nature, Peaceful"
+                className="w-1/2 input"
               />
             </div>
 
