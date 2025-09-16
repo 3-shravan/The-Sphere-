@@ -123,7 +123,7 @@ export const getMyPosts = catchAsyncError(async (req, res, next) => {
  * ******************** / */
 export const getPostById = catchAsyncError(async (req, res, next) => {
   const { postId } = req.params;
-  const userId = req.user._id;
+  const userId = req?.user?._id;
 
   const post = await Post.findById(postId).populate([
     { path: "author", select: "name profilePicture" },
@@ -224,14 +224,14 @@ export const likePost = catchAsyncError(async (req, res, next) => {
     return next(new ErrorHandler(403, "You cannot like this post"));
 
   const isLiked = post.likes.includes(likedBy);
+
   if (isLiked) {
-    post.likes.pull(likedBy);
-    await post.save();
+    await Post.findByIdAndUpdate(postId, { $pull: { likes: likedBy } });
     return handleSuccessResponse(res, 200, "Post unliked successfully");
   }
-  post.likes.push(likedBy);
-  await post.populate({ path: "likes", select: "name , profilePicture" });
-  await post.save();
+  await Post.findByIdAndUpdate(postId, { $push: { likes: likedBy } });
+  await post.populate({ path: "likes", select: "name profilePicture" });
+
   handleSuccessResponse(res, 200, "Post liked successfully");
 });
 

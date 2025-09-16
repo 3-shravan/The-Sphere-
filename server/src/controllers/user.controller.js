@@ -18,6 +18,7 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
   const query = req.query.search
     ? {
         _id: { $nin: [...blockedUserIds] },
+        accountVerified: true,
         $or: [
           { name: { $regex: req.query.search, $options: "i" } },
           { email: { $regex: req.query.search, $options: "i" } },
@@ -180,14 +181,21 @@ export const followUnfollow = catchAsyncError(async (req, res, next) => {
     toFollowUser.followers = toFollowUser.followers.filter(
       (userId) => userId.toString() !== user._id.toString()
     );
-    await user.save();
-    await toFollowUser.save();
+    await User.findByIdAndUpdate(user._id, {
+      $pull: { following: toFollowUser._id },
+    });
+    await User.findByIdAndUpdate(toFollowUser._id, {
+      $pull: { followers: user._id },
+    });
     return handleSuccessResponse(res, 200, "Unfollowed successfully");
   }
-  user.following.push(toFollowUser._id);
-  toFollowUser.followers.push(user._id);
-  await user.save();
-  await toFollowUser.save();
+  await User.findByIdAndUpdate(user._id, {
+    $push: { following: toFollowUser._id },
+  });
+  await User.findByIdAndUpdate(toFollowUser._id, {
+    $push: { followers: user._id },
+  });
+
   handleSuccessResponse(res, 200, "Followed successfully");
 });
 

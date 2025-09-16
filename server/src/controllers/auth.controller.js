@@ -107,7 +107,7 @@ export const login = catchAsyncError(async (req, res, next) => {
   if (!isMatch)
     return next(new ErrorHandler(400, "Incorrect password. Please try again."));
 
-  sendToken(user, 200, "Login Successfull", res);
+  sendToken(user, 200, "Login Successfull 🚀", res);
 });
 
 export const logout = catchAsyncError(async (req, res, next) => {
@@ -119,7 +119,7 @@ export const logout = catchAsyncError(async (req, res, next) => {
   }
   res.clearCookie("token", { httpOnly: true });
   res.cookie("token", "", { expires: new Date(Date.now()), httpOnly: true });
-  handleSuccessResponse(res, 200, "Logged out successfully");
+  handleSuccessResponse(res, 200, "logged out 😢");
 });
 
 export const getUser = catchAsyncError(async (req, res, next) => {

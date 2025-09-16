@@ -2,13 +2,22 @@ import Joi from "joi";
 import { validatePhoneNo } from "../utils/validations.js";
 
 export const registerSchema = Joi.object({
-  name: Joi.string().trim().min(3).max(20).lowercase().required().messages({
-    "string.base": "username must be a text",
-    "string.empty": "username is required",
-    "string.min": "username should have at least {#limit} characters",
-    "string.max": "username should not exceed {#limit} characters",
-    "any.required": "username is required",
-  }),
+  name: Joi.string()
+    .trim()
+    .min(3)
+    .max(20)
+    .lowercase()
+    .pattern(/^[a-z0-9._]+$/)
+    .required()
+    .messages({
+      "string.base": "username must be a text",
+      "string.empty": "username is required",
+      "string.min": "username should have at least {#limit} characters",
+      "string.max": "username should not exceed {#limit} characters",
+      "string.pattern.base":
+        "username can only contain lowercase letters, numbers, dots, and underscores",
+      "any.required": "username is required",
+    }),
   phone: Joi.string().trim().empty("").allow(null, ""),
   email: Joi.string().trim().empty("").email().allow(null, ""),
   password: Joi.string().min(6).required(),
