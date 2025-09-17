@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "@context";
 import { useTheme } from "@/context";
-import { LogOut, UserRound } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { motion } from "framer-motion";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { ProfilePicture, Spinner } from "@/components";
@@ -11,7 +11,7 @@ const PhoneHeader = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="sticky z-50 md:hidden bg-card w-full">
+    <header className="sticky z-50 md:hidden bg-background w-full">
       <div className="flex-between py-1 pl-5 pr-4 items-center">
         {/*  Logo */}
         <div className="flex items-center gap-x-3">

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { FaBirthdayCake } from "react-icons/fa";
 
 const Birthdays = () => {
-  const { mutateAsync } = useGetUsers();
+  const { mutateAsync, isLoading } = useGetUsers();
   const { auth } = useAuth();
   const [users, setUsers] = useState([]);
   const [todayBirthdays, setTodayBirthdays] = useState([]);

@@ -21,7 +21,7 @@ import { useUpdatePost } from "../services";
 import { usePostFromCache } from "@/shared";
 
 const EditPost = ({ open, setOpen, postId }) => {
-  const post=usePostFromCache(postId);
+  const post = usePostFromCache(postId);
   const { mutateAsync: updatePost, isPending } = useUpdatePost(post?._id);
 
   const handleSubmit = async (e) => {
@@ -86,7 +86,7 @@ const EditPost = ({ open, setOpen, postId }) => {
                 name="location"
                 placeholder="e.g. Paris, France"
                 defaultValue={post?.location}
-                className="w-1/2 input "
+                className="w-1/2 input text-xs "
               />
             </div>
 
@@ -99,7 +99,7 @@ const EditPost = ({ open, setOpen, postId }) => {
                 name="tags"
                 defaultValue={stringifyTags(post?.tags)}
                 placeholder="e.g. Nature, Peaceful"
-                className="w-1/2 input"
+                className="w-1/2 input text-xs"
               />
             </div>
 

@@ -58,11 +58,11 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
 
         <div className="flex px-2 items-center justify-between gap-4">
           <LikePost postId={post?._id} likes={post?.likes} />
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2">
             <SavePost postId={post?._id} />
             <Button
               variant="outline"
-              className="text-xs cursor-pointer"
+              className="hidden md:block text-xs cursor-pointer"
               onClick={() => setShowModal(true)}
             >
               Share
