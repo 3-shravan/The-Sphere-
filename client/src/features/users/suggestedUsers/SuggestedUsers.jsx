@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { ListUsers } from "./components/ListUsers";
 import { useFollowUser } from "@/shared/services";
+import { useSmoothScroll } from "@/hooks";
 
 const SuggestedUsers = () => {
   const { data, isLoading, error } = useSuggestedUsers();
@@ -29,11 +30,13 @@ const SuggestedUsers = () => {
     }
   }, [suggestedUsers, currentUser]);
 
-  if (isLoading) return <Loading />;
+  useSmoothScroll(".scroll");
   if (error) return <Error />;
 
-  return (
-    <SmoothScroll className="max-h-[198px] md:max-h-[215px] custom-scrollbar-hide">
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <SmoothScroll className="max-h-[240px] md:max-h-[215px] scroll custom-scrollbar-hide">
       <div className=" flex-col gap-2  p-2">
         <h2 className="px-3 p-2 text-second dark:text-first tracking-tight font-Futura">
           <CircleSmall className="inline text-second" />

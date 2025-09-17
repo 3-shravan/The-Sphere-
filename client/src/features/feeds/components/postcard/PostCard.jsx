@@ -1,35 +1,16 @@
-import { Confirm } from "@/components";
 import PostCardHeader from "./PostCardHeader";
 import PostCardMedia from "./PostCardMedia";
 import { LikePost, SavePost, ShowTags } from "@/shared";
-import { useDeletePost } from "@/features/posts/services";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Comments from "@/features/comments/Comments";
 
 const PostCard = ({ post }) => {
   if (!post) return null;
-
-  const [confirmDelete, setConfirmDelete] = useState(false);
   const likePostRef = useRef(null);
 
-  const { mutate: deletePost } = useDeletePost();
-  const handledeletePost = () => {
-    deletePost(post._id);
-    setConfirmDelete(false);
-  };
-
-  return confirmDelete ? (
-    <Confirm
-      onCancel={() => setConfirmDelete(false)}
-      onConfirm={handledeletePost}
-    />
-  ) : (
+  return (
     <div className="post-card">
-      <PostCardHeader
-        post={post}
-        deletePost={deletePost}
-        setConfirmDelete={setConfirmDelete}
-      />
+      <PostCardHeader post={post} />
 
       <div className="caption">{post.caption}</div>
 
@@ -48,7 +29,6 @@ const PostCard = ({ post }) => {
         <SavePost postId={post._id} />
       </div>
 
-      {/* COMMENTS ----------> */}
       <Comments postId={post._id} />
     </div>
   );

@@ -24,7 +24,7 @@ const ViewPost = () => {
 
   return (
     <div className=" inset-0 bg-background flex items-center h-screen justify-center z-50 p-2 md:p-4">
-      <main className="bg-background rounded-xl border  shadow-xl w-full max-w-6xl h-full md:h-[95vh] flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
+      <main className="bg-background w-full max-w-6xl h-full flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
         <ViewPostMedia media={media} thoughts={thoughts} />
         <ViewPostInfo postId={_id} post={post} setShowModal={setShowModal} />
 

@@ -13,7 +13,7 @@ const Dock = () => {
     <BadgePlus className={`${className}`} />,
   ];
   return (
-    <section className="z-50 flex backdrop-blur-lg items-center w-[95%] left-1/2 -translate-x-1/2  fixed bottom-1 rounded-xl md:hidden">
+    <section className="z-50 flex backdrop-blur-2xl items-center w-[80%] left-1/2 -translate-x-1/2  fixed bottom-4 rounded-2xl md:hidden">
       {tabs.map((link, index) => {
         const isActive = pathname === link.route;
         return (

@@ -1,17 +1,11 @@
 import { ProfilePicture } from "@/components";
-import { useAuth } from "@/context";
 import { multiFormatDateString } from "@/utils";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import PostOptions from "./PostOptions";
-import EditPost from "@/features/posts/post/EditPost";
 
-const PostCardHeader = ({ post, setConfirmDelete }) => {
+const PostCardHeader = ({ post }) => {
   if (!post) return null;
-  const { currentUserId } = useAuth();
-
-  const [editOpen, setEditOpen] = useState(false);
-  const { author, createdAt, location, thoughts } = post;
+  const { author, createdAt, location } = post;
   return (
     <div className="flex-between mx-auto pl-2">
       <div className="flex items-center gap-3">
@@ -33,15 +27,7 @@ const PostCardHeader = ({ post, setConfirmDelete }) => {
         </div>
       </div>
 
-      <PostOptions
-        isThoughts={!!thoughts}
-        setConfirmDelete={setConfirmDelete}
-        setOpen={setEditOpen}
-        postId={post._id}
-        authorized={currentUserId === author?._id}
-      />
-
-      {editOpen && <EditPost open={open} setOpen={setEditOpen} post={post} />}
+      <PostOptions postId={post._id} />
     </div>
   );
 };

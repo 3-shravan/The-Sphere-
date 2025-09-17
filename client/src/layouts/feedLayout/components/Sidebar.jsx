@@ -13,13 +13,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ProfilePicture, Spinner } from "@/components";
 
 const Sidebar = () => {
+  const { theme, toggleTheme } = useTheme();
   const { logout, auth, globalLoading } = useAuth();
+
   const username = auth?.profile?.name;
   const profilePicture = auth?.profile?.profilePicture;
-  const { theme, toggleTheme } = useTheme();
+  const isProfile = window.location.pathname.includes(`/profile/${username}`);
 
   const navigate = useNavigate();
-  const isProfile = window.location.pathname.includes(`/profile/${username}`);
 
   const className = "w-4";
   const icons = [
@@ -34,13 +35,13 @@ const Sidebar = () => {
     <nav className="hidden md:flex p-4 flex-col justify-between max-h-screen sidebar">
       <div className="flex flex-col gap-10">
         {/* Logo */}
-        <div className="flex gap-1 mt-3 px-2 items-center transition duration-200">
+        <div className="flex  mt-3 px-1 items-center transition duration-200">
           <img
             src={theme === "dark" ? "/favicon.svg" : "/favicon-dark.svg"}
             alt="logo"
-            width={15}
+            width={20}
           />
-          <span className="font-bold text-lg  font-Gilroy ">sphere</span>
+          <span className="font-bold text-lg font-Gilroy ">sphere</span>
         </div>
 
         {/* Sidebar Links */}

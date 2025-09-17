@@ -1,7 +1,11 @@
-import { ProfilePicture } from "@/components";
-import { ChevronDown, UserRound } from "lucide-react";
+import { HappyBirthday, ProfilePicture } from "@/components";
+import { useAuth } from "@/context";
+import { ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const HomePageHeader = ({ auth, navigate }) => {
+const HomePageHeader = () => {
+  const { auth, isBirthday } = useAuth();
+  const navigate = useNavigate();
   return (
     <div className="flex-between md:py- 1 md:mt-1 pt-2 ">
       {/* TIME  */}
@@ -11,6 +15,10 @@ const HomePageHeader = ({ auth, navigate }) => {
           minute: "2-digit",
         })}
       </span>
+      {/* BIRTHDAY WISHES */}
+      <div className="hidden md:block">
+        <HappyBirthday />
+      </div>
 
       {/* PROFILE */}
       <div
@@ -28,11 +36,17 @@ const HomePageHeader = ({ auth, navigate }) => {
         </span>
       </div>
 
-      {/* Phone Header Line  */}
-      <span className=" md:hidden px-2.5 text-xs font-Poppins text-foreground  ">
-        whats been up,{" "}
-        <span className="text-rose-400">{auth?.profile?.name}</span>
-      </span>
+      {/* Greeting  */}
+      {isBirthday ? (
+        <div className="md:hidden px-3">
+          <HappyBirthday />
+        </div>
+      ) : (
+        <span className=" md:hidden px-2.5 text-xs font-Poppins text-foreground  ">
+          whats been up,{" "}
+          <span className="text-rose-400">{auth?.profile?.name}</span>
+        </span>
+      )}
     </div>
   );
 };

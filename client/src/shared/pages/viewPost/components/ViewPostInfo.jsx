@@ -5,6 +5,7 @@ import { formatDistanceToNow } from "date-fns";
 import Comments from "@/features/comments/Comments";
 import { ProfilePicture, Spinner } from "@/components";
 import { Button } from "@/components/ui/button";
+import PostOptions from "@/features/feeds/components/postcard/PostOptions";
 
 export default function ViewPostInfo({ postId, post, setShowModal }) {
   const navigate = useNavigate();
@@ -14,8 +15,7 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
   };
 
   return (
-    // overflow-y-auto custom-scrollbar-hide
-    <div className="w-full md:px-6 md:w-1/2  flex flex-col p-3 overflow-y-auto custom-scrollbar-hide h-screen md:p-4 border-border ">
+    <div className="w-full md:px-6 md:w-1/2 flex flex-col p-3 overflow-y-auto custom-scrollbar-hide h-screen md:p-8 border-border ">
       <header className="flex px-1 items-center justify-between">
         <div className="flex items-center gap-3">
           <ProfilePicture
@@ -36,17 +36,21 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
             </p>
           </div>
         </div>
-        <button
-          onClick={handleBackNavigation}
-          className="bg-muted p-2 rounded-full hover:bg-third transition"
-        >
-          <X className="w-4 h-4" />
-        </button>
+        <div className="flex">
+          <PostOptions postId={postId} />
+          <button
+            onClick={handleBackNavigation}
+            className="bg-muted text-xs px-2 py-1 flex items-center cursor-pointer rounded-full hover:bg-third transition"
+          >
+            {/* <X className="w-3 h-3" /> */}
+            &lt; back
+          </button>
+        </div>
       </header>
 
       <div className="flex-1 mt-4  space-y-2  ">
         {post?.caption && post?.media && (
-          <p className="text-sm font-Futura border-b py-2 border-muted">
+          <p className="text-sm font-Futura border-b px-2 py-2 border-muted">
             {post?.caption}
           </p>
         )}
@@ -54,11 +58,11 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
 
         <div className="flex px-2 items-center justify-between gap-4">
           <LikePost postId={post?._id} likes={post?.likes} />
-          <div>
+          <div className="flex flex-col gap-1">
             <SavePost postId={post?._id} />
             <Button
               variant="outline"
-              className="text-xs ml-2 cursor-pointer"
+              className="text-xs cursor-pointer"
               onClick={() => setShowModal(true)}
             >
               Share

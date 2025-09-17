@@ -2,7 +2,6 @@ import { useState, useEffect, useContext, createContext } from "react";
 import {
   getIsAuthenticated,
   getToken,
-  errorToast,
   removeTokenAndAuthenticated,
 } from "@utils";
 import { useApi, useErrorToast, useSuccessToast } from "@/hooks";
@@ -19,7 +18,6 @@ export const ContextProvider = ({ children }) => {
   }));
 
   const navigate = useNavigate();
-  // const [loading, setLoading] = useState(false);
   const { request, loading } = useApi();
   const token = getToken();
   const currentUserId = auth?.profile?._id;
@@ -62,9 +60,21 @@ export const ContextProvider = ({ children }) => {
     }
   };
 
+  const today = new Date();
+  const dob = new Date(auth?.profile?.dob) || null;
+  const isBirthday =
+    today.getDate() === dob.getDate() && today.getMonth() === dob.getMonth();
+
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, currentUserId, logout, globalLoading: loading }}
+      value={{
+        auth,
+        setAuth,
+        currentUserId,
+        logout,
+        isBirthday,
+        globalLoading: loading,
+      }}
     >
       {/* <LoadingScreen show={loading} /> */}
       {children}

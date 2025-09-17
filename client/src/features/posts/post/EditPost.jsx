@@ -18,8 +18,10 @@ import {
   validatePostForm,
 } from "@/utils";
 import { useUpdatePost } from "../services";
+import { usePostFromCache } from "@/shared";
 
-const EditPost = ({ open, setOpen, post }) => {
+const EditPost = ({ open, setOpen, postId }) => {
+  const post=usePostFromCache(postId);
   const { mutateAsync: updatePost, isPending } = useUpdatePost(post?._id);
 
   const handleSubmit = async (e) => {

@@ -16,5 +16,6 @@ export { default as SmoothScroll } from "./wrappers/SmoothScroll";
 export { default as ProfilePicture } from "./wrappers/ProfilePicture";
 export { FirstLetterProfilePicture } from "./wrappers/ProfilePicture";
 export { default as H2 } from "./wrappers/H2";
+export { default as HappyBirthday } from "./core/HappyBirthday";
 export { default as Offline } from "./core/Offline";
 export { default as Modal } from "./wrappers/Modal";

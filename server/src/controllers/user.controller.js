@@ -27,8 +27,8 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
     : { _id: { $nin: [...blockedUserIds] } };
 
   const users = await User.find(query)
-    .find({ _id: { $ne: userId } })
-    .select("name profilePicture followers following")
+    // .find({ _id: { $ne: userId } })
+    .select("name profilePicture followers following dob")
     .limit(20)
     .sort({ createdAt: -1 });
   if (!users) throw new ErrorHandler(404, "No users found");

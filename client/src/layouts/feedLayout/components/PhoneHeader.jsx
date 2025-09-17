@@ -4,15 +4,14 @@ import { useTheme } from "@/context";
 import { LogOut, UserRound } from "lucide-react";
 import { motion } from "framer-motion";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components";
+import { ProfilePicture, Spinner } from "@/components";
 
 const PhoneHeader = () => {
   const { auth, logout, globalLoading } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="sticky z-50 md:hidden bg-background border-b border-muted w-full">
+    <header className="sticky z-50 md:hidden bg-card w-full">
       <div className="flex-between py-1 pl-5 pr-4 items-center">
         {/*  Logo */}
         <div className="flex items-center gap-x-3">
@@ -20,17 +19,21 @@ const PhoneHeader = () => {
         </div>
 
         <div className="flex items-center gap-x-3">
-          <Button variant="ghost" onClick={logout}>
+          <button onClick={logout}>
             {globalLoading ? (
               <Spinner size="3" />
             ) : (
-              <LogOut className="text-third w-6 h-6" />
+              <LogOut className="text-third cursor-pointer w-5 h-5" />
             )}
-          </Button>
+          </button>
 
           <ToggleTheme theme={theme} toggleTheme={toggleTheme} />
 
-          <Profile auth={auth} />
+          <ProfilePicture
+            profilePicture={auth?.profile?.profilePicture}
+            username={auth?.profile?.name}
+            size="md"
+          />
         </div>
       </div>
     </header>
@@ -40,11 +43,11 @@ const PhoneHeader = () => {
 export default PhoneHeader;
 
 const Logo = ({ theme }) => (
-  <Link to="/" className="flex gap-1 items-center">
+  <Link to="/" className="flex items-center">
     {theme === "dark" ? (
-      <img src="/favicon.svg" alt="logo" width={15} />
+      <img src="/favicon.svg" alt="logo" width={18} />
     ) : (
-      <img src="/favicon-dark.svg" alt="logo" width={15} />
+      <img src="/favicon-dark.svg" alt="logo" width={18} />
     )}
     <span className="font-bold font-Poppins tracking-tighter">sphere</span>
   </Link>
@@ -52,7 +55,7 @@ const Logo = ({ theme }) => (
 
 const ToggleTheme = ({ theme, toggleTheme }) => (
   <div
-    className={`flex items-center w-10 h-5.5 border border-border rounded-full cursor-pointer transition-colors duration-300 ${
+    className={`flex items-center w-10 h-6 border rounded-full cursor-pointer transition-colors duration-300 ${
       theme === "dark" ? "bg-muted" : ""
     }`}
     onClick={toggleTheme}
@@ -62,31 +65,14 @@ const ToggleTheme = ({ theme, toggleTheme }) => (
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
       className="w-5 h-5 rounded-full flex items-center justify-center shadow-md bg-second"
       style={{
-        marginLeft: theme === "dark" ? "calc(100% - 20px)" : "2px",
+        marginLeft: theme === "dark" ? "calc(100% - 22px)" : "2px",
       }}
     >
       {theme === "dark" ? (
-        <MdOutlineLightMode className="text-black text-sm" />
+        <MdOutlineLightMode className="text-black text-xs" />
       ) : (
-        <MdOutlineDarkMode className="text-white text-sm" />
+        <MdOutlineDarkMode className="text-white text-xs" />
       )}
     </motion.div>
   </div>
-);
-
-const Profile = ({ auth }) => (
-  <Link
-    to={`/profile/${auth?.profile?.name}`}
-    className="flex items-center justify-center"
-  >
-    {auth?.profile?.profilePicture ? (
-      <img
-        src={auth.profile.profilePicture}
-        alt="profile"
-        className="w-6 h-6 rounded-full inline"
-      />
-    ) : (
-      <UserRound className="text-second w-5" />
-    )}
-  </Link>
 );
