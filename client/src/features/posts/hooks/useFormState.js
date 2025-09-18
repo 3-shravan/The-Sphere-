@@ -19,7 +19,9 @@ export const usePostFormState = () => {
 
   return {
     preview,
+    setPreview,
     image,
+    setImage,
     fileInputRef,
     handleImageChange,
     clearPreview,

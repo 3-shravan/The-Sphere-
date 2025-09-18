@@ -13,13 +13,16 @@ const PostCardMedia = ({ media, thoughts, likePostRef }) => {
 
   if (media) {
     return (
-      <div className="relative w-full flex md:max-w-[55vw] lg:w-[45vw] justify-center p-2 rounded-xl">
-        <img
-          src={media}
-          alt="post"
-          className="w-full max-h-[60vh] md:max-h-[85vh] object-cover rounded-xl cursor-pointer"
-          onDoubleClick={handleDoubleClick}
-        />
+      <div className="relative w-full flex justify-center p-2">
+        <div className="overflow-hidden rounded-2xl max-w-[90vw] md:max-w-[55vw] lg:max-w-[45vw]">
+          <img
+            src={media}
+            alt="post"
+            onDoubleClick={handleDoubleClick}
+            className="w-full max-h-[85vh] object-cover cursor-pointer"
+          />
+        </div>
+
         {showHeart && (
           <FaHeart className="absolute inset-0 m-auto text-rose-600 text-8xl opacity-50 animate-[popBounce_1s_ease-out]" />
         )}

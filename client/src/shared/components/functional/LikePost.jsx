@@ -51,7 +51,7 @@ const LikePost = forwardRef(
             )}
             <span
               className={`font-bold text-xs ${
-                !likedBy && "text-muted-foreground"
+                !likedBy && "text-muted-foreground text-auto-contrast "
               }`}
             >
               {likesCount}

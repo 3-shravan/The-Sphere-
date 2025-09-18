@@ -4,6 +4,7 @@ export { default as Marquee } from "./core/Marquee";
 export { default as Menu } from "./core/Menu";
 export { default as Offline } from "./core/Offline";
 export { default as HappyBirthday } from "./core/HappyBirthday";
+export { default as ImageCropper } from "./core/ImageCropper";
 
 export { default as H2 } from "./wrappers/H2";
 export { default as Container } from "./wrappers/Container";

@@ -12,3 +12,4 @@ export { default as SavePost } from "./components/functional/SavePost";
 export { default as ShareModal } from "./components/modals/ShareModal";
 export { default as DeleteModal } from "./components/modals/DeleteModal";
 export { default as ShowUserModal } from "./components/modals/ShowUserModal";
+export { default as SocialLinksModal } from "./components/modals/SocailLinksModal";

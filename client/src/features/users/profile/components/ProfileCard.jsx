@@ -1,19 +1,26 @@
-import { Activity } from "lucide-react";
-import { useState } from "react";
-import { FollowUser, ShowUserModal } from "@/shared";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ProfilePicture } from "@/components";
-import { Modal } from "@/components";
+import { ProfilePicture, Modal } from "@/components";
+import { FollowUser, ShowUserModal, SocialLinksModal } from "@/shared";
+import { Link } from "react-router-dom";
 import useProfile from "../hooks/useProfile";
 import EditProfile from "../EditProfile";
 
-export const ProfileCard = ({ user }) => {
+export function ProfileCard({ user }) {
   if (!user) return null;
+
   const [activeModal, setActiveModal] = useState(null);
+  const [showLinksModal, setShowLinksModal] = useState(false);
+  const [socialLinks, setSocialLinks] = useState({});
 
   const { fullName, dob, name, bio, following, followers } = user;
-  const { me, followersCount, followUser, isFollowing, isPending } =
+  const { me, followersCount, isFollowing, followUser, isPending } =
     useProfile(user);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(`links_${user._id}`);
+    if (saved) setSocialLinks(JSON.parse(saved));
+  }, [user._id]);
 
   return (
     <div className="flex flex-col items-center font-Gilroy w-full justify-center backdrop-blur-md">
@@ -23,34 +30,61 @@ export const ProfileCard = ({ user }) => {
         size="profile"
       />
 
-      <div className="flex flex-col mt-2 justify-center items-center w-full text-neutral-600">
-        <h2 className="text-2xl text-second font-Futura font-bold text-center">
-          {name}
-        </h2>
-        {fullName && <h2 className="text-base">{fullName}</h2>}
-        {dob && (
-          <span className="text-xs">{new Date(dob).toLocaleDateString()}</span>
-        )}
+      <div className="flex flex-col mt-3 items-center text-neutral-700">
+        <h2 className="text-2xl font-Futura font-bold text-second">{name}</h2>
+        {fullName && <h3 className="text-base">{fullName}</h3>}
+        {dob && <p className="text-xs">{new Date(dob).toLocaleDateString()}</p>}
 
-        <div className="flex gap-2 mt-3 items-center cursor-pointer font-bold md:text-sm text-xs">
-          <span onClick={() => setActiveModal("followers")}>
-            followers <Activity className="w-3 -mx-1 inline" /> {followersCount}
-          </span>
-          <span className="text-red-200">·</span>
-          <span onClick={() => setActiveModal("followings")}>
-            following <Activity className="w-3 -mx-1 inline" />{" "}
-            {following.length}
-          </span>
+        <div className="flex gap-10 mt-1">
+          <div
+            className="flex flex-col cursor-pointer items-center"
+            onClick={() => setActiveModal("followers")}
+          >
+            <span className="text-lg font-extrabold">{followersCount}</span>
+            <span className="text-xs text-neutral-500">Followers</span>
+          </div>
+          <div
+            className="flex flex-col cursor-pointer items-center"
+            onClick={() => setActiveModal("followings")}
+          >
+            <span className="text-lg font-extrabold">{following.length}</span>
+            <span className="text-xs text-neutral-500">Following</span>
+          </div>
         </div>
 
         {bio && (
-          <span className="italic mt-2 text-foreground max-w-sm font-mono">
+          <p className="italic mt-3 text-center text-foreground max-w-sm font-mono break-words">
             “{bio}”
-          </span>
+          </p>
         )}
+        <div className="flex gap-4 mt-4 text-xs font-semibold">
+          {Object.entries(socialLinks).map(
+            ([key, val]) =>
+              val && (
+                <Link
+                  key={key}
+                  to={`https://${key}.com/${val}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-1 border rounded-full hover:bg-muted transition text-neutral-600"
+                >
+                  {key}
+                </Link>
+              )
+          )}
+        </div>
 
         {me ? (
-          <EditProfile user={user} />
+          <div className="space-x-2 ">
+            <EditProfile user={user} />
+            <Button
+              variant="outline"
+              className="text-xs text-foreground/90 font-Gilroy bg-input/20 rounded-xl"
+              onClick={() => setShowLinksModal(true)}
+            >
+              add links 🚀
+            </Button>
+          </div>
         ) : (
           <div className="flex flex-wrap justify-center md:justify-start gap-3 font-mono mt-4">
             <FollowUser
@@ -61,7 +95,7 @@ export const ProfileCard = ({ user }) => {
             />
             <Button
               variant="secondary"
-              className="text-xs font-Gilroy font-bold cursor-pointer bg-input/20 rounded-xl"
+              className="text-xs font-Gilroy border font-bold cursor-pointer bg-input/20 rounded-xl"
             >
               Message
             </Button>
@@ -75,9 +109,17 @@ export const ProfileCard = ({ user }) => {
             title={activeModal === "followers" ? "Followers" : "Following"}
             users={activeModal === "followers" ? followers : following}
             onCancel={() => setActiveModal(null)}
-          />
+          />{" "}
         </Modal>
+      )}
+
+      {showLinksModal && (
+        <SocialLinksModal
+          userId={user._id}
+          onClose={() => setShowLinksModal(false)}
+          onSave={setSocialLinks}
+        />
       )}
     </div>
   );
-};
+}

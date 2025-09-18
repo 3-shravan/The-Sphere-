@@ -37,7 +37,7 @@ const Explore = () => {
         </HandleClickOutsideWrapper>
       </header>
       {!isDropdownOpen && (
-        <div className="flex flex-col gap-6 w-full md:hidden ">
+        <div className="flex flex-col gap-6 w-full lg:hidden ">
           <SuggestedUsers />
           <Birthdays />
         </div>

@@ -24,36 +24,44 @@ const PostGrid = ({
   const toProfile = (username) => navigate(`/profile/${username}`);
 
   return (
-    <div className="grid md:grid-cols-2 w-full lg:grid-cols-3 gap-4 lg:gap-6">
+    <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 lg:gap-6 w-full">
       {posts.length === 0 ? (
-        <H2>{emptyText}</H2>
+        <div className="px-1">
+          <H2>{emptyText}</H2>
+        </div>
       ) : (
         posts.map((post) => (
           <div
             key={post._id}
-            className="relative rounded-4xl overflow-hidden shadow border cursor-pointer"
+            className="break-inside-avoid mb-4 relative rounded-4xl overflow-hidden shadow border cursor-pointer"
           >
-            <div className="relative w-full h-64">
-              {post?.media && (
+            <div className="relative w-full">
+              {post?.media ? (
                 <img
                   onClick={() => toViewPost(post._id)}
                   src={post.media}
                   alt="post"
-                  className="w-full absolute  h-full object-cover"
+                  className="w-full h-auto object-cover"
                 />
+              ) : (
+                <div
+                  className="inset-0 h-64 bg-background/70 z-10 "
+                  onClick={() => toViewPost(post._id)}
+                >
+                  <ThoughtsCard
+                    thought={post?.thoughts}
+                    postId={post._id}
+                    className="h-full"
+                  />
+                </div>
               )}
-              <div className="absolute top-3 right-1 ">
+
+              <div className="absolute top-3 right-1">
                 <PostOptions
                   postId={post._id}
                   author={post.author}
                   thoughts={post.thoughts}
                 />
-              </div>
-              <div
-                className="absolute -z-10 h-full w-full"
-                onClick={() => toViewPost(post._id)}
-              >
-                <ThoughtsCard thought={post?.thoughts} postId={post._id} />
               </div>
 
               {showAuthor && (
@@ -66,13 +74,13 @@ const PostGrid = ({
                 </Backdrop>
               )}
 
-              {/* Gradient Overlay Content */}
               <div
-                className={`absolute bottom-0 left-0 w-full px-4  pb-4 text-neutral-900
-                  ${
-                    post.media &&
-                    "bg-gradient-to-t from-neutral-900/95 to-transparent"
-                  }`}
+                className={`absolute bottom-0 left-0 w-full px-4 pb-4 text-neutral-900
+                ${
+                  post.media &&
+                  "bg-gradient-to-t from-neutral-900 to-transparent"
+                }
+              `}
               >
                 {showCaption && (
                   <h2 className="text-xs font-medium font-Poppins text-neutral-300 mb-1">

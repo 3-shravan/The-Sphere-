@@ -6,15 +6,40 @@ import { formatTags, validatePostForm } from "@/utils";
 import { errorToast } from "@/utils";
 import { SiSparkpost } from "react-icons/si";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components";
+import { ImageCropper, Spinner } from "@/components";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 const CreatePostForm = () => {
   const navigate = useNavigate();
-  const { preview, image, fileInputRef, handleImageChange, clearPreview } =
+  const { preview, setPreview, image, fileInputRef, clearPreview, setImage } =
     usePostFormState();
 
   const { mutateAsync: createPost, isPending } = useCreatePost();
+
+  const [showCropper, setShowCropper] = useState(false);
+  const [tempImage, setTempImage] = useState(null);
+
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    e.target.value = "";
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setTempImage(reader.result);
+      setShowCropper(true);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleCropped = (croppedFile, croppedPreview) => {
+    setImage(croppedFile);
+    setPreview(croppedPreview);
+    setTempImage(null);
+    setShowCropper(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,18 +106,25 @@ const CreatePostForm = () => {
               <p className="mt-2 text-sm text-muted-foreground">
                 Click to upload image
               </p>
-              <p className="text-xs text-muted-foreground">PNG, JPG, JPEG</p>
             </div>
           )}
-
           <input
             type="file"
             ref={fileInputRef}
-            onChange={handleImageChange}
+            onChange={handleImageSelect}
             accept="image/*"
             className="hidden"
           />
         </div>
+
+        {showCropper && (
+          <ImageCropper
+            image={tempImage}
+            // aspect={3 / 4}
+            onCancel={() => setShowCropper(false)}
+            onCropComplete={handleCropped}
+          />
+        )}
       </div>
 
       {/* Location */}

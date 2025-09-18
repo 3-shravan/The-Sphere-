@@ -84,7 +84,7 @@ const Sidebar = () => {
 
         <button className="btn-base border w-[60%]" onClick={toggleTheme}>
           {theme === "dark" ? (
-            <MdLightMode className="text-[2.5vh]" />
+            <MdLightMode className="text-[2.5vh] sm:text-lg " />
           ) : (
             <MdDarkMode className="text-lg" />
           )}
