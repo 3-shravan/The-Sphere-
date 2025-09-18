@@ -39,10 +39,10 @@ const PostGrid = ({
                   onClick={() => toViewPost(post._id)}
                   src={post.media}
                   alt="post"
-                  className="w-full absolute z-0 h-full object-cover"
+                  className="w-full absolute  h-full object-cover"
                 />
               )}
-              <div className="absolute top-3 right-1 z-10">
+              <div className="absolute top-3 right-1 ">
                 <PostOptions
                   postId={post._id}
                   author={post.author}
@@ -50,7 +50,7 @@ const PostGrid = ({
                 />
               </div>
               <div
-                className="absolute h-full w-full"
+                className="absolute -z-10 h-full w-full"
                 onClick={() => toViewPost(post._id)}
               >
                 <ThoughtsCard thought={post?.thoughts} postId={post._id} />

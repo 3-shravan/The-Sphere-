@@ -45,14 +45,13 @@ const CreatePostForm = () => {
       onSubmit={handleSubmit}
       className="flex flex-col gap-8 w-full font-bold font-Gilroy text-foreground text-sm max-w-6xl"
     >
-      {/* Grid Layout for Caption + Image */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="flex flex-col gap-2">
-          <label>Caption</label>
+          <label className="pl-1">Caption</label>
           <textarea
             name="caption"
             placeholder="🗽"
-            className="resize-none min-h-[200px] bg-input/30 p-4 rounded-xl focus-visible:ring-2"
+            className="resize-none min-h-[160px] md:min-h-[200px] bg-input/30 p-4 rounded-xl focus-visible:ring-2"
           />
         </div>
 
@@ -98,7 +97,7 @@ const CreatePostForm = () => {
 
       {/* Location */}
       <div className="flex flex-col gap-2">
-        <label>Add Location</label>
+        <label className="pl-1">Add Location</label>
         <Input
           type="text"
           name="location"
@@ -109,7 +108,13 @@ const CreatePostForm = () => {
 
       {/* Tags */}
       <div className="flex flex-col gap-2">
-        <label>Add Tags (comma-separated)</label>
+        <label className="pl-1">
+          Add Tags
+          <span className="text-muted-foreground/50 font-mono">
+            {" "}
+            comma-separated
+          </span>
+        </label>
         <Input
           type="text"
           name="tags"

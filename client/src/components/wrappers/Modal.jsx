@@ -8,10 +8,10 @@ export default function Modal({
 }) {
   return (
     <div
-      className={`fixed inset-0 not-[]:backdrop-blur-xs flex items-center justify-center z-50
-        ${darkModal ? "bg-black" : "bg-black/60"}`}
+      className={`fixed inset-0 not-[]:backdrop-blur-xs flex items-center rounded-2xl justify-center z-[998]
+        ${darkModal ? "bg-black" : "bg-black/90"}`}
     >
-      <div className="bg-background rounded-xl shadow-lg p-4 md:p-6 min-w-80 max-h-[70vh] overflow-y-auto">
+      <div className="bg-background relative rounded-xl shadow-lg p-4 w-[85%] md:p-6 md:w-[40%] max-h-[70vh] z-[999] overflow-y-auto">
         <div className="flex items-center justify-between mb-3">
           {title && (
             <h2 className="flex-1 text-center text-base font-semibold text-foreground">

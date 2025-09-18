@@ -70,7 +70,7 @@ export const ProfileCard = ({ user }) => {
       </div>
 
       {activeModal && (
-        <Modal darkModal={true}>
+        <Modal darkModal={false}>
           <ShowUserModal
             title={activeModal === "followers" ? "Followers" : "Following"}
             users={activeModal === "followers" ? followers : following}

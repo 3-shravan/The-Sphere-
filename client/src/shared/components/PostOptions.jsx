@@ -63,13 +63,17 @@ const PostOptions = ({ postId, author, thoughts }) => {
       )}
       {/* Share Modal */}
       {showModal && (
-        <Modal onCancel={() => setShowModal(false)} title="Share Post">
+        <Modal
+          darkModal={true}
+          onCancel={() => setShowModal(false)}
+          title="Share Post"
+        >
           <ShareModal postId={postId} />
         </Modal>
       )}
       {/* Delete Confirm Modal */}
       {confirmDelete && (
-        <Modal>
+        <Modal darkModal={true}>
           <DeleteModal
             onCancel={() => setConfirmDelete(false)}
             postId={postId}

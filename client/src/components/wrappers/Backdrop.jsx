@@ -12,7 +12,7 @@ export default function Backdrop({
     <div
       onClick={fn}
       className={clsx(
-        "absolute z-50 backdrop-blur-md bg-white/20 dark:bg-neutral-800/30 text-sm p-1 rounded-full font-medium text-neutral-800 dark:text-neutral-100 shadow-sm",
+        "absolute backdrop-blur-md bg-white/20 dark:bg-neutral-800/30 text-sm p-1 rounded-full font-medium text-neutral-800 dark:text-neutral-100 shadow-sm",
         positionClasses[position]
       )}
     >

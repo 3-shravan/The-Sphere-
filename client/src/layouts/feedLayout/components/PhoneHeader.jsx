@@ -18,7 +18,7 @@ const PhoneHeader = () => {
           <Logo theme={theme} />
         </div>
 
-        <div className="flex items-center gap-x-3">
+        <div className="flex items-center gap-x-3 px-2">
           <button onClick={logout}>
             {globalLoading ? (
               <Spinner size="4" />
@@ -56,7 +56,7 @@ const Logo = ({ theme }) => (
 const ToggleTheme = ({ theme, toggleTheme }) => (
   <div
     className={`flex items-center w-10 h-6 border rounded-full cursor-pointer transition-colors duration-300 ${
-      theme === "dark" ? "bg-muted" : ""
+      theme === "dark" ? "bg-muted/50" : ""
     }`}
     onClick={toggleTheme}
   >
