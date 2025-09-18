@@ -259,6 +259,12 @@ input::-webkit-inner-spin-button {
   transition: background-color 9999s ease-in-out 0s;
 }
 
+.animate-[popBounce_1s_ease-out] {
+  animation: popBounce 1s ease-out forwards;
+}
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
 @keyframes spin-slow {
   0% {
     transform: rotate(0deg);
@@ -268,7 +274,23 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
+@keyframes popBounce {
+  0% {
+    transform: scale(0) rotate(-20deg);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.8) rotate(10deg);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.4) rotate(-5deg);
+  }
+  80% {
+    transform: scale(1.6) rotate(3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0;
+  }
 }
-

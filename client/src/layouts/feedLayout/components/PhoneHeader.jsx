@@ -12,7 +12,7 @@ const PhoneHeader = () => {
 
   return (
     <header className="sticky z-50 md:hidden bg-background w-full">
-      <div className="flex-between py-2 pl-2.5 p-2 items-center">
+      <div className="flex-between py-2 pl-3 p-2 items-center">
         {/*  Logo */}
         <div className="flex items-center ">
           <Logo theme={theme} />
