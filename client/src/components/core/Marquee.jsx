@@ -1,9 +1,9 @@
-import { motion } from "@lib";
+import { motion } from "framer-motion";
 import { MarqueeItems } from "@utils";
 import { Asterisk } from "lucide-react";
 import "@styles/marquee.css";
 
-const Marquee = ({ direction }) => {
+export default function Marquee({ direction }) {
   const animationX = direction === "left" ? ["0%", "-100%"] : ["-100%", "0%"];
   return (
     <motion.div className="marquee-container">
@@ -35,6 +35,4 @@ const Marquee = ({ direction }) => {
       ))}
     </motion.div>
   );
-};
-
-export default Marquee;
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context";
-import Confetti from "react-confetti";
 import { motion } from "framer-motion";
+import Confetti from "react-confetti";
 
 export default function BirthdayHeader() {
   const { isBirthday, auth } = useAuth();

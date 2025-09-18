@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { ShareModal } from "..";
-import { useGetSinglePost } from "../services";
 import { Error, Loading, Modal } from "@/components";
-import ViewPostMedia from "./viewPost/components/ViewPostMedia";
-import ViewPostInfo from "./viewPost/components/ViewPostInfo";
+import { useGetSinglePost } from "@/shared/services";
+import { ShareModal } from "@/shared";
+import ViewPostMedia from "./components/ViewPostMedia";
+import ViewPostInfo from "./components/ViewPostInfo";
 
-const ViewPost = () => {
+export default function ViewPost() {
   const { postId } = useParams();
   const { data, isLoading, isError } = useGetSinglePost(postId);
-  const [showModal, setShowModal] = useState(false);
-
   const post = data?.post;
+
+  const [showModal, setShowModal] = useState(false);
 
   if (isLoading)
     return (
@@ -20,6 +20,7 @@ const ViewPost = () => {
       </div>
     );
   if (isError || !post) return <Error />;
+
   const { media, thoughts, _id } = post;
 
   return (
@@ -36,5 +37,4 @@ const ViewPost = () => {
       </main>
     </div>
   );
-};
-export default ViewPost;
+}

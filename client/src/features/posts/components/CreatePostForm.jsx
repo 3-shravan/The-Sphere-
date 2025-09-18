@@ -135,7 +135,7 @@ const CreatePostForm = () => {
           className=" text-black/80 rounded-xl border  bg-emerald-400 cursor-pointer  transition-all duration-200 font-semibold min-w-28 flex items-center justify-center disabled:bg-neutral-900 disabled:cursor-progress"
         >
           {isPending ? (
-            <Spinner color="emerald-400" />
+            <Spinner color="emerald-400" size="5" />
           ) : (
             <span className="flex items-center gap-1">
               <SiSparkpost className="inline" /> Upload

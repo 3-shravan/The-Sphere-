@@ -1,7 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetcher } from "@lib/fetcher";
-import { useAuth } from "@/context";
-import { errorToast, successToast } from "@/utils";
 import { useErrorToast } from "@/hooks";
 
 const POSTS_QUERY_KEY = ["posts"];
@@ -10,9 +8,7 @@ const SAVED_POSTS_QUERY_KEY = ["savedPosts"];
 export const useGetUsers = () => {
   return useMutation({
     mutationFn: ({ query }) => fetcher({ endpoint: `/users?search=${query}` }),
-    onError: () => {
-      errorToast("Failed to fetch user. Please try again later.");
-    },
+    onError: (err) => useErrorToast(err, "Error fetching users"),
   });
 };
 
@@ -21,9 +17,7 @@ export const useGetSinglePost = (postId) => {
     queryKey: ["posts", postId],
     queryFn: () => fetcher({ endpoint: `/posts/${postId}` }),
     enabled: !!postId,
-    onError: (error) => {
-      errorToast(error?.response?.data?.message || "Error fetching the post");
-    },
+    onError: (error) => useErrorToast(error, "Error fetching post"),
   });
 };
 
@@ -80,11 +74,7 @@ export const useSavedPosts = () =>
   useQuery({
     queryKey: SAVED_POSTS_QUERY_KEY,
     queryFn: () => fetcher({ endpoint: "/posts/saved" }),
-    onError: (error) => {
-      errorToast(
-        error?.response?.data?.message || "Error fetching saved posts"
-      );
-    },
+    onError: (error) => useErrorToast(error, "Error fetching saved posts"),
   });
 
 // export const useToggleLikePostCache = () => {
@@ -133,7 +123,7 @@ export const useSavedPosts = () =>
 //       if (context?.prevPosts) {
 //         queryClient.setQueryData(POSTS_QUERY_KEY, context.prevPosts);
 //       }
-//       errorToast(err?.response?.data?.message || "Error liking post");
+//      useErrorToast(err, "Error liking post");
 //     },
 //     onSettled: () => {
 //       queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });

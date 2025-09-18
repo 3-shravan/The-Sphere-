@@ -1,22 +1,13 @@
 import clsx from "clsx";
-import { useNavigate } from "react-router-dom";
-const positionClasses = {
-  "top-left": "top-3 left-3",
-  "top-right": "top-3 right-3",
-  "bottom-left": "bottom-3 left-3",
-  "bottom-right": "bottom-3 right-3",
-  center: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-  "top-center": "top-3 left-1/2 -translate-x-1/2",
-  "bottom-center": "bottom-3 left-1/2 -translate-x-1/2",
-};
+import { positionClasses } from "@/utils";
 
-const Backdrop = ({
+export default function Backdrop({
   fn,
   children,
   image = null,
   position = "top-left",
   alt = "Image",
-}) => {
+}) {
   return (
     <div
       onClick={fn}
@@ -37,6 +28,4 @@ const Backdrop = ({
       </div>
     </div>
   );
-};
-
-export default Backdrop;
+}

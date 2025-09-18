@@ -3,9 +3,8 @@ import { CLIENT_URL } from "@/lib/api";
 import { Link as LinkIcon, MessageCircle, Share2, Forward } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const ShareModal = ({ postId }) => {
+export default function ShareModal({ postId }) {
   const postUrl = `${CLIENT_URL}/post/${postId}`;
-
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(postUrl);
@@ -30,12 +29,11 @@ const ShareModal = ({ postId }) => {
     }
   };
 
-  // Common styling
   const itemClasses =
     "flex items-center gap-3 p-3 rounded-lg font-Futura shadow-sm hover:shadow-md transition text-sm cursor-pointer";
 
   return (
-    <div className="grid grid-cols-1 text-black sm:grid-cols-2 lg:grid-cols-2 gap-3 sm:gap-4 px-4 py-5">
+    <div className="grid grid-cols-1 text-black sm:grid-cols-2  lg:grid-cols-2 gap-3 sm:gap-4 px-4 py-5">
       {/* WhatsApp */}
       <a
         href={`https://wa.me/?text=${encodeURIComponent(postUrl)}`}
@@ -75,6 +73,4 @@ const ShareModal = ({ postId }) => {
       </Link>
     </div>
   );
-};
-
-export default ShareModal;
+}

@@ -1,7 +1,7 @@
-import { useMenu } from "@context";
-import { useNavigate } from "@lib";
+import { useMenu } from "@/context";
+import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+export default function Header() {
   const navigate = useNavigate();
   const { menu, toggleMenu } = useMenu();
 
@@ -25,6 +25,4 @@ const Header = () => {
       </nav>
     </header>
   );
-};
-
-export default Header;
+}

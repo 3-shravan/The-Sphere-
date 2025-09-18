@@ -1,9 +1,9 @@
 import React from "react";
-import { Outlet, useNavigate } from "@lib";
 import { useAuth } from "@context";
 import { Loader } from "@components";
+import { Outlet, useNavigate } from "react-router-dom";
 
-const ProtectedRoutes = () => {
+export default function ProtectedRoutes() {
   const navigate = useNavigate();
   const { auth, setAuth } = useAuth();
 
@@ -12,5 +12,4 @@ const ProtectedRoutes = () => {
   }, [auth.isAuthenticated, navigate]);
 
   return auth.isAuthenticated ? <Outlet /> : <Loader />;
-};
-export default ProtectedRoutes;
+}

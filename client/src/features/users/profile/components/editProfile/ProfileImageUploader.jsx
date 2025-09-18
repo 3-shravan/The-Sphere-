@@ -26,7 +26,7 @@ const ProfileImageUploader = ({
         )}
         <ProfilePicture
           profilePicture={previewImage || profilePicture}
-          size="32"
+          size="profile"
         />
       </div>
 

@@ -1,9 +1,9 @@
-import { useNavigate, useState, useCallback } from "@lib";
-import { successToast } from "@utils";
 import axios from "@/lib/axios";
-import { useErrorToast } from "./useResponse";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useErrorToast, useSuccessToast } from "./useResponse";
 
-const useApi = () => {
+export default function useApi() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -17,7 +17,7 @@ const useApi = () => {
           data: body,
         });
         if (response?.data?.success) {
-          if (response.data.message) successToast(response.data.message);
+          // useSuccessToast(response?.data?.message || "Success ✅");
           if (redirectUrl) navigate(redirectUrl, { replace: true });
           return response;
         }
@@ -46,6 +46,4 @@ const useApi = () => {
   );
 
   return { request, loading, fetcher };
-};
-
-export default useApi;
+}

@@ -1,4 +1,4 @@
-const Offline = () => {
+export default function Offline() {
   return (
     <div className="flex items-center justify-center h-screen ">
       <div className="text-center">
@@ -7,5 +7,4 @@ const Offline = () => {
       </div>
     </div>
   );
-};
-export default Offline;
+}

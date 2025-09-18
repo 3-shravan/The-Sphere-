@@ -1,4 +1,4 @@
-import { errorToast, successToast } from "@/utils";
+import { errorToast, successToast } from "@/lib/Toast";
 
 export const useSuccessMessage = (response, customErrMessage) => {
   return (

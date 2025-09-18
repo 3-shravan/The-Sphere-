@@ -1,4 +1,5 @@
-import { motion, FaUserAstronaut, FaGithub, FaLinkedin, FaTwitter } from "@lib";
+import { FaUserAstronaut, FaGithub, FaLinkedin, FaTwitter } from "@lib";
+import { motion } from "framer-motion";
 import { HeartIcon } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
 
@@ -37,7 +38,7 @@ const AnimatedText = ({ text }) => {
   );
 };
 
-const Menu = () => {
+export default function Menu() {
   return (
     <motion.div
       initial={{ y: -800, opacity: 1 }}
@@ -108,6 +109,4 @@ const Menu = () => {
       </span>
     </motion.div>
   );
-};
-
-export default Menu;
+}

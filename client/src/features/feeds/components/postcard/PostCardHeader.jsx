@@ -1,7 +1,7 @@
 import { ProfilePicture } from "@/components";
+import { PostOptions } from "@/shared";
 import { multiFormatDateString } from "@/utils";
 import { Link } from "react-router-dom";
-import PostOptions from "./PostOptions";
 
 const PostCardHeader = ({ post }) => {
   if (!post) return null;

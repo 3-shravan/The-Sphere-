@@ -15,7 +15,7 @@ const Comments = ({ postId, expanded }) => {
   if (isLoading) return <Loading />;
   return (
     <>
-      <div className="md:px-2 px-2 text-sm max-h-[50vh] md:max-h-[60vh] transition-all duration-200 overflow-y-auto font-Poppins text-foreground">
+      <div className="md:px-2 px-2 text-sm max-h-[50vh] transition-all duration-200 overflow-y-auto font-Poppins text-foreground">
         <div className="mt-2">
           <CommentsCount
             count={comments?.comments?.length}

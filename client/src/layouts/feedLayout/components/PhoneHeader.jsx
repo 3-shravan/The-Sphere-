@@ -12,16 +12,16 @@ const PhoneHeader = () => {
 
   return (
     <header className="sticky z-50 md:hidden bg-background w-full">
-      <div className="flex-between py-1 pl-5 pr-4 items-center">
+      <div className="flex-between py-2 pl-2.5 p-2 items-center">
         {/*  Logo */}
-        <div className="flex items-center gap-x-3">
+        <div className="flex items-center ">
           <Logo theme={theme} />
         </div>
 
         <div className="flex items-center gap-x-3">
           <button onClick={logout}>
             {globalLoading ? (
-              <Spinner size="3" />
+              <Spinner size="4" />
             ) : (
               <LogOut className="text-third cursor-pointer w-5 h-5" />
             )}

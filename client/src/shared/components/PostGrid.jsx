@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from "date-fns";
-import { LikePost, SavePost, ShowTags } from "@/shared";
+import { LikePost, PostOptions, SavePost, ShowTags } from "@/shared";
 import { H2, Backdrop } from "@/components";
 import { useNavigate } from "react-router-dom";
 import ThoughtsCard from "./ui/ThoughtsCard";
@@ -16,7 +16,9 @@ const PostGrid = ({
   likePost = false,
 }) => {
   if (!posts) return null;
+
   const navigate = useNavigate();
+
   const isExpanded = (caption, WORDS) => caption.length > WORDS;
   const toViewPost = (postId) => navigate(`/post/${postId}`);
   const toProfile = (username) => navigate(`/profile/${username}`);
@@ -40,7 +42,13 @@ const PostGrid = ({
                   className="w-full absolute z-0 h-full object-cover"
                 />
               )}
-
+              <div className="absolute top-3 right-1 z-10">
+                <PostOptions
+                  postId={post._id}
+                  author={post.author}
+                  thoughts={post.thoughts}
+                />
+              </div>
               <div
                 className="absolute h-full w-full"
                 onClick={() => toViewPost(post._id)}
@@ -57,6 +65,7 @@ const PostGrid = ({
                   {post?.author?.name}
                 </Backdrop>
               )}
+
               {/* Gradient Overlay Content */}
               <div
                 className={`absolute bottom-0 left-0 w-full px-4  pb-4 text-neutral-900

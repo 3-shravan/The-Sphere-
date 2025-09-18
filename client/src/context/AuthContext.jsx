@@ -3,24 +3,23 @@ import {
   getIsAuthenticated,
   getToken,
   removeTokenAndAuthenticated,
-} from "@utils";
+} from "@/utils";
 import { useApi, useErrorToast, useSuccessToast } from "@/hooks";
 import { useNavigate } from "react-router-dom";
-import LoadingScreen from "@/components/core/States";
 
 const AuthContext = createContext();
 
 export const ContextProvider = ({ children }) => {
+  const navigate = useNavigate();
+
   const [auth, setAuth] = useState(() => ({
     isAuthenticated: getIsAuthenticated() ?? false,
     token: getToken() || null,
     profile: null,
   }));
 
-  const navigate = useNavigate();
-  const { request, loading } = useApi();
   const token = getToken();
-  const currentUserId = auth?.profile?._id;
+  const { request, loading } = useApi();
 
   const resetAuth = () => {
     setAuth({
@@ -29,7 +28,6 @@ export const ContextProvider = ({ children }) => {
       profile: null,
     });
     removeTokenAndAuthenticated();
-    // navigate("/login");
   };
 
   useEffect(() => {
@@ -70,7 +68,8 @@ export const ContextProvider = ({ children }) => {
       value={{
         auth,
         setAuth,
-        currentUserId,
+        user: auth?.profile,
+        currentUserId: auth?.profile?._id,
         logout,
         isBirthday,
         globalLoading: loading,

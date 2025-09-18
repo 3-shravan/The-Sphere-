@@ -1,10 +1,11 @@
+import { useState, forwardRef, useImperativeHandle } from "react";
 import { Heart } from "lucide-react";
 import { FaHeart } from "react-icons/fa6";
-import { useState, forwardRef, useImperativeHandle } from "react";
-import useLikePost from "../../hooks/useLikePost";
-import { LikeModal } from "../ui/LikeModal";
 import { useAuth } from "@/context";
 import { useErrorToast } from "@/hooks";
+import LikeModal from "../modals/ShowUserModal";
+import useLikePost from "../../hooks/useLikePost";
+import { Modal } from "@/components";
 
 const LikePost = forwardRef(
   ({ postId, likes: initialLikes = [], likedBy = true }, ref) => {
@@ -98,7 +99,11 @@ const LikePost = forwardRef(
           )}
         </div>
 
-        {showModal && <LikeModal likes={likes} setShowModal={setShowModal} />}
+        {showModal && (
+          <Modal darkModal={true}>
+            <LikeModal title="Liked by" users={likes} onCancel={setShowModal} />
+          </Modal>
+        )}
       </>
     );
   }

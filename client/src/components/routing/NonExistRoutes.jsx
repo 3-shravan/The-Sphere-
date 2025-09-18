@@ -2,7 +2,7 @@ import { useNavigate } from "@lib";
 import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 
-const NonExistRoutes = () => {
+export default function NonExistRoutes() {
   const navigate = useNavigate();
 
   return (
@@ -33,6 +33,4 @@ const NonExistRoutes = () => {
       </motion.div>
     </div>
   );
-};
-
-export default NonExistRoutes;
+}

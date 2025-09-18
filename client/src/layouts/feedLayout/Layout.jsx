@@ -1,9 +1,12 @@
-import { Dock, Sidebar, Header } from "./components";
 import { Outlet } from "react-router-dom";
-const Layout = () => {
+import Dock from "./components/Dock";
+import Sidebar from "./components/Sidebar";
+import PhoneHeader from "./components/PhoneHeader";
+
+export default function Layout() {
   return (
     <div className="w-full h-[100svh] md:flex">
-      <Header />
+      <PhoneHeader />
       <Sidebar />
       <main className="flex flex-1 md:min-w-[70vw] h-[92svh] md:h-screen">
         <Outlet />
@@ -11,5 +14,4 @@ const Layout = () => {
       <Dock />
     </div>
   );
-};
-export default Layout;
+}

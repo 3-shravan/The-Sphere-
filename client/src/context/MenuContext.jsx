@@ -1,21 +1,14 @@
-import React from "react";
-import { createContext } from "@lib";
+import React, { createContext } from "react";
 
 const MenuContext = createContext();
 
-export const MenuProvider = ({ children }) => {
+export function MenuProvider({ children }) {
   const [menu, setMenu] = React.useState(false);
   const [isMenuDisabled, setIsMenuDisabled] = React.useState(false);
-  const disableMenu = () => {
-    setIsMenuDisabled(true);
-  };
-  const enableMenu = () => {
-    setIsMenuDisabled(false);
-  };
 
-  const toggleMenu = () => {
-    setMenu((prev) => !prev);
-  };
+  const disableMenu = () => setIsMenuDisabled(true);
+  const enableMenu = () => setIsMenuDisabled(false);
+  const toggleMenu = () => setMenu((prev) => !prev);
 
   return (
     <MenuContext.Provider
@@ -24,6 +17,6 @@ export const MenuProvider = ({ children }) => {
       {children}
     </MenuContext.Provider>
   );
-};
+}
 
 export const useMenu = () => React.useContext(MenuContext);

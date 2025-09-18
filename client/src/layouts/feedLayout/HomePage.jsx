@@ -1,12 +1,13 @@
 import { SuggestedUsers } from "@/features/users";
 import { useSavedPosts } from "@/shared/services";
+import HomePageHeader from "./components/HomePageHeader";
 import Thoughts from "@/features/posts/post/Thoughts";
 import Birthdays from "@/features/birthdays/Birthdays";
 import Feed from "@/features/feeds/Feed";
-import HomePageHeader from "./components/HomePageHeader";
 
-const HomePage = () => {
+export default function HomePage() {
   useSavedPosts();
+
   return (
     <div className="flex flex-col w-full flex-1 overflow-hidden rounded-3xl m-1.5 md:m-3 md:border-[1.5px] md:border-border">
       <HomePageHeader />
@@ -20,6 +21,4 @@ const HomePage = () => {
       </main>
     </div>
   );
-};
-
-export default HomePage;
+}

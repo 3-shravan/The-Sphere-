@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import { AnimatePresence } from "@lib";
+import { AnimatePresence } from "framer-motion";
 import { useMenu } from "@context";
 import { Menu, Marquee } from "@components";
 import {
@@ -9,7 +9,7 @@ import {
   Chats,
   Connect,
   Post,
-  Button,
+  SignUpButton,
   StackedCards,
   PhoneMockup,
   Gradient,
@@ -18,9 +18,9 @@ import {
   VelocityText,
   RevealLinks,
   Footer,
-} from "../../layouts/components";
+} from "./components";
 
-const Page = () => {
+export default function Page() {
   const { menu } = useMenu();
   return (
     <>
@@ -40,7 +40,7 @@ const Page = () => {
             <RevealLinks />
             <div className={styles.sectionRevealLinksInner}>
               <Day />
-              <Button />
+              <SignUpButton />
             </div>
           </section>
           <section className={styles.sectionMagnetButton}>
@@ -77,6 +77,4 @@ const Page = () => {
       </div>
     </>
   );
-};
-
-export default Page;
+}

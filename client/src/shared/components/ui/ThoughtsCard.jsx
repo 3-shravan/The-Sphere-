@@ -3,16 +3,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
-const ThoughtsCard = ({
+export default function ThoughtsCard({
   thought,
   postId,
   redirect = false,
   className = "",
-}) => {
+}) {
   const navigate = useNavigate();
-  const isLong = thought?.trim().length > 300;
   const [expanded, setExpanded] = useState(false);
+
   const toggleExpanded = () => setExpanded((prev) => !prev);
+  const isLong = thought?.trim().length > 300;
 
   return (
     <div
@@ -49,6 +50,4 @@ const ThoughtsCard = ({
       )}
     </div>
   );
-};
-
-export default ThoughtsCard;
+}

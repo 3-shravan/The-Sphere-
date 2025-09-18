@@ -13,8 +13,7 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: "Poppins", "Gilroy", "Gill Sans", "Gill Sans MT", Calibri,
-    "Trebuchet MS", sans-serif;
+  font-family: "Poppins", "Gilroy", "Gill Sans MT", Calibri, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -42,10 +41,6 @@ body {
   max-height: 100vh;
   scroll-behavior: auto !important;
   -webkit-overflow-scrolling: touch;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
 }
 
 :root {
@@ -88,10 +83,6 @@ body {
   --scrollbar-thumb-hover: #7a7a7a;
 }
 .dark {
-  /* --first: oklch(0.81 0.117 11.638);
-  --second: oklch(0.712 0.194 13.428);
-  --third: oklch(0.645 0.246 16.439); */
-
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.2 0 0);
@@ -164,7 +155,7 @@ body {
     @apply flex justify-between items-center;
   }
 
-  .input{
+  .input {
     @apply font-Gilroy font-bold bg-input/30;
   }
   .sidebar {
@@ -277,27 +268,7 @@ input::-webkit-inner-spin-button {
   }
 }
 
-@keyframes popBounce {
-  0% {
-    transform: scale(0) rotate(-20deg);
-    opacity: 0;
-  }
-  40% {
-    transform: scale(1.8) rotate(10deg);
-    opacity: 1;
-  }
-  60% {
-    transform: scale(1.4) rotate(-5deg);
-  }
-  80% {
-    transform: scale(1.6) rotate(3deg);
-  }
-  100% {
-    transform: scale(1) rotate(0deg);
-    opacity: 0;
-  }
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
 }
 
-.animate-[popBounce_1s_ease-out] {
-  animation: popBounce 1s ease-out forwards;
-}

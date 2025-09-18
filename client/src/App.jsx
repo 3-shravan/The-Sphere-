@@ -18,10 +18,11 @@ import {
   ResetPasswordViaEmail,
   ResetPasswordViaPhone,
 } from "@features/auth";
-import ViewPost from "./shared/pages/ViewPost";
-import useNetworkStatus from "./hooks/useNetworkStatus";
 
-const App = () => {
+import useNetworkStatus from "./hooks/useNetworkStatus";
+import { ViewPost } from "./shared";
+
+export default function App() {
   const isOnline = useNetworkStatus();
   if (!isOnline) return <Offline />;
   return (
@@ -63,6 +64,4 @@ const App = () => {
       {/* </ReactLenis> */}
     </>
   );
-};
-
-export default App;
+}

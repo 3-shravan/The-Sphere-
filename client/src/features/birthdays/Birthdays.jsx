@@ -52,7 +52,7 @@ const Birthdays = () => {
         </h2>
 
         {todayBirthdays.length === 0 ? (
-          <p className="text-xs px-3 p-2 font-semibold text-muted-foreground font-Poppins">
+          <p className="text-xs px-3.5  font-semibold text-foreground font-Poppins">
             No birthdays today.
           </p>
         ) : (

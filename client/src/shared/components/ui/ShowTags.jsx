@@ -1,7 +1,7 @@
-const ShowTags = ({ tags, count = tags?.length }) => {
+export default function ShowTags({ tags, count = tags?.length }) {
   return (
     <div>
-      { tags?.length > 0 && (
+      {tags?.length > 0 && (
         <div className="mt-1">
           {tags.slice(0, count).map((tag, index) => (
             <span key={index} className="tags">
@@ -12,6 +12,4 @@ const ShowTags = ({ tags, count = tags?.length }) => {
       )}
     </div>
   );
-};
-
-export default ShowTags;
+}

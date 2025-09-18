@@ -3,9 +3,9 @@ import { useAuth } from "@context";
 import { Loader } from "@components";
 import React from "react";
 
-const PublicRoutes = () => {
+export default function PublicRoutes() {
   const navigate = useNavigate();
-  const { auth } = useAuth?.();
+  const { auth } = useAuth();
 
   React.useEffect(() => {
     if (auth.isAuthenticated) {
@@ -13,6 +13,4 @@ const PublicRoutes = () => {
     }
   }, [auth.isAuthenticated, navigate]);
   return auth.isAuthenticated ? <Loader /> : <Outlet />;
-};
-
-export default PublicRoutes;
+}

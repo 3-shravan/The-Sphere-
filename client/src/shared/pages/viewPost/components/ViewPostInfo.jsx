@@ -1,14 +1,15 @@
-import { LikePost, SavePost, ShowTags, usePostFromCache } from "@/shared";
-import { useNavigate } from "react-router-dom";
-import { X } from "lucide-react";
+import { LikePost, PostOptions, SavePost, ShowTags } from "@/shared";
+import { Link, useNavigate } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import Comments from "@/features/comments/Comments";
 import { ProfilePicture, Spinner } from "@/components";
 import { Button } from "@/components/ui/button";
-import PostOptions from "@/features/feeds/components/postcard/PostOptions";
 
 export default function ViewPostInfo({ postId, post, setShowModal }) {
+  if (!post) return null;
+
   const navigate = useNavigate();
+
   const handleBackNavigation = () => {
     if (window.history.state && window.history.state.idx > 0) navigate(-1);
     else navigate("/feeds");
@@ -24,7 +25,9 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
             size={"md"}
           />
           <div>
-            <h2 className="text-sm">{post?.author?.name}</h2>
+            <Link to={`/profile/${post?.author?.name}`} className="text-sm">
+              {post?.author?.name}
+            </Link>
             <p className="text-[9px] text-muted-foreground">
               {post?.createdAt && !isNaN(new Date(post.createdAt)) ? (
                 formatDistanceToNow(new Date(post?.createdAt), {
@@ -37,12 +40,15 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
           </div>
         </div>
         <div className="flex">
-          <PostOptions postId={postId} />
+          <PostOptions
+            postId={postId}
+            author={post?.author}
+            thoughts={post?.thoughts}
+          />
           <button
             onClick={handleBackNavigation}
             className="bg-muted text-xs px-2 py-1 flex items-center cursor-pointer rounded-full hover:bg-third transition"
           >
-            {/* <X className="w-3 h-3" /> */}
             &lt; back
           </button>
         </div>

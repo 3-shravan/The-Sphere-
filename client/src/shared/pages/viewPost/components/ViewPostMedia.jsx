@@ -5,7 +5,7 @@ export default function ViewPostMedia({ media, thoughts }) {
         <img
           src={media}
           alt="Post"
-          className="w-full p-4 h-auto max-h-[50vh] md:max-h-full object-cover rounded-4xl"
+          className="w-full p-4 h-auto max-h-[50vh] md:max-h-full object-contain rounded-4xl"
         />
       ) : (
         <div className="flex items-center justify-center p-4 text-sm font-Poppins uppercase text-neutral-600 leading-5 md:leading-8">

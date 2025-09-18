@@ -1,4 +1,4 @@
-const H2 = ({ text, children }) => {
+export default function H2({ text, children }) {
   return (
     <h2
       className={`text-3xl md:font-bold md:leading-tight md:tracking-tighter font-Futura font-bold text-left w-full
@@ -12,5 +12,4 @@ const H2 = ({ text, children }) => {
       {children}
     </h2>
   );
-};
-export default H2;
+}

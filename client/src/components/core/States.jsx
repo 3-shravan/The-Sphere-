@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function LoadingScreen({ show }) {
+export function LoadingScreen({ show }) {
   return (
     <AnimatePresence>
       {show && (
@@ -25,20 +25,20 @@ export function Spinner({ size = "6", color = "neutral-700" }) {
   );
 }
 
-export const Loading = ({ message = "", size, spinner = true }) => {
+export function Loading({ message = "", size, spinner = true }) {
   return (
     <div className="flex-center  w-full uppercase gap-2 font-bold text-sm font-Futura">
       {spinner && <Spinner size={size} />}
       {message}
     </div>
   );
-};
+}
 
-export const Error = ({ message = "❗ Failed to fetch" }) => {
+export function Error({ message = "❗ Failed to fetch" }) {
   <div className="text-center py-10 font-bold text-third">{message}</div>;
-};
+}
 
-export const Loader = () => {
+export function Loader() {
   return (
     <div className="absolute inset-0 w-screen h-full bg-background flex items-center justify-center overflow-hidden">
       {/* Spinner 1 */}
@@ -87,7 +87,7 @@ export const Loader = () => {
       </motion.div>
     </div>
   );
-};
+}
 const Spin = ({ text, radius, fontSize, letterSpacing }) => {
   const characters = text.split("");
   return (

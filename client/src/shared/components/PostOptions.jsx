@@ -1,34 +1,26 @@
-import { useState } from "react";
-import { Tally2 } from "lucide-react";
-import { Confirm, Modal } from "@/components";
-import { ShareModal, usePostFromCache } from "@/shared";
-import { useDeletePost } from "@/features/posts/services";
-import EditPost from "@/features/posts/post/EditPost";
-import { useAuth } from "@/context";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useState } from "react";
+import { Tally2 } from "lucide-react";
+import { Modal } from "@/components";
+import { useAuth } from "@/context";
+import { DeleteModal, ShareModal, usePostFromCache } from "@/shared";
+import EditPost from "@/features/posts/post/EditPost";
 
-const PostOptions = ({ postId }) => {
+const PostOptions = ({ postId, author, thoughts }) => {
   const post = usePostFromCache(postId);
-  if (!post) return null;
 
   const [showModal, setShowModal] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const { currentUserId } = useAuth();
-  const authorized = currentUserId === post?.author?._id;
-  const isThoughts = !!post?.thoughts;
-
-  const { mutate: deletePost } = useDeletePost();
-  const handledeletePost = () => {
-    deletePost(postId);
-    setConfirmDelete(false);
-  };
+  const authorized = currentUserId === (post?.author?._id || author?._id);
+  const isThoughts = thoughts || !!post?.thoughts;
 
   return (
     <>
@@ -77,10 +69,12 @@ const PostOptions = ({ postId }) => {
       )}
       {/* Delete Confirm Modal */}
       {confirmDelete && (
-        <Confirm
-          onCancel={() => setConfirmDelete(false)}
-          onConfirm={handledeletePost}
-        />
+        <Modal>
+          <DeleteModal
+            onCancel={() => setConfirmDelete(false)}
+            postId={postId}
+          />
+        </Modal>
       )}
     </>
   );
