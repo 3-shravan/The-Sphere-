@@ -16,6 +16,7 @@ export default function notify(data) {
           parent={data.parent}
           comment={data.comment}
           postId={data.postId}
+          media={data.media}
           type={data.type}
         />
       );
@@ -36,6 +37,8 @@ export default function notify(data) {
       content = (
         <LikeNotificationToast
           user={data.user}
+          postId={data.postId}
+          media={data.media}
           notification={`${data.user.name} liked your post ❤️`}
         />
       );

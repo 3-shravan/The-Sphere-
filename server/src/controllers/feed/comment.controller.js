@@ -74,11 +74,12 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
           name: newComment.author.name,
           profilePicture: newComment.author.profilePicture,
         },
-        parent:{
+        parent: {
           name: parentComment.author.name,
           profilePicture: parentComment.author.profilePicture,
         },
         postId,
+        media: post.media,
         comment: newComment.comment,
         message: `${newComment.author.name} replied ${newComment.comment}`,
       });
@@ -96,6 +97,7 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
           profilePicture: newComment.author.profilePicture,
         },
         postId,
+        media: post.media,
         comment: newComment.comment,
         message: `${newComment.author.name} commented  ${newComment.comment}`,
       });

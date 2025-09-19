@@ -250,6 +250,7 @@ export const likePost = catchAsyncError(async (req, res, next) => {
         profilePicture: likedByUser.profilePicture,
       },
       postId,
+      media: post.media,
       message: `${likedByUser.name} liked your post ❤️`,
     });
   }
