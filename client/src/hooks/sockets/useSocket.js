@@ -3,7 +3,10 @@ import { io } from "socket.io-client";
 import { BASE_API_URL } from "@/lib/api";
 import notify from "@/features/notifications/notify";
 
-const socket = io(BASE_API_URL);
+const socket = io(BASE_API_URL, {
+  transports: ["websocket"],
+  withCredentials: true,
+});
 
 export default function useSocket(userId) {
   useEffect(() => {
