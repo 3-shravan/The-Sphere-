@@ -63,7 +63,7 @@ const EditProfileForm = ({
           <Textarea
             name="bio"
             defaultValue={user?.bio}
-            placeholder="what's your idea about you...💫"
+            placeholder="🗽"
             className="resize-none h-24 p-2 font-mono text-sm"
           />
         </div>

@@ -6,7 +6,9 @@ const FollowUser = ({ userId, followUser, isFollowing, isPending }) => {
       onClick={() => followUser(userId)}
       variant="secondary"
       // disabled={isPending}
-      className="text-sm cursor-pointer bg-rose-400 border disabled:opacity-50"
+      className={`text-xs cursor-pointer border font-Futura disabled:opacity-50 ${
+        isFollowing ? "bg-third" : "bg-emerald-500"
+      }`}
     >
       {isFollowing ? "Unfollow" : "Follow"}
     </Button>

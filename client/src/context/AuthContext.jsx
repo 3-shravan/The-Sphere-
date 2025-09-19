@@ -4,7 +4,7 @@ import {
   getToken,
   removeTokenAndAuthenticated,
 } from "@/utils";
-import { useApi, useErrorToast, useSuccessToast } from "@/hooks";
+import { useApi, useErrorToast, useSocket, useSuccessToast } from "@/hooks";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
@@ -18,6 +18,7 @@ export const ContextProvider = ({ children }) => {
     profile: null,
   }));
 
+  useSocket(auth?.profile?._id);
   const token = getToken();
   const { request, loading } = useApi();
 

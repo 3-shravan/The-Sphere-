@@ -3,6 +3,7 @@ import ErrorHandler from "../../middlewares/errorHandler.js";
 import { Post } from "../../models/feed/post.model.js";
 import { Comment } from "../../models/feed/comment.model.js";
 import { handleSuccessResponse } from "../../utils/responseHandler.js";
+import { sendNotification } from "../../sockets/emit.js";
 
 export const getPostComments = catchAsyncError(async (req, res, next) => {
   const { postId } = req.params;
@@ -54,14 +55,51 @@ export const commentPost = catchAsyncError(async (req, res, next) => {
     select: "name , profilePicture",
   });
   if (parentId) {
-    const parentComment = await Comment.findById(parentId);
+    const parentComment = await Comment.findById(parentId).populate({
+      path: "author",
+      select: "name  profilePicture",
+    });
     if (!parentComment)
       return next(new ErrorHandler(404, "Parent comment not found"));
+
     parentComment.replies.push(newComment._id);
     await parentComment.save();
+
+    // 🚀🚀🚀 notify reply
+    if (String(parentComment.author._id) !== String(commentedBy)) {
+      sendNotification(String(parentComment.author._id), {
+        type: "reply",
+        isReply: true,
+        user: {
+          name: newComment.author.name,
+          profilePicture: newComment.author.profilePicture,
+        },
+        parent:{
+          name: parentComment.author.name,
+          profilePicture: parentComment.author.profilePicture,
+        },
+        postId,
+        comment: newComment.comment,
+        message: `${newComment.author.name} replied ${newComment.comment}`,
+      });
+    }
   } else {
     post.comments.push(newComment._id);
     await post.save();
+    // 🚀🚀🚀 notify  comment
+    if (post.author.toString() !== commentedBy.toString()) {
+      sendNotification(post.author, {
+        type: "comment",
+        isReply: false,
+        user: {
+          name: newComment.author.name,
+          profilePicture: newComment.author.profilePicture,
+        },
+        postId,
+        comment: newComment.comment,
+        message: `${newComment.author.name} commented  ${newComment.comment}`,
+      });
+    }
   }
   handleSuccessResponse(res, 200, "Comment added successfully", {
     comment: newComment,
@@ -81,8 +119,17 @@ export const deleteComment = catchAsyncError(async (req, res, next) => {
   if (comment.author.toString() !== authorID.toString())
     return next(new ErrorHandler(400, "Unautorize to delete this comment."));
 
-  await post.comments.pull(comment._id);
-  await post.save();
-  await comment.deleteOne();
+  const deleteCommentAndReplies = async (id) => {
+    const c = await Comment.findById(id);
+    if (!c) return;
+    for (const replyId of c.replies) {
+      await deleteCommentAndReplies(replyId);
+    }
+    await Comment.findByIdAndDelete(id);
+  };
+
+  await deleteCommentAndReplies(commentId);
+  await Post.findByIdAndUpdate(postId, { $pull: { comments: comment._id } });
+
   handleSuccessResponse(res, 200, "Comment deleted successfully.");
 });

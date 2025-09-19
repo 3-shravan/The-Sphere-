@@ -6,3 +6,4 @@ export { default as useIgnoreLenisScroll } from "./lenis/useIgnoreLenis";
 export { default as useSmoothScroll } from "./lenis/useSmoothScroll";
 export { default as useInfiniteScroll } from "./useInfiniteScroll";
 export { default as useNetworkStatus } from "./useNetworkStatus";
+export { default as useSocket } from "./sockets/useSocket";

@@ -11,6 +11,7 @@ import {
   handleSuccessResponse,
 } from "../utils/responseHandler.js";
 import { blockedUsers, userBlocked } from "../services/block.services.js";
+import { sendNotification } from "../sockets/emit.js";
 
 export const getAllUsers = catchAsyncError(async (req, res, next) => {
   const userId = req.user._id;
@@ -187,6 +188,7 @@ export const followUnfollow = catchAsyncError(async (req, res, next) => {
     await User.findByIdAndUpdate(toFollowUser._id, {
       $pull: { followers: user._id },
     });
+
     return handleSuccessResponse(res, 200, "Unfollowed successfully");
   }
   await User.findByIdAndUpdate(user._id, {
@@ -196,6 +198,14 @@ export const followUnfollow = catchAsyncError(async (req, res, next) => {
     $push: { followers: user._id },
   });
 
+  sendNotification(toFollowUser._id, {
+    type: "follow",
+    user: {
+      name: user.name,
+      profilePicture: user.profilePicture,
+    },
+    message: `${user.name} started following you 🗽`,
+  });
   handleSuccessResponse(res, 200, "Followed successfully");
 });
 

@@ -25,6 +25,9 @@ import { ViewPost } from "./shared";
 export default function App() {
   const isOnline = useNetworkStatus();
   if (!isOnline) return <Offline />;
+
+ 
+
   return (
     <>
       {/* <ReactLenis root> */}

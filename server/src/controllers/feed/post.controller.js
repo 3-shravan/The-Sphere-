@@ -11,6 +11,7 @@ import {
   blockedUsersDistinct,
   userBlocked,
 } from "../../services/block.services.js";
+import { sendNotification } from "../../sockets/emit.js";
 
 /**************************************
  * Common Helpers
@@ -217,11 +218,15 @@ export const likePost = catchAsyncError(async (req, res, next) => {
   const { postId } = req.params;
   const likedBy = req.user._id;
 
-  const post = await Post.findById(postId);
+  const post = await Post.findById(postId).populate({
+    path: "author",
+    select: "name profilePicture",
+  });
   if (!post) return next(new ErrorHandler(404, "Post not found"));
 
-  if (await userBlocked(likedBy, post.author))
-    return next(new ErrorHandler(403, "You cannot like this post"));
+  // check block status
+  // if (await userBlocked(likedBy, post.author._id))
+  //   return next(new ErrorHandler(403, "You cannot like this post"));
 
   const isLiked = post.likes.includes(likedBy);
 
@@ -229,8 +234,25 @@ export const likePost = catchAsyncError(async (req, res, next) => {
     await Post.findByIdAndUpdate(postId, { $pull: { likes: likedBy } });
     return handleSuccessResponse(res, 200, "Post unliked successfully");
   }
-  await Post.findByIdAndUpdate(postId, { $push: { likes: likedBy } });
-  await post.populate({ path: "likes", select: "name profilePicture" });
+
+  await Post.findByIdAndUpdate(postId, { $addToSet: { likes: likedBy } });
+
+  // get user who liked
+  const likedByUser = await User.findById(likedBy).select(
+    "name profilePicture"
+  );
+
+  if (post.author._id.toString() !== likedBy.toString()) {
+    sendNotification(post.author._id, {
+      type: "like",
+      user: {
+        name: likedByUser.name,
+        profilePicture: likedByUser.profilePicture,
+      },
+      postId,
+      message: `${likedByUser.name} liked your post ❤️`,
+    });
+  }
 
   handleSuccessResponse(res, 200, "Post liked successfully");
 });
