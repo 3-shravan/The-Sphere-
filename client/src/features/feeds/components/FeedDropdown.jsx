@@ -7,30 +7,27 @@ import {
 import { ChevronDown } from "lucide-react";
 
 export default function FeedDropdown({ dropdown, setDropdown }) {
-  console.log(dropdown);
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className=" cursor-pointer p-2 md:pt-4 no-focus">
+      <DropdownMenuTrigger className="inline-flex  max-w-fit cursor-pointer p-2 md:pt-4 no-focus">
         <h2 className="text-xl flex items-end gap-1 font-Futura tracking-tighter">
           your feed
           <span className="text-muted-foreground/50 font-Gilroy text-sm">
-            {dropdown === "all posts"
-              ? "showing following posts for now"
-              : dropdown}
+            {dropdown === "all" ? "posts from everywhere" : dropdown}
           </span>
           <ChevronDown size={16} color="pink" />
         </h2>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-card outline-hidden">
+      <DropdownMenuContent side="right" className="bg-card w-40 outline-hidden">
         <DropdownMenuItem
           className="cursor-pointer"
-          onClick={() => setDropdown("all posts")}
+          onClick={() => setDropdown("all")}
         >
           All Posts
         </DropdownMenuItem>
         <DropdownMenuItem
           className="cursor-pointer"
-          onClick={() => setDropdown("following 🐱‍👤")}
+          onClick={() => setDropdown("following")}
         >
           Following
         </DropdownMenuItem>

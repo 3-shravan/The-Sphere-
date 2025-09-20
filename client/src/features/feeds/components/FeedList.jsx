@@ -1,9 +1,9 @@
 import { Spinner } from "@/components";
-import useFeed from "../hooks/useFeed";
+import { usePost } from "@/context";
 import PostCard from "./postcard/PostCard";
 
-const FeedList = () => {
-  const { posts, isFetchingNextPage } = useFeed();
+const FeedList = ({ isFetchingNextPage }) => {
+  const { posts } = usePost();
   return (
     <div className="flex flex-col gap-3 w-full">
       {posts?.length === 0 || (posts && !posts[0]) ? (

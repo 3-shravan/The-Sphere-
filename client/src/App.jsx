@@ -21,12 +21,12 @@ import {
 
 import useNetworkStatus from "./hooks/useNetworkStatus";
 import { ViewPost } from "./shared";
+import { PostProvider } from "@/context";
+import PostProviderWrapper from "./components/routing/PostProviderWrapper";
 
 export default function App() {
   const isOnline = useNetworkStatus();
   if (!isOnline) return <Offline />;
-
- 
 
   return (
     <>
@@ -49,18 +49,22 @@ export default function App() {
           />
         </Route>
 
-        <Route path="/post/:postId" element={<ViewPost />} />
-
         {/* Protected Routes */}
         <Route element={<ProtectedRoutes />}>
-          <Route path="/" element={<FeedLayout />}>
-            <Route path="feeds" element={<HomePage />} />
-            <Route path="saved" element={<SavedPosts />} />
-            <Route path="create-post" element={<CreatePost />} />
-            <Route path="explore" element={<Explore />} />
-            <Route path="profile/:username" element={<Profile />} />
+          <Route element={<PostProviderWrapper />}>
+            <Route path="/" element={<FeedLayout />}>
+              <Route path="feeds" element={<HomePage />} />
+              <Route path="saved" element={<SavedPosts />} />
+              <Route path="create-post" element={<CreatePost />} />
+              <Route path="explore" element={<Explore />} />
+              <Route path="profile/:username" element={<Profile />} />
+            </Route>
           </Route>
         </Route>
+
+        {/* Shared Routes */}
+        <Route path="/post/:postId" element={<ViewPost />} />
+
         {/* Catch All */}
         <Route path="*" element={<NonExistRoutes />} />
       </Routes>

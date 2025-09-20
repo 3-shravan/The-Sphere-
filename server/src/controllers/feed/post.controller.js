@@ -78,7 +78,6 @@ export const getFollowingPosts = catchAsyncError(async (req, res, next) => {
     parseInt(limit),
     POST_POPULATE
   );
-  if (!data.posts.length) return next(new ErrorHandler(404, "No posts found"));
   return handleSuccessResponse(res, 200, "Posts fetched successfully", data);
 });
 
@@ -113,7 +112,6 @@ export const getMyPosts = catchAsyncError(async (req, res, next) => {
     parseInt(limit),
     POST_POPULATE
   );
-  if (!data.posts.length) return next(new ErrorHandler(404, "No posts found"));
   return handleSuccessResponse(res, 200, "Your posts fetched successfully", {
     data,
   });
@@ -151,7 +149,7 @@ export const createThoughtPost = catchAsyncError(async (req, res, next) => {
   });
   await User.findByIdAndUpdate(authorId, { $push: { posts: post._id } });
   await post.populate({ path: "author", select: "name profilePicture" });
-  return handleSuccessResponse(res, 201, "Thought shared successfully", {
+  return handleSuccessResponse(res, 201, "Your thought is shared", {
     post,
   });
 });

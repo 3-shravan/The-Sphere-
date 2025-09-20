@@ -1,20 +1,25 @@
 import { ProfilePicture } from "@/components";
 import { Button } from "@/components/ui/button";
+import { useIgnoreLenisScroll, useSmoothScroll } from "@/hooks";
 import { PiHeartFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
 export default function ShowUserModel({ title = "Users", users, onCancel }) {
+  useIgnoreLenisScroll(".scroll");
   return (
     <>
-      <h2 className="flex gap-1 font-semibold mb-4 ">
-        <PiHeartFill size={22} className="text-third" /> {title}
+      <h2 className="flex items-center text-2xl gap-1 px-4 font-semibold mb-4">
+        <PiHeartFill size={27} className="text-third" /> {title}
       </h2>
-      <ul className="space-y-4 pl-1">
+      <ul className="space-y-2 p-2 overflow-y-auto max-h-90 scroll ">
         {users.map((user) => (
-          <li key={user._id} className="flex items-center gap-2">
+          <li
+            key={user._id}
+            className="flex hover:bg-card rounded-sm cursor-pointer p-2 items-center gap-2"
+          >
             <ProfilePicture
               profilePicture={user.profilePicture}
-              size="sm"
+              size="md"
               username={user.name}
             />
             <Link

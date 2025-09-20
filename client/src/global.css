@@ -240,7 +240,6 @@ WEBKIT STYLES
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--scrollbar-thumb-hover);
 }
-
 .custom-scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
