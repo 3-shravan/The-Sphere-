@@ -18,7 +18,10 @@ export default function FeedDropdown({ dropdown, setDropdown }) {
           <ChevronDown size={16} color="pink" />
         </h2>
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="right" className="bg-card w-40 outline-hidden">
+      <DropdownMenuContent
+        side="bottom"
+        className="bg-card w-40 outline-hidden"
+      >
         <DropdownMenuItem
           className="cursor-pointer"
           onClick={() => setDropdown("all")}
