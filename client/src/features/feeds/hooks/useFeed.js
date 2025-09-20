@@ -1,20 +1,20 @@
-// import { useDispatch } from "react-redux";
-// import { useEffect } from "react";
-// import { setPosts, setSavedPosts } from "@/features/posts/postSlice";
+import { useState } from "react";
 import { usePosts } from "../services";
 
-const useFeed = () => {
+export default function useFeed() {
+  const [dropdown, setDropdown] = useState("following");
+
   const { data, status, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    usePosts();
+    usePosts(dropdown, 10);
+
   const posts = data?.pages?.flatMap((page) => page?.posts);
-
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (posts) dispatch(setPosts(posts));
-  //   if (savedPosts?.savedPosts) dispatch(setSavedPosts(savedPosts.savedPosts));
-  // }, [savedPosts]);
-
-  return { posts, status, hasNextPage, fetchNextPage, isFetchingNextPage };
-};
-
-export default useFeed;
+  return {
+    posts,
+    status,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    dropdown,
+    setDropdown,
+  };
+}

@@ -158,6 +158,9 @@ body {
   .flex-between {
     @apply flex justify-between items-center;
   }
+  .no-focus {
+    @apply focus:outline-none focus:ring-0 focus-visible:ring-0 border-none;
+  }
 
   .input {
     @apply font-Gilroy font-bold bg-input/30;
@@ -167,9 +170,6 @@ body {
   }
   .feed {
     @apply h-[90vh] pb-18 md:pb-8 lg:pb-5 px-1 md:pl-4.5 lg:min-w-[49vw];
-  }
-  .your-feed {
-    @apply text-xl p-2 md:pt-4 font-Futura tracking-tighter;
   }
   .post-card {
     @apply bg-card text-card-foreground rounded-2xl px-2 py-4 md:px-6 lg:p-4 lg:max-w-[47vw] space-y-1;

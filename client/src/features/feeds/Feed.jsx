@@ -4,10 +4,18 @@ import Thoughts from "@/features/posts/post/Thoughts";
 import useFeedInfiniteScroll from "./hooks/useFeedInfiniteScroll";
 import useFeed from "./hooks/useFeed";
 import FeedList from "./components/FeedList";
+import FeedDropdown from "./components/FeedDropdown";
 
 const Feed = () => {
-  const { posts, status, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useFeed();
+  const {
+    posts,
+    status,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    dropdown,
+    setDropdown,
+  } = useFeed();
 
   const scrollRef = useRef(null);
 
@@ -23,7 +31,7 @@ const Feed = () => {
       ref={scrollRef}
       className="overflow-y-scroll flex flex-col rounded-lg feed "
     >
-      <h2 className="your-feed">your feed</h2>
+      <FeedDropdown dropdown={dropdown} setDropdown={setDropdown} />
       <div className="md:hidden mb-4">
         <Thoughts />
       </div>

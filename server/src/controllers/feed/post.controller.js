@@ -73,7 +73,7 @@ export const getFollowingPosts = catchAsyncError(async (req, res, next) => {
   const user = await User.findById(userId).select("following");
   const data = await paginateQuery(
     Post,
-    { author: { $in: user.following, $nin: getBlockedUsers } },
+    { author: { $in: [...user.following, userId], $nin: getBlockedUsers } },
     parseInt(page),
     parseInt(limit),
     POST_POPULATE
