@@ -1,6 +1,50 @@
 import Joi from "joi";
 import { validatePhoneNo } from "../utils/validations.js";
 
+const baseUsernameSchema = Joi.string()
+  .trim()
+  .min(3)
+  .max(20)
+  .required()
+  .messages({
+    "string.base": "username must be a text",
+    "string.empty": "username is required",
+    "string.min": "username should have at least {#limit} characters",
+    "string.max": "username should not exceed {#limit} characters",
+    "any.required": "username is required",
+  });
+
+export const validateUsername = (username) => {
+  const { error } = baseUsernameSchema.validate(username);
+  if (error) return error.details[0].message;
+
+  for (let char of username) {
+    if (/[A-Z]/.test(char))
+      return `username cannot contain uppercase letter ${char}`;
+    if (char === " ") return "username cannot contain space";
+    if (!/[a-z0-9._]/.test(char)) return `username cannot contain ${char}`;
+  }
+  return null;
+};
+
+export const usernameSchema = Joi.string()
+  .trim()
+  .min(3)
+  .max(20)
+  .lowercase()
+  .pattern(/^[a-z0-9._]+$/)
+  .required()
+  .messages({
+    "string.base": "username must be a text",
+    "string.empty": "username is required",
+    "string.min": "username should have at least {#limit} characters",
+    "string.max": "username should not exceed {#limit} characters",
+    //lowercase
+    "string.pattern.base":
+      "username can only contain lowercase letters, numbers, dots, and underscores",
+    "any.required": "username is required",
+  });
+
 export const registerSchema = Joi.object({
   name: Joi.string()
     .trim()
@@ -19,7 +63,7 @@ export const registerSchema = Joi.object({
       "any.required": "username is required",
     }),
   phone: Joi.string().trim().empty("").allow(null, ""),
-  email: Joi.string().trim().empty("").email().allow(null, ""),
+  email: Joi.string().trim().empty("").email().lowercase().allow(null, ""),
   password: Joi.string().min(6).required(),
   verificationMethod: Joi.string().valid("phone", "email").required().messages({
     "any.only": "Verification method must be either 'phone' or 'email'",

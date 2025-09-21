@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FollowButton } from "./FollowButton";
 
 export const ListUsers = ({ users, followUser, map, setMap }) => {
-  if (!users || users.length === 0) {
+  if (!users || users.length === 0)
     return (
       <div className="font-Gilroy px-5 py-2">
         NO SUGGESTED USER
@@ -12,7 +12,6 @@ export const ListUsers = ({ users, followUser, map, setMap }) => {
         </span>
       </div>
     );
-  }
 
   return (
     <div className="flex flex-col gap-2 pb-1">
@@ -23,7 +22,7 @@ export const ListUsers = ({ users, followUser, map, setMap }) => {
         >
           <Link
             to={`/profile/${user.name}`}
-            className="flex items-center gap-1.5 w-full"
+            className="flex items-center gap-2 w-full"
           >
             <ProfilePicture
               profilePicture={user.profilePicture}

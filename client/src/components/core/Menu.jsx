@@ -49,14 +49,14 @@ export default function Menu() {
         duration: 1,
         ease: "anticipate",
       }}
-      className="relative flex flex-col justify-center items-center bg-[#131313] min-h-[100vh] w-screen text-white/35 font-[Gilroy] z-10 px-5"
+      className="relative flex flex-col justify-center items-center  min-h-screen font-Gilroy z-10 px-5"
     >
       <div className="flex flex-col items-center justify-center  text-center h-[65vh] ">
         <FaUserAstronaut className="text-9xl text-emerald-600 animate-pulse mb-4" />
-        <div className="text-lg text-white tracking-wide drop-shadow-lg">
-          developer by <HeartIcon className="inline " size={17} color="red" />{" "}
+        <div className="text-lg text-white/35  tracking-wide drop-shadow-lg">
+          developed by <HeartIcon className="inline " size={17} color="red" />{" "}
           <br />
-          <span className="font-bold text-xl">Shravan </span>
+          <span className="font-bold text-white text-xl">Shravan </span>
         </div>
         <p className="text-sm text-neutral-700 font-medium mt-2">
           Crafting with code & creativity

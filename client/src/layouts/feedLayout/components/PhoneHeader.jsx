@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "@context";
 import { useTheme } from "@/context";
-import { LogOut } from "lucide-react";
 import { motion } from "framer-motion";
-import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
+import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 import { ProfilePicture, Spinner } from "@/components";
+import { RiLogoutCircleRFill } from "react-icons/ri";
 
 const PhoneHeader = () => {
   const { auth, logout, globalLoading } = useAuth();
@@ -23,7 +23,7 @@ const PhoneHeader = () => {
             {globalLoading ? (
               <Spinner size="4" />
             ) : (
-              <LogOut className="text-third cursor-pointer w-5 h-5" />
+              <RiLogoutCircleRFill className="text-third cursor-pointer w-6 h-6" />
             )}
           </button>
 
@@ -63,15 +63,15 @@ const ToggleTheme = ({ theme, toggleTheme }) => (
     <motion.div
       layout
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
-      className="w-5 h-5 rounded-full flex items-center justify-center shadow-md bg-second"
+      className="w-4 h-4 rounded-full flex items-center justify-center "
       style={{
-        marginLeft: theme === "dark" ? "calc(100% - 22px)" : "2px",
+        marginLeft: theme === "dark" ? "calc(100% - 20px)" : "3px",
       }}
     >
       {theme === "dark" ? (
-        <MdOutlineLightMode className="text-black text-xs" />
+        <MdDarkMode className="text-sm" />
       ) : (
-        <MdOutlineDarkMode className="text-white text-xs" />
+        <MdOutlineLightMode className=" text-xs" />
       )}
     </motion.div>
   </div>

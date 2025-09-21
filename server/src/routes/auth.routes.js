@@ -7,6 +7,7 @@ import {
   register,
   resetPasswordWithEmailToken,
   resetPasswordWithPhone,
+  usernameAvailability,
   verifyOTP,
   verifyResetPasswordOTP,
 } from "../controllers/auth.controller.js";
@@ -27,6 +28,7 @@ import {
 import express from "express";
 const router = express.Router();
 
+router.get("/check-username", usernameAvailability);
 router.post("/register", validate(registerSchema), register);
 router.post("/verify-otp", validate(otpVerificationSchema), verifyOTP);
 router.post("/login", validate(loginSchema), login);

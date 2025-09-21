@@ -2,9 +2,14 @@ import RedirectToLogin from "./RedirectToLogin";
 import styles from "@features/auth/shared/auth.module.css";
 import { AuthButton } from "../../shared";
 import { useEffect, useRef, motion, MdNavigateNext, CgProfile } from "@lib";
+import { useUsernameAvailability } from "@/shared";
+import { Spinner } from "@/components";
+import { GiCrossMark } from "react-icons/gi";
+import { CircleCheckBig } from "lucide-react";
 
 const Fullname = ({ handleNext, formData, handleChange }) => {
   const inputRef = useRef(null);
+  const { status, message } = useUsernameAvailability(formData.name);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -43,9 +48,32 @@ const Fullname = ({ handleNext, formData, handleChange }) => {
             spellCheck="false"
           />
         </div>
+        {status && (
+          <p
+            className={`mt-1 font-Gilroy text-xs text-left pl-2 min-h-[1.25rem] font-medium
+              ${status === "unavailable" && "text-rose-500"}
+              ${status === "available" && "text-emerald-400"}`}
+          >
+            {status === "checking" ? (
+              <span className="flex items-center gap-2">
+                Checking if username available
+                <Spinner size="2" />
+              </span>
+            ) : (
+              <span className="flex items-center gap-1">
+                {message}
+                {status === "available" ? (
+                  <CircleCheckBig className=" text-emerald-600" size={12} />
+                ) : (
+                  <GiCrossMark className="inline text-rose-500 text-sm" />
+                )}
+              </span>
+            )}
+          </p>
+        )}
       </motion.div>
       <AuthButton
-        handleNext={handleNext}
+        handleNext={status === "available" && handleNext}
         text="Next"
         type="button"
         register={true}

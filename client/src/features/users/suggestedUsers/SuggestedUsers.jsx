@@ -36,10 +36,10 @@ const SuggestedUsers = () => {
   return isLoading ? (
     <Loading />
   ) : (
-    <SmoothScroll className="max-h-[240px] md:max-h-[215px] scroll custom-scrollbar-hide">
+    <SmoothScroll className="max-h-[300px] md:max-h-[215px] scroll custom-scrollbar-hide">
       <div className=" flex-col gap-2  p-2">
-        <h2 className="px-3 p-2 text-second dark:text-first tracking-tight font-Futura">
-          <CircleSmall className="inline text-second" />
+        <h2 className="px-2.5 p-2 pb-4 text-second dark:text-first tracking-tight font-Futura">
+          <CircleSmall className="inline text-second" size={27} />
           you may know
         </h2>
 

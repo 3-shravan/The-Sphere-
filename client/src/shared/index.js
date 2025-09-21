@@ -1,4 +1,5 @@
 export { default as usePostFromCache } from "./hooks/usePostFromCache";
+export { default as useUsernameAvailability } from "./hooks/useUsernameAvailability";
 export { default as ViewPost } from "./pages/viewPost/ViewPost";
 
 export { default as PostGrid } from "./components/PostGrid";

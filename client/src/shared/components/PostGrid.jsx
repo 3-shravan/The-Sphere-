@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import { LikePost, PostOptions, SavePost, ShowTags } from "@/shared";
-import { H2, Backdrop } from "@/components";
+import { Backdrop } from "@/components";
 import { useNavigate } from "react-router-dom";
 import ThoughtsCard from "./ui/ThoughtsCard";
 
@@ -26,9 +26,9 @@ const PostGrid = ({
   return (
     <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 lg:gap-6 w-full">
       {posts.length === 0 ? (
-        <div className="px-1">
-          <H2>{emptyText}</H2>
-        </div>
+        <span className=" text-neutral-500 px-0.5 font-medium tracking-tighter uppercase ">
+          {emptyText}
+        </span>
       ) : (
         posts.map((post) => (
           <div

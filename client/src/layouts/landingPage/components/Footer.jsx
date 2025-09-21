@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaTwitter, FaFacebook, FaInstagram, FaGithub } from "react-icons/fa";
 
 function Footer() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  // Removed unused state variable
   const [isHovering, setIsHovering] = useState(false);
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -42,11 +40,6 @@ function Footer() {
       <div
         className="relative z-20 w-full flex flex-col-reverse items-center justify-center gap-10 px-4 py-8 
             md:flex-row md:items-end md:justify-between md:px-10 md:py-10 overflow-hidden"
-        // style={{
-        //   background:
-        //     "linear-gradient(to bottom, #000000, #0a0a1a, #0f0f2d, #000000)",
-        //   boxShadow: "0 0 40px rgba(0, 0, 255, 0.1) inset",
-        // }}
       >
         <div
           className="flex flex-col items-center justify-center w-full p-4 gap-8 
@@ -104,12 +97,9 @@ function Footer() {
                 className="relative px-4 py-3 sm:px-6 sm:py-4 bg-black/90 leading-none flex items-center
                    border border-white/10 rounded-md group"
               >
-                <span className="text-sm sm:text-base md:text-lg font-bold text-violet-400 flex gap-2 items-center justify-center uppercase font-[Poppins]">
+                <span className="text-sm sm:text-base md:text-lg font-bold text-violet-400 flex gap-2 items-center justify-center uppercase font-Poppins">
                   <img src="/favicon.svg" alt="" className="w-4 sm:w-5" />
-                  Get Sphere{" "}
-                  <span className="text-white text-xs font-extralight">
-                    (soon)
-                  </span>
+                  Get Sphere
                 </span>
               </Link>
             </div>

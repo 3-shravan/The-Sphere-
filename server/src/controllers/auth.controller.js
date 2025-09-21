@@ -272,3 +272,23 @@ export const resetPasswordWithPhone = catchAsyncError(
     return handleSuccessResponse(res, 200, "Password reset successfully.");
   }
 );
+
+import { validateUsername } from "../validations/auth.schemas.js";
+
+export const usernameAvailability = catchAsyncError(async (req, res) => {
+  const { username } = req.query;
+
+  const validationError = validateUsername(username);
+  if (validationError)
+    return res.json({ available: false, message: validationError });
+
+  const reservedUsernames = ["shravan", "admin", "test"];
+  if (reservedUsernames.includes(username))
+    return res.json({ available: false, message: "username is reserved" });
+
+  const existingUser = await User.findOne({ name: username });
+  if (existingUser)
+    return res.json({ available: false, message: "username already taken" });
+
+  return res.json({ available: true, message: "username is available" });
+});

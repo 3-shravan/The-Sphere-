@@ -13,7 +13,7 @@ const SavedPosts = () => {
       <div className="md:mt-7 w-full lg:mt-5">
         <PostGrid
           posts={savedPosts}
-          emptyText="You have'nt saved any post yet."
+          emptyText="You have'nt saved any post yet🗽"
           showTags={true}
           savePost={true}
         />

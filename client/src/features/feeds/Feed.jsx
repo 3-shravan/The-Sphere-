@@ -29,6 +29,8 @@ const Feed = () => {
       ) : (
         <FeedList
           posts={posts}
+          dropdown={dropdown}
+          setDropdown={setDropdown}
           isFetchingNextPage={fetchInfinite?.isFetchingNextPage}
         />
       )}
