@@ -1,5 +1,6 @@
 import { useDebounce } from "@/hooks";
 import { useEffect, useState } from "react";
+import { API_URL } from "@/lib/api";
 
 export default function useUsernameAvailability(value) {
   const [status, setStatus] = useState(null);
@@ -18,7 +19,7 @@ export default function useUsernameAvailability(value) {
       try {
         setStatus("checking");
         const res = await fetch(
-          `http://localhost:8000/api/v1/auth/check-username?username=${debouncedUsername}`
+          `${API_URL}/auth/check-username?username=${debouncedUsername}`
         );
         const data = await res.json();
         if (data.available) setStatus("available");
