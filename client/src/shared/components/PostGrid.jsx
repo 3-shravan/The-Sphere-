@@ -24,8 +24,8 @@ const PostGrid = ({
   const toProfile = (username) => navigate(`/profile/${username}`);
 
   return (
-    <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 lg:gap-6 w-full">
-      {posts.length === 0 ? (
+    <div className="columns-1 xs:columns-2 sm:columns-2 md:columns-3 lg:columns-3 gap-5 w-full">
+      {posts.length === 0 || !posts[0] ? (
         <span className=" text-neutral-500 px-0.5 font-medium tracking-tighter uppercase ">
           {emptyText}
         </span>

@@ -14,13 +14,9 @@ import chatRouter from "./routes/chat.routes.js";
 
 const app = express();
 
-const allowedOrigins = [process.env.CLIENT_URL, process.env.LOCALHOST_URL];
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) callback(null, true);
-      else callback(new Error("Not allowed by CORS"));
-    },
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
@@ -32,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) =>
   res.status(200).json({
     success: true,
-    message: "API's are working 🚀🚀",
+    message: "SERVER IS LIVE 🗽",
   })
 );
 

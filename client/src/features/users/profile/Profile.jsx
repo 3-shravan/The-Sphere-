@@ -20,7 +20,7 @@ const Profile = () => {
   return (
     <Container>
       <ProfileCard user={user} />
-      <div className="font-Futura text-left w-full px-2 text-neutral-600">
+      <div className="font-Futura text-left w-full px-0.5 text-neutral-600">
         <span className="border-b-2 py-1 border-border">
           {me ? "your" : "there"} posts{" "}
           <span className="text-second font-blackout">{posts?.length}</span>
