@@ -23,6 +23,9 @@ export const initSocket = (server) => {
     socket.on("register", (userId) => {
       onlineUsers.set(userId, socket.id);
       log(`✅ ${userId} is online`);
+
+      io.emit("online-users", Array.from(onlineUsers.keys()));
+      socket.emit("online-users", Array.from(onlineUsers.keys()));
     });
 
     socket.on("disconnect", () => {

@@ -18,7 +18,8 @@ export const ContextProvider = ({ children }) => {
     profile: null,
   }));
 
-  useSocket(auth?.profile?._id);
+  const { onlineUsers } = useSocket(auth?.profile?._id);
+  // console.log("Online Users:", onlineUsers);
   const token = getToken();
   const { request, loading } = useApi();
 

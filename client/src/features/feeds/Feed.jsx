@@ -1,12 +1,12 @@
 import { Loading } from "@/components";
 import { useRef } from "react";
+import { usePost } from "@/context";
 import Thoughts from "@/features/posts/post/Thoughts";
 import useFeedInfiniteScroll from "./hooks/useFeedInfiniteScroll";
 import FeedList from "./components/FeedList";
 import FeedDropdown from "./components/FeedDropdown";
-import { usePost } from "@/context";
 
-const Feed = () => {
+export default function Feed() {
   const { posts, status, fetchInfinite, dropdown, setDropdown } = usePost();
   const scrollRef = useRef(null);
 
@@ -36,6 +36,4 @@ const Feed = () => {
       )}
     </div>
   );
-};
-
-export default Feed;
+}

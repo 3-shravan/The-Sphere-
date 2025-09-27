@@ -1,6 +1,6 @@
 import { ProfilePicture } from "@/components";
 import { Button } from "@/components/ui/button";
-import { useIgnoreLenisScroll, useSmoothScroll } from "@/hooks";
+import { useIgnoreLenisScroll } from "@/hooks";
 import { PiHeartFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
