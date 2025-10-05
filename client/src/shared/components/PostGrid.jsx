@@ -15,9 +15,8 @@ const PostGrid = ({
   savePost = false,
   likePost = false,
 }) => {
-  if (!posts) return null;
-
   const navigate = useNavigate();
+  if (!posts) return null;
 
   const isExpanded = (caption, WORDS) => caption.length > WORDS;
   const toViewPost = (postId) => navigate(`/post/${postId}`);

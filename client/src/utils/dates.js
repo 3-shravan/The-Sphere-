@@ -1,6 +1,6 @@
 export const setAllFieldsNull = (formData) => {
   for (let key in formData) {
-    if (formData.hasOwnProperty(key)) {
+    if (Object.prototype.hasOwnProperty.call(formData, key)) {
       formData[key] = "";
     }
   }

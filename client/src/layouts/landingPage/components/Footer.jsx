@@ -110,34 +110,5 @@ function Footer() {
   );
 }
 
-function FooterLink({ href, label }) {
-  const [isHovering, setIsHovering] = useState(false);
 
-  return (
-    <Link
-      href={href}
-      className="text-gray-400 hover:text-white transition-colors duration-200"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
-      {label}
-    </Link>
-  );
-}
-
-function SocialLink({ href, icon, label }) {
-  const [isHovering, setIsHovering] = useState(false);
-
-  return (
-    <Link
-      href={href}
-      className="text-gray-400 hover:text-white transition-colors duration-200"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-      aria-label={label}
-    >
-      {icon}
-    </Link>
-  );
-}
 export default Footer;

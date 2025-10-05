@@ -12,7 +12,7 @@ export default function TopCommentPreview({ topComment, onClick }) {
         <span className="font-mono ml-1 font-bold text-muted-foreground/80">
           {topComment?.author?.name} commented{" "}
         </span>
-        <span className="font-mono italic">"{topComment?.comment}"</span>
+        <span className="font-mono italic">&quot;{topComment?.comment}&quot;</span>
       </span>
     </div>
   );

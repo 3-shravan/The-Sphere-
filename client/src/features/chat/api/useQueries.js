@@ -6,7 +6,6 @@ import tryCatch from "@/lib/utils/try-catch";
 export function useConnections() {
   return useQuery({
     queryKey: CHAT_QUERY_KEYS.connections,
-    staleTime: 0,
     queryFn: () => tryCatch(chatApi.connections()),
   });
 }
@@ -16,14 +15,16 @@ export function useChatDetails(chatId = "67ea8544ac4ed256c1ba3afb") {
     queryKey: CHAT_QUERY_KEYS.chat(chatId),
     queryFn: () => tryCatch(chatApi.chatDetails(chatId)),
     staleTime: 0,
-    retry: false,
   });
 }
 
 export function useMessages(chatId = "68e14efb456d6a9948842147") {
   return useQuery({
     queryKey: CHAT_QUERY_KEYS.messages(chatId),
-    staleTime: 0,
+    // staleTime: 0,
+    onSuccess: (data) => {
+      console.log("Messages fetched >", data);
+    },
     queryFn: () => tryCatch(chatApi.messages(chatId)),
   });
 }

@@ -5,7 +5,7 @@ import {
   useGetPostComments,
 } from "../services";
 import { useAuth } from "@/context";
-import { useErrorToast } from "@/hooks";
+import { showErrorToast } from "@/lib/utils/api-responses";
 
 const useComment = (postId) => {
   const [comment, setComment] = useState("");
@@ -21,14 +21,14 @@ const useComment = (postId) => {
 
   const handleCreate = async (parentId = null) => {
     if (!auth.isAuthenticated)
-      return useErrorToast({}, "Please login to comment");
+      return showErrorToast({}, "Please login to comment");
     if (!comment.trim()) return;
     await createComment({ comment, parentId });
     setComment("");
   };
   const handleCreateReply = async (parentId, reply) => {
     if (!auth.isAuthenticated)
-      return useErrorToast({}, "Please login to reply");
+      return showErrorToast({}, "Please login to reply");
     if (!reply.trim()) return;
     const comment = reply;
     await createComment({ comment, parentId });

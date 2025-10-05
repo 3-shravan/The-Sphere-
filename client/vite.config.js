@@ -1,9 +1,13 @@
 import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
-// import babel from "vite-plugin-babel";
+import { fileURLToPath } from "url";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 export default defineConfig({
   server: {
@@ -15,11 +19,6 @@ export default defineConfig({
         plugins: ["babel-plugin-react-compiler"],
       },
     }),
-    // babel({
-    //   babelConfig: {
-    //     plugins: ["babel-plugin-react-compiler"],
-    //   },
-    // }),
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",

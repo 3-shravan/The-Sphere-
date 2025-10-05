@@ -29,12 +29,14 @@ export const Toast = () => {
   );
 };
 
-// Helper toast functions
+// eslint-disable-next-line react-refresh/only-export-components
 export const successToast = (message) =>
   toast.success(message, { className: "h-10" });
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const errorToast = (message) => toast.error(message);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const infoToast = (message) =>
   toast.info(message, { className: "h-10" });
 

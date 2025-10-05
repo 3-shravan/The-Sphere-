@@ -1,6 +1,4 @@
 import { MessageSquare } from "lucide-react";
-import React from "react";
-
 export default function CommentsCount({ count, expand, onToggle }) {
   return (
     <header

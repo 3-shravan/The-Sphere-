@@ -2,10 +2,10 @@ import { useState, forwardRef, useImperativeHandle } from "react";
 import { Heart } from "lucide-react";
 import { FaHeart } from "react-icons/fa6";
 import { useAuth } from "@/context";
-import { useErrorToast } from "@/hooks";
-import LikeModal from "../modals/ShowUserModal";
+import LikeModal from "./modals/ShowUserModal";
 import useLikePost from "../../hooks/useLikePost";
 import { Modal } from "@/components";
+import { showErrorToast } from "@/lib/utils/api-responses";
 
 const LikePost = forwardRef(
   ({ postId, likes: initialLikes = [], likedBy = true }, ref) => {
@@ -23,7 +23,7 @@ const LikePost = forwardRef(
 
     const handleLike = () => {
       if (!auth.isAuthenticated)
-        return useErrorToast({}, "Please login to like posts");
+        return showErrorToast({}, "Please login to like posts");
       toggleLike(postId);
       setAnimate(true);
       setTimeout(() => setAnimate(false), 300);
@@ -109,4 +109,5 @@ const LikePost = forwardRef(
   }
 );
 
+LikePost.displayName = "LikePost";
 export default LikePost;

@@ -1,4 +1,3 @@
-import { ReactLenis } from "lenis/react";
 import { Toast } from "@lib/Toast";
 import { Routes, Route } from "react-router-dom";
 import {
@@ -17,11 +16,12 @@ import {
   ResetPasswordViaEmail,
   ResetPasswordViaPhone,
 } from "@features/auth";
-import { ViewPost } from "./shared";
-import Explore from "@/features/explore/pages/Explore";
-import useNetworkStatus from "@/hooks/useNetworkStatus";
-import PostProviderWrapper from "@/components/routing/PostProviderWrapper";
-import Conversations from "./features/chat/pages/Conversations";
+
+import useNetworkStatus from "./hooks/useNetworkStatus";
+import PostProviderWrapper from "./components/routing/PostProviderWrapper";
+import Explore from "./features/explore/pages/Explore";
+import Chat from "./features/chat/pages/Conversations";
+import ViewPost from "./features/posts/pages/ViewPost";
 
 export default function App() {
   const isOnline = useNetworkStatus();
@@ -56,7 +56,7 @@ export default function App() {
               <Route path="saved" element={<SavedPosts />} />
               <Route path="create-post" element={<CreatePost />} />
               <Route path="explore" element={<Explore />} />
-              <Route path="conversations" element={<Conversations />} />
+              <Route path="conversations" element={<Chat />} />
               <Route path="profile/:username" element={<Profile />} />
             </Route>
           </Route>

@@ -147,7 +147,7 @@ export const Chats = () => {
       <div className="space-y-2">
         <MessageBubble>
           <p className="text-neutral-400 font-semibold text-xs">
-            Hi! What's plan for today?
+            Hi! What&apos;s plan for today?
           </p>
           <p className="text-[10px] text-right">11:11</p>
         </MessageBubble>
@@ -198,38 +198,38 @@ const ProfileImg = ({ src, alt = "Profile", className = "" }) => {
 };
 
 // Notification Badge component
-const NotificationBadge = ({ children, className = "" }) => {
-  return (
-    <div
-      className={clsx(
-        "flex items-center gap-2 border border-violet-200 backdrop-blur-lg rounded-full py-2 px-2.5",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-};
+// const NotificationBadge = ({ children, className = "" }) => {
+//   return (
+//     <div
+//       className={clsx(
+//         "flex items-center gap-2 border border-violet-200 backdrop-blur-lg rounded-full py-2 px-2.5",
+//         className
+//       )}
+//     >
+//       {children}
+//     </div>
+//   );
+// };
 
 // Icon Button component
-const IconBtn = ({
-  icon: Icon,
-  className = "",
-  iconClassName = "",
-  ...props
-}) => {
-  return (
-    <button
-      className={clsx(
-        "w-10 h-10 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center border border-green-200",
-        className
-      )}
-      {...props}
-    >
-      <Icon className={clsx("w-5 h-5 text-white", iconClassName)} />
-    </button>
-  );
-};
+// const IconBtn = ({
+//   icon: Icon,
+//   className = "",
+//   iconClassName = "",
+//   ...props
+// }) => {
+//   return (
+//     <button
+//       className={clsx(
+//         "w-10 h-10 bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center border border-green-200",
+//         className
+//       )}
+//       {...props}
+//     >
+//       <Icon className={clsx("w-5 h-5 text-white", iconClassName)} />
+//     </button>
+//   );
+// };
 
 // Message Bubble component
 const MessageBubble = ({ children, isOwn = false, className = "" }) => {

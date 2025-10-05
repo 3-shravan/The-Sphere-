@@ -16,7 +16,7 @@ const ResetPassowrdViaEmail = () => {
   React.useEffect(() => {
     disableMenu();
     return enableMenu;
-  }, []);
+  }, [disableMenu, enableMenu]);
 
   const { request, loading } = useApi();
 

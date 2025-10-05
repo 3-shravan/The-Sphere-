@@ -1,4 +1,5 @@
 import { useDebounce } from "@/hooks";
+import { showErrorToast } from "@/lib/utils/api-responses";
 import { useGetUsers } from "@/shared/services";
 import { useEffect, useState } from "react";
 
@@ -16,13 +17,14 @@ export const useSearchUsers = (query) => {
       try {
         const response = await getUsers({ query: debouncedQuery });
         setUsers(response?.users || []);
-      } catch (err) {
+      } catch (error) {
+        showErrorToast(error);
         setUsers([]);
       }
     };
 
     fetchUsers();
-  }, [debouncedQuery]);
+  }, [debouncedQuery, getUsers]);
 
   return { users, loading };
 };

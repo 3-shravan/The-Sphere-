@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-const FollowUser = ({ userId, followUser, isFollowing, isPending }) => {
+const FollowUser = ({ userId, followUser, isFollowing }) => {
   return (
     <Button
       onClick={() => followUser(userId)}

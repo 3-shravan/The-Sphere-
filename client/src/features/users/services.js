@@ -1,7 +1,6 @@
-import { useApi, useErrorToast, useSuccessToast } from "@/hooks";
+import { useApi } from "@/hooks";
+import { showErrorToast, showSuccessToast } from "@/lib/utils/api-responses";
 import { fetcher } from "@/lib/fetcher";
-
-import { errorToast, successToast } from "@/utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +12,7 @@ export const useUpdateProfile = () => {
     mutationFn: (formData) =>
       fetcher({ endpoint: "/users/update", method: "PUT", data: formData }),
     onSuccess: (data) => {
-      successToast(data.message || "Profile updated Successfully");
+      showSuccessToast(data.message || "Profile updated Successfully");
       const updatedUsername = data?.user?.name;
       if (updatedUsername) {
         naviagte(`/profile/${updatedUsername}`);
@@ -22,7 +21,7 @@ export const useUpdateProfile = () => {
         });
       }
     },
-    onError: (error) => useErrorToast(error),
+    onError: (error) => showErrorToast(error),
   });
 };
 
@@ -39,7 +38,7 @@ export const useGetProfile = (username) => {
     queryKey: ["profile", username],
     queryFn: () => fetcher({ endpoint: `/users/profile/${username}` }),
     enabled: !!username,
-    onError: (error) => useErrorToast(error),
+    onError: (error) => showErrorToast(error),
   });
 };
 
@@ -49,9 +48,9 @@ export const useDeleteProfilePicture = () => {
     mutationFn: () =>
       fetcher({ endpoint: "/users/profile-picture", method: "DELETE" }),
     onSuccess: (data) => {
-      useSuccessToast(data);
+      showSuccessToast(data);
       queryClient.invalidateQueries({ queryKey: ["profile"] });
     },
-    onError: (error) => useErrorToast(error),
+    onError: (error) => showErrorToast(error),
   });
 };

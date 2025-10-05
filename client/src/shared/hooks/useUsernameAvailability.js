@@ -1,6 +1,7 @@
 import { useDebounce } from "@/hooks";
 import { useEffect, useState } from "react";
 import { API_URL } from "@/lib/utils/api";
+import { errorMessage } from "@/lib/utils/api-responses";
 
 export default function useUsernameAvailability(value) {
   const [status, setStatus] = useState(null);
@@ -27,7 +28,7 @@ export default function useUsernameAvailability(value) {
         setMessage(data.message || "");
       } catch (err) {
         setStatus("error");
-        setMessage("Something went wrong.");
+        setMessage(errorMessage(err));
       }
     };
 

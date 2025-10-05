@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 export default function useInfiniteScroll({ thresold = 50, scrollRef }) {
   const [remainingScroll, setRemainingScroll] = useState(null);
   const [loading, setLoading] = useState(false);
   const fetchLock = useRef(false);
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (!scrollRef.current) return;
 
     const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
@@ -13,7 +13,7 @@ export default function useInfiniteScroll({ thresold = 50, scrollRef }) {
     setRemainingScroll(remScroll);
 
     if (remScroll < thresold && !loading) setLoading(true);
-  };
+  }, [scrollRef, thresold, loading]);
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -21,7 +21,7 @@ export default function useInfiniteScroll({ thresold = 50, scrollRef }) {
     container.addEventListener("scroll", handleScroll);
 
     return () => container.removeEventListener("scroll", handleScroll);
-  }, [loading]);
+  }, [handleScroll, loading, scrollRef]);
 
   return { remainingScroll, loading, setLoading, fetchLock };
 }

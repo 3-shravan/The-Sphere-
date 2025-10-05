@@ -10,7 +10,7 @@ const InputOtp = ({ handleOtpSubmit, loading }) => {
     if (otp.every((val) => val === "") && inputRefs.current[0]) {
       inputRefs.current[0].focus();
     }
-  }, [handleOtpSubmit]);
+  }, [handleOtpSubmit, otp]);
 
   const handleOtp = (code) => {
     handleOtpSubmit(code);

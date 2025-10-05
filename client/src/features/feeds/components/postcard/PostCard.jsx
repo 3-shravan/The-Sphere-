@@ -5,9 +5,8 @@ import { useRef } from "react";
 import Comments from "@/features/comments/Comments";
 
 const PostCard = ({ post }) => {
-  if (!post) return null;
   const likePostRef = useRef(null);
-
+  if (!post) return null;
   return (
     <div className="post-card">
       <PostCardHeader post={post} />
@@ -29,7 +28,7 @@ const PostCard = ({ post }) => {
         <SavePost postId={post._id} />
       </div>
 
-      <Comments postId={post._id} />
+      <Comments postId={post?._id} />
     </div>
   );
 };

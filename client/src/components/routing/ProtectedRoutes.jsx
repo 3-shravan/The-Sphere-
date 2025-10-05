@@ -5,7 +5,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 export default function ProtectedRoutes() {
   const navigate = useNavigate();
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
 
   React.useEffect(() => {
     if (!auth.isAuthenticated) navigate("/login", { replace: true });

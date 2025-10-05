@@ -7,13 +7,10 @@ import useProfile from "../hooks/useProfile";
 import EditProfile from "../EditProfile";
 
 export function ProfileCard({ user }) {
-  if (!user) return null;
-
   const [activeModal, setActiveModal] = useState(null);
   const [showLinksModal, setShowLinksModal] = useState(false);
   const [socialLinks, setSocialLinks] = useState({});
 
-  const { fullName, dob, name, bio, following, followers } = user;
   const { me, followersCount, isFollowing, followUser, isPending } =
     useProfile(user);
 
@@ -22,6 +19,8 @@ export function ProfileCard({ user }) {
     if (saved) setSocialLinks(JSON.parse(saved));
   }, [user._id]);
 
+  const { fullName, dob, name, bio, following, followers } = user;
+  if (!user) return null;
   return (
     <div className="flex flex-col items-center font-Gilroy w-full justify-center backdrop-blur-md">
       <ProfilePicture

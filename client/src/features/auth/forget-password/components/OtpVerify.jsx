@@ -2,7 +2,6 @@ import styles from "@features/auth/shared/auth.module.css";
 import { InputOtp } from "@features/auth/shared";
 import { useApi } from "@hooks";
 import { motion, IoIosArrowBack } from "@lib";
-import { redirect } from "react-router-dom";
 
 const OtpVerify = ({
   formData,
@@ -26,7 +25,7 @@ const OtpVerify = ({
       phone: formData.phone,
       otp,
     };
-    const response = await request({
+    await request({
       endpoint: "/auth/forget-password/verify-otp",
       method: "POST",
       body: requestData,

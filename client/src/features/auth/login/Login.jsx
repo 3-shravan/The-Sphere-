@@ -11,7 +11,7 @@ import "@styles/auth.css";
 import { useForm } from "@/hooks";
 
 const Login = () => {
-  const { setAuth } = useAuth?.();
+  const { setAuth } = useAuth();
   const { menu } = useMenu();
   const navigate = useNavigate();
   const { formData, handleChange, resetForm } = useForm(LoginInitialFormData);

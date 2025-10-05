@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useApi, useErrorToast } from "@/hooks";
+import { useApi } from "@/hooks";
 import { getPosts } from "./posts.api";
+import { showErrorToast } from "@/lib/utils/api-responses";
 
 export const usePosts = (type = "all", limit = 10) => {
   const { fetcher } = useApi();
@@ -10,6 +11,6 @@ export const usePosts = (type = "all", limit = 10) => {
       getPosts(fetcher, { type, page: pageParam, limit }),
     getNextPageParam: (lastPage) =>
       lastPage?.hasMore ? lastPage?.currentPage + 1 : undefined,
-    onError: (error) => useErrorToast(error),
+    onError: (error) => showErrorToast(error),
   });
 };

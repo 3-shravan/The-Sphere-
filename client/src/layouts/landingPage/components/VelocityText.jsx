@@ -6,7 +6,7 @@ import {
   useSpring,
 } from "framer-motion";
 import { Asterisk } from "lucide-react";
-import React, { useRef } from "react";
+import  { useRef } from "react";
 
 const VelocityText = () => {
   const targetRef = useRef(null);

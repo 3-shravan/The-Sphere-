@@ -35,6 +35,7 @@ const useFeedInfiniteScroll = ({
     loading,
     setLoading,
     fetchNextPage,
+    fetchLock,
   ]);
 };
 

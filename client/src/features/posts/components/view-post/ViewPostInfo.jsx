@@ -6,9 +6,8 @@ import { ProfilePicture, Spinner } from "@/components";
 import { Button } from "@/components/ui/button";
 
 export default function ViewPostInfo({ postId, post, setShowModal }) {
-  if (!post) return null;
-
   const navigate = useNavigate();
+  if (!post) return null;
 
   const handleBackNavigation = () => {
     if (window.history.state && window.history.state.idx > 0) navigate(-1);

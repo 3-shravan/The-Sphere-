@@ -7,10 +7,10 @@ const Dock = () => {
 
   const className = "w-5";
   const icons = [
-    <GalleryVerticalEnd className={`${className}`} />,
-    <Search className={`${className}`} />,
-    <Album className={`${className}`} />,
-    <BadgePlus className={`${className}`} />,
+    <GalleryVerticalEnd key="gallery" className={`${className}`} />,
+    <Search key="search" className={`${className}`} />,
+    <Album key="album" className={`${className}`} />,
+    <BadgePlus key="badge" className={`${className}`} />,
   ];
   return (
     <section className="z-50 flex backdrop-blur bg-background/50 items-center w-full left-1/2 -translate-x-1/2 fixed bottom-0  md:hidden">

@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "@features/auth/shared/auth.module.css";
 import { motion, MdLock, FaPlus, TbNumber91Small } from "@lib";
 

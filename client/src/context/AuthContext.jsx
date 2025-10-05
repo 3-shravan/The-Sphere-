@@ -4,8 +4,9 @@ import {
   getToken,
   removeTokenAndAuthenticated,
 } from "@/utils";
-import { useApi, useErrorToast, useSocket, useSuccessToast } from "@/hooks";
+import { useApi, useSocket } from "@/hooks";
 import { useNavigate } from "react-router-dom";
+import { showErrorToast, showSuccessToast } from "@/lib/utils/api-responses";
 
 const AuthContext = createContext();
 
@@ -18,7 +19,7 @@ export const ContextProvider = ({ children }) => {
     profile: null,
   }));
 
-  const { onlineUsers } = useSocket(auth?.profile?._id);
+  useSocket(auth?.profile?._id);
 
   const { request, loading } = useApi();
   const resetAuth = () => {
@@ -41,27 +42,22 @@ export const ContextProvider = ({ children }) => {
           profile: data?.user,
         });
       } catch (error) {
-        useErrorToast(error, "Failed to fetch user profile");
+        showErrorToast(error, "Failed to fetch user profile");
         resetAuth();
       }
     };
     fetchUserProfile();
-  }, [navigate]);
+  }, [navigate, request]);
 
   const logout = async () => {
     try {
       const response = await request({ endpoint: "auth/logout" });
       resetAuth();
-      useSuccessToast(response, "Logged out 😢");
+      showSuccessToast(response, "Logged out 😢");
     } catch (error) {
-      useErrorToast(error, "Logout failed");
+      showErrorToast(error, "Logout failed");
     }
   };
-
-  const today = new Date();
-  const dob = new Date(auth?.profile?.dob) || null;
-  const isBirthday =
-    today.getDate() === dob.getDate() && today.getMonth() === dob.getMonth();
 
   return (
     <AuthContext.Provider
@@ -71,7 +67,6 @@ export const ContextProvider = ({ children }) => {
         user: auth?.profile,
         currentUserId: auth?.profile?._id,
         logout,
-        isBirthday,
         globalLoading: loading,
       }}
     >
@@ -81,10 +76,10 @@ export const ContextProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
+  if (!context)
     throw new Error("useAuth must be used within a ContextProvider");
-  }
   return context;
 };

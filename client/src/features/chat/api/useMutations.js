@@ -17,7 +17,7 @@ export const useDeleteMessage = (messageId) => {
     mutationFn: ({ messageId }) => tryCatch(chatApi.deleteMessage(messageId)),
   });
 };
-export const deleteChat = (chatId) => {
+export const useDeleteChat = (chatId) => {
   return useMutation({
     queryKey: CHAT_QUERY_KEYS.chat(chatId),
     mutationFn: ({ chatId }) => tryCatch(chatApi.deleteChat(chatId)),

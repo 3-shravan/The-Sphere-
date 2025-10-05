@@ -1,7 +1,7 @@
 import axios from "@/lib/axios";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useErrorToast, useSuccessToast } from "./useResponse";
+import { showErrorToast } from "@/lib/utils/api-responses";
 
 export default function useApi() {
   const navigate = useNavigate();
@@ -17,19 +17,19 @@ export default function useApi() {
           data: body,
         });
         if (response?.data?.success) {
-          // useSuccessToast(response?.data?.message || "Success ✅");
+          // showSuccessToast(response?.data?.message || "Success ✅");
           if (redirectUrl) navigate(redirectUrl, { replace: true });
           return response;
         }
       } catch (err) {
         // if (import.meta.env.VITE_MODE == "development") console.error(err);
         console.error(err);
-        useErrorToast(err, "⚙ Server failed to respond");
+        showErrorToast(err, "⚙ Server failed to respond");
       } finally {
         setLoading(false);
       }
     },
-    []
+    [navigate]
   );
 
   const fetcher = useCallback(

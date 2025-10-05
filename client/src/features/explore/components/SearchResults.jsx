@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "@/lib";
 import { SearchedUser } from "./SearchedUser";
 import { useIgnoreLenisScroll } from "@/hooks";
-export const SearchResults = ({ users, loading, query, isOpen }) => {
+export const SearchResults = ({ users, loading, isOpen }) => {
   useIgnoreLenisScroll(".scroll");
   return (
     <AnimatePresence>

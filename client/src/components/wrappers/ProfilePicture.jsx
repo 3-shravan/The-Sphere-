@@ -33,7 +33,7 @@ export default function ProfilePicture({
   );
 }
 
-export function FirstLetterProfilePicture({ profilePicture, username }) {
+export function FirstLetterProfilePicture({ user }) {
   return (
     <div className="w-5 h-5 rounded-full border-2 border-white bg-gradient-to-r from-rose-300 to-rose-400 flex items-center justify-center text-muted text-xs font-Futura font-bold">
       {user?.name?.[0]?.toUpperCase() || "U"}

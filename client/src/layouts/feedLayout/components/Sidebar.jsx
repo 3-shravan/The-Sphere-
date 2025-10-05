@@ -24,11 +24,11 @@ const Sidebar = () => {
 
   const className = "w-4";
   const icons = [
-    <GalleryVerticalEnd className={className} />,
-    <Search className={className} />,
-    <Album className={className} />,
-    <BadgePlus className={className} />,
-    <UserCircleIcon className={className} />,
+    <GalleryVerticalEnd key="gallery" className={className} />,
+    <Search key="search" className={className} />,
+    <Album key="album" className={className} />,
+    <BadgePlus key="badge" className={className} />,
+    <UserCircleIcon key="user" className={className} />,
   ];
 
   return (

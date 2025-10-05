@@ -1,6 +1,6 @@
 import { Loading } from "@/components";
 import { useAuth } from "@/context";
-import { useErrorToast } from "@/hooks";
+import { showErrorToast } from "@/lib/utils/api-responses";
 import useSavePost from "@/shared/hooks/useSavePost";
 
 const SavePost = ({ postId }) => {
@@ -11,7 +11,7 @@ const SavePost = ({ postId }) => {
       className="text-xs py-0.5 text-second hover:text-rose-600 cursor-pointer"
       onClick={() => {
         if (!auth?.isAuthenticated)
-          return useErrorToast({}, "You need to be logged in to save posts");
+          return showErrorToast({}, "You need to be logged in to save posts");
         toggleSave(postId);
       }}
     >

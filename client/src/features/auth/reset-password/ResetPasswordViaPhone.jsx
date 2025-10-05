@@ -23,7 +23,7 @@ const ResetPasswordViaPhone = () => {
   useEffect(() => {
     disableMenu();
     return enableMenu;
-  }, []);
+  }, [disableMenu, enableMenu]);
 
   const submitHandler = async (e) => {
     e.preventDefault();

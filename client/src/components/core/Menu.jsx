@@ -3,41 +3,6 @@ import { motion } from "framer-motion";
 import { HeartIcon } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
 
-const textVariants = {
-  initial: { opacity: 1 },
-  hover: {
-    transition: {
-      staggerChildren: 0.05,
-    },
-  },
-};
-
-const letterVariants = {
-  initial: { y: 0 },
-  hover: { y: -8, transition: { duration: 0.3, ease: "easeOut" } },
-};
-
-const AnimatedText = ({ text }) => {
-  return (
-    <motion.span
-      variants={textVariants}
-      initial="initial"
-      whileHover="hover"
-      className="hover:text-emerald-500 cursor-pointer"
-    >
-      {text.split("").map((letter, index) => (
-        <motion.span
-          key={index}
-          variants={letterVariants}
-          className="inline-block"
-        >
-          {letter}
-        </motion.span>
-      ))}
-    </motion.span>
-  );
-};
-
 export default function Menu() {
   return (
     <motion.div
@@ -97,13 +62,7 @@ export default function Menu() {
           </a>
         </div>
       </div>
-
-      <div className="flex flex-col gap-1 items-center mt-10">
-        {/* <AnimatedText text="Contact Us." />
-        <AnimatedText text="About Us." />
-        <AnimatedText text="Privacy Policy." /> */}
-      </div>
-
+      
       <span className="absolute bottom-1 text-xs text-yellow-100">
         Copyright © 2025
       </span>

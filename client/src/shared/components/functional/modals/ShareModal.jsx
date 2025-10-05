@@ -1,5 +1,5 @@
-import { useErrorToast, useSuccessToast } from "@/hooks";
 import { CLIENT_URL } from "@/lib/utils/api";
+import { showErrorToast, showSuccessToast } from "@/lib/utils/api-responses";
 import { Link as LinkIcon, MessageCircle, Share2, Forward } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -8,9 +8,9 @@ export default function ShareModal({ postId }) {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(postUrl);
-      useSuccessToast("🚀 Link copied to clipboard");
+      showSuccessToast("🚀 Link copied to clipboard");
     } catch {
-      useErrorToast("❌ Failed to copy link");
+      showErrorToast("❌ Failed to copy link");
     }
   };
 
@@ -22,10 +22,10 @@ export default function ShareModal({ postId }) {
           url: postUrl,
         });
       } catch {
-        useErrorToast("❌ Failed to share");
+        showErrorToast("❌ Failed to share");
       }
     } else {
-      useErrorToast("⚡ Native share not supported on this device");
+      showErrorToast("⚡ Native share not supported on this device");
     }
   };
 
