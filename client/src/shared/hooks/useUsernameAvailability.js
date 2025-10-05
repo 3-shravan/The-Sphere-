@@ -1,6 +1,6 @@
 import { useDebounce } from "@/hooks";
 import { useEffect, useState } from "react";
-import { API_URL } from "@/lib/api";
+import { API_URL } from "@/lib/utils/api";
 
 export default function useUsernameAvailability(value) {
   const [status, setStatus] = useState(null);

@@ -10,6 +10,7 @@ import {
   getProfiles,
   getSuggestedUsers,
   myProfile,
+  todayBirthdays,
   updateProfile,
 } from "../controllers/user.controller.js";
 import { validate, validateRequest } from "../middlewares/validate.js";
@@ -23,6 +24,7 @@ const router = express.Router();
 
 router.get("/", authUser, validateRequest(querySearch), getAllUsers);
 router.get("/suggested", authUser, getSuggestedUsers);
+router.get("/birthdays", authUser, todayBirthdays);
 router.get("/profile", authUser, myProfile);
 router.get(
   "/profile/:username",

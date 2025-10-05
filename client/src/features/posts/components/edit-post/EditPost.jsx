@@ -17,7 +17,7 @@ import {
   stringifyTags,
   validatePostForm,
 } from "@/utils";
-import { useUpdatePost } from "../services";
+import { useUpdatePost } from "../../services";
 import { usePostFromCache } from "@/shared";
 
 const EditPost = ({ open, setOpen, postId }) => {

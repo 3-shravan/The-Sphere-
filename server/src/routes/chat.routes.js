@@ -47,20 +47,20 @@ router
  *   MESSAGE ROUTES    *
  */
 router.get(
-  "/messages/:chatId",
+  "/:chatId/messages",
   authUser,
   validateRequest(fetchMessagesSchema),
   fetchMessages
 );
 router.post(
-  "/messages/:receiverId",
+  "/:receiverId/message",
   authUser,
   validateRequest(sendMessageSchema),
   singleUpload("image"),
   sendMessage
 );
 router.delete(
-  "/messages/:messageId",
+  "/message/:messageId",
   authUser,
   validateRequest(deleteMessageSchema),
   deleteMessage

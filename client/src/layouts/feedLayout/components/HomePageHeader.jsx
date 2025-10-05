@@ -23,7 +23,7 @@ const HomePageHeader = () => {
       {/* PROFILE */}
       <div
         className="hidden md:flex items-center  cursor-pointer tracking-tight rounded px-7 py-2 "
-        onClick={() => navigate(`/profile/${auth.profile.name}`)}
+        onClick={() => navigate(`/profile/${auth?.profile?.name}`)}
       >
         <ProfilePicture
           profilePicture={auth?.profile?.profilePicture}

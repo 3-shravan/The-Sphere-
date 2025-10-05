@@ -1,15 +1,25 @@
 import { defineConfig } from "vite";
+import { VitePWA } from "vite-plugin-pwa";
+// import babel from "vite-plugin-babel";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
-import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
   server: {
     host: true,
   },
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ["babel-plugin-react-compiler"],
+      },
+    }),
+    // babel({
+    //   babelConfig: {
+    //     plugins: ["babel-plugin-react-compiler"],
+    //   },
+    // }),
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
@@ -158,6 +168,9 @@ export default defineConfig({
       devOptions: {
         enabled: true,
         type: "module",
+      },
+      optimizeDeps: {
+        include: ["react", "react-dom"],
       },
     }),
   ],

@@ -44,6 +44,7 @@ export const connections = catchAsyncError(async (req, res, next) => {
 
 export const getChat = catchAsyncError(async (req, res, next) => {
   const { chatId } = req.params;
+  console.log(chatId);
   const chat = await Chat.findById(chatId)
     .populate([
       { path: "users", select: "name profilePicture" },
@@ -56,8 +57,9 @@ export const getChat = catchAsyncError(async (req, res, next) => {
       { path: "groupCreatedBy", select: "name profilePicture" },
     ])
     .lean();
+  console.log("chat", chat);
 
-  if (!chat) return next(new ErrorHandler(404, "Chat does not exist"));
+  if (!chat) throw new ErrorHandler(404, "Chat does not exist");
 
   if (req.query.includeMessages === "true")
     chat.messages = await Message.find({ chat: chat._id })

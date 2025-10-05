@@ -19,10 +19,8 @@ export const ContextProvider = ({ children }) => {
   }));
 
   const { onlineUsers } = useSocket(auth?.profile?._id);
-  // console.log("Online Users:", onlineUsers);
-  const token = getToken();
-  const { request, loading } = useApi();
 
+  const { request, loading } = useApi();
   const resetAuth = () => {
     setAuth({
       isAuthenticated: false,
@@ -34,12 +32,12 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      if (!token) return resetAuth();
+      if (!getToken()) return resetAuth();
       try {
         const { data } = await request({ endpoint: "auth/profile" });
         setAuth({
           isAuthenticated: true,
-          token,
+          token: getToken(),
           profile: data?.user,
         });
       } catch (error) {

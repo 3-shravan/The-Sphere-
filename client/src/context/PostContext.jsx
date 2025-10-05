@@ -1,4 +1,4 @@
-import { usePosts } from "@/features/feeds/services";
+import { usePosts } from "@/features/feeds/api/useQueries";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const PostContext = createContext();

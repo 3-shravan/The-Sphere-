@@ -1,5 +1,5 @@
 import { useErrorToast, useSuccessToast } from "@/hooks";
-import { CLIENT_URL } from "@/lib/api";
+import { CLIENT_URL } from "@/lib/utils/api";
 import { Link as LinkIcon, MessageCircle, Share2, Forward } from "lucide-react";
 import { Link } from "react-router-dom";
 

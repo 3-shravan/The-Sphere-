@@ -32,7 +32,6 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
     .select("name profilePicture followers following dob")
     .limit(20)
     .sort({ createdAt: -1 });
-  if (!users) throw new ErrorHandler(404, "No users found");
 
   return handleSuccessResponse(res, 200, "Users fetched successfully", {
     users,
@@ -274,4 +273,29 @@ export const blockUnblockUser = catchAsyncError(async (req, res, next) => {
     { $pull: { following: blockerId, followers: blockerId } }
   );
   return handleSuccessResponse(res, 200, "User blocked successfully");
+});
+
+export const todayBirthdays = catchAsyncError(async (req, res, next) => {
+  const userId = req.userId;
+
+  const today = new Date();
+  const day = today.getDate();
+  const month = today.getMonth() + 1;
+  const users = await User.aggregate([
+    {
+      $addFields: {
+        dobDay: { $dayOfMonth: "$dob" },
+        dobMonth: { $month: "$dob" },
+      },
+    },
+    {
+      $match: {
+        dobDay: day,
+        dobMonth: month,
+        accountVerified: true,
+      },
+    },
+  ]).project("_id name profilePicture dob");
+
+  return handleSuccessResponse(res, 200, "Today's Birthdays", { users });
 });

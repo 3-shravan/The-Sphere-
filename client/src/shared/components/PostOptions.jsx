@@ -9,7 +9,7 @@ import { Tally2 } from "lucide-react";
 import { Modal } from "@/components";
 import { useAuth } from "@/context";
 import { DeleteModal, ShareModal, usePostFromCache } from "@/shared";
-import EditPost from "@/features/posts/post/EditPost";
+import EditPost from "@/features/posts/components/edit-post/EditPost";
 
 const PostOptions = ({ postId, author, thoughts }) => {
   const post = usePostFromCache(postId);

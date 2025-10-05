@@ -9,8 +9,8 @@ import { createAndSaveMessage } from "../../services/chat.services.js";
 import { uploadFile } from "../../config/cloudinary.js";
 
 export const sendMessage = catchAsyncError(async (req, res, next) => {
-  const { receiverId } = req.params;
   const { content } = req.body;
+  const { receiverId } = req.params;
   const image = req.file;
   const senderId = req.user._id;
 
@@ -82,8 +82,8 @@ export const fetchMessages = catchAsyncError(async (req, res, next) => {
     .limit(limit + 1)
     .populate("sender", "name profilePicture")
     .lean();
-  if (!messages.length) return next(new ErrorHandler(404, "No messages found"));
-  const hasMore = messages.length > limit;
+
+    const hasMore = messages.length > limit;
   if (hasMore) messages.pop();
   handleSuccessResponse(res, 200, "Messages fetched successfully", {
     messages,

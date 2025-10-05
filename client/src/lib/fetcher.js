@@ -6,11 +6,15 @@ export const fetcher = async ({
   data = null,
   params = null,
 }) => {
-  const res = await axios({
-    url: endpoint,
-    method,
-    data,
-    params,
-  });
-  return res.data;
+  try {
+    const res = await axios({
+      url: endpoint,
+      method,
+      data,
+      params,
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
 };

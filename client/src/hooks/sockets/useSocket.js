@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { BASE_API_URL } from "@/lib/api";
+import { BASE_API_URL } from "@/lib/utils/api";
 import notify from "@/features/notifications/notify";
 
 const socket = io(BASE_API_URL, {

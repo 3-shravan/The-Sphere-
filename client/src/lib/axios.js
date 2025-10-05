@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useAuth } from "@/context";
-import { API_URL } from "./api";
+import { API_URL } from "./utils/api";
 import { getToken, removeTokenAndAuthenticated } from "@/utils";
 
 const axiosInstance = axios.create({

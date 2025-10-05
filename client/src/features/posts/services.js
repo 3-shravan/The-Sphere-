@@ -12,7 +12,10 @@ export const useCreatePost = () => {
       fetcher({ endpoint: "/posts", method: "POST", data: formData }),
     onSuccess: (response) => {
       useSuccessToast(response);
-      queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
+      queryClient.invalidateQueries({
+        queryKey: POSTS_QUERY_KEY,
+        exact: false,
+      });
     },
     onError: (error) => useErrorToast(error),
   });

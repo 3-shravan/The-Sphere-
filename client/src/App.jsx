@@ -9,7 +9,6 @@ import {
 } from "@/components";
 import { FeedLayout, HomePage, LandingPage } from "@/layouts";
 import { CreatePost, SavedPosts } from "@/features/posts";
-import Explore from "@features/explore/Explore";
 import { Profile } from "@features/users";
 import {
   Login,
@@ -18,11 +17,11 @@ import {
   ResetPasswordViaEmail,
   ResetPasswordViaPhone,
 } from "@features/auth";
-
-import useNetworkStatus from "./hooks/useNetworkStatus";
 import { ViewPost } from "./shared";
-import { PostProvider } from "@/context";
-import PostProviderWrapper from "./components/routing/PostProviderWrapper";
+import Explore from "@/features/explore/pages/Explore";
+import useNetworkStatus from "@/hooks/useNetworkStatus";
+import PostProviderWrapper from "@/components/routing/PostProviderWrapper";
+import Conversations from "./features/chat/pages/Conversations";
 
 export default function App() {
   const isOnline = useNetworkStatus();
@@ -57,6 +56,7 @@ export default function App() {
               <Route path="saved" element={<SavedPosts />} />
               <Route path="create-post" element={<CreatePost />} />
               <Route path="explore" element={<Explore />} />
+              <Route path="conversations" element={<Conversations />} />
               <Route path="profile/:username" element={<Profile />} />
             </Route>
           </Route>
