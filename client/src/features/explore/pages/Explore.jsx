@@ -4,8 +4,8 @@ import { Container, H2 } from "@/components";
 import { HandleClickOutsideWrapper } from "../components/HandleClickOutsideWrapper";
 import { SearchBar } from "../components/SearchBar";
 import { SearchResults } from "../components/SearchResults";
-import { SuggestedUsers } from "@/features/users";
 import Birthdays from "@/features/birthdays/pages/Birthdays";
+import SuggestedUsers from "@/features/users/pages/SuggestedUsers";
 
 const Explore = () => {
   const [query, setQuery] = useState("");

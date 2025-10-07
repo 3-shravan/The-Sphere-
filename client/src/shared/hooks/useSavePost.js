@@ -1,5 +1,6 @@
-import { useSavedPosts, useToggleSavePost } from "../services";
 import { useState } from "react";
+import { useSavedPosts } from "../api/useQueries";
+import { useToggleSavePost } from "../api/useMutations";
 
 const useSavePost = (postId) => {
   const { data } = useSavedPosts();

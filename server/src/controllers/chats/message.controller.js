@@ -37,7 +37,7 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
         media
       );
       return handleSuccessResponse(res, 200, "Message sent successfully", {
-        message,
+        sentMessage: message,
       });
     }
   } else {
@@ -65,7 +65,7 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
     media
   );
   return handleSuccessResponse(res, 200, "Message sent successfully", {
-    message: newMessage,
+    sentMessage: newMessage,
   });
 });
 
@@ -83,7 +83,7 @@ export const fetchMessages = catchAsyncError(async (req, res, next) => {
     .populate("sender", "name profilePicture")
     .lean();
 
-    const hasMore = messages.length > limit;
+  const hasMore = messages.length > limit;
   if (hasMore) messages.pop();
   handleSuccessResponse(res, 200, "Messages fetched successfully", {
     messages,

@@ -1,85 +1,51 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetcher } from "@lib/fetcher";
-import { showErrorToast } from "@/lib/utils/api-responses";
-
-const POSTS_QUERY_KEY = ["posts"];
-const SAVED_POSTS_QUERY_KEY = ["savedPosts"];
+import { useMutation } from "@tanstack/react-query";
+import { POSTS_QUERY_KEYS } from "./query-keys";
+import { api } from "./shared-api";
 
 export const useGetUsers = () => {
   return useMutation({
-    mutationFn: ({ query }) => fetcher({ endpoint: `/users?search=${query}` }),
-    onError: (err) => showErrorToast(err, "Error fetching users"),
-  });
-};
-
-export const useGetSinglePost = (postId) => {
-  return useQuery({
-    queryKey: ["posts", postId],
-    queryFn: () => fetcher({ endpoint: `/posts/${postId}` }),
-    enabled: !!postId,
-    onError: (error) => showErrorToast(error, "Error fetching post"),
+    mutationFn: ({ query }) => api.getUsers({ query }),
+    meta: {
+      showError: true,
+    },
   });
 };
 
 export const useToggleLikePost = ({ onMutate, onError } = {}) => {
-  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (postId) =>
-      fetcher({ endpoint: `/posts/${postId}/like`, method: "PUT" }),
+    mutationFn: (postId) => api.likePost(postId),
     onMutate: () => onMutate(),
     onError: () => onError(),
     meta: {
-      // showSuccess: true,
-      successMessage: "Post 🗽 successfully",
       showError: true,
-      errorMessage: "Error liking post",
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: POSTS_QUERY_KEY });
+      invalidateQuery: POSTS_QUERY_KEYS.all,
     },
   });
 };
 
 export const useToggleSavePost = ({ onMutate, onError } = {}) => {
-  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (postId) =>
-      fetcher({ endpoint: `/posts/${postId}/save`, method: "PUT" }),
+    mutationFn: (postId) => api.savePost(postId),
     onMutate: () => onMutate?.(),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: SAVED_POSTS_QUERY_KEY }),
-    onError: (error) => {
-      onError?.();
-      showErrorToast(error, "Error saving post");
+    onError: () => onError?.(),
+    meta: {
+      showError: true,
+      invalidateQuery: POSTS_QUERY_KEYS.saved,
     },
   });
 };
 
-export const useFollowUser = ({ onMutate, onError }) => {
-  const queryClient = useQueryClient();
+export const useFollowUser = ({ onMutate, onError } = {}) => {
   return useMutation({
-    mutationFn: (userId) =>
-      fetcher({ endpoint: `/users/${userId}/follow`, method: "PUT" }),
-    onMutate: () => {
-      onMutate?.();
-    },
-    onError: (error) => {
-      onError?.();
-      showErrorToast(error, "Error while following user");
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["profile"] });
-      queryClient.invalidateQueries({ queryKey: ["suggestedUsers"] });
+    mutationFn: (userId) => api.followUser(userId),
+    onMutate: () => onMutate?.(),
+    onError: () => onError?.(),
+    meta: {
+      showError: true,
+      invalidateQuery: [["profile"], ["posts"], ["suggestedUsers"]],
     },
   });
 };
-
-export const useSavedPosts = () =>
-  useQuery({
-    queryKey: SAVED_POSTS_QUERY_KEY,
-    queryFn: () => fetcher({ endpoint: "/posts/saved" }),
-    onError: (error) => showErrorToast(error, "Error fetching saved posts"),
-  });
 
 // export const useToggleLikePostCache = () => {
 //   const queryClient = useQueryClient();

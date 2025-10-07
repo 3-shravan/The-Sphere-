@@ -6,25 +6,23 @@ import tryCatch from "@/lib/utils/try-catch";
 export function useConnections() {
   return useQuery({
     queryKey: CHAT_QUERY_KEYS.connections,
-    queryFn: () => tryCatch(chatApi.connections()),
+    queryFn: () => chatApi.connections(),
+    meta: { showError: true },
   });
 }
 
-export function useChatDetails(chatId = "67ea8544ac4ed256c1ba3afb") {
+export function useChatDetails(chatId) {
   return useQuery({
     queryKey: CHAT_QUERY_KEYS.chat(chatId),
     queryFn: () => tryCatch(chatApi.chatDetails(chatId)),
-    staleTime: 0,
+    meta: { showError: true },
   });
 }
 
-export function useMessages(chatId = "68e14efb456d6a9948842147") {
+export function useMessages(chatId) {
   return useQuery({
     queryKey: CHAT_QUERY_KEYS.messages(chatId),
-    // staleTime: 0,
-    onSuccess: (data) => {
-      console.log("Messages fetched >", data);
-    },
-    queryFn: () => tryCatch(chatApi.messages(chatId)),
+    queryFn: () => chatApi.messages(chatId),
+    meta: { showError: true },
   });
 }

@@ -1,6 +1,6 @@
 import { H2, Loading, Container } from "@/components";
 import { PostGrid } from "@/shared";
-import { useSavedPosts } from "@/shared/services";
+import { useSavedPosts } from "@/shared/api/useQueries";
 
 const SavedPosts = () => {
   const { data, isLoading } = useSavedPosts();

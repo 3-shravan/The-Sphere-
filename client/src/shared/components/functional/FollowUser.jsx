@@ -5,7 +5,6 @@ const FollowUser = ({ userId, followUser, isFollowing }) => {
     <Button
       onClick={() => followUser(userId)}
       variant="secondary"
-      // disabled={isPending}
       className={`text-xs cursor-pointer border font-Futura disabled:opacity-50 ${
         isFollowing ? "bg-third" : "bg-emerald-500"
       }`}

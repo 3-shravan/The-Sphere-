@@ -1,6 +1,6 @@
 import { useDebounce } from "@/hooks";
 import { showErrorToast } from "@/lib/utils/api-responses";
-import { useGetUsers } from "@/shared/services";
+import { useGetUsers } from "@/shared/api/useMutations";
 import { useEffect, useState } from "react";
 
 export const useSearchUsers = (query) => {

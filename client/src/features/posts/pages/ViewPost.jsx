@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { Error, Loading, Modal } from "@/components";
-import { useGetSinglePost } from "@/shared/services";
 import { ShareModal } from "@/shared";
 import ViewPostMedia from "../components/view-post/ViewPostMedia";
 import ViewPostInfo from "../components/view-post/ViewPostInfo";
+import { useGetSinglePost } from "@/shared/api/useQueries";
 
 export default function ViewPost() {
   const { postId } = useParams();

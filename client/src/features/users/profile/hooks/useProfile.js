@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/context";
-import { useFollowUser } from "@/shared/services";
+import { useFollowUser } from "@/shared/api/useMutations";
 
 const useProfile = (user) => {
   const { _id, followers } = user;

@@ -18,9 +18,9 @@ const Thoughts = () => {
   };
 
   return (
-    <div className="w-full bg-card p-3 font-Poppins rounded-2xl">
+    <div className="w-full p-3 font-Poppins rounded-2xl">
       <textarea
-        className="resize-none h-18 w-full rounded-2xl p-4 text-xs bg-background focus-visible:ring-1 outline-hidden focus-visible:ring-emerald-400 placeholder:text-neutral-600/80 dark:placeholder:text-muted-foreground/50 placeholder:font-Futura font-bold "
+        className="resize-none h-18 w-full rounded-2xl p-4 text-xs bg-card focus-visible:ring-1 outline-hidden focus-visible:ring-emerald-400 placeholder:text-neutral-600/80 dark:placeholder:text-muted-foreground/50 placeholder:font-Futura font-bold "
         placeholder="have thoughts 🗽"
         onChange={(e) => setThoughts(e.target.value)}
         value={thoughts}

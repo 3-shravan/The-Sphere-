@@ -20,8 +20,8 @@ import {
 import useNetworkStatus from "./hooks/useNetworkStatus";
 import PostProviderWrapper from "./components/routing/PostProviderWrapper";
 import Explore from "./features/explore/pages/Explore";
-import Chat from "./features/chat/pages/Conversations";
 import ViewPost from "./features/posts/pages/ViewPost";
+import Chat from "./features/chat/pages/Conversations";
 
 export default function App() {
   const isOnline = useNetworkStatus();
@@ -29,7 +29,6 @@ export default function App() {
 
   return (
     <>
-      {/* <ReactLenis root> */}
       <Toast />
       <Routes>
         {/* Public Routes */}
@@ -56,7 +55,7 @@ export default function App() {
               <Route path="saved" element={<SavedPosts />} />
               <Route path="create-post" element={<CreatePost />} />
               <Route path="explore" element={<Explore />} />
-              <Route path="conversations" element={<Chat />} />
+              <Route path="c" element={<Chat />} />
               <Route path="profile/:username" element={<Profile />} />
             </Route>
           </Route>
@@ -64,11 +63,8 @@ export default function App() {
 
         {/* Shared Routes */}
         <Route path="/post/:postId" element={<ViewPost />} />
-
-        {/* Catch All */}
         <Route path="*" element={<NonExistRoutes />} />
       </Routes>
-      {/* </ReactLenis> */}
     </>
   );
 }

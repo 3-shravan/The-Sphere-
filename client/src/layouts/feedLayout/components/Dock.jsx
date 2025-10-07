@@ -13,7 +13,7 @@ const Dock = () => {
     <BadgePlus key="badge" className={`${className}`} />,
   ];
   return (
-    <section className="z-50 flex backdrop-blur bg-background/50 items-center w-full left-1/2 -translate-x-1/2 fixed bottom-0  md:hidden">
+    <section className="z-50 flex backdrop-blur bg-background/40 items-center w-full left-1/2 -translate-x-1/2 fixed bottom-0 md:hidden">
       {tabs.map((link, index) => {
         const isActive = pathname === link.route;
         return (
@@ -22,13 +22,13 @@ const Dock = () => {
             to={link.route}
             className={`${
               isActive && "text-third"
-            } flex-center flex-col w-full py-2 md:py-3 transition`}
+            } flex-center flex-col w-full py-2.5 md:py-4 transition`}
           >
             {icons[index]}
 
-            <p className=" text-[8px] font-bold font-Poppins leading-tight">
+            {/* <p className=" text-[8px] font-bold font-Poppins leading-tight">
               {link.label}
-            </p>
+            </p> */}
           </Link>
         );
       })}

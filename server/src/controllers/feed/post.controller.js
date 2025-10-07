@@ -230,7 +230,7 @@ export const likePost = catchAsyncError(async (req, res, next) => {
 
   if (isLiked) {
     await Post.findByIdAndUpdate(postId, { $pull: { likes: likedBy } });
-    return handleSuccessResponse(res, 200, "Post unliked successfully");
+    return handleSuccessResponse(res, 200, "Post unliked");
   }
 
   await Post.findByIdAndUpdate(postId, { $addToSet: { likes: likedBy } });
@@ -253,7 +253,7 @@ export const likePost = catchAsyncError(async (req, res, next) => {
     });
   }
 
-  handleSuccessResponse(res, 200, "Post liked successfully");
+  handleSuccessResponse(res, 200, "Post liked ❤");
 });
 
 /************************************

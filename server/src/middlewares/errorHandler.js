@@ -40,9 +40,9 @@ export const errorMiddleware = (err, req, res, next) => {
 
   res.status(err.statusCode).json({
     success: false,
-    errors: Array.isArray(err.originalMessage)
-      ? err.originalMessage
-      : [err.originalMessage],
+    error: Array.isArray(err.originalMessage)
+      ? err.originalMessage[0]
+      : err.originalMessage,
 
     // ...(process.env.NODE_ENV === "development" && {
     //   stack: err.stack,
@@ -50,5 +50,6 @@ export const errorMiddleware = (err, req, res, next) => {
     // }),
   });
 
-  if (process.env.NODE_ENV === "development") console.error("❌ Error:", err.message);
+  if (process.env.NODE_ENV === "development")
+    console.error("❌ Error:", err.message);
 };

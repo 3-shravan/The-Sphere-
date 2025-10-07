@@ -1,6 +1,6 @@
 import { useAuth } from "@/context";
 import { useState } from "react";
-import { useToggleLikePost } from "../services";
+import { useToggleLikePost } from "../api/useMutations";
 
 const useLikePost = (initialLikes = []) => {
   const { currentUserId, auth } = useAuth();

@@ -17,8 +17,9 @@ export const showSuccessToast = (response, customErrMessage) => {
 export const errorMessage = (error, customErrMessage) => {
   return (
     error.response?.data?.message ||
-    error?.response?.data?.errors[0] ||
+    error.response?.data?.error ||
     error?.message ||
+    error ||
     customErrMessage ||
     "An Error while doing so 😢"
   );
