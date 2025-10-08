@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/suspicious/noUnknownAtRules: <reason> */
+/** biome-ignore-all lint/complexity/noImportantStyles: <reason> */
 @import "tailwindcss";
 @import "tw-animate-css";
 @custom-variant dark (&:is(.dark *));
@@ -220,7 +222,8 @@ body {
 }
 @font-face {
   font-family: "Blackout-Midnight";
-  src: url("/fonts/Blackout-Midnight.woff2") format("woff2"),
+  src:
+    url("/fonts/Blackout-Midnight.woff2") format("woff2"),
     url("/fonts/Blackout-Midnight.woff") format("woff");
 }
 
@@ -259,7 +262,8 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 .inputField:-webkit-autofill {
-  font-family: "Gilroy" !important;
+  font-family:
+    "Gilroy", "Poppins", "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif !important;
   font-weight: 400 !important;
   font-size: 0.9rem !important;
   background-color: transparent !important;

@@ -1,11 +1,11 @@
 export const FEEDS_QUERY_KEY = {
-  all: ["posts"],
+	all: ["posts"],
 
-  feeds: () => [...FEEDS_QUERY_KEY.all, "feeds"],
-  feed: (type = "all") => [...FEEDS_QUERY_KEY.lists(), { type }],
+	feeds: () => [...FEEDS_QUERY_KEY.all, "feeds"],
+	feed: (type = "all") => [...FEEDS_QUERY_KEY.lists(), { type }],
 
-  // details: () => [...FEEDS_QUERY_KEY.all, "detail"],
-  // detail: (id) => [...FEEDS_QUERY_KEY.details(), { id }],
+	// details: () => [...FEEDS_QUERY_KEY.all, "detail"],
+	// detail: (id) => [...FEEDS_QUERY_KEY.details(), { id }],
 };
 
 /*

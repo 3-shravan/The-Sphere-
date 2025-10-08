@@ -1,32 +1,32 @@
-import  { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const ThemeContext = createContext("dark");
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState("dark");
+	const [theme, setTheme] = useState("dark");
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-  }, []);
+	useEffect(() => {
+		const savedTheme = localStorage.getItem("theme");
+		if (savedTheme) {
+			setTheme(savedTheme);
+		}
+	}, []);
 
-  useEffect(() => {
-    document.body.className = theme;
-  }, [theme]);
+	useEffect(() => {
+		document.body.className = theme;
+	}, [theme]);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-  };
+	const toggleTheme = () => {
+		const newTheme = theme === "dark" ? "light" : "dark";
+		setTheme(newTheme);
+		localStorage.setItem("theme", newTheme);
+	};
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+	return (
+		<ThemeContext.Provider value={{ theme, toggleTheme }}>
+			{children}
+		</ThemeContext.Provider>
+	);
 }
 
 // eslint-disable-next-line react-refresh/only-export-components

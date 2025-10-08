@@ -1,13 +1,12 @@
-import { defineConfig } from "vite";
-import { VitePWA } from "vite-plugin-pwa";
-import { fileURLToPath } from "url";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
-import path from "path";
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+import tailwindcss from "@tailwindcss/vite"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
+import { VitePWA } from "vite-plugin-pwa"
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export default defineConfig({
   server: {
@@ -70,31 +69,7 @@ export default defineConfig({
             type: "image/png",
           },
         ],
-
-        // screenshots: [
-        //   {
-        //     src: "screenshot-desktop.png",
-        //     sizes: "1280x800",
-        //     type: "image/png",
-        //     form_factor: "wide",
-        //     label: "SPHERE Desktop Experience",
-        //   },
-        //   {
-        //     src: "screenshot-mobile.png",
-        //     sizes: "390x844",
-        //     type: "image/png",
-        //     form_factor: "narrow",
-        //     label: "SPHERE Mobile Experience",
-        //   },
-        // ],
-        categories: [
-          "social",
-          "productivity",
-          "entertainment",
-          "connect",
-          "share",
-          "discover",
-        ],
+        categories: ["social", "productivity", "entertainment", "connect", "share", "discover"],
         shortcuts: [
           {
             name: "Feed",
@@ -191,4 +166,4 @@ export default defineConfig({
       "@lib": path.resolve(__dirname, "src/lib"),
     },
   },
-});
+})

@@ -27,11 +27,11 @@
  * @returns {string[]} - e.g., ["travel", "nature", "photography"]
  */
 export const formatTags = (rawTags = "") => {
-  return rawTags
-    .split(",")
-    .map((tag) => tag.trim().toLowerCase()) // remove extra space & normalize
-    .filter((tag) => tag.length > 0) // remove empty entries
-    .filter((tag, index, self) => self.indexOf(tag) === index); // remove duplicates
+	return rawTags
+		.split(",")
+		.map((tag) => tag.trim().toLowerCase()) // remove extra space & normalize
+		.filter((tag) => tag.length > 0) // remove empty entries
+		.filter((tag, index, self) => self.indexOf(tag) === index); // remove duplicates
 };
 
 /**
@@ -41,5 +41,5 @@ export const formatTags = (rawTags = "") => {
  * @returns {string} - e.g., "travel, nature"
  */
 export const stringifyTags = (tagArray = []) => {
-  return tagArray.filter(Boolean).join(", ");
+	return tagArray.filter(Boolean).join(", ");
 };

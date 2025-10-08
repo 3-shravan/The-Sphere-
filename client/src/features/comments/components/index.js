@@ -6,11 +6,11 @@ import CommentsCount from "./CommentsCount";
 import ReplyBox from "./ReplyBox";
 import TopCommentPreview from "./TopCommentPreview";
 export {
-  AddComment,
-  CommentList,
-  CommentsCount,
-  TopCommentPreview,
-  Comment,
-  CommentBox,
-  ReplyBox,
+	AddComment,
+	CommentList,
+	CommentsCount,
+	TopCommentPreview,
+	Comment,
+	CommentBox,
+	ReplyBox,
 };

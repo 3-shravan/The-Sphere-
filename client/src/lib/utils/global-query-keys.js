@@ -15,7 +15,7 @@ export const POSTS_QUERY_KEY = {
   // --- INDIVIDUAL POST DETAIL ---
   details: () => [...POSTS_QUERY_KEY.all, "detail"],
   detail: (id) => [...POSTS_QUERY_KEY.details(), { id }],
-};
+}
 
 /*
  

@@ -3,48 +3,48 @@ import { POSTS_QUERY_KEYS } from "./query-keys";
 import { api } from "./shared-api";
 
 export const useGetUsers = () => {
-  return useMutation({
-    mutationFn: ({ query }) => api.getUsers({ query }),
-    meta: {
-      showError: true,
-    },
-  });
+	return useMutation({
+		mutationFn: ({ query }) => api.getUsers({ query }),
+		meta: {
+			showError: true,
+		},
+	});
 };
 
 export const useToggleLikePost = ({ onMutate, onError } = {}) => {
-  return useMutation({
-    mutationFn: (postId) => api.likePost(postId),
-    onMutate: () => onMutate(),
-    onError: () => onError(),
-    meta: {
-      showError: true,
-      invalidateQuery: POSTS_QUERY_KEYS.all,
-    },
-  });
+	return useMutation({
+		mutationFn: (postId) => api.likePost(postId),
+		onMutate: () => onMutate(),
+		onError: () => onError(),
+		meta: {
+			showError: true,
+			invalidateQuery: POSTS_QUERY_KEYS.all,
+		},
+	});
 };
 
 export const useToggleSavePost = ({ onMutate, onError } = {}) => {
-  return useMutation({
-    mutationFn: (postId) => api.savePost(postId),
-    onMutate: () => onMutate?.(),
-    onError: () => onError?.(),
-    meta: {
-      showError: true,
-      invalidateQuery: POSTS_QUERY_KEYS.saved,
-    },
-  });
+	return useMutation({
+		mutationFn: (postId) => api.savePost(postId),
+		onMutate: () => onMutate?.(),
+		onError: () => onError?.(),
+		meta: {
+			showError: true,
+			invalidateQuery: POSTS_QUERY_KEYS.saved,
+		},
+	});
 };
 
 export const useFollowUser = ({ onMutate, onError } = {}) => {
-  return useMutation({
-    mutationFn: (userId) => api.followUser(userId),
-    onMutate: () => onMutate?.(),
-    onError: () => onError?.(),
-    meta: {
-      showError: true,
-      invalidateQuery: [["profile"], ["posts"], ["suggestedUsers"]],
-    },
-  });
+	return useMutation({
+		mutationFn: (userId) => api.followUser(userId),
+		onMutate: () => onMutate?.(),
+		onError: () => onError?.(),
+		meta: {
+			showError: true,
+			invalidateQuery: [["profile"], ["posts"], ["suggestedUsers"]],
+		},
+	});
 };
 
 // export const useToggleLikePostCache = () => {

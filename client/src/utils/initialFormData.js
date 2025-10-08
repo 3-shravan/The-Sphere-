@@ -1,32 +1,32 @@
 export const RegisterInitialFormData = {
-  name: "",
-  email: "",
-  phone: "",
-  password: "",
-  verificationMethod: "email",
+	name: "",
+	email: "",
+	phone: "",
+	password: "",
+	verificationMethod: "email",
 };
 
 export const LoginInitialFormData = {
-  email: "",
-  phone: "",
-  password: "",
+	email: "",
+	phone: "",
+	password: "",
 };
 
 export const ForgetPasswordFormData = {
-  email: "",
-  phone: "",
+	email: "",
+	phone: "",
 };
 
 export const ResetPasswordFormData = {
-  newPassword: "",
-  confirmPassword: "",
+	newPassword: "",
+	confirmPassword: "",
 };
 
 export const setAllFieldsNull = (formData) => {
-  for (let key in formData) {
-    if (Object.prototype.hasOwnProperty.call(formData, key)) {
-      formData[key] = "";
-    }
-  }
-  return formData;
+	for (const key in formData) {
+		if (Object.hasOwn(formData, key)) {
+			formData[key] = "";
+		}
+	}
+	return formData;
 };

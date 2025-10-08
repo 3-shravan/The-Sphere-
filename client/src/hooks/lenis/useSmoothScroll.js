@@ -2,33 +2,33 @@ import Lenis from "@studio-freight/lenis";
 import { useEffect, useRef } from "react";
 
 const useLenisInsideDiv = (selector = ".js-native-scroll") => {
-  const lenisRef = useRef(null);
+	const lenisRef = useRef(null);
 
-  useEffect(() => {
-    const el = document.querySelector(selector);
-    if (!el) return;
+	useEffect(() => {
+		const el = document.querySelector(selector);
+		if (!el) return;
 
-    const lenis = new Lenis({
-      wrapper: el, // <--- attach to the inner div
-      content: el.firstElementChild || el,
-      duration: 1.2,
-      smooth: true,
-      gestureOrientation: "vertical",
-    });
+		const lenis = new Lenis({
+			wrapper: el, // <--- attach to the inner div
+			content: el.firstElementChild || el,
+			duration: 1.2,
+			smooth: true,
+			gestureOrientation: "vertical",
+		});
 
-    const raf = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
+		const raf = (time) => {
+			lenis.raf(time);
+			requestAnimationFrame(raf);
+		};
 
-    requestAnimationFrame(raf);
-    lenisRef.current = lenis;
+		requestAnimationFrame(raf);
+		lenisRef.current = lenis;
 
-    return () => {
-      lenis.destroy();
-    };
-  }, [selector]);
+		return () => {
+			lenis.destroy();
+		};
+	}, [selector]);
 
-  return lenisRef;
+	return lenisRef;
 };
 export default useLenisInsideDiv;
