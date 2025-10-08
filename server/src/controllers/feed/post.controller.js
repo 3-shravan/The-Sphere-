@@ -1,17 +1,14 @@
-import catchAsyncError from "../../middlewares/catchAsyncError.js";
-import ErrorHandler from "../../middlewares/errorHandler.js";
-import { deleteFile, uploadFile } from "../../config/cloudinary.js";
-import { v4 as uuidv4 } from "uuid";
-import { Post } from "../../models/feed/post.model.js";
-import { User } from "../../models/user/user.model.js";
-import { Comment } from "../../models/feed/comment.model.js";
-import { handleSuccessResponse } from "../../utils/responseHandler.js";
-import { parseArray, postChanges } from "../../utils/validations.js";
-import {
-  blockedUsersDistinct,
-  userBlocked,
-} from "../../services/block.services.js";
-import { sendNotification } from "../../sockets/emit.js";
+import { v4 as uuidv4 } from "uuid"
+import { deleteFile, uploadFile } from "../../config/cloudinary.js"
+import catchAsyncError from "../../middlewares/catchAsyncError.js"
+import ErrorHandler from "../../middlewares/errorHandler.js"
+import { Comment } from "../../models/feed/comment.model.js"
+import { Post } from "../../models/feed/post.model.js"
+import { User } from "../../models/user/user.model.js"
+import { blockedUsersDistinct } from "../../services/block.services.js"
+import { sendNotification } from "../../sockets/emit.js"
+import { handleSuccessResponse } from "../../utils/responseHandler.js"
+import { parseArray, postChanges } from "../../utils/validations.js"
 
 /**************************************
  * Common Helpers
@@ -24,7 +21,7 @@ const POST_POPULATE = [
     options: { sort: { createdAt: -1 } },
     populate: { path: "author", select: "name profilePicture" },
   },
-];
+]
 const paginateQuery = async (model, query, page, limit, populate = []) => {
   const [posts, totalPosts] = await Promise.all([
     model
@@ -34,137 +31,137 @@ const paginateQuery = async (model, query, page, limit, populate = []) => {
       .limit(limit)
       .populate(populate),
     model.countDocuments(query),
-  ]);
+  ])
   return {
     currentPage: page,
     totalPages: Math.ceil(totalPosts / limit),
     hasMore: page * limit < totalPosts,
     posts,
-  };
-};
+  }
+}
 
 /***********************************************
  * @Get_All_Posts
  * ********************************************* / */
-export const getAllPosts = catchAsyncError(async (req, res, next) => {
-  const userId = req.user._id;
-  const { page = 1, limit = 10 } = req.query;
+export const getAllPosts = catchAsyncError(async (req, res) => {
+  const userId = req.user._id
+  const { page = 1, limit = 10 } = req.query
 
-  const getBlockedUsers = await blockedUsersDistinct(userId);
+  const getBlockedUsers = await blockedUsersDistinct(userId)
 
   const data = await paginateQuery(
     Post,
     { author: { $nin: getBlockedUsers } },
-    parseInt(page),
-    parseInt(limit),
-    POST_POPULATE
-  );
-  return handleSuccessResponse(res, 200, "Posts fetched successfully", data);
-});
+    parseInt(page, 10),
+    parseInt(limit, 10),
+    POST_POPULATE,
+  )
+  return handleSuccessResponse(res, 200, "Posts fetched successfully", data)
+})
 /****************************
  * @Get_Following_Posts
  * ******************************/
-export const getFollowingPosts = catchAsyncError(async (req, res, next) => {
-  const { page = 1, limit = 10 } = req.query;
-  const userId = req.user._id;
+export const getFollowingPosts = catchAsyncError(async (req, res) => {
+  const { page = 1, limit = 10 } = req.query
+  const userId = req.user._id
 
-  const getBlockedUsers = await blockedUsersDistinct(userId);
+  const getBlockedUsers = await blockedUsersDistinct(userId)
 
-  const user = await User.findById(userId).select("following");
+  const user = await User.findById(userId).select("following")
   const data = await paginateQuery(
     Post,
     { author: { $in: [...user.following, userId], $nin: getBlockedUsers } },
-    parseInt(page),
-    parseInt(limit),
-    POST_POPULATE
-  );
-  return handleSuccessResponse(res, 200, "Posts fetched successfully", data);
-});
+    parseInt(page, 10),
+    parseInt(limit, 10),
+    POST_POPULATE,
+  )
+  return handleSuccessResponse(res, 200, "Posts fetched successfully", data)
+})
 
 /*********************************************
  * @Get_Saved_Posts
  *  ******************************************* / */
 export const getSavedPosts = catchAsyncError(async (req, res, next) => {
-  const savedBy = req.user._id;
-  const user = await User.findById(savedBy);
+  const savedBy = req.user._id
+  const user = await User.findById(savedBy)
   const savedPosts = await Post.find({ _id: { $in: user.saved } })
     .populate({
       path: "author",
       select: "name , profilePicture",
     })
     .sort({ createdAt: -1 })
-    .limit(100);
-  if (!savedPosts) return next(new ErrorHandler(404, "No saved posts found"));
+    .limit(100)
+  if (!savedPosts) return next(new ErrorHandler(404, "No saved posts found"))
   return handleSuccessResponse(res, 200, "Saved posts fetched successfully", {
     savedPosts,
-  });
-});
+  })
+})
 
 /**********************************
    @Get_Own_Posts
  ************************************8*/
-export const getMyPosts = catchAsyncError(async (req, res, next) => {
-  const { page = 1, limit = 10 } = req.query;
+export const getMyPosts = catchAsyncError(async (req, res) => {
+  const { page = 1, limit = 10 } = req.query
   const data = await paginateQuery(
     Post,
     { author: req.user._id },
-    parseInt(page),
-    parseInt(limit),
-    POST_POPULATE
-  );
+    parseInt(page, 10),
+    parseInt(limit, 10),
+    POST_POPULATE,
+  )
   return handleSuccessResponse(res, 200, "Your posts fetched successfully", {
     data,
-  });
-});
+  })
+})
 
 /**********************
  * @Get_Post_By_Id
  * ******************** / */
 export const getPostById = catchAsyncError(async (req, res, next) => {
-  const { postId } = req.params;
-  const userId = req?.user?._id;
+  const { postId } = req.params
+  const userId = req?.user?._id
 
   const post = await Post.findById(postId).populate([
     { path: "author", select: "name profilePicture" },
     { path: "likes", select: "name profilePicture" },
-  ]);
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
+  ])
+  if (!post) return next(new ErrorHandler(404, "Post not found"))
 
-  const isSaved = await User.exists({ _id: userId, saved: postId });
+  const isSaved = await User.exists({ _id: userId, saved: postId })
   return handleSuccessResponse(res, 200, "Post fetched successfully", {
     post: { ...post.toObject(), isSaved: !!isSaved },
-  });
-});
+  })
+})
 
 /****************************************
  * @Create_Thought_Post
  * ***************************************/
-export const createThoughtPost = catchAsyncError(async (req, res, next) => {
-  const { thoughts } = req.body;
-  const authorId = req.user._id;
+export const createThoughtPost = catchAsyncError(async (req, res) => {
+  const { thoughts } = req.body
+  const authorId = req.user._id
   const post = await Post.create({
     author: authorId,
     postType: "thought",
     thoughts,
-  });
-  await User.findByIdAndUpdate(authorId, { $push: { posts: post._id } });
-  await post.populate({ path: "author", select: "name profilePicture" });
+  })
+  await User.findByIdAndUpdate(authorId, { $push: { posts: post._id } })
+  await post.populate({ path: "author", select: "name profilePicture" })
   return handleSuccessResponse(res, 201, "Your thought is shared", {
     post,
-  });
-});
+  })
+})
 /*******************************************
  * @add_new_post
  ******************************************** / */
 export const addNewPost = catchAsyncError(async (req, res, next) => {
-  const authorId = req.user._id;
-  const { caption, location, tags: rawTags } = req.body;
-  const tags = await parseArray(rawTags);
+  const authorId = req.user._id
+  const { caption, location, tags: rawTags } = req.body
+  const tags = await parseArray(rawTags)
 
-  const image = req.file;
-  if (!image) return next(new ErrorHandler(400, "Image is required for post"));
+  const image = req.file
+  if (!image) return next(new ErrorHandler(400, "Image is required for post"))
 
-  const media = await uploadFile(image, `post_${uuidv4()}`, "posts");
+  const media = await uploadFile(image, `post_${uuidv4()}`, "posts")
   const post = await Post.create({
     author: authorId,
     caption,
@@ -173,72 +170,71 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
     media: media.url,
     public_id: media.public_id,
     thoughts: null,
-  });
-  if (!post) return next(new ErrorHandler(500, "Failed to upload post"));
+  })
+  if (!post) return next(new ErrorHandler(500, "Failed to upload post"))
 
-  await User.findByIdAndUpdate(authorId, { $push: { posts: post._id } });
-  await post.populate({ path: "author", select: "name profilePicture" });
-  return handleSuccessResponse(res, 201, "Post created successfully", { post });
-});
+  await User.findByIdAndUpdate(authorId, { $push: { posts: post._id } })
+  await post.populate({ path: "author", select: "name profilePicture" })
+  return handleSuccessResponse(res, 201, "Post created successfully", { post })
+})
 
 /*********************************************
  * @Update_Post
  * *******************************************/
 export const updatePost = catchAsyncError(async (req, res, next) => {
-  const { postId } = req.params;
-  const { caption, location, tags: rawTags } = req.body;
-  const tags = await parseArray(rawTags);
+  const { postId } = req.params
+  const { caption, location, tags: rawTags } = req.body
+  const tags = await parseArray(rawTags)
 
-  const post = await Post.findOne({ _id: postId, author: req.user._id });
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
-  if (post.thoughts)
-    throw new ErrorHandler(400, "You cannot update a post with thoughts");
+  const post = await Post.findOne({ _id: postId, author: req.user._id })
+  if (!post) return next(new ErrorHandler(404, "Post not found"))
+  if (post.thoughts) throw new ErrorHandler(400, "You cannot update a post with thoughts")
 
-  const { isUnchanged, isCaptionSame, isLocationSame, isTagsSame } =
-    postChanges(post, { caption, location, tags });
-  if (isUnchanged)
-    return handleSuccessResponse(res, 200, "You made no changes.", { post });
+  const { isUnchanged, isCaptionSame, isLocationSame, isTagsSame } = postChanges(post, {
+    caption,
+    location,
+    tags,
+  })
+  if (isUnchanged) return handleSuccessResponse(res, 200, "You made no changes.", { post })
 
-  if (!isCaptionSame) post.caption = caption;
-  if (!isLocationSame) post.location = location;
-  if (!isTagsSame) post.tags = tags;
+  if (!isCaptionSame) post.caption = caption
+  if (!isLocationSame) post.location = location
+  if (!isTagsSame) post.tags = tags
 
-  await post.save();
-  await post.populate({ path: "author", select: "name profilePicture" });
+  await post.save()
+  await post.populate({ path: "author", select: "name profilePicture" })
 
-  return handleSuccessResponse(res, 200, "Post updated successfully", { post });
-});
+  return handleSuccessResponse(res, 200, "Post updated successfully", { post })
+})
 
 /****************************************
  * @Like_and_dislike_Post
  * ***************************************/
 export const likePost = catchAsyncError(async (req, res, next) => {
-  const { postId } = req.params;
-  const likedBy = req.user._id;
+  const { postId } = req.params
+  const likedBy = req.user._id
 
   const post = await Post.findById(postId).populate({
     path: "author",
     select: "name profilePicture",
-  });
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
+  })
+  if (!post) return next(new ErrorHandler(404, "Post not found"))
 
   // check block status
   // if (await userBlocked(likedBy, post.author._id))
   //   return next(new ErrorHandler(403, "You cannot like this post"));
 
-  const isLiked = post.likes.includes(likedBy);
+  const isLiked = post.likes.includes(likedBy)
 
   if (isLiked) {
-    await Post.findByIdAndUpdate(postId, { $pull: { likes: likedBy } });
-    return handleSuccessResponse(res, 200, "Post unliked");
+    await Post.findByIdAndUpdate(postId, { $pull: { likes: likedBy } })
+    return handleSuccessResponse(res, 200, "Post unliked")
   }
 
-  await Post.findByIdAndUpdate(postId, { $addToSet: { likes: likedBy } });
+  await Post.findByIdAndUpdate(postId, { $addToSet: { likes: likedBy } })
 
   // get user who liked
-  const likedByUser = await User.findById(likedBy).select(
-    "name profilePicture"
-  );
+  const likedByUser = await User.findById(likedBy).select("name profilePicture")
 
   if (post.author._id.toString() !== likedBy.toString()) {
     sendNotification(post.author._id, {
@@ -250,49 +246,49 @@ export const likePost = catchAsyncError(async (req, res, next) => {
       postId,
       media: post.media,
       message: `${likedByUser.name} liked your post ❤️`,
-    });
+    })
   }
 
-  handleSuccessResponse(res, 200, "Post liked ❤");
-});
+  handleSuccessResponse(res, 200, "Post liked ❤")
+})
 
 /************************************
  * @Save_and_unsave_Post
  *  ******************************** / */
 export const savePosts = catchAsyncError(async (req, res, next) => {
-  const { postId } = req.params;
-  const savedBy = req.user._id;
+  const { postId } = req.params
+  const savedBy = req.user._id
 
-  const post = await Post.findById(postId);
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
+  const post = await Post.findById(postId)
+  if (!post) return next(new ErrorHandler(404, "Post not found"))
 
-  const user = await User.findById(savedBy);
+  const user = await User.findById(savedBy)
 
   if (user.saved.includes(postId)) {
-    user.saved.pull(postId);
-    await user.save();
-    return handleSuccessResponse(res, 200, "Post unsaved.");
+    user.saved.pull(postId)
+    await user.save()
+    return handleSuccessResponse(res, 200, "Post unsaved.")
   }
-  user.saved.push(postId);
-  await user.save();
-  handleSuccessResponse(res, 200, "Post saved successfully");
-});
+  user.saved.push(postId)
+  await user.save()
+  handleSuccessResponse(res, 200, "Post saved successfully")
+})
 
 /*****************************************
  * @Delete_Post
  * **************************************** */
 export const deletePost = catchAsyncError(async (req, res, next) => {
-  const { postId } = req.params;
-  const authorID = req.user._id;
+  const { postId } = req.params
+  const authorID = req.user._id
 
-  const post = await Post.findOneAndDelete({ _id: postId, author: authorID });
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
+  const post = await Post.findOneAndDelete({ _id: postId, author: authorID })
+  if (!post) return next(new ErrorHandler(404, "Post not found"))
 
-  if (post.media) await deleteFile(post.public_id);
+  if (post.media) await deleteFile(post.public_id)
 
   await Promise.all([
     User.findByIdAndUpdate(authorID, { $pull: { posts: post._id } }),
     Comment.deleteMany({ post: postId }),
-  ]);
-  return handleSuccessResponse(res, 200, "Post deleted successfully");
-});
+  ])
+  return handleSuccessResponse(res, 200, "Post deleted successfully")
+})

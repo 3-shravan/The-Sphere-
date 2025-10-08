@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const blockSchema = new mongoose.Schema(
   {
@@ -11,7 +11,7 @@ const blockSchema = new mongoose.Schema(
       ref: "User",
     },
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-export const Block = mongoose.model("Block", blockSchema);
+export const Block = mongoose.model("Block", blockSchema)

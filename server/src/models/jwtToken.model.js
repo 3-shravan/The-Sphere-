@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
+
 const blackListTokenSchema = new mongoose.Schema(
   {
     token: {
@@ -6,10 +7,7 @@ const blackListTokenSchema = new mongoose.Schema(
       require: true,
     },
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-export const ExpiredToken = mongoose.model(
-  "ExpiredToken",
-  blackListTokenSchema
-);
+export const ExpiredToken = mongoose.model("ExpiredToken", blackListTokenSchema)

@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi from "joi"
 
 export const updateProfileSchema = Joi.object({
   name: Joi.string()
@@ -22,7 +22,7 @@ export const updateProfileSchema = Joi.object({
   dob: Joi.date().iso().optional().messages({
     "date.format": "Date of birth must be in YYYY-MM-DD format",
   }),
-});
+})
 
 export const getProfileSchema = Joi.object({
   params: Joi.object({
@@ -32,4 +32,4 @@ export const getProfileSchema = Joi.object({
       "string.max": "Username cannot be more than 20 characters.",
     }),
   }),
-});
+})

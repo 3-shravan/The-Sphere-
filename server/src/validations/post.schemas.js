@@ -1,9 +1,9 @@
-import Joi from "joi";
-import { objectId, paginationSchemaObject } from "./global.schemas.js";
+import Joi from "joi"
+import { objectId, paginationSchemaObject } from "./global.schemas.js"
 
 export const paginationSchema = Joi.object({
   query: paginationSchemaObject(),
-});
+})
 
 export const addThoughtSchema = Joi.object({
   thoughts: Joi.string().trim().min(1).max(2000).required().messages({
@@ -13,7 +13,7 @@ export const addThoughtSchema = Joi.object({
     "string.max": "Thoughts cannot exceed 2000 characters",
     "any.required": "Thoughts are required",
   }),
-});
+})
 
 export const addPostSchema = Joi.object({
   caption: Joi.string().trim().max(300).allow("").optional(),
@@ -22,14 +22,14 @@ export const addPostSchema = Joi.object({
     .items(
       Joi.string().trim().max(20).message({
         "string.max": "Each tag should not exceed {#limit} characters",
-      })
+      }),
     )
     .max(50)
     .optional()
     .messages({
       "array.max": "You can add up to {#limit} tags",
     }),
-});
+})
 
 export const updatePostSchema = Joi.object({
   params: Joi.object({
@@ -42,7 +42,7 @@ export const updatePostSchema = Joi.object({
       .items(
         Joi.string().trim().max(20).message({
           "string.max": "Each tag should not exceed {#limit} characters",
-        })
+        }),
       )
       .max(50)
       .optional()
@@ -50,7 +50,7 @@ export const updatePostSchema = Joi.object({
         "array.max": "You can add up to {#limit} tags",
       }),
   }),
-});
+})
 
 export const commnetPostSchema = Joi.object({
   params: Joi.object({
@@ -66,17 +66,17 @@ export const commnetPostSchema = Joi.object({
     }),
     parentId: objectId("parentId").optional().allow(null),
   }),
-});
+})
 
 export const postIdSchema = Joi.object({
   params: Joi.object({
     postId: objectId("postId"),
   }),
-});
+})
 
 export const deleteCommentSchema = Joi.object({
   params: Joi.object({
     postId: objectId("postId"),
     commentId: objectId("commentId"),
   }),
-});
+})

@@ -1,4 +1,4 @@
-import { authUser } from "../middlewares/authUser.js";
+import express from "express"
 import {
   forgetPassword,
   getUser,
@@ -10,49 +10,48 @@ import {
   usernameAvailability,
   verifyOTP,
   verifyResetPasswordOTP,
-} from "../controllers/auth.controller.js";
-
-import { validate } from "../middlewares/validate.js";
+} from "../controllers/auth.controller.js"
+import { authUser } from "../middlewares/authUser.js"
+import { validate } from "../middlewares/validate.js"
 import {
-  loginSchema,
-  registerSchema,
-  otpVerificationSchema,
   forgotPasswordSchema,
+  loginSchema,
+  otpVerificationSchema,
+  registerSchema,
   resetOtpVerificationSchema,
-  resetPasswordParamsSchema,
   resetPasswordBodySchema,
+  resetPasswordParamsSchema,
   resetPasswordWithPhoneBodySchema,
   resetPasswordWithPhoneParamSchema,
-} from "../validations/auth.schemas.js";
+} from "../validations/auth.schemas.js"
 
-import express from "express";
-const router = express.Router();
+const router = express.Router()
 
-router.get("/check-username", usernameAvailability);
-router.post("/register", validate(registerSchema), register);
-router.post("/verify-otp", validate(otpVerificationSchema), verifyOTP);
-router.post("/login", validate(loginSchema), login);
-router.get("/logout", authUser, logout);
-router.get("/profile", authUser, getUser);
+router.get("/check-username", usernameAvailability)
+router.post("/register", validate(registerSchema), register)
+router.post("/verify-otp", validate(otpVerificationSchema), verifyOTP)
+router.post("/login", validate(loginSchema), login)
+router.get("/logout", authUser, logout)
+router.get("/profile", authUser, getUser)
 
-router.post("/forget-password", validate(forgotPasswordSchema), forgetPassword);
+router.post("/forget-password", validate(forgotPasswordSchema), forgetPassword)
 router.post(
   "/forget-password/verify-otp",
   validate(resetOtpVerificationSchema),
-  verifyResetPasswordOTP
-);
+  verifyResetPasswordOTP,
+)
 
 router.put(
   "/reset-password/email/:token",
   validate(resetPasswordParamsSchema, "params"),
   validate(resetPasswordBodySchema),
-  resetPasswordWithEmailToken
-);
+  resetPasswordWithEmailToken,
+)
 router.put(
   "/reset-password/phone/:phone",
   validate(resetPasswordWithPhoneParamSchema, "params"),
   validate(resetPasswordWithPhoneBodySchema),
-  resetPasswordWithPhone
-);
+  resetPasswordWithPhone,
+)
 
-export default router;
+export default router

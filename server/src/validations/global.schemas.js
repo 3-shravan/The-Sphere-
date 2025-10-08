@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi from "joi"
 
 export const objectId = (fieldName = "id") =>
   Joi.string()
@@ -9,13 +9,13 @@ export const objectId = (fieldName = "id") =>
       "string.empty": `${fieldName} is required.`,
       "string.length": `${fieldName} must be 24 characters long.`,
       "string.hex": `${fieldName} must be a valid hexadecimal string.`,
-    });
+    })
 
 export const idParam = Joi.object({
   params: Joi.object({
     id: objectId("ID"),
   }),
-});
+})
 
 export const querySearch = Joi.object({
   query: Joi.object({
@@ -23,7 +23,7 @@ export const querySearch = Joi.object({
       "string.max": "Search query cannot be more than 100 characters.",
     }),
   }),
-});
+})
 
 export const paginationSchemaObject = () =>
   Joi.object({
@@ -38,4 +38,4 @@ export const paginationSchemaObject = () =>
       "number.min": "Limit must be at least {#limit}",
       "number.max": "Limit must be at most {#limit}",
     }),
-  });
+  })

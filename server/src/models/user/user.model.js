@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import crypto from "crypto";
-import { generateFiveDigitRandomNumber } from "../../services/auth.services.js";
+import crypto from "node:crypto"
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
+import mongoose from "mongoose"
+import { generateFiveDigitRandomNumber } from "../../services/auth.services.js"
 
 const userSchema = new mongoose.Schema(
   {
@@ -111,50 +111,47 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
-    return next();
+    return next()
   }
-  this.password = await bcrypt.hash(this.password, 10);
-});
+  this.password = await bcrypt.hash(this.password, 10)
+})
 
 userSchema.methods.comparePassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
-};
+  return await bcrypt.compare(password, this.password)
+}
 
 userSchema.methods.generateVerificationCode = async function () {
-  const verificationCode = generateFiveDigitRandomNumber();
-  this.verificationCode = verificationCode;
-  this.verificationCodeExpire = Date.now() + 10 * 60 * 1000;
-  return verificationCode;
-};
+  const verificationCode = generateFiveDigitRandomNumber()
+  this.verificationCode = verificationCode
+  this.verificationCodeExpire = Date.now() + 10 * 60 * 1000
+  return verificationCode
+}
 
 userSchema.methods.generateAuthToken = async function () {
   const token = jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
-  });
-  return token;
-};
+  })
+  return token
+}
 
 userSchema.methods.generateResetPasswordToken = async function () {
-  const resetToken = crypto.randomBytes(20).toString("hex");
-  this.resetPasswordToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
-  this.resetPasswordTokenExpire = Date.now() + 10 * 60 * 1000;
-  return resetToken;
-};
+  const resetToken = crypto.randomBytes(20).toString("hex")
+  this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex")
+  this.resetPasswordTokenExpire = Date.now() + 10 * 60 * 1000
+  return resetToken
+}
 
 // //generate verification code to validate the user for reseting the password by phone OTP
 userSchema.methods.generateResetPasswordOTP = async function () {
-  const resetPasswordOTP = await generateFiveDigitRandomNumber();
-  this.resetPasswordOTP = resetPasswordOTP;
-  this.resetPasswordOTPExpire = Date.now() + 10 * 60 * 1000;
-  return resetPasswordOTP;
-};
+  const resetPasswordOTP = await generateFiveDigitRandomNumber()
+  this.resetPasswordOTP = resetPasswordOTP
+  this.resetPasswordOTPExpire = Date.now() + 10 * 60 * 1000
+  return resetPasswordOTP
+}
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model("User", userSchema)

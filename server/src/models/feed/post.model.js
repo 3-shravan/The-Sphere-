@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
+
 const postSchema = new mongoose.Schema(
   {
     author: {
@@ -45,7 +46,7 @@ const postSchema = new mongoose.Schema(
     },
     tags: [{ type: String }],
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-export const Post = mongoose.model("Post", postSchema);
+export const Post = mongoose.model("Post", postSchema)

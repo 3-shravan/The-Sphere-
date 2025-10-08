@@ -28,9 +28,8 @@ export const generateEmailTemplate = (verificationCode) => {
       If you didn’t request this, please ignore this email.
     </p>
   </div>
-  `;
-};
-
+  `
+}
 
 export const generateResetEmailTemplate = (resetPasswordUrl) => {
   return `
@@ -66,5 +65,5 @@ export const generateResetEmailTemplate = (resetPasswordUrl) => {
       If you didn’t request this, please ignore this email.
     </p>
   </div>
-  `;
-};
+  `
+}

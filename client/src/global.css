@@ -32,17 +32,12 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
 }
-.home-native-scroll {
-  overflow-y: auto;
-  scroll-behavior: smooth !important;
-  -webkit-overflow-scrolling: auto !important;
-  will-change: auto !important;
-}
 .js-native-scroll {
   overflow-y: auto;
   max-height: 100vh;
   scroll-behavior: auto !important;
   -webkit-overflow-scrolling: touch;
+  /* will-change: auto !important; */
 }
 .text-auto-contrast {
   mix-blend-mode: difference;
@@ -66,7 +61,6 @@ body {
   /* --gradient-bg-green: rgba(183, 12, 80, 0.934);
   --gradient-bg-text: rgba(59, 10, 30, 0.231); */
 
-  --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(0.975 0 0);
@@ -80,9 +74,11 @@ body {
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
+
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
 
   --scrollbar-track: var(--background);
   --scrollbar-thumb: rgb(255, 121, 148);
@@ -101,6 +97,7 @@ body {
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
+
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
@@ -112,20 +109,17 @@ body {
 }
 
 @theme inline {
+
   --font-Gilroy: "Gilroy", sans-serif;
   --font-Futura: "Futura", sans-serif;
   --font-mono: monospace;
   --font-blackout: "Blackout-Midnight", sans-serif;
   --font-Poppins: "Poppins", sans-serif;
-  /*--------------------------------------------------------------
-  MAINLAYOUT                                          
---------------------------------------------------------------*/
+
   --color-first: var(--first);
   --color-second: var(--second);
   --color-third: var(--third);
-  /*--------------------------------------------------------------
-  SHADCN
---------------------------------------------------------------*/
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -163,7 +157,6 @@ body {
   .no-focus {
     @apply focus:outline-none focus:ring-0 focus-visible:ring-0 border-none;
   }
-
   .input {
     @apply font-Gilroy font-bold bg-input/30;
   }
@@ -227,15 +220,12 @@ body {
     url("/fonts/Blackout-Midnight.woff") format("woff");
 }
 
-/*--------------------------------------------------------------
-WEBKIT STYLES
---------------------------------------------------------------*/
+
 ::selection {
   background-color: #2e2e2e;
   color: #fbfbfb;
 }
 ::-webkit-scrollbar {
-  /* display: none; */
   width: 1.5px;
   height: 8px;
 }
@@ -271,6 +261,7 @@ input::-webkit-inner-spin-button {
   -webkit-text-fill-color: rgb(255, 255, 255) !important;
   transition: background-color 9999s ease-in-out 0s;
 }
+
 
 .animate-[popBounce_1s_ease-out] {
   animation: popBounce 1s ease-out forwards;
