@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { ShowError, Loading, Modal } from "@/components";
+import { Loading, Modal, ShowError } from "@/components";
 import { ShareModal } from "@/shared";
 import { useGetSinglePost } from "@/shared/api/useQueries";
 import ViewPostInfo from "../components/view-post/ViewPostInfo";
@@ -24,8 +24,8 @@ export default function ViewPost() {
   const { media, thoughts, _id } = post;
 
   return (
-    <div className=" inset-0 bg-background flex items-center h-screen justify-center z-50 p-2 md:p-4">
-      <main className="bg-background w-full max-w-6xl h-full flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
+    <div className="inset-0 z-50 flex h-screen items-center justify-center bg-background p-2 md:p-4">
+      <main className="flex h-full w-full max-w-6xl flex-col overflow-y-auto bg-background md:flex-row md:overflow-hidden">
         <ViewPostMedia media={media} thoughts={thoughts} />
         <ViewPostInfo postId={_id} post={post} setShowModal={setShowModal} />
 

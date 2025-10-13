@@ -1,16 +1,13 @@
-export const handleSuccessResponse = (res, statusCode, responseMessage, data = undefined) => {
-  let response = {
+export const handleSuccessResponse = (res, statusCode, responseMessage, data) =>
+  res.status(statusCode).json({
     success: true,
     message: responseMessage,
-  }
-  if (data !== undefined) {
-    response = { ...response, ...data }
-  }
-  return res.status(statusCode).json(response)
-}
-export const handleErrorResponse = (res, statusCode, responseMessage) => {
-  return res.status(statusCode).json({
+    ...(data ? data : { data: null }),
+  });
+
+export const handleErrorResponse = (res, statusCode, responseMessage) =>
+  res.status(statusCode).json({
     success: false,
     message: responseMessage,
-  })
-}
+    data: null,
+  });

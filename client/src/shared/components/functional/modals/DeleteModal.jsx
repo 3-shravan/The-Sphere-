@@ -1,35 +1,37 @@
 import { Spinner } from "@/components";
-import { useDeletePost } from "@/features/posts/services";
+import { useDeletePost } from "@/features/posts/api";
 
 export default function DeleteModal({ postId, onCancel }) {
-	const { mutateAsync: deletePost, isPending } = useDeletePost();
+  const { mutateAsync: deletePost, isPending } = useDeletePost();
 
-	return (
-		<>
-			<h2 className="text-lg font-semibold font-mono">Confirm Deletion</h2>
-			<p className="text-sm font-medium  font-mono text-muted-foreground my-6">
-				Are you sure you want to proceed with this action? This cannot be
-				undone.
-			</p>
-			<div className="flex justify-end gap-4">
-				<button
-					className="px-4 py-2 rounded-md text-sm bg-card hover:bg-accent  transition cursor-pointer "
-					onClick={onCancel}
-					disabled={isPending}
-				>
-					Cancel
-				</button>
-				<button
-					className="px-4 py-2 rounded-md min-w-20 flex-center text-sm font-semibold bg-third text-black hover:bg-rose-600 transition cursor-pointer"
-					onClick={async () => {
-						await deletePost(postId);
-						onCancel();
-					}}
-					disabled={isPending}
-				>
-					{isPending ? <Spinner size="4" /> : "Delete"}
-				</button>
-			</div>
-		</>
-	);
+  return (
+    <>
+      <h2 className="font-mono font-semibold text-lg">Confirm Deletion</h2>
+      <p className="my-6 font-medium font-mono text-muted-foreground text-sm">
+        Are you sure you want to proceed with this action? This cannot be
+        undone.
+      </p>
+      <div className="flex justify-end gap-4">
+        <button
+          type="button"
+          className="cursor-pointer rounded-md bg-card px-4 py-2 text-sm transition hover:bg-accent"
+          onClick={onCancel}
+          disabled={isPending}
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          className="min-w-20 flex-center cursor-pointer rounded-md bg-third px-4 py-2 font-semibold text-black text-sm transition hover:bg-rose-600"
+          onClick={async () => {
+            await deletePost(postId);
+            onCancel();
+          }}
+          disabled={isPending}
+        >
+          {isPending ? <Spinner size="4" /> : "Delete"}
+        </button>
+      </div>
+    </>
+  );
 }

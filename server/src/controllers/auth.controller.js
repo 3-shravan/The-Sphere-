@@ -14,7 +14,7 @@ import { generateResetEmailTemplate } from "../utils/emailTemplate.js"
 import { handleSuccessResponse } from "../utils/responseHandler.js"
 import { validatePhoneNo } from "../utils/validations.js"
 
-export const register = catchAsyncError(async (req, res) => {
+export const register = catchAsyncError(async (req, res,next) => {
   let { name, email, phone, password, verificationMethod } = req.body
 
   phone = phone?.trim() || undefined

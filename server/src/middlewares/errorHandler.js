@@ -40,5 +40,6 @@ export const errorMiddleware = (err, _req, res, _next) => {
     // }),
   })
 
-  if (process.env.NODE_ENV === "development") console.error("❌ Error:", err.message)
+  // if (process.env.NODE_ENV === "development")
+  console.error("❌ Error:", err.message)
 }

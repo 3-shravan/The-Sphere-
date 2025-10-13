@@ -1,51 +1,45 @@
-import { useMutation } from "@tanstack/react-query";
-import { POSTS_QUERY_KEYS } from "./query-keys";
-import { api } from "./shared-api";
+import { useMutation } from "@tanstack/react-query"
+import { POSTS_QUERY_KEYS, USERS_QUERY_KEY } from "@/lib/utils/global-query-keys"
+import { api } from "./shared-api"
 
-export const useGetUsers = () => {
-	return useMutation({
-		mutationFn: ({ query }) => api.getUsers({ query }),
-		meta: {
-			showError: true,
-		},
-	});
-};
+export const useGetUsers = () =>
+  useMutation({
+    mutationFn: ({ query }) => api.getUsers({ query }),
+    meta: { showError: true },
+  })
 
-export const useToggleLikePost = ({ onMutate, onError } = {}) => {
-	return useMutation({
-		mutationFn: (postId) => api.likePost(postId),
-		onMutate: () => onMutate(),
-		onError: () => onError(),
-		meta: {
-			showError: true,
-			invalidateQuery: POSTS_QUERY_KEYS.all,
-		},
-	});
-};
+export const useToggleLikePost = (postId, { onMutate, onError } = {}) =>
+  useMutation({
+    mutationFn: (postId) => api.likePost(postId),
+    onMutate: () => onMutate(),
+    onError: () => onError(),
+    meta: {
+      showError: true,
+      invalidateQuery: POSTS_QUERY_KEYS.detail(postId),
+    },
+  })
 
-export const useToggleSavePost = ({ onMutate, onError } = {}) => {
-	return useMutation({
-		mutationFn: (postId) => api.savePost(postId),
-		onMutate: () => onMutate?.(),
-		onError: () => onError?.(),
-		meta: {
-			showError: true,
-			invalidateQuery: POSTS_QUERY_KEYS.saved,
-		},
-	});
-};
+export const useToggleSavePost = ({ onMutate, onError } = {}) =>
+  useMutation({
+    mutationFn: (postId) => api.savePost(postId),
+    onMutate: () => onMutate?.(),
+    onError: () => onError?.(),
+    meta: {
+      showError: true,
+      invalidateQuery: [POSTS_QUERY_KEYS.saved()],
+    },
+  })
 
-export const useFollowUser = ({ onMutate, onError } = {}) => {
-	return useMutation({
-		mutationFn: (userId) => api.followUser(userId),
-		onMutate: () => onMutate?.(),
-		onError: () => onError?.(),
-		meta: {
-			showError: true,
-			invalidateQuery: [["profile"], ["posts"], ["suggestedUsers"]],
-		},
-	});
-};
+export const useFollowUser = (name, { onMutate, onError } = {}) =>
+  useMutation({
+    mutationFn: (userId) => api.followUser(userId),
+    onMutate: () => onMutate?.(),
+    onError: () => onError?.(),
+    meta: {
+      showError: true,
+      invalidateQuery: [USERS_QUERY_KEY.profile(name), USERS_QUERY_KEY.suggested()],
+    },
+  })
 
 // export const useToggleLikePostCache = () => {
 //   const queryClient = useQueryClient();

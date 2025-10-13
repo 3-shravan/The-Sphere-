@@ -1,20 +1,26 @@
-export const POSTS_QUERY_KEY = {
+export const POSTS_QUERY_KEYS = {
   all: ["posts"],
 
   // --- FEEDS ---
-  feeds: () => [...POSTS_QUERY_KEY.all, "feeds"],
-  feed: (type = "all") => [...POSTS_QUERY_KEY.feeds(), { type }],
+  feeds: () => [...POSTS_QUERY_KEYS.all, "feeds"],
+  feed: (type = "all") => [...POSTS_QUERY_KEYS.feeds(), { type }],
 
   // --- SAVED POSTS ---
-  saved: () => [...POSTS_QUERY_KEY.all, "saved"],
+  saved: () => [...POSTS_QUERY_KEYS.all, "saved"],
 
   // --- PROFILE POSTS ---
-  profiles: () => [...POSTS_QUERY_KEY.all, "profiles"],
-  profile: (userId) => [...POSTS_QUERY_KEY.profiles(), { userId }],
+  profiles: () => [...POSTS_QUERY_KEYS.all, "profiles"],
+  profile: (userId) => [...POSTS_QUERY_KEYS.profiles(), { userId }],
 
   // --- INDIVIDUAL POST DETAIL ---
-  details: () => [...POSTS_QUERY_KEY.all, "detail"],
-  detail: (id) => [...POSTS_QUERY_KEY.details(), { id }],
+  details: () => [...POSTS_QUERY_KEYS.all, "detail"],
+  detail: (id) => [...POSTS_QUERY_KEYS.details(), { id }],
+}
+
+export const USERS_QUERY_KEY = {
+  all: ["users"],
+  suggested: () => [...USERS_QUERY_KEY.all, "suggested-users"],
+  profile: (username) => [...USERS_QUERY_KEY.all, "profile", { username }],
 }
 
 /*

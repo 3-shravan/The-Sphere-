@@ -3,122 +3,122 @@ import { Link } from "react-router-dom";
 import { Modal, ProfilePicture } from "@/components";
 import { Button } from "@/components/ui/button";
 import { FollowUser, ShowUserModal, SocialLinksModal } from "@/shared";
-import EditProfile from "../EditProfile";
+import EditProfile from "../drawer/EditProfile";
 import useProfile from "../hooks/useProfile";
 
 export function ProfileCard({ user }) {
-	const [activeModal, setActiveModal] = useState(null);
-	const [showLinksModal, setShowLinksModal] = useState(false);
-	const [socialLinks, setSocialLinks] = useState({});
+  const [activeModal, setActiveModal] = useState(null);
+  const [showLinksModal, setShowLinksModal] = useState(false);
+  const [socialLinks, setSocialLinks] = useState({});
 
-	const { me, followersCount, isFollowing, followUser, isPending } =
-		useProfile(user);
+  const { me, followersCount, isFollowing, followUser, isPending } =
+    useProfile(user);
 
-	useEffect(() => {
-		const saved = localStorage.getItem(`links_${user._id}`);
-		if (saved) setSocialLinks(JSON.parse(saved));
-	}, [user._id]);
+  useEffect(() => {
+    const saved = localStorage.getItem(`links_${user._id}`);
+    if (saved) setSocialLinks(JSON.parse(saved));
+  }, [user._id]);
 
-	const { fullName, dob, name, bio, following, followers } = user;
-	if (!user) return null;
-	return (
-		<div className="flex flex-col items-center font-Gilroy w-full justify-center backdrop-blur-md">
-			<ProfilePicture
-				profilePicture={user.profilePicture}
-				username={name}
-				size="profile"
-			/>
+  const { fullName, dob, name, bio, following, followers } = user;
+  if (!user) return null;
+  return (
+    <div className="flex w-full flex-col items-center justify-center font-Gilroy backdrop-blur-md">
+      <ProfilePicture
+        profilePicture={user.profilePicture}
+        username={name}
+        size="profile"
+      />
 
-			<div className="flex flex-col mt-3 items-center text-neutral-700">
-				<h2 className="text-2xl font-Futura font-bold text-second">{name}</h2>
-				{fullName && <h3 className="text-base">{fullName}</h3>}
-				{dob && <p className="text-xs">{new Date(dob).toLocaleDateString()}</p>}
+      <div className="mt-3 flex flex-col items-center text-neutral-700">
+        <h2 className="font-Futura font-bold text-2xl text-second">{name}</h2>
+        {fullName && <h3 className="text-base">{fullName}</h3>}
+        {dob && <p className="text-xs">{new Date(dob).toLocaleDateString()}</p>}
 
-				<div className="flex gap-10 mt-1">
-					<div
-						className="flex flex-col cursor-pointer items-center"
-						onClick={() => setActiveModal("followers")}
-					>
-						<span className="text-lg font-extrabold">{followersCount}</span>
-						<span className="text-xs text-neutral-500">Followers</span>
-					</div>
-					<div
-						className="flex flex-col cursor-pointer items-center"
-						onClick={() => setActiveModal("followings")}
-					>
-						<span className="text-lg font-extrabold">{following.length}</span>
-						<span className="text-xs text-neutral-500">Following</span>
-					</div>
-				</div>
+        <div className="mt-1 flex gap-10">
+          <div
+            className="flex cursor-pointer flex-col items-center"
+            onClick={() => setActiveModal("followers")}
+          >
+            <span className="font-extrabold text-lg">{followersCount}</span>
+            <span className="text-neutral-500 text-xs">Followers</span>
+          </div>
+          <div
+            className="flex cursor-pointer flex-col items-center"
+            onClick={() => setActiveModal("followings")}
+          >
+            <span className="font-extrabold text-lg">{following.length}</span>
+            <span className="text-neutral-500 text-xs">Following</span>
+          </div>
+        </div>
 
-				{bio && (
-					<p className="italic mt-3 text-center text-foreground max-w-sm font-mono break-words">
-						“{bio}”
-					</p>
-				)}
-				<div className="flex gap-4 mt-4 text-xs font-semibold">
-					{Object.entries(socialLinks).map(
-						([key, val]) =>
-							val && (
-								<Link
-									key={key}
-									to={`https://${key}.com/${val}`}
-									target="_blank"
-									rel="noreferrer"
-									className="px-3 py-1 border rounded-full hover:bg-muted transition text-neutral-600"
-								>
-									{key}
-								</Link>
-							),
-					)}
-				</div>
+        {bio && (
+          <p className="mt-3 max-w-sm break-words text-center font-mono text-foreground italic">
+            “{bio}”
+          </p>
+        )}
+        <div className="mt-4 flex gap-4 font-semibold text-xs">
+          {Object.entries(socialLinks).map(
+            ([key, val]) =>
+              val && (
+                <Link
+                  key={key}
+                  to={`https://${key}.com/${val}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border px-3 py-1 text-neutral-600 transition hover:bg-muted"
+                >
+                  {key}
+                </Link>
+              )
+          )}
+        </div>
 
-				{me ? (
-					<div className="space-x-2 ">
-						<EditProfile user={user} />
-						<Button
-							variant="outline"
-							className="text-xs text-foreground/90 font-Gilroy bg-input/20 rounded-xl"
-							onClick={() => setShowLinksModal(true)}
-						>
-							add links 🚀
-						</Button>
-					</div>
-				) : (
-					<div className="flex flex-wrap justify-center md:justify-start gap-3 font-mono mt-4">
-						<FollowUser
-							userId={user._id}
-							isFollowing={isFollowing}
-							followUser={followUser}
-							isPending={isPending}
-						/>
-						<Button
-							variant="secondary"
-							className="text-xs font-Gilroy border font-bold cursor-pointer bg-input/20 rounded-xl"
-						>
-							Message
-						</Button>
-					</div>
-				)}
-			</div>
+        {me ? (
+          <div className="space-x-2">
+            <EditProfile user={user} />
+            <Button
+              variant="outline"
+              className="rounded-xl bg-input/20 font-Gilroy text-foreground/90 text-xs"
+              onClick={() => setShowLinksModal(true)}
+            >
+              add links 🚀
+            </Button>
+          </div>
+        ) : (
+          <div className="mt-4 flex flex-wrap justify-center gap-3 font-mono md:justify-start">
+            <FollowUser
+              userId={user._id}
+              isFollowing={isFollowing}
+              followUser={followUser}
+              isPending={isPending}
+            />
+            <Button
+              variant="secondary"
+              className="cursor-pointer rounded-xl border bg-input/20 font-Gilroy font-bold text-xs"
+            >
+              Message
+            </Button>
+          </div>
+        )}
+      </div>
 
-			{activeModal && (
-				<Modal darkModal={false}>
-					<ShowUserModal
-						title={activeModal === "followers" ? "Followers" : "Following"}
-						users={activeModal === "followers" ? followers : following}
-						onCancel={() => setActiveModal(null)}
-					/>{" "}
-				</Modal>
-			)}
+      {activeModal && (
+        <Modal darkModal={false}>
+          <ShowUserModal
+            title={activeModal === "followers" ? "Followers" : "Following"}
+            users={activeModal === "followers" ? followers : following}
+            onCancel={() => setActiveModal(null)}
+          />{" "}
+        </Modal>
+      )}
 
-			{showLinksModal && (
-				<SocialLinksModal
-					userId={user._id}
-					onClose={() => setShowLinksModal(false)}
-					onSave={setSocialLinks}
-				/>
-			)}
-		</div>
-	);
+      {showLinksModal && (
+        <SocialLinksModal
+          userId={user._id}
+          onClose={() => setShowLinksModal(false)}
+          onSave={setSocialLinks}
+        />
+      )}
+    </div>
+  );
 }

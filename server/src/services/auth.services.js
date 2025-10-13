@@ -92,7 +92,8 @@ export const sendEmail = async ({ email, subject, message }) => {
       html: message,
     }
     await transporter.sendMail(options)
-  } catch (_error) {
+  } catch (error) {
+    console.error("Email sending error:", error)
     throw new ErrorHandler(
       500,
       "Failed to send verification code on your email. Please try again later.",

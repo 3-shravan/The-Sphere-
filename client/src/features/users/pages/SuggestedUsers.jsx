@@ -5,7 +5,7 @@ import { useAuth } from "@/context";
 import { useSmoothScroll } from "@/hooks";
 import { useFollowUser } from "@/shared/api/useMutations";
 import { ListUsers } from "../components/ListUsers";
-import { useSuggestedUsers } from "../services";
+import { useSuggestedUsers } from "../api/useQueries";
 
 export default function SuggestedUsers() {
   const { data } = useSuggestedUsers();
@@ -31,10 +31,9 @@ export default function SuggestedUsers() {
   useSmoothScroll(".scroll");
 
   return (
-    <SmoothScroll className="max-h-[300px] md:max-h-[215px] scroll custom-scrollbar-hide">
-      <div className=" flex-col gap-2  p-2">
-        {/* {error && <Error />} */}
-        <h2 className="px-2.5 p-2 pb-4 text-second dark:text-first tracking-tight font-Futura">
+    <SmoothScroll className="scroll custom-scrollbar-hide max-h-[300px] md:max-h-[215px]">
+      <div className="flex-col gap-2 p-2">
+        <h2 className="p-2 px-2.5 pb-4 font-Futura text-second tracking-tight dark:text-first">
           <CircleSmall className="inline text-second" size={27} />
           you may know
         </h2>

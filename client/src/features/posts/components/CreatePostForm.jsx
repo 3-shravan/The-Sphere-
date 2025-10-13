@@ -1,67 +1,68 @@
-import { BadgePlus } from "lucide-react"
-import { useState } from "react"
-import { SiSparkpost } from "react-icons/si"
-import { useNavigate } from "react-router-dom"
-import { ImageCropper, Spinner } from "@/components"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { errorToast, formatTags, validatePostForm } from "@/utils"
-import { usePostFormState } from "../hooks/useFormState"
-import { useCreatePost } from "../services"
+import { BadgePlus } from "lucide-react";
+import { useState } from "react";
+import { SiSparkpost } from "react-icons/si";
+import { useNavigate } from "react-router-dom";
+import { ImageCropper, Spinner } from "@/components";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { errorToast, formatTags, validatePostForm } from "@/utils";
+import { useCreatePost } from "../api/useMutations";
+import { usePostFormState } from "../hooks/useFormState";
 
 const CreatePostForm = () => {
-  const navigate = useNavigate()
-  const { preview, setPreview, image, fileInputRef, clearPreview, setImage } = usePostFormState()
+  const navigate = useNavigate();
+  const { preview, setPreview, image, fileInputRef, clearPreview, setImage } =
+    usePostFormState();
 
-  const { mutateAsync: createPost, isPending } = useCreatePost()
+  const { mutateAsync: createPost, isPending } = useCreatePost();
 
-  const [showCropper, setShowCropper] = useState(false)
-  const [tempImage, setTempImage] = useState(null)
+  const [showCropper, setShowCropper] = useState(false);
+  const [tempImage, setTempImage] = useState(null);
 
   const handleImageSelect = (e) => {
-    const file = e.target.files[0]
-    if (!file) return
-    e.target.value = ""
+    const file = e.target.files[0];
+    if (!file) return;
+    e.target.value = "";
 
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onloadend = () => {
-      setTempImage(reader.result)
-      setShowCropper(true)
-    }
-    reader.readAsDataURL(file)
-  }
+      setTempImage(reader.result);
+      setShowCropper(true);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleCropped = (croppedFile, croppedPreview) => {
-    setImage(croppedFile)
-    setPreview(croppedPreview)
-    setTempImage(null)
-    setShowCropper(false)
-    if (fileInputRef.current) fileInputRef.current.value = ""
-  }
+    setImage(croppedFile);
+    setPreview(croppedPreview);
+    setTempImage(null);
+    setShowCropper(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    if (image) formData.append("image", image)
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    if (image) formData.append("image", image);
 
-    const tags = formData.get("tags")
-    const formattedTags = formatTags(tags)
-    formData.delete("tags")
+    const tags = formData.get("tags");
+    const formattedTags = formatTags(tags);
+    formData.delete("tags");
     // formData.set("tags", JSON.stringify(formattedTags));
     formattedTags.forEach((tag) => {
-      formData.append("tags", tag)
-    })
+      formData.append("tags", tag);
+    });
 
-    const error = validatePostForm(formData)
-    if (error) return errorToast(error)
+    const error = validatePostForm(formData);
+    if (error) return errorToast(error);
 
-    const response = await createPost(formData)
+    const response = await createPost(formData);
     if (response?.success) {
       setTimeout(() => {
-        navigate("/feeds")
-      }, 500)
+        navigate("/feeds");
+      }, 500);
     }
-  }
+  };
 
   return (
     <form
@@ -104,7 +105,9 @@ const CreatePostForm = () => {
               onClick={() => fileInputRef.current?.click()}
             >
               <BadgePlus className="h-10 w-10 text-second" />
-              <p className="mt-2 text-muted-foreground text-sm">Click to upload image</p>
+              <p className="mt-2 text-muted-foreground text-sm">
+                Click to upload image
+              </p>
             </button>
           )}
           <input
@@ -143,7 +146,10 @@ const CreatePostForm = () => {
       <div className="flex flex-col gap-2">
         <label htmlFor="tags" className="pl-1">
           Add Tags
-          <span className="font-mono text-muted-foreground/50"> comma-separated</span>
+          <span className="font-mono text-muted-foreground/50">
+            {" "}
+            comma-separated
+          </span>
         </label>
         <Input
           type="text"
@@ -179,7 +185,7 @@ const CreatePostForm = () => {
         </Button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default CreatePostForm
+export default CreatePostForm;

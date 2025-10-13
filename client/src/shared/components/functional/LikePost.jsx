@@ -1,113 +1,101 @@
-import { Heart } from "lucide-react";
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { FaHeart } from "react-icons/fa6";
-import { Modal } from "@/components";
-import { useAuth } from "@/context";
-import { showErrorToast } from "@/lib/utils/api-responses";
-import useLikePost from "../../hooks/useLikePost";
-import LikeModal from "./modals/ShowUserModal";
+import { Heart } from "lucide-react"
+import { forwardRef, useImperativeHandle, useState } from "react"
+import { FaHeart } from "react-icons/fa6"
+import { Modal } from "@/components"
+import { useAuth } from "@/context"
+import { showErrorToast } from "@/lib/utils/api-responses"
+import useLikePost from "../../hooks/useLikePost"
+import LikeModal from "./modals/ShowUserModal"
 
-const LikePost = forwardRef(
-	({ postId, likes: initialLikes = [], likedBy = true }, ref) => {
-		const { toggleLike, likes, likesCount, isLiked } =
-			useLikePost(initialLikes);
+const LikePost = forwardRef(({ postId, likes: initialLikes = [], likedBy = true }, ref) => {
+  const { toggleLike, likes, likesCount, isLiked } = useLikePost(postId, initialLikes)
 
-		const [showModal, setShowModal] = useState(false);
-		const [animate, setAnimate] = useState(false);
+  const [showModal, setShowModal] = useState(false)
+  const [animate, setAnimate] = useState(false)
 
-		const { auth } = useAuth();
+  const { auth } = useAuth()
 
-		useImperativeHandle(ref, () => ({
-			triggerLike: () => handleLike(),
-		}));
+  useImperativeHandle(ref, () => ({
+    triggerLike: () => handleLike(),
+  }))
 
-		const handleLike = () => {
-			if (!auth.isAuthenticated)
-				return showErrorToast({}, "Please login to like posts");
-			toggleLike(postId);
-			setAnimate(true);
-			setTimeout(() => setAnimate(false), 300);
-		};
+  const handleLike = () => {
+    if (!auth.isAuthenticated) return showErrorToast({}, "Please login to like posts")
+    toggleLike(postId)
+    setAnimate(true)
+    setTimeout(() => setAnimate(false), 300)
+  }
 
-		return (
-			<>
-				<div className="flex font-Gilroy items-center gap-2 text-sm">
-					<button
-						onClick={handleLike}
-						className="cursor-pointer min-w-8 flex items-center gap-1"
-					>
-						{isLiked ? (
-							<FaHeart
-								className={`text-rose-600 w-4 h-4 transition-transform duration-200 ${
-									animate ? "scale-125" : ""
-								}`}
-							/>
-						) : (
-							<Heart
-								className={`w-4 h-4 transition-transform duration-200 ${
-									animate ? "scale-125" : ""
-								}`}
-							/>
-						)}
-						<span
-							className={`font-bold text-xs ${
-								!likedBy && "text-muted-foreground text-auto-contrast "
-							}`}
-						>
-							{likesCount}
-						</span>
-					</button>
+  return (
+    <>
+      <div className="flex items-center gap-2 font-Gilroy text-sm">
+        <button onClick={handleLike} className="flex min-w-8 cursor-pointer items-center gap-1">
+          {isLiked ? (
+            <FaHeart
+              className={`h-4 w-4 text-rose-600 transition-transform duration-200 ${
+                animate ? "scale-125" : ""
+              }`}
+            />
+          ) : (
+            <Heart
+              className={`h-4 w-4 transition-transform duration-200 ${animate ? "scale-125" : ""}`}
+            />
+          )}
+          <span
+            className={`font-bold text-xs ${
+              !likedBy && "text-auto-contrast text-muted-foreground"
+            }`}
+          >
+            {likesCount}
+          </span>
+        </button>
 
-					{likedBy && (
-						<>
-							<span>·</span>
-							{likesCount > 0 ? (
-								<div
-									className="flex items-center gap-1 cursor-pointer"
-									onClick={() => setShowModal(true)}
-								>
-									<div className="flex -space-x-2">
-										{likes.slice(0, 3).map((user) =>
-											user?.profilePicture ? (
-												<img
-													key={user._id}
-													src={user.profilePicture}
-													alt={user.name}
-													className="w-5 h-5 object-cover rounded-full border-2 border-rose-200"
-												/>
-											) : (
-												<div
-													key={user._id}
-													className="w-5 h-5 rounded-full border-2 border-white bg-gradient-to-r from-rose-300 to-rose-400 flex items-center justify-center text-muted text-xs font-Futura font-bold"
-												>
-													{user?.name?.[0]?.toUpperCase() || "U"}
-												</div>
-											),
-										)}
-									</div>
-									<span className="text-xs text-muted-foreground hover:text-foreground">
-										liked by {likes[0]?.name}{" "}
-										{likesCount > 1 && <>and {likesCount - 1} others</>}
-									</span>
-								</div>
-							) : (
-								<span className="text-xs text-muted-foreground">
-									Be the first to like
-								</span>
-							)}
-						</>
-					)}
-				</div>
+        {likedBy && (
+          <>
+            <span>·</span>
+            {likesCount > 0 ? (
+              <div
+                className="flex cursor-pointer items-center gap-1"
+                onClick={() => setShowModal(true)}
+              >
+                <div className="-space-x-2 flex">
+                  {likes.slice(0, 3).map((user) =>
+                    user?.profilePicture ? (
+                      <img
+                        key={user._id}
+                        src={user.profilePicture}
+                        alt={user.name}
+                        className="h-5 w-5 rounded-full border-2 border-rose-200 object-cover"
+                      />
+                    ) : (
+                      <div
+                        key={user._id}
+                        className="flex h-5 w-5 items-center justify-center rounded-full border-2 border-white bg-gradient-to-r from-rose-300 to-rose-400 font-Futura font-bold text-muted text-xs"
+                      >
+                        {user?.name?.[0]?.toUpperCase() || "U"}
+                      </div>
+                    ),
+                  )}
+                </div>
+                <span className="text-muted-foreground text-xs hover:text-foreground">
+                  liked by {likes[0]?.name} {likesCount > 1 && <>and {likesCount - 1} others</>}
+                </span>
+              </div>
+            ) : (
+              <span className="text-muted-foreground text-xs">Be the first to like</span>
+            )}
+          </>
+        )}
+      </div>
 
-				{showModal && (
-					<Modal darkModal={true}>
-						<LikeModal title="Liked by" users={likes} onCancel={setShowModal} />
-					</Modal>
-				)}
-			</>
-		);
-	},
-);
+      {showModal && (
+        <Modal darkModal={true}>
+          <LikeModal title="Liked by" users={likes} onCancel={setShowModal} />
+        </Modal>
+      )}
+    </>
+  )
+})
 
-LikePost.displayName = "LikePost";
-export default LikePost;
+LikePost.displayName = "LikePost"
+export default LikePost
