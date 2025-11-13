@@ -4,7 +4,7 @@ import {
   Album,
   BadgePlus,
   GalleryVerticalEnd,
-  MessageSquare,
+  // MessageSquare,
   Search,
   UserCircleIcon,
 } from "lucide-react";
@@ -27,7 +27,7 @@ const Sidebar = () => {
   const icons = [
     <GalleryVerticalEnd key="gallery" className={className} />,
     <Search key="search" className={className} />,
-    <MessageSquare key="message" className={className} />,
+    // <MessageSquare key="message" className={className} />,
     <Album key="album" className={className} />,
     <BadgePlus key="badge" className={className} />,
     <UserCircleIcon key="user" className={className} />,
