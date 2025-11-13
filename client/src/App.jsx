@@ -55,7 +55,7 @@ export default function App() {
               <Route path="saved" element={<SavedPosts />} />
               <Route path="create-post" element={<CreatePost />} />
               <Route path="explore" element={<Explore />} />
-              <Route path="c" element={<Chat />} />
+              {/* <Route path="conversations" element={<Chat />} /> */}
               <Route path="profile/:username" element={<Profile />} />
             </Route>
           </Route>

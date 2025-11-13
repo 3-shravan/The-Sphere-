@@ -23,6 +23,7 @@ import styles from "../styles/page.module.css";
 export default function Page() {
   const { menu } = useMenu();
   return (
+    
     <div className={styles.page}>
       <div className={styles.marqueeTop}>
         <Marquee direction="left" />

@@ -1,14 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { createContext, useCallback, useContext, useEffect, useState } from "react"
 import { useApi, useSocket } from "@/hooks"
+import { setLogoutHandler } from "@/lib/axios"
 import { showErrorToast, showSuccessToast } from "@/lib/utils/api-responses"
 import { getIsAuthenticated, getToken, removeTokenAndAuthenticated } from "@/utils"
 
-const AuthContext = createContext()
+export const AuthContext = createContext()
 
 export const ContextProvider = ({ children }) => {
-  const navigate = useNavigate()
-
   const [auth, setAuth] = useState(() => ({
     isAuthenticated: getIsAuthenticated() ?? false,
     token: getToken() || null,
@@ -18,16 +16,17 @@ export const ContextProvider = ({ children }) => {
   useSocket(auth?.profile?._id)
 
   const { request, loading } = useApi()
-  const resetAuth = () => {
+
+  const resetAuth = useCallback(() => {
     setAuth({
       isAuthenticated: false,
       token: null,
       profile: null,
     })
     removeTokenAndAuthenticated()
-  }
+  }, [])
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: false positive
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!getToken()) return resetAuth()
@@ -44,9 +43,10 @@ export const ContextProvider = ({ children }) => {
       }
     }
     fetchUserProfile()
-  }, [request, navigate])
+  }, [request, resetAuth])
 
-  const logout = async () => {
+
+  const logout = useCallback(async () => {
     try {
       const response = await request({ endpoint: "auth/logout" })
       resetAuth()
@@ -54,7 +54,12 @@ export const ContextProvider = ({ children }) => {
     } catch (error) {
       showErrorToast(error, "Logout failed")
     }
-  }
+  }, [request, resetAuth])
+
+  
+  useEffect(() => {
+    setLogoutHandler(logout)
+  }, [logout])
 
   return (
     <AuthContext.Provider

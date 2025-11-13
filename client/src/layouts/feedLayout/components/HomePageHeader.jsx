@@ -1,54 +1,55 @@
 import { ChevronDown } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { HappyBirthday, ProfilePicture } from "@/components";
+import { Link, useNavigate } from "react-router-dom";
+import { ProfilePicture } from "@/components";
 import { useAuth } from "@/context";
+import BirthdayHeader from "@/features/birthdays/components/HappyBirthday";
 
 const HomePageHeader = () => {
-	const { auth, isBirthday } = useAuth();
-	const navigate = useNavigate();
-	return (
-		<div className="flex-between md:py- 1 md:mt-1 pt-2 ">
-			{/* TIME  */}
-			<span className="px-6 text-xs font-blackout hidden tracking-widest md:block text-second">
-				{new Date().toLocaleTimeString([], {
-					hour: "2-digit",
-					minute: "2-digit",
-				})}
-			</span>
-			{/* BIRTHDAY WISHES */}
-			<div className="hidden md:block">
-				<HappyBirthday />
-			</div>
+  const { auth, isBirthday } = useAuth();
+  const navigate = useNavigate();
+  return (
+    <div className="md:py- 1 flex-between pt-2 md:mt-1">
+      {/* TIME  */}
+      <span className="hidden px-6 font-blackout text-second text-xs tracking-widest md:block">
+        {new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </span>
+      {/* BIRTHDAY WISHES */}
+      <div className="hidden md:block">
+        <BirthdayHeader />
+      </div>
 
-			{/* PROFILE */}
-			<div
-				className="hidden md:flex items-center  cursor-pointer tracking-tight rounded px-7 py-2 "
-				onClick={() => navigate(`/profile/${auth?.profile?.name}`)}
-			>
-				<ProfilePicture
-					profilePicture={auth?.profile?.profilePicture}
-					size="sm"
-				/>
+      {/* PROFILE */}
+      <Link
+        className="hidden cursor-pointer items-center rounded px-7 py-2 tracking-tight md:flex"
+        onClick={() => navigate(`/profile/${auth?.profile?.name}`)}
+      >
+        <ProfilePicture
+          profilePicture={auth?.profile?.profilePicture}
+          size="sm"
+        />
 
-				<span className="font-Poppins text-sm font-bold  px-2 text-foreground ">
-					{auth?.profile?.name}
-					<ChevronDown className="inline w-5 h-4" />
-				</span>
-			</div>
+        <span className="px-2 font-Poppins font-bold text-foreground text-sm">
+          {auth?.profile?.name}
+          <ChevronDown className="inline h-4 w-5" />
+        </span>
+      </Link>
 
-			{/* Greeting  */}
-			{isBirthday ? (
-				<div className="md:hidden px-3">
-					<HappyBirthday />
-				</div>
-			) : (
-				<span className=" md:hidden px-2.5 text-xs font-Poppins text-foreground  ">
-					whats been up,{" "}
-					<span className="text-rose-400">{auth?.profile?.name}</span>
-				</span>
-			)}
-		</div>
-	);
+      {/* Greeting  */}
+      {isBirthday ? (
+        <div className="px-3 md:hidden">
+          <HappyBirthday />
+        </div>
+      ) : (
+        <span className="px-2.5 font-Poppins text-foreground text-xs md:hidden">
+          whats been up,{" "}
+          <span className="text-rose-400">{auth?.profile?.name}</span>
+        </span>
+      )}
+    </div>
+  );
 };
 
 export default HomePageHeader;

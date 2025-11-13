@@ -55,7 +55,7 @@ export const getSuggestedUsers = catchAsyncError(async (req, res) => {
 
   if (!users)
     throw new ErrorHandler(404, "Suggested Users are not available currently.");
-  return handleSuccessResponse(res, 200, "Suggested users fetched", {users});
+  return handleSuccessResponse(res, 200, "Suggested users fetched", { users });
 });
 
 export const myProfile = catchAsyncError(async (req, res) => {
@@ -296,3 +296,4 @@ export const todayBirthdays = catchAsyncError(async (_req, res) => {
 
   return handleSuccessResponse(res, 200, "Today's Birthdays", { users });
 });
+

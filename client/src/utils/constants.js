@@ -20,6 +20,7 @@ export const tabs = [
     route: "/explore",
     label: "Explore",
   },
+  { route: "/conversations", label: "Conversations" },
   {
     route: "/saved",
     label: "Saved",

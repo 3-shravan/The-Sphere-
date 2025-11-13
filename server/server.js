@@ -1,5 +1,4 @@
 import { config } from "dotenv"
-
 config({ path: "./src/config/config.env" })
 
 import http from "node:http"

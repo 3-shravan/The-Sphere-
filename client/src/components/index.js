@@ -1,4 +1,4 @@
-export { default as HappyBirthday } from "./core/HappyBirthday";
+export { default as HappyBirthday } from "../features/birthdays/components/HappyBirthday";
 export { default as Header } from "./core/Header";
 export { default as ImageCropper } from "./core/ImageCropper";
 export { default as Marquee } from "./core/Marquee";

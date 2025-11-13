@@ -9,7 +9,9 @@ const Thoughts = () => {
   const { mutateAsync, isPending } = useCreateThought();
 
   const submitHandler = () => {
-    if (validateThoughtsForm(thoughts)) return infoToast(error);
+    const errors = validateThoughtsForm(thoughts);
+    if (errors) return infoToast(errors);
+    
     mutateAsync({ thoughts });
     setThoughts("");
   };

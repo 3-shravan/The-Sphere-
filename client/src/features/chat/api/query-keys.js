@@ -1,9 +1,10 @@
 export const CHAT_QUERY_KEYS = {
-	connections: ["chats", "connections"],
-	chat: (chatId) => ["chat", chatId],
-	messages: (chatId) => ["chat", chatId, "messages"],
-	group: (groupId) => ["chat", "groups", groupId],
-};
+  connections: ["chats", "connections"],
+  search: (q) => ["chats", "search", q],
+  chat: (chatId) => ["chat", chatId],
+  messages: (chatId) => ["chat", chatId, "messages"],
+  group: (groupId) => ["chat", "groups", groupId],
+}
 
 /*  CACHE DIAGRAM EXAMPLE 
 
