@@ -10,9 +10,10 @@ export const useGetSinglePost = (postId) =>
     meta: { showError: true },
   })
 
-export const useSavedPosts = () =>
+export const useSavedPosts = (isAuthenticated) =>
   useQuery({
     queryKey: POSTS_QUERY_KEYS.saved(),
     queryFn: () => api.getSavedPosts(),
+    enabled: !!isAuthenticated,
     meta: { showError: true },
   })

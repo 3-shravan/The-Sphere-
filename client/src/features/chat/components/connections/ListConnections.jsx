@@ -1,6 +1,8 @@
 import { ProfilePicture } from "@/components"
+import { useChatStore } from "../../store/chatStore"
 
 export default function ListConnections({ connections }) {
+  const setSelectedChat = useChatStore((state) => state.setSelectedChat)
   return (
     <div>
       {connections?.map((c) => {
@@ -11,7 +13,8 @@ export default function ListConnections({ connections }) {
         return (
           <div
             key={c._id}
-            className="flex cursor-pointer items-center gap-3 p-3 transition hover:bg-muted/50"
+            onClick={() => setSelectedChat(c)}
+            className="flex cursor-pointer items-center gap-3 rounded-xl p-3 transition hover:bg-muted/50"
           >
             <ProfilePicture profilePicture={user.profilePicture} username={user.name} size="lg" />
 

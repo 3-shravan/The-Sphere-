@@ -1,12 +1,11 @@
-import { ChevronDown } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { ProfilePicture } from "@/components";
-import { useAuth } from "@/context";
-import BirthdayHeader from "@/features/birthdays/components/HappyBirthday";
+import { ChevronDown } from "lucide-react"
+import { Link } from "react-router-dom"
+import { ProfilePicture } from "@/components"
+import { useAuth } from "@/context"
+import BirthdayHeader from "@/features/birthdays/components/HappyBirthday"
 
 const HomePageHeader = () => {
-  const { auth, isBirthday } = useAuth();
-  const navigate = useNavigate();
+  const { auth, isBirthday } = useAuth()
   return (
     <div className="md:py- 1 flex-between pt-2 md:mt-1">
       {/* TIME  */}
@@ -24,12 +23,9 @@ const HomePageHeader = () => {
       {/* PROFILE */}
       <Link
         className="hidden cursor-pointer items-center rounded px-7 py-2 tracking-tight md:flex"
-        onClick={() => navigate(`/profile/${auth?.profile?.name}`)}
+        to={`/profile/${auth?.profile?.name}`}
       >
-        <ProfilePicture
-          profilePicture={auth?.profile?.profilePicture}
-          size="sm"
-        />
+        <ProfilePicture profilePicture={auth?.profile?.profilePicture} size="sm" />
 
         <span className="px-2 font-Poppins font-bold text-foreground text-sm">
           {auth?.profile?.name}
@@ -44,12 +40,11 @@ const HomePageHeader = () => {
         </div>
       ) : (
         <span className="px-2.5 font-Poppins text-foreground text-xs md:hidden">
-          whats been up,{" "}
-          <span className="text-rose-400">{auth?.profile?.name}</span>
+          whats been up, <span className="text-rose-400">{auth?.profile?.name}</span>
         </span>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default HomePageHeader;
+export default HomePageHeader

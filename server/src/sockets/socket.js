@@ -1,41 +1,16 @@
 import { Server } from "socket.io";
-
-export let io = null;
-export const onlineUsers = new Map();
-
-const log = (...args) => {
-  if (process.env.NODE_ENV === "production") {
-    console.log(...args);
-  }
-};
+import { socketCore } from "../config/cors.js";
+import { log } from "../utils/index.js";
+import presenceHandler from "./handlers/presence.handler.js";
+import { setIO } from "./utils/socketInstance.js";
 
 export const initSocket = (server) => {
-  io = new Server(server, {
-    cors: {
-      origin: process.env.CLIENT_URL,
-      methods: ["GET", "POST"],
-    },
-  });
+  const io = new Server(server, socketCore);
+  setIO(io);
 
   io.on("connection", (socket) => {
     log("⚡ User connected:", socket.id);
 
-    socket.on("register", (userId) => {
-      onlineUsers.set(userId, socket.id);
-      log(`✅ ${userId} is online`);
-
-      io.emit("online-users", Array.from(onlineUsers.keys()));
-      socket.emit("online-users", Array.from(onlineUsers.keys()));
-    });
-
-    socket.on("disconnect", () => {
-      for (let [uid, sid] of onlineUsers.entries()) {
-        if (sid === socket.id) {
-          onlineUsers.delete(uid);
-          log(`❌ ${uid} went offline`);
-          break;
-        }
-      }
-    });
+    presenceHandler(io, socket);
   });
 };

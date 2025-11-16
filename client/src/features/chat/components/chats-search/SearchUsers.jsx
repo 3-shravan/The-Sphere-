@@ -22,17 +22,14 @@ export default function SearchUsers() {
   }, [search, setDropdown, query])
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full p-1.5">
       <HandleClickOutsideWrapper onClickOutside={() => setDropdown(false)}>
         <div className="relative w-full">
           <SearchBar query={query} setQuery={setQuery} />
-  
-          {query && isDropdownOpen && (
-            <ShowSearchedUsers users={users} />
-          )}
+
+          {query && isDropdownOpen && <ShowSearchedUsers users={users} />}
         </div>
       </HandleClickOutsideWrapper>
     </div>
   )
-  
 }

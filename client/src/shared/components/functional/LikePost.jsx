@@ -20,7 +20,7 @@ const LikePost = forwardRef(({ postId, likes: initialLikes = [], likedBy = true 
   }))
 
   const handleLike = () => {
-    if (!auth.isAuthenticated) return showErrorToast({}, "Please login to like posts")
+    if (!auth.isAuthenticated) return showErrorToast("Please login to like posts")
     toggleLike(postId)
     setAnimate(true)
     setTimeout(() => setAnimate(false), 300)

@@ -1,12 +1,12 @@
-import { useRef } from "react";
-import Comments from "@/features/posts/features/comments/Comments";
-import { LikePost, SavePost, ShowTags } from "@/shared";
-import PostCardHeader from "./PostCardHeader";
-import PostCardMedia from "./PostCardMedia";
+import { useRef } from "react"
+import Comments from "@/features/posts/features/comments/Comments"
+import { LikePost, SavePost, ShowTags } from "@/shared"
+import PostCardHeader from "./PostCardHeader"
+import PostCardMedia from "./PostCardMedia"
 
 const PostCard = ({ post }) => {
-  const likePostRef = useRef(null);
-  if (!post) return null;
+  const likePostRef = useRef(null)
+  if (!post) return null
   return (
     <div className="post-card">
       <PostCardHeader post={post} />
@@ -17,11 +17,7 @@ const PostCard = ({ post }) => {
         <ShowTags tags={post.tags} />
       </div>
 
-      <PostCardMedia
-        media={post?.media}
-        thoughts={post?.thoughts}
-        likePostRef={likePostRef}
-      />
+      <PostCardMedia media={post?.media} thoughts={post?.thoughts} likePostRef={likePostRef} />
 
       <div className="flex-between px-2">
         <LikePost postId={post._id} likes={post.likes} ref={likePostRef} />
@@ -30,7 +26,7 @@ const PostCard = ({ post }) => {
 
       <Comments postId={post?._id} />
     </div>
-  );
-};
+  )
+}
 
-export default PostCard;
+export default PostCard

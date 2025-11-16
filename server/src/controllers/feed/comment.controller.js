@@ -2,7 +2,7 @@ import catchAsyncError from "../../middlewares/catchAsyncError.js"
 import ErrorHandler from "../../middlewares/errorHandler.js"
 import { Comment } from "../../models/feed/comment.model.js"
 import { Post } from "../../models/feed/post.model.js"
-import { sendNotification } from "../../sockets/emit.js"
+import { sendNotification } from "../../sockets/emitters/notifications.emit.js"
 import { handleSuccessResponse } from "../../utils/responseHandler.js"
 
 export const getPostComments = catchAsyncError(async (req, res, next) => {

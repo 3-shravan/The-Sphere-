@@ -3,6 +3,7 @@ import { useApi, useSocket } from "@/hooks"
 import { setLogoutHandler } from "@/lib/axios"
 import { showErrorToast, showSuccessToast } from "@/lib/utils/api-responses"
 import { getIsAuthenticated, getToken, removeTokenAndAuthenticated } from "@/utils"
+import { useChatStore } from "@/features/chat/store/chatStore"
 
 export const AuthContext = createContext()
 
@@ -12,8 +13,13 @@ export const ContextProvider = ({ children }) => {
     token: getToken() || null,
     profile: null,
   }))
-
-  useSocket(auth?.profile?._id)
+  const userId = auth?.profile?._id
+  const { onlineUsers } = useSocket(userId)
+  console.log(onlineUsers)
+  const { setOnlineUsers } = useChatStore()
+  useEffect(() => {
+    setOnlineUsers(onlineUsers)
+  }, [onlineUsers, setOnlineUsers])
 
   const { request, loading } = useApi()
 
@@ -26,16 +32,15 @@ export const ContextProvider = ({ children }) => {
     removeTokenAndAuthenticated()
   }, [])
 
-
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!getToken()) return resetAuth()
       try {
-        const { data } = await request({ endpoint: "auth/profile" })
+        const res = await request({ endpoint: "auth/profile" })
         setAuth({
           isAuthenticated: true,
           token: getToken(),
-          profile: data?.user,
+          profile: res?.data?.user,
         })
       } catch (error) {
         showErrorToast(error, "Failed to fetch user profile")
@@ -44,7 +49,6 @@ export const ContextProvider = ({ children }) => {
     }
     fetchUserProfile()
   }, [request, resetAuth])
-
 
   const logout = useCallback(async () => {
     try {
@@ -56,7 +60,6 @@ export const ContextProvider = ({ children }) => {
     }
   }, [request, resetAuth])
 
-  
   useEffect(() => {
     setLogoutHandler(logout)
   }, [logout])

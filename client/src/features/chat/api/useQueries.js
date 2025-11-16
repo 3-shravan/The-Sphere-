@@ -1,14 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import tryCatch from "@/lib/utils/try-catch";
-import { chatApi } from "./conversation-api";
-import { CHAT_QUERY_KEYS } from "./query-keys";
+import { useQuery } from "@tanstack/react-query"
+import tryCatch from "@/lib/utils/try-catch"
+import { chatApi } from "./conversation-api"
+import { CHAT_QUERY_KEYS } from "./query-keys"
 
 export function useConnections() {
   return useQuery({
     queryKey: CHAT_QUERY_KEYS.connections,
     queryFn: () => chatApi.connections(),
     meta: { showError: true },
-  });
+  })
 }
 
 export function useChatDetails(chatId) {
@@ -16,13 +16,13 @@ export function useChatDetails(chatId) {
     queryKey: CHAT_QUERY_KEYS.chat(chatId),
     queryFn: () => tryCatch(chatApi.chatDetails(chatId)),
     meta: { showError: true },
-  });
+  })
 }
 
-export function useMessages(chatId) {
+export function useMessages(chatId, params) {
   return useQuery({
     queryKey: CHAT_QUERY_KEYS.messages(chatId),
-    queryFn: () => chatApi.messages(chatId),
+    queryFn: () => chatApi.messages(chatId, params),
     meta: { showError: true },
-  });
+  })
 }

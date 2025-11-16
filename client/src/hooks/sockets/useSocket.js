@@ -1,30 +1,40 @@
-import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
-import notify from "@/features/notifications/notify";
-import { BASE_API_URL } from "@/lib/utils/api";
+import { useEffect, useState } from "react"
+import notificationEvents from "@/socket/events/notifications"
+import presenceEvents from "@/socket/events/presence"
+import { socket } from "@/socket/socket"
 
-const socket = io(BASE_API_URL, {
-  transports: ["websocket"],
-  withCredentials: true,
-});
-
-export default function useSocket(userId) {
-  const [onlineUsers, setOnlineUsers] = useState([]);
+export default function useSocket(userId, options = {}) {
+  const [onlineUsers, setOnlineUsers] = useState([])
 
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) return
 
-    socket.emit("register", userId);
-    const handleNotification = (data) => data && notify(data);
-    const handleOnlineUsers = (users) => setOnlineUsers(users);
+    if (!socket.connected) socket.connect()
 
-    socket.on("online-users", handleOnlineUsers);
-    socket.on("notification", handleNotification);
+    const registerUser = () => {
+      console.log("Socket connected:", socket.id, "registering", userId)
+      socket.emit("register", userId)
+    }
+
+    socket.on("connect", registerUser)
+    socket.on("reconnect", registerUser)
+
+    const cleanups = []
+
+    cleanups.push(presenceEvents(socket, setOnlineUsers))
+    cleanups.push(notificationEvents(socket))
+
+    if (options.chat) cleanups.push(chatEvents(socket, options.chat))
 
     return () => {
-      socket.off("notification", handleNotification);
-      socket.off("online-users", handleOnlineUsers);
-    };
-  }, [userId]);
-  return { socket, onlineUsers };
+      socket.off("connect", registerUser)
+      socket.off("reconnect", registerUser)
+
+      cleanups.forEach((cleanup) => {
+        if (cleanup) cleanup()
+      })
+    }
+  }, [userId, options.chat])
+
+  return { socket, onlineUsers }
 }

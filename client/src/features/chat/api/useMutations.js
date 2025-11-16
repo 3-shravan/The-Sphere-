@@ -18,7 +18,7 @@ export const useSendMessage = (chatId) => {
     mutationFn: ({ receiverId, message }) => chatApi.sendMessage(receiverId, message),
     meta: {
       showError: true,
-      invalidateQuery: CHAT_QUERY_KEYS.messages(chatId),
+      invalidateQuery: [CHAT_QUERY_KEYS.messages(chatId)],
     },
   })
 }
@@ -29,7 +29,7 @@ export const useDeleteMessage = (chatId) => {
     mutationFn: ({ messageId }) => chatApi.deleteMessage(messageId),
     meta: {
       showError: true,
-      invalidateQuery: CHAT_QUERY_KEYS.messages(chatId),
+      invalidateQuery: [CHAT_QUERY_KEYS.messages(chatId)],
     },
   })
 }
@@ -40,7 +40,7 @@ export const useDeleteChat = (chatId) => {
     meta: {
       showError: true,
       showSuccess: true,
-      invalidateQuery: CHAT_QUERY_KEYS.connections,
+      invalidateQuery: [CHAT_QUERY_KEYS.connections],
     },
   })
 }

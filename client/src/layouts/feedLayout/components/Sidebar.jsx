@@ -1,37 +1,37 @@
-import { useAuth, useTheme } from "@context";
-import { tabs } from "@utils";
+import { useAuth, useTheme } from "@context"
 import {
   Album,
   BadgePlus,
   GalleryVerticalEnd,
-  // MessageSquare,
+  MessageSquare,
   Search,
   UserCircleIcon,
-} from "lucide-react";
-import { BsArrowDownRightCircleFill } from "react-icons/bs";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
-import { NavLink, useNavigate } from "react-router-dom";
-import { ProfilePicture, Spinner } from "@/components";
+} from "lucide-react"
+import { BsArrowDownRightCircleFill } from "react-icons/bs"
+import { MdDarkMode, MdLightMode } from "react-icons/md"
+import { NavLink, useNavigate } from "react-router-dom"
+import { ProfilePicture, Spinner } from "@/components"
+import { tabs } from "@/utils"
 
 const Sidebar = () => {
-  const { theme, toggleTheme } = useTheme();
-  const { logout, auth, globalLoading } = useAuth();
+  const { theme, toggleTheme } = useTheme()
+  const { logout, auth, globalLoading } = useAuth()
 
-  const username = auth?.profile?.name;
-  const profilePicture = auth?.profile?.profilePicture;
-  const isProfile = window.location.pathname.includes(`/profile/${username}`);
+  const username = auth?.profile?.name
+  const profilePicture = auth?.profile?.profilePicture
+  const isProfile = window.location.pathname.includes(`/profile/${username}`)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const className = "w-4";
+  const className = "w-4"
   const icons = [
     <GalleryVerticalEnd key="gallery" className={className} />,
     <Search key="search" className={className} />,
-    // <MessageSquare key="message" className={className} />,
+    <MessageSquare key="message" className={className} />,
     <Album key="album" className={className} />,
     <BadgePlus key="badge" className={className} />,
     <UserCircleIcon key="user" className={className} />,
-  ];
+  ]
 
   return (
     <nav className="sidebar hidden max-h-screen flex-col justify-between p-4 md:flex">
@@ -51,7 +51,7 @@ const Sidebar = () => {
           {tabs.map((tab, index) => (
             <NavLink
               key={tab.label}
-              to={index === 4 ? `profile/${username}` : tab.route}
+              to={tab.route}
               className={({ isActive }) =>
                 `flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-2 font-Gilroy font-bold text-sm transition duration-100 ${
                   isActive
@@ -85,19 +85,13 @@ const Sidebar = () => {
           Profile
         </button>
 
-        <button
-          type="button"
-          className="btn-base w-[60%] border"
-          onClick={toggleTheme}
-        >
+        <button type="button" className="btn-base w-[60%] border" onClick={toggleTheme}>
           {theme === "dark" ? (
             <MdLightMode className="text-[2.5vh] sm:text-lg" />
           ) : (
             <MdDarkMode className="text-lg" />
           )}
-          <span className="text-muted-foreground hover:text-foreground">
-            Theme
-          </span>
+          <span className="text-muted-foreground hover:text-foreground">Theme</span>
         </button>
 
         <button
@@ -117,7 +111,7 @@ const Sidebar = () => {
         </button>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

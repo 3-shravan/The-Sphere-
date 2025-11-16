@@ -21,11 +21,7 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "a11y": {
-        "useAltText": "warn",
-        "useAriaPropsForRole": "warn",
-        "noAriaUnsupportedElements": "warn"
-      },
+      "a11y": "off",
       "correctness": {
         "noChildrenProp": "error",
         "useHookAtTopLevel": "error",

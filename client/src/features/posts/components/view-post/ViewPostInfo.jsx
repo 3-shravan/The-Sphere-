@@ -1,18 +1,18 @@
-import { formatDistanceToNow } from "date-fns";
-import { Link, useNavigate } from "react-router-dom";
-import { ProfilePicture, Spinner } from "@/components";
-import { Button } from "@/components/ui/button";
-import { LikePost, PostOptions, SavePost, ShowTags } from "@/shared";
-import Comments from "../../features/comments/Comments";
+import { formatDistanceToNow } from "date-fns"
+import { Link, useNavigate } from "react-router-dom"
+import { ProfilePicture, Spinner } from "@/components"
+import { Button } from "@/components/ui/button"
+import { LikePost, PostOptions, SavePost, ShowTags } from "@/shared"
+import Comments from "../../features/comments/Comments"
 
 export default function ViewPostInfo({ postId, post, setShowModal }) {
-  const navigate = useNavigate();
-  if (!post) return null;
+  const navigate = useNavigate()
+  if (!post) return null
 
   const handleBackNavigation = () => {
-    if (window.history.state && window.history.state.idx > 0) navigate(-1);
-    else navigate("/feeds");
-  };
+    if (window.history.state && window.history.state.idx > 0) navigate(-1)
+    else navigate("/feeds")
+  }
 
   return (
     <div className="custom-scrollbar-hide flex h-screen w-full flex-col overflow-y-auto border-border p-3 md:w-1/2 md:p-8 md:px-6">
@@ -28,7 +28,7 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
               {post?.author?.name}
             </Link>
             <p className="text-[9px] text-muted-foreground">
-              {post?.createdAt && !isNaN(new Date(post.createdAt)) ? (
+              {post?.createdAt && !Number.isNaN(new Date(post.createdAt)) ? (
                 formatDistanceToNow(new Date(post?.createdAt), {
                   addSuffix: true,
                 })
@@ -39,11 +39,7 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
           </div>
         </div>
         <div className="flex">
-          <PostOptions
-            postId={postId}
-            author={post?.author}
-            thoughts={post?.thoughts}
-          />
+          <PostOptions postId={postId} author={post?.author} thoughts={post?.thoughts} />
           <button
             onClick={handleBackNavigation}
             className="flex cursor-pointer items-center rounded-full bg-muted px-2 py-1 text-xs transition hover:bg-third"
@@ -55,9 +51,7 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
 
       <div className="mt-4 flex-1 space-y-2">
         {post?.caption && post?.media && (
-          <p className="border-muted border-b px-2 py-2 font-Futura text-sm">
-            {post?.caption}
-          </p>
+          <p className="border-muted border-b px-2 py-2 font-Futura text-sm">{post?.caption}</p>
         )}
         <ShowTags tags={post?.tags} />
 
@@ -77,5 +71,5 @@ export default function ViewPostInfo({ postId, post, setShowModal }) {
         <Comments postId={post?._id} expanded={true} />
       </div>
     </div>
-  );
+  )
 }

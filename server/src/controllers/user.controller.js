@@ -5,7 +5,7 @@ import ErrorHandler from "../middlewares/errorHandler.js";
 import { Block } from "../models/user/block.model.js";
 import { User } from "../models/user/user.model.js";
 import { blockedUsers } from "../services/block.services.js";
-import { sendNotification } from "../sockets/emit.js";
+import { sendNotification } from "../sockets/emitters/notifications.emit.js";
 import {
   handleErrorResponse,
   handleSuccessResponse,
@@ -296,4 +296,3 @@ export const todayBirthdays = catchAsyncError(async (_req, res) => {
 
   return handleSuccessResponse(res, 200, "Today's Birthdays", { users });
 });
-

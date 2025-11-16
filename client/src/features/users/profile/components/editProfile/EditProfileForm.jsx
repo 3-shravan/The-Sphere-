@@ -1,12 +1,14 @@
-import { X } from "lucide-react";
-import { CgVercel } from "react-icons/cg";
-import { Button } from "@/components/ui/button";
-import { DrawerClose } from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import DateOfBirth from "./DateOfBirth";
-import ProfileImageUploader from "./ProfileImageUploader";
-import SelectGender from "./SelectGender";
+import { X } from "lucide-react"
+import { CgVercel } from "react-icons/cg"
+import { FaDeleteLeft } from "react-icons/fa6"
+import { Button } from "@/components/ui/button"
+import { DrawerClose } from "@/components/ui/drawer"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import DateOfBirth from "./DateOfBirth"
+import ProfileImageUploader from "./ProfileImageUploader"
+import SelectGender from "./SelectGender"
+import { showInfoToast } from "@/lib/utils/api-responses"
 
 const EditProfileForm = ({
   user,
@@ -49,7 +51,7 @@ const EditProfileForm = ({
           <label htmlFor="fullName" className="update-input-label">
             Full Name
           </label>
-          <Input id="fullName" name="fullName" defaultValue={user?.fullName} />
+          <Input name="fullName" defaultValue={user?.fullName} />
         </div>
 
         <div className="flex w-full flex-col gap-2 md:w-3/4 md:flex-row md:items-center">
@@ -97,8 +99,19 @@ const EditProfileForm = ({
           </Button>
         </div>
       </DrawerClose>
+      <div className="col-span-1 flex justify-center font-Poppins md:col-span-2">
+        <Button
+          type="button"
+          variant="destructive"
+          onClick={() => showInfoToast("You will be able to delete your account soon !")}
+          className="mx-auto w-full cursor-pointer rounded-xl text-xs md:w-[30%]"
+        >
+          <FaDeleteLeft className="h-4 w-4" />
+          Delete Account
+        </Button>
+      </div>
     </form>
-  );
-};
+  )
+}
 
-export default EditProfileForm;
+export default EditProfileForm

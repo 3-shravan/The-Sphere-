@@ -1,17 +1,17 @@
-import { Outlet } from "react-router-dom";
-import Dock from "./components/Dock";
-import PhoneHeader from "./components/PhoneHeader";
-import Sidebar from "./components/Sidebar";
+import { Outlet } from "react-router-dom"
+import Dock from "./components/Dock"
+import PhoneHeader from "./components/PhoneHeader"
+import Sidebar from "./components/Sidebar"
 
 export default function Layout() {
-	return (
-		<div className="w-full h-[100svh] md:flex">
-			<PhoneHeader />
-			<Sidebar />
-			<main className="flex flex-1 md:min-w-[70vw] h-[92svh] md:h-screen">
-				<Outlet />
-			</main>
-			<Dock />
-		</div>
-	);
+  return (
+    <div className="h-[100svh] w-full md:flex">
+      <PhoneHeader />
+      <Sidebar />
+      <main className="flex h-[92svh] flex-1 md:h-screen md:min-w-[70vw]">
+        <Outlet />
+      </main>
+      <Dock />
+    </div>
+  )
 }
