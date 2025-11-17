@@ -32,7 +32,7 @@ export const paginationSchemaObject = () =>
       "number.integer": "Page must be an integer",
       "number.min": "Page must be at least {#limit}",
     }),
-    limit: Joi.number().integer().min(1).max(100).default(10).messages({
+    limit: Joi.number().integer().min(1).max(1000).messages({
       "number.base": "Limit must be a number",
       "number.integer": "Limit must be an integer",
       "number.min": "Limit must be at least {#limit}",

@@ -7,8 +7,6 @@ export default function MessagesArea() {
   const { currentUserId } = useAuth()
   const { messages, isLoading } = useChatMessages()
 
-
-
   if (isLoading)
     return (
       <div className="h-full flex-center">

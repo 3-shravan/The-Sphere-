@@ -300,3 +300,19 @@ input::-webkit-inner-spin-button {
     opacity: 0;
   }
 }
+
+
+@keyframes matrixFall {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(120vh);
+    opacity: 1;
+  }
+}
+
+.animate-matrix {
+  animation: matrixFall 3.5s linear infinite;
+}

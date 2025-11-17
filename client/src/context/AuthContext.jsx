@@ -13,15 +13,14 @@ export const ContextProvider = ({ children }) => {
     token: getToken() || null,
     profile: null,
   }))
+  const [authLoading, setAuthLoading] = useState(true)
 
   const userId = auth?.profile?._id
-  const { onlineUsers } = useSocket(userId)
-  console.log(onlineUsers)
   const { setOnlineUsers } = useChatStore()
+  const { onlineUsers } = useSocket(userId)
   useEffect(() => {
     setOnlineUsers(onlineUsers)
   }, [onlineUsers, setOnlineUsers])
-  
 
   const { request, loading } = useApi()
 
@@ -36,7 +35,11 @@ export const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      if (!getToken()) return resetAuth()
+      if (!getToken()) {
+        resetAuth()
+        setAuthLoading(false)
+        return
+      }
       try {
         const res = await request({ endpoint: "auth/profile" })
         setAuth({
@@ -47,6 +50,8 @@ export const ContextProvider = ({ children }) => {
       } catch (error) {
         showErrorToast(error, "Failed to fetch user profile")
         resetAuth()
+      } finally {
+        setAuthLoading(false)
       }
     }
     fetchUserProfile()
@@ -75,6 +80,7 @@ export const ContextProvider = ({ children }) => {
         currentUserId: auth?.profile?._id,
         logout,
         globalLoading: loading,
+        authLoading,
       }}
     >
       {children}

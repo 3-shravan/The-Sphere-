@@ -11,8 +11,10 @@ import { Route, Routes } from "react-router-dom"
 import { NonExistRoutes, Offline, ProtectedRoutes, PublicRoutes } from "@/components"
 import { CreatePost, SavedPosts } from "@/features/posts"
 import { FeedLayout, HomePage } from "@/layouts"
+import { DeveloperRoute } from "./components/routing/DeveloperRoutes"
 import PostProviderWrapper from "./components/routing/PostProviderWrapper"
 import Conversations from "./features/chat/pages/Conversations"
+import DeveloperPage from "./features/developer/pages/DeveloperPage"
 import Explore from "./features/explore/pages/Explore"
 import Page from "./features/landing-page/pages/Page"
 import ViewPost from "./features/posts/pages/ViewPost"
@@ -49,6 +51,15 @@ export default function App() {
             </Route>
           </Route>
         </Route>
+
+        <Route
+          path="/developer"
+          element={
+            <DeveloperRoute>
+              <DeveloperPage />
+            </DeveloperRoute>
+          }
+        />
 
         {/* View Post - Publicly Accessible */}
         <Route path="/post/:postId" element={<ViewPost />} />

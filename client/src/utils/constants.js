@@ -31,41 +31,6 @@ export const sizeMap = {
   profile: "w-50 h-50",
 }
 
-//import { GalleryVerticalEnd, Search, MessageSquare, Album, BadgePlus } from "lucide-react"
-
-// export const tabs = [
-//   {
-//     key: "home",
-//     route: "/feeds",
-//     label: "Home",
-//     icon: GalleryVerticalEnd,
-//   },
-//   {
-//     key: "explore",
-//     route: "/explore",
-//     label: "Explore",
-//     icon: Search,
-//   },
-//   {
-//     key: "conversations",
-//     route: "/conversations",
-//     label: "Conversations",
-//     icon: MessageSquare,
-//   },
-//   {
-//     key: "saved",
-//     route: "/saved",
-//     label: "Saved",
-//     icon: Album,
-//   },
-//   {
-//     key: "create",
-//     route: "/create-post",
-//     label: "New Post",
-//     icon: BadgePlus,
-//   },
-// ]
-
 import AddCircleIcon from "@mui/icons-material/AddCircle"
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
 import BookmarkIcon from "@mui/icons-material/Bookmark"

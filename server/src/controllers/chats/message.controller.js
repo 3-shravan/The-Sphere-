@@ -58,7 +58,7 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
 export const fetchMessages = catchAsyncError(async (req, res) => {
   const { chatId } = req.params
 
-  const limit = parseInt(req.query.limit, 10) || 50
+  const limit = parseInt(req.query.limit, 10) || 100
   const page = parseInt(req.query.page, 10) || 1
   const skip = (page - 1) * limit
 
