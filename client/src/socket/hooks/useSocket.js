@@ -9,8 +9,13 @@ export default function useSocket(userId, options = {}) {
 
   useEffect(() => {
     if (!userId) return
+    if (!socket.connected) socket.connect()
+    const registerUser = () => {
+      socket.emit("register", userId)
+    }
 
-    socket.emit("register", userId)
+    socket.on("connect", registerUser)
+    socket.on("reconnect", registerUser)
 
     const cleanups = []
     cleanups.push(presenceEvents(socket, setOnlineUsers))
@@ -18,6 +23,8 @@ export default function useSocket(userId, options = {}) {
     if (options.chat) cleanups.push(chatEvents(socket, options.chat))
 
     return () => {
+      socket.off("connect", registerUser)
+      socket.off("reconnect", registerUser)
       cleanups.forEach((cleanup) => {
         if (cleanup) cleanup()
       })

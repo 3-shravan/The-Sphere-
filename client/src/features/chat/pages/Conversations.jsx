@@ -1,16 +1,34 @@
+import { useDeveloperStore } from "@/features/developer/store/developerStore"
 import ChatArea from "../components/chat-area/ChatArea"
 import SearchUsers from "../components/chats-search/SearchUsers"
 import Connections from "../components/connections/Connections"
 import Container from "../components/ui/chat-container"
+import { useChatStore } from "../store/chatStore"
 
 export default function Conversations() {
+  const { selectedChat } = useChatStore()
+  const { isChat } = useDeveloperStore()
   return (
     <Container>
-      <div className="flex w-full max-w-sm flex-col gap-5 rounded-lg p-1 md:max-w-[33%]">
-        <SearchUsers />
-        <Connections />
-      </div>
-      <ChatArea />
+      {isChat ? (
+        <>
+          <div
+            className={`${selectedChat && "hidden md:flex"} w-full flex-col gap-5 rounded-lg p-1 md:max-w-[33%]`}
+          >
+            <SearchUsers />
+            <Connections />
+          </div>
+          <div className={`${!selectedChat && "hidden md:flex"} w-full`}>
+            <ChatArea />
+          </div>
+        </>
+      ) : (
+        <div className="flex h-full w-full items-center justify-center">
+          <p className="text-center font-medium text-gray-500 text-lg">
+            Chat feature will be available soon!
+          </p>
+        </div>
+      )}
     </Container>
   )
 }

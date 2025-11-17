@@ -4,6 +4,7 @@ import { useApi, useSocket } from "@/hooks"
 import { setLogoutHandler } from "@/lib/axios"
 import { showErrorToast, showSuccessToast } from "@/lib/utils/api-responses"
 import { getIsAuthenticated, getToken, removeTokenAndAuthenticated } from "@/utils"
+import { socket } from "@/socket/socket"
 
 export const AuthContext = createContext()
 
@@ -18,6 +19,7 @@ export const ContextProvider = ({ children }) => {
   const userId = auth?.profile?._id
   const { setOnlineUsers } = useChatStore()
   const { onlineUsers } = useSocket(userId)
+  console.log("Online Users:", onlineUsers)
   useEffect(() => {
     setOnlineUsers(onlineUsers)
   }, [onlineUsers, setOnlineUsers])
@@ -60,6 +62,10 @@ export const ContextProvider = ({ children }) => {
   const logout = useCallback(async () => {
     try {
       const response = await request({ endpoint: "auth/logout" })
+
+      socket.disconnect()
+      socket.connect()
+
       resetAuth()
       showSuccessToast(response, "Logged out 😢")
     } catch (error) {

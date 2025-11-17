@@ -8,7 +8,7 @@ export default function Connections() {
   if (isLoading) return <Spinner />
   return (
     <div className="flex h-full flex-col overflow-auto rounded-lg">
-      <h1 className="flex items-center gap-2 px-4.5 pb-2">
+      <h1 className="flex items-center gap-2 px-4.5 py-4">
         <MessageSquare className="h-5 w-5 text-rose-400" />
         Chats
       </h1>

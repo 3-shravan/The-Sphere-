@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useChatStore } from "@/features/chat/store/chatStore"
 import { Button } from "@/components/ui/button"
+import { useChatStore } from "@/features/chat/store/chatStore"
+import { useDeveloperStore } from "../store/developerStore"
 
 export default function DeveloperPage() {
   const { onlineUsers } = useChatStore()
+  const { isChat, setIsChat } = useDeveloperStore()
   const [showModal, setShowModal] = useState(false)
   const navigate = useNavigate()
 
@@ -46,6 +48,18 @@ export default function DeveloperPage() {
               className="mt-2 w-full rounded border border-green-500 bg-green-700/30 py-2 text-green-300 transition hover:bg-green-700/50"
             >
               Show Online Users
+            </button>
+          </div>
+
+          {/* enableChat */}
+          <div className="rounded-lg border border-green-700 bg-black/50 p-5 backdrop-blur-sm transition hover:bg-black/70">
+            <h2 className="mb-3 font-semibold text-lg md:text-xl">{">Enable Chat Feature"}</h2>
+
+            <button
+              onClick={() => setIsChat(!isChat)}
+              className="mt-2 w-full rounded border border-green-500 bg-green-700/30 py-2 text-green-300 transition hover:bg-green-700/50"
+            >
+              {isChat ? "Disable Chat" : "Enable Chat"}
             </button>
           </div>
 
