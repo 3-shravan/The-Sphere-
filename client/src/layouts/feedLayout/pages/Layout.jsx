@@ -1,7 +1,5 @@
 import { Outlet } from "react-router-dom"
-import Dock from "./components/Dock"
-import PhoneHeader from "./components/PhoneHeader"
-import Sidebar from "./components/Sidebar"
+import { Dock, PhoneHeader, Sidebar } from "../components"
 
 export default function Layout() {
   return (

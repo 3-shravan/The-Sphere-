@@ -11,26 +11,6 @@ export const MarqueeItems = [
   "💡 Get Inspired Every Day!",
 ]
 
-export const tabs = [
-  {
-    route: "/feeds",
-    label: "Home",
-  },
-  {
-    route: "/explore",
-    label: "Explore",
-  },
-  { route: "/conversations", label: "Conversations" },
-  {
-    route: "/saved",
-    label: "Saved",
-  },
-  {
-    route: "/create-post",
-    label: "New Post",
-  },
-]
-
 export const positionClasses = {
   "top-left": "top-3 left-3",
   "top-right": "top-3 right-3",
@@ -50,3 +30,94 @@ export const sizeMap = {
   xl: "w-12 h-12",
   profile: "w-50 h-50",
 }
+
+//import { GalleryVerticalEnd, Search, MessageSquare, Album, BadgePlus } from "lucide-react"
+
+// export const tabs = [
+//   {
+//     key: "home",
+//     route: "/feeds",
+//     label: "Home",
+//     icon: GalleryVerticalEnd,
+//   },
+//   {
+//     key: "explore",
+//     route: "/explore",
+//     label: "Explore",
+//     icon: Search,
+//   },
+//   {
+//     key: "conversations",
+//     route: "/conversations",
+//     label: "Conversations",
+//     icon: MessageSquare,
+//   },
+//   {
+//     key: "saved",
+//     route: "/saved",
+//     label: "Saved",
+//     icon: Album,
+//   },
+//   {
+//     key: "create",
+//     route: "/create-post",
+//     label: "New Post",
+//     icon: BadgePlus,
+//   },
+// ]
+
+import AddCircleIcon from "@mui/icons-material/AddCircle"
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
+import BookmarkIcon from "@mui/icons-material/Bookmark"
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder"
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble"
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline"
+import ExploreIcon from "@mui/icons-material/Explore"
+import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined"
+import HomeIcon from "@mui/icons-material/Home"
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined"
+
+export const tabs = [
+  {
+    key: "home",
+    route: "/feeds",
+    label: "Home",
+    icon: HomeOutlinedIcon,
+    filled: HomeIcon,
+    size: 25,
+  },
+  {
+    key: "explore",
+    route: "/explore",
+    label: "Explore",
+    icon: ExploreOutlinedIcon,
+    filled: ExploreIcon,
+    size: 24,
+  },
+  // {
+  //   key: "messages",
+  //   route: "/conversations",
+  //   label: "Messages",
+  //   icon: ChatBubbleOutlineIcon,
+  //   filled: ChatBubbleIcon,
+  //   size: 23,
+  //   filledSize: 23,
+  // },
+  {
+    key: "saved",
+    route: "/saved",
+    label: "Saved",
+    icon: BookmarkBorderIcon,
+    filled: BookmarkIcon,
+    size: 26,
+    filledSize: 24,
+  },
+  {
+    key: "create",
+    route: "/create-post",
+    label: "Create",
+    icon: AddCircleOutlineIcon,
+    filled: AddCircleIcon,
+    size: 24,
+  },
+]

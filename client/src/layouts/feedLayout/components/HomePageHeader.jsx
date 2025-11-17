@@ -4,7 +4,7 @@ import { ProfilePicture } from "@/components"
 import { useAuth } from "@/context"
 import BirthdayHeader from "@/features/birthdays/components/HappyBirthday"
 
-const HomePageHeader = () => {
+export default function HomePageHeader() {
   const { auth, isBirthday } = useAuth()
   return (
     <div className="md:py- 1 flex-between pt-2 md:mt-1">
@@ -46,5 +46,3 @@ const HomePageHeader = () => {
     </div>
   )
 }
-
-export default HomePageHeader

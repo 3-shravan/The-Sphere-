@@ -36,11 +36,6 @@ export default function App() {
           <Route path="/reset-password/email/:token" element={<ResetPasswordViaEmail />} />
         </Route>
 
-        {/* Post View Route */}
-        {/* <Route element={<PostProviderWrapper />}> */}
-        <Route path="/post/:postId" element={<ViewPost />} />
-        {/* </Route> */}
-
         {/* Protected Routes */}
         <Route element={<ProtectedRoutes />}>
           <Route element={<PostProviderWrapper />}>
@@ -54,6 +49,9 @@ export default function App() {
             </Route>
           </Route>
         </Route>
+
+        {/* View Post - Publicly Accessible */}
+        <Route path="/post/:postId" element={<ViewPost />} />
 
         {/* 404 */}
         <Route path="*" element={<NonExistRoutes />} />

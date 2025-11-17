@@ -1,9 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react"
+import { useChatStore } from "@/features/chat/store/chatStore"
 import { useApi, useSocket } from "@/hooks"
 import { setLogoutHandler } from "@/lib/axios"
 import { showErrorToast, showSuccessToast } from "@/lib/utils/api-responses"
 import { getIsAuthenticated, getToken, removeTokenAndAuthenticated } from "@/utils"
-import { useChatStore } from "@/features/chat/store/chatStore"
 
 export const AuthContext = createContext()
 
@@ -13,6 +13,7 @@ export const ContextProvider = ({ children }) => {
     token: getToken() || null,
     profile: null,
   }))
+
   const userId = auth?.profile?._id
   const { onlineUsers } = useSocket(userId)
   console.log(onlineUsers)
@@ -20,6 +21,7 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     setOnlineUsers(onlineUsers)
   }, [onlineUsers, setOnlineUsers])
+  
 
   const { request, loading } = useApi()
 
