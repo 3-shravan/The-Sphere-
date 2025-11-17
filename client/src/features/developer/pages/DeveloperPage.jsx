@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useChatStore } from "@/features/chat/store/chatStore"
+import { Button } from "@/components/ui/button"
 
 export default function DeveloperPage() {
   const { onlineUsers } = useChatStore()
@@ -16,12 +17,13 @@ export default function DeveloperPage() {
       <div className="pointer-events-none absolute inset-0 bg-[url('/scanlines.png')] opacity-10 mix-blend-overlay"></div>
 
       {/* BACK BUTTON */}
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute top-4 left-4 z-50 rounded border border-green-500 bg-green-700/30 px-4 py-2 text-green-300 transition hover:bg-green-700/50"
+      <Button
+        variant="outline"
+        onClick={() => navigate("/")}
+        className="absolute top-2 left-2 z-50 cursor-pointer rounded border border-green-500 bg-green-700/30 px-4 py-2 text-green-300 transition hover:bg-green-700/50"
       >
         ← Back
-      </button>
+      </Button>
 
       <div className="relative z-10 mx-auto max-w-3xl px-4 py-10 md:px-8">
         {/* TITLE */}

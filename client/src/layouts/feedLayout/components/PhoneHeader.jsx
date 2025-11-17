@@ -47,7 +47,14 @@ const Logo = ({ theme }) => (
     ) : (
       <img src="/favicon-dark.svg" alt="logo" width={18} />
     )}
-    <span className="font-Poppins font-bold tracking-tighter">sphere</span>
+    <span
+      onDoubleClick={() => {
+        window.location.href = "/developer"
+      }}
+      className="font-Poppins font-bold tracking-tighter"
+    >
+      sphere
+    </span>
   </Link>
 )
 
