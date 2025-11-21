@@ -1,5 +1,5 @@
+import ApiError from "../../core/errors/apiError.js";
 import catchAsyncError from "../../middlewares/catchAsyncError.js";
-import ErrorHandler from "../../middlewares/errorHandler.js";
 import { Chat } from "../../models/chats/chat.model.js";
 import { Message } from "../../models/chats/message.model.js";
 import { User } from "../../models/user/user.model.js";
@@ -58,7 +58,7 @@ export const getChat = catchAsyncError(async (req, res) => {
     ])
     .lean();
 
-  if (!chat) throw new ErrorHandler(404, "Chat does not exist");
+  if (!chat) throw new ApiError(404, "Chat does not exist");
 
   if (req.query.includeMessages === "true")
     chat.messages = await Message.find({ chat: chat._id })
@@ -110,16 +110,16 @@ export const deleteChat = catchAsyncError(async (req, res, next) => {
   const { chatId } = req.params;
 
   const chat = await Chat.findById(chatId).lean();
-  if (!chat) return next(new ErrorHandler(404, "Chat not found"));
+  if (!chat) return next(new ApiError(404, "Chat not found"));
 
   if (chat.isGroupChat)
-    return next(new ErrorHandler(400, "You can't delete a group chat"));
+    return next(new ApiError(400, "You can't delete a group chat"));
 
   const isParticipant = chat.users.some(
     (u) => u.toString() === req.user._id.toString()
   );
   if (!isParticipant)
-    return next(new ErrorHandler(403, "Unauthorized to delete this chat"));
+    return next(new ApiError(403, "Unauthorized to delete this chat"));
 
   await Promise.all([
     Chat.findByIdAndDelete(chatId),

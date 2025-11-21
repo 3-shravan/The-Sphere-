@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import nodeMailer from "nodemailer";
 import { Resend } from "resend";
 import twilio from "twilio";
-import ErrorHandler from "../middlewares/errorHandler.js";
+import ApiError from "../core/errors/apiError.js";
 import { generateEmailTemplate } from "../utils/emailTemplate.js";
 
 export const sendToken = async (user, statusCode, message, res) => {
@@ -42,12 +42,12 @@ export const sendVerificationCode = async (
       await makePhoneCall(name, phone, verificationCode, "");
       return `Verification code successfully sent to ${phone}.`;
     }
-    throw new ErrorHandler(
+    throw new ApiError(
       400,
       'Invalid verification method. Please use "email" or "phone".'
     );
   } catch (error) {
-    throw new ErrorHandler(500, error.message);
+    throw new ApiError(500, error.message);
   }
 };
 
@@ -77,12 +77,12 @@ export const makePhoneCall = async (
     });
   } catch (error) {
     if (error.code === 21219) {
-      throw new ErrorHandler(
+      throw new ApiError(
         400,
         "Phone verification is unavailable for now . Please try email verification instead."
       );
     }
-    throw new ErrorHandler(
+    throw new ApiError(
       400,
       "Unable to send verification code via phone call. Please try email verification."
     );
@@ -100,7 +100,7 @@ export const sendEmailRsend = async ({ email, subject, message }) => {
     });
     console.log(response);
   } catch (error) {
-    throw new ErrorHandler(
+    throw new ApiError(
       500,
       `Failed to send verification code on your email. ${error.message}. `
     );
@@ -125,7 +125,7 @@ export const sendEmail = async ({ email, subject, message }) => {
     };
     await transporter.sendMail(options);
   } catch (_error) {
-    throw new ErrorHandler(
+    throw new ApiError(
       500,
       "Failed to send verification code on your email. Please try again later."
     );

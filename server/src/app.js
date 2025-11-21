@@ -9,12 +9,11 @@ import express from "express";
 import cleanupManager from "./Automation/index.js";
 
 import { corsOptions } from "./config/cors.js";
-import { errorMiddleware } from "./middlewares/errorHandler.js";
-
 import authRouter from "./routes/auth.routes.js";
 import chatRouter from "./routes/chat.routes.js";
 import postRouter from "./routes/post.routes.js";
 import userRouter from "./routes/user.routes.js";
+import { errorMiddleware } from "./middlewares/errMiddleware.js";
 
 const app = express();
 

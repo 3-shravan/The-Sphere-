@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { deleteFile, uploadFile } from "../config/cloudinary.js";
+import ApiError from "../core/errors/apiError.js";
 import catchAsyncError from "../middlewares/catchAsyncError.js";
-import ErrorHandler from "../middlewares/errorHandler.js";
 import { Block } from "../models/user/block.model.js";
 import { User } from "../models/user/user.model.js";
 import { blockedUsers } from "../services/block.services.js";
@@ -37,25 +37,104 @@ export const getAllUsers = catchAsyncError(async (req, res) => {
   });
 });
 
+// export const getSuggestedUsers = catchAsyncError(async (req, res) => {
+//   const userId = req.user._id;
+//   // const blockedUserIds = await blockedUsers(userId);
+//   const user = await User.findOne({
+//     _id: userId,
+//     accountVerified: true,
+//   }).select("-password");
+
+//   const users = await User.find({
+//     _id: { $nin: [userId, ...user.following] }, //add -> ,...blockedUserIds
+//     accountVerified: true,
+//   })
+//     .sort({ createdAt: -1 })
+//     .select("-password")
+//     .limit(20);
+
+//   if (!users)
+//     throw new ApiError(404, "Suggested Users are not available currently.");
+//   return handleSuccessResponse(res, 200, "Suggested users fetched", { users });
+// });
+
 export const getSuggestedUsers = catchAsyncError(async (req, res) => {
   const userId = req.user._id;
-  // const blockedUserIds = await blockedUsers(userId);
-  const user = await User.findOne({
-    _id: userId,
-    accountVerified: true,
-  }).select("-password");
 
-  const users = await User.find({
-    _id: { $nin: [userId, ...user.following] }, //add -> ,...blockedUserIds
+  const user = await User.findById(userId).select("following").lean();
+
+  if (!user) {
+    throw new ApiError(404, "User not found.");
+  }
+
+  const followingIds = user.following || [];
+
+  // -----------------------------
+  // 🧠 STEP 1: Mutual connections pipeline
+  // -----------------------------
+  const mutualSuggestions = await User.aggregate([
+    {
+      $match: {
+        _id: { $in: followingIds },
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "following",
+        foreignField: "_id",
+        as: "theirFollowings",
+      },
+    },
+    { $unwind: "$theirFollowings" },
+    {
+      $group: {
+        _id: "$theirFollowings._id",
+        score: { $sum: 1 }, // mutual follow count
+      },
+    },
+    {
+      $match: {
+        _id: { $nin: [...followingIds, userId] }, // remove already-followed and self
+      },
+    },
+    { $sort: { score: -1 } },
+    { $limit: 20 },
+  ]);
+
+  const mutualIds = mutualSuggestions.map((u) => u._id);
+
+  const mutualUsers = await User.find({
+    _id: { $in: mutualIds },
+    accountVerified: true,
+  })
+    .select("-password")
+    .lean();
+
+  // -----------------------------
+  // 🟦 STEP 2: Fallback Suggestions (fresh users, not followed)
+  // -----------------------------
+  const fallbackUsers = await User.find({
+    _id: { $nin: [...followingIds, userId, ...mutualIds] },
     accountVerified: true,
   })
     .sort({ createdAt: -1 })
     .select("-password")
-    .limit(20);
+    .limit(10)
+    .lean();
 
-  if (!users)
-    throw new ErrorHandler(404, "Suggested Users are not available currently.");
-  return handleSuccessResponse(res, 200, "Suggested users fetched", { users });
+  // -----------------------------
+  // FINAL RESPONSE
+  // -----------------------------
+  const suggestions = [...mutualUsers, ...fallbackUsers];
+
+  if (!suggestions.length) {
+    throw new ApiError(404, "Suggested users are not available currently.");
+  }
+
+  return handleSuccessResponse(res, 200, "Suggested users fetched", {
+    users: suggestions,
+  });
 });
 
 export const myProfile = catchAsyncError(async (req, res) => {
@@ -75,7 +154,7 @@ export const myProfile = catchAsyncError(async (req, res) => {
         select: "name profilePicture",
       },
     ]);
-  if (!user) throw new ErrorHandler(404, "error while getting your profile");
+  if (!user) throw new ApiError(404, "error while getting your profile");
   return handleSuccessResponse(res, 200, "Profile fetched", { user });
 });
 
@@ -98,9 +177,9 @@ export const getProfiles = catchAsyncError(async (req, res) => {
       },
     ]);
   // if (userBlocked(req.user._id, user._id))
-  //   throw new ErrorHandler(403, "You cannot view this profile");
+  //   throw new ApiError(403, "You cannot view this profile");
 
-  if (!user) throw new ErrorHandler(404, "User not found");
+  if (!user) throw new ApiError(404, "User not found");
   return handleSuccessResponse(res, 200, "Profile fetched", { user });
 });
 
@@ -112,10 +191,10 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
   const dob = birthday ? new Date(birthday) : null;
 
   if (dob && !isAtLeast13YearsOld(dob))
-    return next(new ErrorHandler(400, "You must be at least 13 years old."));
+    return next(new ApiError(400, "You must be at least 13 years old."));
 
   const user = await User.findById(userId);
-  if (!user) return next(new ErrorHandler(404, "User not found"));
+  if (!user) return next(new ApiError(404, "User not found"));
 
   const {
     isUnchanged,
@@ -143,7 +222,7 @@ export const updateProfile = catchAsyncError(async (req, res, next) => {
       "avatars"
     );
     if (!url || !publicId)
-      return next(new ErrorHandler(500, "Failed to upload profile picture"));
+      return next(new ApiError(500, "Failed to upload profile picture"));
     user.profilePicture = url;
     user.profilePicturePublicId = publicId;
   }
@@ -210,9 +289,9 @@ export const followUnfollow = catchAsyncError(async (req, res) => {
 export const deleteProfilePicture = catchAsyncError(async (req, res, next) => {
   const userId = req.user._id;
   const user = await User.findById(userId);
-  if (!user) return next(new ErrorHandler(404, "User not found"));
+  if (!user) return next(new ApiError(404, "User not found"));
   if (!user.profilePicturePublicId)
-    return next(new ErrorHandler(400, "No profile picture to delete"));
+    return next(new ApiError(400, "No profile picture to delete"));
 
   try {
     const result = await deleteFile(user.profilePicturePublicId);
@@ -226,7 +305,7 @@ export const deleteProfilePicture = catchAsyncError(async (req, res, next) => {
       { user }
     );
   } catch (error) {
-    throw new ErrorHandler(
+    throw new ApiError(
       500,
       error.message || "Failed to delete profile picture"
     );
@@ -235,7 +314,7 @@ export const deleteProfilePicture = catchAsyncError(async (req, res, next) => {
 
 export const deleteAccount = catchAsyncError(async (req, res) => {
   const user = await User.deleteOne({ _id: req.user._id });
-  if (!user) throw new ErrorHandler(404, "User not found");
+  if (!user) throw new ApiError(404, "User not found");
   return handleSuccessResponse(res, 200, "Account deleted", { user });
 });
 

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { deleteFile, uploadFile } from "../../config/cloudinary.js";
+import ApiError from "../../core/errors/apiError.js";
 import catchAsyncError from "../../middlewares/catchAsyncError.js";
-import ErrorHandler from "../../middlewares/errorHandler.js";
 import { Comment } from "../../models/feed/comment.model.js";
 import { Post } from "../../models/feed/post.model.js";
 import { User } from "../../models/user/user.model.js";
@@ -91,7 +91,7 @@ export const getSavedPosts = catchAsyncError(async (req, res, next) => {
     })
     .sort({ createdAt: -1 })
     .limit(100);
-  if (!savedPosts) return next(new ErrorHandler(404, "No saved posts found"));
+  if (!savedPosts) return next(new ApiError(404, "No saved posts found"));
   return handleSuccessResponse(res, 200, "Saved posts fetched successfully", {
     savedPosts,
   });
@@ -125,7 +125,7 @@ export const getPostById = catchAsyncError(async (req, res, next) => {
     { path: "author", select: "name profilePicture" },
     { path: "likes", select: "name profilePicture" },
   ]);
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
+  if (!post) return next(new ApiError(404, "Post not found"));
 
   const isSaved = await User.exists({ _id: userId, saved: postId });
   return handleSuccessResponse(res, 200, "Post fetched successfully", {
@@ -159,7 +159,7 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
   const tags = await parseArray(rawTags);
 
   const image = req.file;
-  if (!image) return next(new ErrorHandler(400, "Image is required for post"));
+  if (!image) return next(new ApiError(400, "Image is required for post"));
 
   const media = await uploadFile(image, `post_${uuidv4()}`, "posts");
   const post = await Post.create({
@@ -171,7 +171,7 @@ export const addNewPost = catchAsyncError(async (req, res, next) => {
     public_id: media.public_id,
     thoughts: null,
   });
-  if (!post) return next(new ErrorHandler(500, "Failed to upload post"));
+  if (!post) return next(new ApiError(500, "Failed to upload post"));
 
   await User.findByIdAndUpdate(authorId, { $push: { posts: post._id } });
   await post.populate({ path: "author", select: "name profilePicture" });
@@ -187,9 +187,9 @@ export const updatePost = catchAsyncError(async (req, res, next) => {
   const tags = await parseArray(rawTags);
 
   const post = await Post.findOne({ _id: postId, author: req.user._id });
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
+  if (!post) return next(new ApiError(404, "Post not found"));
   if (post.thoughts)
-    throw new ErrorHandler(400, "You cannot update a post with thoughts");
+    throw new ApiError(400, "You cannot update a post with thoughts");
 
   const { isUnchanged, isCaptionSame, isLocationSame, isTagsSame } =
     postChanges(post, {
@@ -210,7 +210,6 @@ export const updatePost = catchAsyncError(async (req, res, next) => {
   return handleSuccessResponse(res, 200, "Post updated successfully", { post });
 });
 
-
 /****************************************
  * @Like_and_dislike_Post
  * ***************************************/
@@ -222,11 +221,11 @@ export const likePost = catchAsyncError(async (req, res, next) => {
     path: "author",
     select: "name profilePicture",
   });
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
+  if (!post) return next(new ApiError(404, "Post not found"));
 
   // check block status
   // if (await userBlocked(likedBy, post.author._id))
-  //   return next(new ErrorHandler(403, "You cannot like this post"));
+  //   return next(new ApiError(403, "You cannot like this post"));
 
   const isLiked = post.likes.includes(likedBy);
 
@@ -266,7 +265,7 @@ export const savePosts = catchAsyncError(async (req, res, next) => {
   const savedBy = req.user._id;
 
   const post = await Post.findById(postId);
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
+  if (!post) return next(new ApiError(404, "Post not found"));
 
   const user = await User.findById(savedBy);
 
@@ -288,7 +287,7 @@ export const deletePost = catchAsyncError(async (req, res, next) => {
   const authorID = req.user._id;
 
   const post = await Post.findOneAndDelete({ _id: postId, author: authorID });
-  if (!post) return next(new ErrorHandler(404, "Post not found"));
+  if (!post) return next(new ApiError(404, "Post not found"));
 
   if (post.media) await deleteFile(post.public_id);
 

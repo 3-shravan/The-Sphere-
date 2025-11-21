@@ -33,7 +33,6 @@ export const usernameSchema = Joi.string()
     "string.empty": "username is required",
     "string.min": "username should have at least {#limit} characters",
     "string.max": "username should not exceed {#limit} characters",
-    //lowercase
     "string.pattern.base":
       "username can only contain lowercase letters, numbers, dots, and underscores",
     "any.required": "username is required",

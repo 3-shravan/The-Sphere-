@@ -1,23 +1,23 @@
-import path from "node:path"
-import { v2 as cloudinary } from "cloudinary"
-import DataUriParser from "datauri/parser.js"
-import { config } from "dotenv"
-import sharp from "sharp"
-import ErrorHandler from "../middlewares/errorHandler.js"
+import path from "node:path";
+import { v2 as cloudinary } from "cloudinary";
+import DataUriParser from "datauri/parser.js";
+import { config } from "dotenv";
+import sharp from "sharp";
+import ApiError from "../core/errors/apiError.js";
 
-const parser = new DataUriParser()
-config({ path: "./src/config/config.env" })
+const parser = new DataUriParser();
+config({ path: "./src/config/config.env" });
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+});
 
 const getDataUri = (file) => {
-  const extensionName = path.extname(file.originalname).toString()
-  return parser.format(extensionName, file.buffer).content
-}
+  const extensionName = path.extname(file.originalname).toString();
+  return parser.format(extensionName, file.buffer).content;
+};
 
 /**
  * Optimize image using sharp
@@ -26,8 +26,8 @@ const optimizeImageBuffer = async (file) => {
   return await sharp(file.buffer)
     .resize({ width: 800, height: 800, fit: "inside" })
     .toFormat("jpeg", { quality: 80 })
-    .toBuffer()
-}
+    .toBuffer();
+};
 
 /**
  * Upload file (image or video)
@@ -38,36 +38,42 @@ const optimizeImageBuffer = async (file) => {
  * @param {boolean} optimize - Optimize images before upload
  */
 
-export const uploadFile = async (file, public_id, folderName, type = "image", optimize = true) => {
-  if (!file) return null
+export const uploadFile = async (
+  file,
+  public_id,
+  folderName,
+  type = "image",
+  optimize = true
+) => {
+  if (!file) return null;
   try {
-    let uploadFile = file
+    let uploadFile = file;
     if (optimize && type === "image") {
-      const optimizedBuffer = await optimizeImageBuffer(file)
+      const optimizedBuffer = await optimizeImageBuffer(file);
       uploadFile = {
         originalname: file.originalname,
         mimetype: "image/jpeg",
         buffer: optimizedBuffer,
-      }
+      };
     }
 
-    const fileUri = getDataUri(uploadFile)
+    const fileUri = getDataUri(uploadFile);
     const cloudResponse = await cloudinary.uploader.upload(fileUri, {
       resource_type: type,
       public_id,
       overwrite: true,
       folder: folderName,
-    })
+    });
 
     return {
       url: cloudResponse.secure_url,
       publicId: cloudResponse.public_id,
       type,
-    }
+    };
   } catch (_error) {
-    throw new ErrorHandler(500, `Failed to upload ${type} to Cloudinary`)
+    throw new ApiError(500, `Failed to upload ${type} to Cloudinary`);
   }
-}
+};
 
 /**
  * Delete file (image or video)
@@ -76,22 +82,25 @@ export const uploadFile = async (file, public_id, folderName, type = "image", op
  */
 
 export const deleteFile = async (publicId, type = "image") => {
-  if (!publicId) return null
+  if (!publicId) return null;
   try {
     const result = await cloudinary.uploader.destroy(publicId, {
       resource_type: type,
-    })
+    });
 
     if (result.result === "ok") {
-      return `${type} deleted successfully`
+      return `${type} deleted successfully`;
     } else if (result.result === "not found") {
-      return `${type} not found in Cloudinary`
+      return `${type} not found in Cloudinary`;
     } else {
-      throw new ErrorHandler(500, `Unexpected Cloudinary response: ${result.result}`)
+      throw new ApiError(
+        500,
+        `Unexpected Cloudinary response: ${result.result}`
+      );
     }
   } catch (_error) {
-    throw new ErrorHandler(500, `${type} deletion failed in Cloudinary`)
+    throw new ApiError(500, `${type} deletion failed in Cloudinary`);
   }
-}
+};
 
-export default cloudinary
+export default cloudinary;

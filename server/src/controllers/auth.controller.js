@@ -1,5 +1,6 @@
+import ApiError from "../core/errors/apiError.js";
+import { BAD_REQUEST, NOT_FOUND } from "../core/errors/customError.js";
 import catchAsyncError from "../middlewares/catchAsyncError.js";
-import ErrorHandler from "../middlewares/errorHandler.js";
 import { ExpiredToken } from "../models/jwtToken.model.js";
 import { User } from "../models/user/user.model.js";
 import {
@@ -31,7 +32,7 @@ export const register = catchAsyncError(async (req, res) => {
   email = email?.trim() || undefined;
 
   if (verificationMethod === "phone" && !validatePhoneNo(phone))
-    throw new ErrorHandler(400, "Please enter a valid phone number.");
+    throw new ApiError(400, "Please enter a valid phone number.");
 
   await checkExistingUsers({ name, phone, email });
 
@@ -67,7 +68,7 @@ export const verifyOTP = catchAsyncError(async (req, res, next) => {
   const { email, phone, otp } = req.body;
 
   if (phone && !validatePhoneNo(phone))
-    return next(new ErrorHandler(400, "Invalid phone number"));
+    return next(new ApiError(400, "Invalid phone number"));
 
   const query = { accountVerified: false };
 
@@ -76,19 +77,17 @@ export const verifyOTP = catchAsyncError(async (req, res, next) => {
   else if (email) query.email = email;
 
   const user = await User.findOne(query);
-  if (!user)
-    return next(new ErrorHandler(404, "No user found to be verified."));
+  if (!user) return next(new ApiError(404, "No user found to be verified."));
 
   const verificationcode = user.verificationCode;
-  if (verificationcode !== Number(otp))
-    throw new ErrorHandler(400, "Invalid OTP");
+  if (verificationcode !== Number(otp)) throw new ApiError(400, "Invalid OTP");
 
   /*
    * * * Check if OTP is expired
    */
   const expireTime = new Date(user.verificationCodeExpire).getTime();
   if (expireTime < Date.now())
-    throw new ErrorHandler(400, "OTP Expired. Please request a new one.");
+    throw new ApiError(400, "OTP Expired. Please request a new one.");
 
   user.accountVerified = true;
   user.verificationCode = undefined;
@@ -116,11 +115,10 @@ export const login = catchAsyncError(async (req, res, next) => {
   else query.email = email;
 
   const user = await User.findOne(query).select("+password");
-  if (!user) throw new ErrorHandler(404, "No user found");
+  if (!user) throw new NOT_FOUND(`No user found with ${email || phone}`);
 
   const isMatch = await user.comparePassword(password);
-  if (!isMatch)
-    return next(new ErrorHandler(400, "Incorrect password. Please try again."));
+  if (!isMatch) throw new BAD_REQUEST("Incorrect credentials");
 
   sendToken(user, 200, "Login Successfull 🚀", res);
 });
@@ -130,7 +128,7 @@ export const logout = catchAsyncError(async (req, res) => {
   try {
     await ExpiredToken.create({ token });
   } catch (_error) {
-    throw new ErrorHandler(500, `token is not blacklisted.`);
+    throw new ApiError(500, `token is not blacklisted.`);
   }
   res.clearCookie("token", { httpOnly: true });
   res.cookie("token", "", { expires: new Date(Date.now()), httpOnly: true });
@@ -145,7 +143,7 @@ export const forgetPassword = catchAsyncError(async (req, res) => {
   const { email, phone } = req.body;
 
   if (phone && !validatePhoneNo(phone))
-    throw new ErrorHandler(400, "Please enter a valid phone number.");
+    throw new ApiError(400, "Please enter a valid phone number.");
 
   const query = { accountVerified: true };
   if (email) query.email = email;
@@ -153,7 +151,7 @@ export const forgetPassword = catchAsyncError(async (req, res) => {
 
   const user = await User.findOne(query);
   if (!user)
-    throw new ErrorHandler(404, `No user is registered with ${email || phone}`);
+    throw new ApiError(404, `No user is registered with ${email || phone}`);
 
   try {
     if (email) {
@@ -194,7 +192,7 @@ export const forgetPassword = catchAsyncError(async (req, res) => {
       user.resetPasswordOTPExpire = undefined;
     }
     await user.save({ validateBeforeSave: false });
-    throw new ErrorHandler(
+    throw new ApiError(
       400,
       error.message ||
         (email
@@ -212,7 +210,7 @@ export const verifyResetPasswordOTP = catchAsyncError(async (req, res) => {
     resetPasswordOTP: otp,
     resetPasswordOTPExpire: { $gt: Date.now() },
   });
-  if (!user) throw new ErrorHandler(400, "Invalid OTP");
+  if (!user) throw new ApiError(400, "Invalid OTP");
 
   user.resetPassword = true;
   user.resetPasswordOTP = undefined;
@@ -226,10 +224,10 @@ export const resetPasswordWithEmailToken = catchAsyncError(async (req, res) => {
   const { newPassword, confirmPassword } = req.body;
 
   if (!newPassword || !confirmPassword)
-    throw new ErrorHandler(400, "Please provide new and confirm password");
+    throw new ApiError(400, "Please provide new and confirm password");
 
   if (newPassword !== confirmPassword)
-    throw new ErrorHandler(400, "Passwords do not match");
+    throw new ApiError(400, "Passwords do not match");
 
   const resetPasswordToken = crpytPassword(token);
   const user = await User.findOne({
@@ -237,11 +235,11 @@ export const resetPasswordWithEmailToken = catchAsyncError(async (req, res) => {
     accountVerified: true,
     resetPasswordTokenExpire: { $gt: Date.now() },
   }).select("+password");
-  if (!user) throw new ErrorHandler(400, "Invalid or expired token");
+  if (!user) throw new ApiError(400, "Invalid or expired token");
 
   const isMatch = await user.comparePassword(newPassword);
   if (isMatch)
-    throw new ErrorHandler(400, "Previously used password. Use a new one.");
+    throw new ApiError(400, "Previously used password. Use a new one.");
 
   user.password = newPassword;
   user.resetPasswordToken = undefined;
@@ -255,10 +253,10 @@ export const resetPasswordWithPhone = catchAsyncError(async (req, res) => {
   const { newPassword, confirmPassword } = req.body;
 
   if (!newPassword || !confirmPassword)
-    throw new ErrorHandler(400, "Please provide new and confirm password");
+    throw new ApiError(400, "Please provide new and confirm password");
 
   if (newPassword !== confirmPassword)
-    throw new ErrorHandler(400, "Passwords do not match");
+    throw new ApiError(400, "Passwords do not match");
 
   const user = await User.findOne({
     phone,
@@ -267,11 +265,11 @@ export const resetPasswordWithPhone = catchAsyncError(async (req, res) => {
   }).select("+password");
 
   if (!user)
-    throw new ErrorHandler(400, "Unauthorized or invalid phone-based reset");
+    throw new ApiError(400, "Unauthorized or invalid phone-based reset");
 
   const isMatch = await user.comparePassword(newPassword);
   if (isMatch)
-    throw new ErrorHandler(400, "Previously used password. Use a new one.");
+    throw new ApiError(400, "Previously used password. Use a new one.");
 
   user.password = newPassword;
   user.resetPassword = false;
