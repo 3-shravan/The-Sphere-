@@ -1,27 +1,30 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
-export default function useInfiniteScroll({ thresold = 50, scrollRef }) {
-  const [remainingScroll, setRemainingScroll] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const fetchLock = useRef(false)
-
-  const handleScroll = useCallback(() => {
-    if (!scrollRef.current) return
-
-    const { scrollTop, scrollHeight, clientHeight } = scrollRef.current
-    const remScroll = scrollHeight - (scrollTop + clientHeight)
-    setRemainingScroll(remScroll)
-
-    if (remScroll < thresold && !loading) setLoading(true)
-  }, [scrollRef, thresold, loading])
+export default function useInfiniteScroll({ scrollRef, threshold = 80, onReach }) {
+  const lockRef = useRef(false)
 
   useEffect(() => {
     const container = scrollRef.current
     if (!container) return
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container
+      const remaining = scrollHeight - (scrollTop + clientHeight)
+
+      if (remaining < threshold && !lockRef.current) {
+        lockRef.current = true
+        onReach?.().finally(() => {
+          // delay unlock to avoid spamming
+          setTimeout(() => {
+            lockRef.current = false
+          }, 150)
+        })
+      }
+    }
+
     container.addEventListener("scroll", handleScroll)
-
     return () => container.removeEventListener("scroll", handleScroll)
-  }, [handleScroll, scrollRef])
+  }, [scrollRef, threshold, onReach])
 
-  return { remainingScroll, loading, setLoading, fetchLock }
+  return { lockRef }
 }
