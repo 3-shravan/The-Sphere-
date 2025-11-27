@@ -1,6 +1,6 @@
-import { Marquee, Menu } from "@components";
-import { useMenu } from "@context";
-import { AnimatePresence } from "framer-motion";
+import { Marquee, Menu } from "@components"
+import { useMenu } from "@context"
+import { AnimatePresence } from "framer-motion"
 import {
   Chats,
   Connect,
@@ -17,14 +17,13 @@ import {
   StackedCards,
   UnreadMessage,
   VelocityText,
-} from "../components";
-import styles from "../styles/page.module.css";
+} from "../components"
+import styles from "../styles/page.module.css"
 
 export default function Page() {
-  const { menu } = useMenu();
+  const { menu } = useMenu()
   return (
-    
-    <div className={styles.page}>
+    <div className={`${styles.page}`}>
       <div className={styles.marqueeTop}>
         <Marquee direction="left" />
       </div>
@@ -75,5 +74,5 @@ export default function Page() {
         <Marquee />
       </div>
     </div>
-  );
+  )
 }

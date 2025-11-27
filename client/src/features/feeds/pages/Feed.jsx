@@ -1,8 +1,9 @@
+import { useInfiniteScroll } from "@eightmay/hooks"
 import { useRef } from "react"
 import { Loading } from "@/components"
 import { usePost } from "@/context"
 import Thoughts from "@/features/posts/components/Thoughts"
-import { useInfiniteScroll } from "@/hooks"
+
 import FeedDropdown from "../components/FeedDropdown"
 import FeedList from "../components/FeedList"
 

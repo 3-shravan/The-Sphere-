@@ -1,34 +1,32 @@
-import { CircleSmall } from "lucide-react";
-import { useEffect, useState } from "react";
-import { SmoothScroll } from "@/components";
-import { useAuth } from "@/context";
-import { useSmoothScroll } from "@/hooks";
-import { useFollowUser } from "@/shared/api/useMutations";
-import { ListUsers } from "../components/ListUsers";
-import { useSuggestedUsers } from "../api/useQueries";
+import { useSmoothScroll } from "@eightmay/use-custom-lenis"
+import { CircleSmall } from "lucide-react"
+import { useEffect, useState } from "react"
+import { SmoothScroll } from "@/components"
+import { useAuth } from "@/context"
+import { useFollowUser } from "@/shared/api/useMutations"
+import { useSuggestedUsers } from "../api/useQueries"
+import { ListUsers } from "../components/ListUsers"
 
 export default function SuggestedUsers() {
-  const { data } = useSuggestedUsers();
-  const suggestedUsers = data?.users;
-  const { auth } = useAuth();
-  const currentUser = auth?.profile?._id;
+  const { data } = useSuggestedUsers()
+  const suggestedUsers = data?.users
+  const { auth } = useAuth()
+  const currentUser = auth?.profile?._id
 
-  const { mutate: followUser } = useFollowUser(() => {});
-  const [map, setMap] = useState({});
+  const { mutate: followUser } = useFollowUser(() => {})
+  const [map, setMap] = useState({})
   useEffect(() => {
     if (suggestedUsers) {
-      const newMap = {};
+      const newMap = {}
       suggestedUsers.forEach((user) => {
-        const isFollowing = user?.followers?.some(
-          (f) => f?._id === currentUser
-        );
-        newMap[user?._id] = isFollowing;
-      });
-      setMap(newMap);
+        const isFollowing = user?.followers?.some((f) => f?._id === currentUser)
+        newMap[user?._id] = isFollowing
+      })
+      setMap(newMap)
     }
-  }, [suggestedUsers, currentUser]);
+  }, [suggestedUsers, currentUser])
 
-  useSmoothScroll(".scroll");
+  useSmoothScroll(".scroll")
 
   return (
     <SmoothScroll className="scroll custom-scrollbar-hide max-h-[300px] md:max-h-[215px]">
@@ -38,13 +36,8 @@ export default function SuggestedUsers() {
           you may know
         </h2>
 
-        <ListUsers
-          users={suggestedUsers}
-          followUser={followUser}
-          map={map}
-          setMap={setMap}
-        />
+        <ListUsers users={suggestedUsers} followUser={followUser} map={map} setMap={setMap} />
       </div>
     </SmoothScroll>
-  );
+  )
 }
