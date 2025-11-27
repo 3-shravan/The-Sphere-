@@ -18,7 +18,7 @@ export default function Conversations() {
             <SearchUsers />
             <Connections />
           </div>
-          <div className={`${!selectedChat && "hidden md:flex"} w-full`}>
+          <div className={`${!selectedChat && "hidden md:flex"} w-full rounded-xl bg-accent/20`}>
             <ChatArea />
           </div>
         </>

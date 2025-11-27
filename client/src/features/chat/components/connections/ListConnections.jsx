@@ -20,7 +20,7 @@ export default function ListConnections({ connections }) {
 
             <div className="flex-1 overflow-hidden">
               <p className="truncate font-medium text-sm">{user.name}</p>
-              <p className="truncate font-Futura text-rose-100 text-xs">{lastMessage}</p>
+              <p className="truncate font-Futura text-primary text-xs">{lastMessage}</p>
             </div>
 
             <div className="flex flex-col items-end gap-1">

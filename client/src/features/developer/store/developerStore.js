@@ -1,6 +1,7 @@
 import { create } from "zustand"
+import { MODE } from "@/lib/utils/api"
 
 export const useDeveloperStore = create((set) => ({
-  isChat: false,
+  isChat: MODE  === "development",
   setIsChat: (value) => set({ isChat: value }),
 }))

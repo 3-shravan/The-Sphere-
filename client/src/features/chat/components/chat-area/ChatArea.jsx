@@ -14,7 +14,7 @@ export default function ChatArea() {
   if (!selectedChat) return <NoSelectedChat />
 
   return (
-    <div className="flex h-full w-full flex-col rounded-xl bg-input/5 p-1 md:p-2">
+    <div className="flex h-full w-full flex-col rounded-xl bg-input/5 p-1 pb-2">
       <header className="flex items-center gap-2 p-2">
         <Button
           variant="ghost"
