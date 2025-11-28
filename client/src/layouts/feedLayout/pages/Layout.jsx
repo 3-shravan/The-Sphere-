@@ -8,7 +8,7 @@ export default function Layout() {
     <div className="h-[100svh] w-full md:flex">
       {!selectedChat && <PhoneHeader />}
       <Sidebar />
-      <main className="flex h-[92svh] flex-1 md:h-screen md:min-w-[70vw]">
+      <main className="flex h-full flex-1 md:h-screen md:min-w-[70vw]">
         <Outlet />
       </main>
       {!selectedChat && <Dock />}

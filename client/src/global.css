@@ -166,13 +166,13 @@ body {
     @apply md:w-full lg:w-auto lg:min-w-[14vw] lg:max-w-[24vw];
   }
   .home-page {
-    @apply flex flex-col w-full flex-1 overflow-hidden rounded-3xl m-1.5 md:m-3 md:border-[1.5px] md:border-border;
+    @apply flex flex-col w-full flex-1 overflow-hidden lg:rounded-3xl m-1.5 md:m-3 md:border-[1.5px] md:border-border;
   }
   .home-page-section {
     @apply hidden lg:flex ml-2 flex-col gap-5 pt-2 pl-0 mr-4.5 w-full;
   }
   .feed {
-    @apply h-[90vh] pb-18 md:pb-8 lg:pb-5 px-1 md:pl-4.5 lg:min-w-[49vw];
+    @apply h-[94svh] pb-30 lg:pb-15 md:pb-8 px-1 md:pl-4.5 lg:min-w-[49vw];
   }
   .post-card {
     @apply bg-card text-card-foreground rounded-2xl px-2 py-4 md:px-6 lg:p-4 lg:max-w-[47vw] space-y-1;

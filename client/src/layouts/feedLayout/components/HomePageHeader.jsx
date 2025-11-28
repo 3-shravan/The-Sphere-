@@ -7,7 +7,7 @@ import BirthdayHeader from "@/features/birthdays/components/HappyBirthday"
 export default function HomePageHeader() {
   const { auth, isBirthday } = useAuth()
   return (
-    <div className="md:py- 1 flex-between pt-2 md:mt-1">
+    <div className="flex-between pt-12 md:mt-1 md:py-1">
       {/* TIME  */}
       <span className="hidden px-6 font-blackout text-second text-xs tracking-widest md:block">
         {new Date().toLocaleTimeString([], {
