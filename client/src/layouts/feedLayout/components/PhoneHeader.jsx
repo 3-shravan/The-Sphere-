@@ -11,7 +11,7 @@ export default function PhoneHeader() {
   const { theme, toggleTheme } = useTheme()
 
   return (
-    <header className="sticky z-50 w-full bg-background md:hidden">
+    <header className="fixed z-50 w-full bg-background md:hidden">
       <div className="flex-between items-center p-2 py-2 pl-3">
         {/*  Logo */}
         <div className="flex items-center">
