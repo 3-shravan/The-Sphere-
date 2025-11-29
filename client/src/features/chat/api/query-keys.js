@@ -2,6 +2,7 @@ export const CHAT_QUERY_KEYS = {
   connections: ["chats", "connections"],
   search: (q) => ["chats", "search", q],
   chat: (chatId) => ["chat", chatId],
+  chatExists: (userId) => ["chat", "exists", userId],
   messages: (chatId) => ["chat", chatId, "messages"],
   group: (groupId) => ["chat", "groups", groupId],
 }

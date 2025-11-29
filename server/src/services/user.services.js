@@ -1,6 +1,7 @@
 import ApiError from "../core/errors/apiError.js";
 import { User } from "../models/user/user.model.js";
 
+
 export const checkExistingUsers = async ({ name, phone, email }) => {
   const [nameUser, phoneUser, emailUser] = await Promise.all([
     User.findOne({ name, accountVerified: true }),

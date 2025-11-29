@@ -11,19 +11,34 @@ import { handleSuccessResponse } from "../../utils/responseHandler.js";
 export const sendMessage = catchAsyncError(async (req, res, next) => {
   const { content } = req.body;
   const { receiverId } = req.params;
+  const { _id: senderId } = req.user;
+
   const image = req.file;
-  const senderId = req.user._id;
 
   if (!receiverId || (!content && !image))
     return next(new ApiError(400, "Invalid data"));
 
   let media = null;
   if (image) media = await uploadFile(image, `message_${uuidv4()}`, "messages");
+  let chat = null;
 
-  let chat = await Chat.findById(receiverId);
-  if (chat) {
-    // GROUP CHAT FLOW
-    if (chat.isGroupChat) {
+  // SELF CHAT FLOW
+  if (receiverId.toString() === senderId.toString()) {
+    chat = await Chat.findOne({
+      users: { $size: 1, $all: [senderId] },
+      isGroupChat: false,
+    });
+    if (!chat) {
+      chat = await Chat.create({
+        users: [senderId],
+        isGroupChat: false,
+      });
+    }
+  }
+  // GROUP CHAT FLOW
+  if (!chat) {
+    chat = await Chat.findById(receiverId);
+    if (chat?.isGroupChat) {
       const isMember = chat.users.some((u) => u.equals(senderId));
       if (!isMember)
         return next(new ApiError(403, "You are not a member of this group"));
@@ -38,8 +53,9 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
         sentMessage: message,
       });
     }
-  } else {
-    // PRIVATE CHAT FLOW (receiverId as UserId)
+  }
+  // PRIVATE CHAT FLOW (receiverId as UserId)
+  if (!chat) {
     const userExists = await User.exists({ _id: receiverId });
     if (!userExists) return next(new ApiError(404, "User not found"));
 
@@ -56,6 +72,7 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
   }
 
   if (!chat) return next(new ApiError(500, "Chat creation failed"));
+
   const newMessage = await createAndSaveMessage(
     chat._id,
     senderId,

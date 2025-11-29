@@ -25,9 +25,11 @@ export function Spinner({ size = "6", color = "neutral-700" }) {
   )
 }
 
-export function Loading({ message = "", size, spinner = true }) {
+export function Loading({ message = "", size, spinner = true, pos = "center" }) {
   return (
-    <div className="w-full flex-center gap-2 font-Futura font-bold text-sm uppercase">
+    <div
+      className={`${pos === "center" && "h-full"} w-full flex-center gap-2 font-Futura font-bold text-sm uppercase`}
+    >
       {spinner && <Spinner size={size} />}
       {message}
     </div>
@@ -36,6 +38,33 @@ export function Loading({ message = "", size, spinner = true }) {
 
 export function ShowError({ message = "❗ Failed to fetch" }) {
   return <div className="py-10 text-center font-bold text-third">{message}</div>
+}
+
+const Spin = ({ text, radius, fontSize, letterSpacing }) => {
+  const characters = text.split("")
+  return (
+    <motion.div className="relative aspect-square" style={{ width: radius * 2 }}>
+      <p aria-label={text} />
+      <p
+        aria-hidden="true"
+        className="absolute top-0 left-1/2 whitespace-nowrap font-bold text-[color:var(--foreground)] mix-blend-difference"
+      >
+        {characters.map((ch, i) => (
+          <motion.span
+            key={i}
+            className="absolute top-0 left-1/2 font-Gilroy font-bold"
+            style={{
+              transformOrigin: `0 ${radius}px`,
+              transform: `rotate(${i * letterSpacing}deg)`,
+              fontSize,
+            }}
+          >
+            {ch}
+          </motion.span>
+        ))}
+      </p>
+    </motion.div>
+  )
 }
 
 export function Loader() {
@@ -81,31 +110,5 @@ export function Loader() {
         <Spin text="LOADING LOADING LOADING" radius={480} fontSize="180px" letterSpacing={15} />
       </motion.div>
     </div>
-  )
-}
-const Spin = ({ text, radius, fontSize, letterSpacing }) => {
-  const characters = text.split("")
-  return (
-    <motion.div className="relative aspect-square" style={{ width: radius * 2 }}>
-      <p aria-label={text} />
-      <p
-        aria-hidden="true"
-        className="absolute top-0 left-1/2 whitespace-nowrap font-bold text-[color:var(--foreground)] mix-blend-difference"
-      >
-        {characters.map((ch, i) => (
-          <motion.span
-            key={i}
-            className="absolute top-0 left-1/2 font-Gilroy font-bold"
-            style={{
-              transformOrigin: `0 ${radius}px`,
-              transform: `rotate(${i * letterSpacing}deg)`,
-              fontSize,
-            }}
-          >
-            {ch}
-          </motion.span>
-        ))}
-      </p>
-    </motion.div>
   )
 }

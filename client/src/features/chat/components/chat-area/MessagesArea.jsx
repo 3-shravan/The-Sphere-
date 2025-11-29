@@ -13,6 +13,12 @@ export default function MessagesArea() {
         <Loading message="Loading Messages.." />
       </div>
     )
+  if (messages?.length === 0)
+    return (
+      <div className="min-h-0 flex-1 flex-center px-3 text-center text-muted-foreground text-sm">
+        No messages yet. Start the conversation!
+      </div>
+    )
   return (
     <ScrollArea className="min-h-0 flex-1 px-3 py-2">
       <div className="flex flex-col gap-2">

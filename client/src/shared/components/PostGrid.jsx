@@ -115,7 +115,9 @@ const Footer = ({ createdAt, location, savePost, likePost, id, likes }) => (
           addSuffix: true,
         })}
       </p>
-      {location && <p className="ml-1 text-[10px] text-neutral-400 uppercase">in {location}</p>}
+      {location && (
+        <p className="ml-1 hidden text-[10px] text-neutral-400 uppercase md:block">in {location}</p>
+      )}
     </div>
     <div className="flex gap-2">
       {savePost && <SavePost postId={id} />}

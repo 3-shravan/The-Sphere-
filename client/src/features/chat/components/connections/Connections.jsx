@@ -1,11 +1,11 @@
 import { MessageSquare } from "lucide-react"
-import { Spinner } from "@/components"
+import { Loading } from "@/components"
 import { useConnections } from "../../api/useQueries"
 import ListConnections from "./ListConnections"
 
 export default function Connections() {
   const { data, isLoading } = useConnections()
-  if (isLoading) return <Spinner />
+  if (isLoading) return <Loading />
   return (
     <div className="flex flex-1 flex-col overflow-auto rounded-lg">
       <h1 className="flex items-center gap-2 px-4.5 py-4">

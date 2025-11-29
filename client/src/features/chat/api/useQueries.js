@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query"
-import tryCatch from "@/lib/utils/try-catch"
 import { chatApi } from "./conversation-api"
 import { CHAT_QUERY_KEYS } from "./query-keys"
 
@@ -14,7 +13,16 @@ export function useConnections() {
 export function useChatDetails(chatId) {
   return useQuery({
     queryKey: CHAT_QUERY_KEYS.chat(chatId),
-    queryFn: () => tryCatch(chatApi.chatDetails(chatId)),
+    queryFn: (chatId) => chatApi.chatDetails(chatId),
+    meta: { showError: true },
+  })
+}
+
+export function useChatExists(userId, options = {}) {
+  return useQuery({
+    queryKey: CHAT_QUERY_KEYS.chatExists(userId),
+    queryFn: () => chatApi.chatExists(userId),
+    enabled: options.enabled ?? true,
     meta: { showError: true },
   })
 }

@@ -26,7 +26,7 @@ const Profile = () => {
           <span className="font-blackout text-second">{posts?.length}</span>
         </span>
       </div>
-      <PostGrid posts={posts} likePost={true} savePost={true} />
+      <PostGrid posts={posts} likePost={true} />
     </Container>
   );
 };

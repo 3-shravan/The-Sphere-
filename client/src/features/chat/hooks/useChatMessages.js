@@ -6,7 +6,7 @@ export function useChatMessages() {
   const { selectedChat, limit, page, setMessages, messages } = useChatStore()
   const params = useMemo(() => ({ limit, page }), [limit, page])
 
-  const { data, isLoading } = useMessages(selectedChat?._id, params)
+  const { data, isLoading, refetch } = useMessages(selectedChat?._id, params)
 
   useEffect(() => {
     if (data?.messages) {
@@ -17,5 +17,6 @@ export function useChatMessages() {
   return {
     messages,
     isLoading,
+    refetch,
   }
 }

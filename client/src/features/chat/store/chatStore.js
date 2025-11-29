@@ -7,6 +7,14 @@ export const useChatStore = create((set) => ({
   onlineUsers: [],
   setOnlineUsers: (users) => set({ onlineUsers: users }),
   setSelectedChat: (chat) => set({ selectedChat: chat }),
-  messages: null,
-  setMessages: (messages) => set({ messages }),
+  messages: [],
+  setMessages: (update) =>
+    set((state) => ({
+      messages:
+        typeof update === "function"
+          ? update(Array.isArray(state.messages) ? state.messages : [])
+          : Array.isArray(update)
+            ? update
+            : [],
+    })),
 }))

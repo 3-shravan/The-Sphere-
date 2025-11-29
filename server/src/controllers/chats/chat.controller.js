@@ -1,8 +1,10 @@
 import ApiError from "../../core/errors/apiError.js";
+import { BAD_REQUEST } from "../../core/errors/customError.js";
 import catchAsyncError from "../../middlewares/catchAsyncError.js";
 import { Chat } from "../../models/chats/chat.model.js";
 import { Message } from "../../models/chats/message.model.js";
 import { User } from "../../models/user/user.model.js";
+import { isExists } from "../../services/db.services.js";
 import { handleSuccessResponse } from "../../utils/responseHandler.js";
 
 export const connections = catchAsyncError(async (req, res) => {
@@ -22,9 +24,13 @@ export const connections = catchAsyncError(async (req, res) => {
     .lean();
 
   const formattedChats = chats.map((chat) => {
-    const otherUsers = chat.users.filter((u) => String(u._id) !== userId);
+    const isSelfChat = chat.users.length === 1;
+    const otherUsers = isSelfChat
+      ? chat.users
+      : chat.users.filter((u) => String(u._id) !== userId);
     return {
       _id: chat._id,
+      isSelfChat,
       isGroupChat: chat.isGroupChat,
       users: otherUsers,
       lastMessage: chat.lastMessage || null,
@@ -83,6 +89,30 @@ export const getChat = catchAsyncError(async (req, res) => {
   } else {
     handleSuccessResponse(res, 200, "Chat fetched successfully", { chat });
   }
+});
+
+export const chatExists = catchAsyncError(async (req, res) => {
+  const { userId } = req;
+  const { otherUserId } = req.params;
+
+  if (!isExists(User, { _id: otherUserId }))
+    throw new BAD_REQUEST(
+      "The user you are trying to chat with does not exist."
+    );
+
+  const chat = await Chat.findOne({
+    isGroupChat: false,
+    users: { $all: [userId, otherUserId] },
+  }).lean();
+
+  return chat
+    ? handleSuccessResponse(res, 200, "Chat existence checked", {
+        isExists: true,
+        chat,
+      })
+    : handleSuccessResponse(res, 200, "Chat existence checked", {
+        isExists: false,
+      });
 });
 
 export const getConversationUsers = catchAsyncError(async (req, res) => {

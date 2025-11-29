@@ -16,12 +16,9 @@ export const ContextProvider = ({ children }) => {
   }))
   const [authLoading, setAuthLoading] = useState(true)
 
-  const userId = auth?.profile?._id
-  const { setOnlineUsers } = useChatStore()
-  const { onlineUsers } = useSocket(userId)
+  const setOnlineUsers = useChatStore((state) => state.setOnlineUsers)
+  const { onlineUsers } = useSocket(auth?.profile?._id)
 
-  console.log("Online Users:", onlineUsers)
-  
   useEffect(() => {
     setOnlineUsers(onlineUsers)
   }, [onlineUsers, setOnlineUsers])

@@ -1,4 +1,7 @@
+import { MdDeleteOutline } from "react-icons/md"
 import { ProfilePicture } from "@/components"
+import { Button } from "@/components/ui/button"
+import { useDeleteChat } from "../../api/useMutations"
 import { useChatStore } from "../../store/chatStore"
 
 export default function ListConnections({ connections }) {
@@ -6,10 +9,11 @@ export default function ListConnections({ connections }) {
   return (
     <div>
       {connections?.map((c) => {
-        const user = c.users[0]
+        const user = c?.users[0]
         const lastMessage = c.lastMessage?.content || "No messages yet"
-        const isUnread = !c.lastMessage?.isSeen && c.lastMessage?.sender?._id !== user._id
+        const isUnread = !c.lastMessage?.isSeen && c.lastMessage?.sender?._id !== user?._id
 
+        if (!user) return null
         return (
           <div
             key={c._id}
@@ -29,9 +33,24 @@ export default function ListConnections({ connections }) {
               </p>
               {isUnread && <span className="h-2 w-2 rounded bg-rose-400"></span>}
             </div>
+            <DeleteChat chat={c} />
           </div>
         )
       })}
     </div>
+  )
+}
+
+const DeleteChat = ({ chat }) => {
+  const { mutate: deleteChat } = useDeleteChat(chat._id)
+
+  return (
+    <Button
+      onClick={() => deleteChat({ chatId: chat._id })}
+      size="sm"
+      className="rounded-full border bg-background hover:bg-muted"
+    >
+      <MdDeleteOutline className="text-red-400" size={10} />
+    </Button>
   )
 }
