@@ -56,6 +56,14 @@ export const getOnlineUsersList = () => {
 };
 
 /**
+ * Return a user from online users map
+ */
+export const getOnlineUser = (userId) => {
+  const entry = onlineUsers.get(userId.toString());
+  return entry ? entry.user : null;
+};
+
+/**
  * Return ALL socket IDs for a user
  */
 export const getOnlineUserSocketIds = (userId) => {

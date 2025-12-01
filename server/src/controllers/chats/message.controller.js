@@ -6,6 +6,7 @@ import { Chat } from "../../models/chats/chat.model.js";
 import { Message } from "../../models/chats/message.model.js";
 import { User } from "../../models/user/user.model.js";
 import { createAndSaveMessage } from "../../services/chat.services.js";
+import { emitMessage } from "../../sockets/emitters/chat.emit.js";
 import { handleSuccessResponse } from "../../utils/responseHandler.js";
 
 export const sendMessage = catchAsyncError(async (req, res, next) => {
@@ -79,6 +80,16 @@ export const sendMessage = catchAsyncError(async (req, res, next) => {
     content,
     media
   );
+  if (chat?.isGroupChat) {
+    chat.users.forEach((user) => {
+      if (!user.equals(senderId)) {
+        emitMessage(user, newMessage);
+      }
+    });
+  } else {
+    emitMessage(receiverId, newMessage);
+  }
+
   return handleSuccessResponse(res, 200, "Message sent successfully", {
     sentMessage: newMessage,
   });
