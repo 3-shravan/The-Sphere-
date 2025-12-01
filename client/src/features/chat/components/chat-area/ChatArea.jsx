@@ -1,7 +1,7 @@
 import { ProfilePicture } from "@/components"
 import { Button } from "@/components/ui/button"
 import { useChatStore } from "../../store/chatStore"
-import MessageInput from "../MessageInput"
+import MessageInput from "./MessageInput"
 import MessagesArea from "./MessagesArea"
 import NoSelectedChat from "./NoSelectedChat"
 

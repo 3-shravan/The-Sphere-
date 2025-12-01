@@ -9,7 +9,7 @@ function Textarea({ className, variant = "default", ...props }) {
         variant === "outlined" && "border-2 border-gray-500",
         variant === "filled" && "bg-gray-200 dark:bg-gray-700",
         variant === "sendMessage" &&
-          "min-h-9 resize-none rounded-lg border-0 px-4 text-foreground md:text-xs",
+          "min-h-9 resize-none rounded-lg border-2 border-accent px-4 text-foreground md:text-xs",
         variant === "reply" &&
           "custom-scrollbar-hide h-10 flex-1 resize-none rounded-full px-3 py-1 font-Gilroy font-bold placeholder:font-light md:text-xs",
         className,

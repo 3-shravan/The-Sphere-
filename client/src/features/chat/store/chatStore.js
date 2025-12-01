@@ -1,20 +1,30 @@
 import { create } from "zustand"
+import { sortByCreatedAtAsc } from "@/lib/utils/global/sort"
 
 export const useChatStore = create((set) => ({
-  selectedChat: null,
-  limit: 100,
+  limit: 30,
   page: 1,
+
   onlineUsers: [],
   setOnlineUsers: (users) => set({ onlineUsers: users }),
-  setSelectedChat: (chat) => set({ selectedChat: chat }),
+
+  selectedChat: null,
+  setSelectedChat: (chat) => set({ selectedChat: chat, messages: [], page: 1 }),
+
   messages: [],
-  setMessages: (update) =>
+  setMessages: (msgs) =>
+    set({
+      messages: sortByCreatedAtAsc(msgs),
+    }),
+
+  addMessage: (msg) =>
+    set((state) => {
+      if (state.messages.some((m) => m._id === msg._id)) return state // prevent duplicates
+      return { messages: sortByCreatedAtAsc([...state.messages, msg]) }
+    }),
+
+  prependMessages: (older) =>
     set((state) => ({
-      messages:
-        typeof update === "function"
-          ? update(Array.isArray(state.messages) ? state.messages : [])
-          : Array.isArray(update)
-            ? update
-            : [],
+      messages: sortByCreatedAtAsc([...older, ...state.messages]),
     })),
 }))

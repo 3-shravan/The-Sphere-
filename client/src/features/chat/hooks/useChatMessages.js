@@ -4,19 +4,24 @@ import { useChatStore } from "../store/chatStore"
 
 export function useChatMessages() {
   const { selectedChat, limit, page, setMessages, messages } = useChatStore()
-  const params = useMemo(() => ({ limit, page }), [limit, page])
 
-  const { data, isLoading, refetch } = useMessages(selectedChat?._id, params)
+  const params = useMemo(() => ({ limit, page }), [limit, page])
+  const { data, isLoading } = useMessages(selectedChat?._id, params)
+
+  // Placeholder function for fetching the next page
+  const fetchNextPage = () => {}
 
   useEffect(() => {
-    if (data?.messages) {
-      setMessages(data.messages.reverse())
-    }
-  }, [data, setMessages])
+    if (data?.messages && page === 1) setMessages(data.messages)
+  }, [data, setMessages, page])
 
+  const loadOlder = async () => {
+    const { messages: older } = await fetchNextPage()
+    prependMessages(older)
+  }
   return {
     messages,
     isLoading,
-    refetch,
+    loadOlder,
   }
 }

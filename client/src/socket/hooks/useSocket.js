@@ -20,6 +20,7 @@ export default function useSocket(userId, options = {}) {
     const cleanups = []
     cleanups.push(presenceEvents(socket, setOnlineUsers))
     cleanups.push(notificationEvents(socket))
+    cleanups.push(chatEvents(socket))
     if (options.chat) cleanups.push(chatEvents(socket, options.chat))
 
     return () => {
