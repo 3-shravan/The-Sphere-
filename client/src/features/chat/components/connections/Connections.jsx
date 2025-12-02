@@ -11,7 +11,6 @@ export default function Connections() {
   useEffect(() => {
     if (data?.connections) useChatListStore.getState().setChats(data.connections)
   }, [data])
-
   const chats = useChatListStore((state) => state.chats)
 
   if (isLoading) return <Loading />

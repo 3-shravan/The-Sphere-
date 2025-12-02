@@ -10,10 +10,11 @@ export function useConnections() {
   })
 }
 
-export function useChatDetails(chatId) {
+export function useChatDetails(chatId, options = {}) {
   return useQuery({
     queryKey: CHAT_QUERY_KEYS.chat(chatId),
-    queryFn: (chatId) => chatApi.chatDetails(chatId),
+    queryFn: () => chatApi.chatDetails(chatId),
+    enabled: options.enabled ?? true,
     meta: { showError: true },
   })
 }

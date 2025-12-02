@@ -13,7 +13,7 @@ import { CreatePost, SavedPosts } from "@/features/posts"
 import { FeedLayout, HomePage } from "@/layouts"
 import { DeveloperRoute } from "./components/routing/DeveloperRoutes"
 import PostProviderWrapper from "./components/routing/PostProviderWrapper"
-import Conversations from "./features/chat/pages/Conversations"
+import { ChatLayout, ChatPage, Conversations } from "./features/chat"
 import DeveloperPage from "./features/developer/pages/DeveloperPage"
 import Explore from "./features/explore/pages/Explore"
 import Page from "./features/landing-page/pages/Page"
@@ -46,7 +46,10 @@ export default function App() {
               <Route path="saved" element={<SavedPosts />} />
               <Route path="create-post" element={<CreatePost />} />
               <Route path="explore" element={<Explore />} />
-              <Route path="conversations" element={<Conversations />} />
+              <Route path="conversations" element={<ChatLayout />}>
+                <Route index element={<Conversations />} />
+                <Route path=":chatId" element={<ChatPage />} />
+              </Route>
               <Route path="profile/:username" element={<Profile />} />
             </Route>
           </Route>

@@ -1,0 +1,28 @@
+import { Outlet, useLocation } from "react-router-dom"
+import { useIsMobile } from "@/hooks"
+import SearchUsers from "../components/chats-search/SearchUsers"
+import Connections from "../components/connections/Connections"
+import Container from "../components/ui/chat-container"
+
+export default function ChatLayout() {
+  const isMobile = useIsMobile()
+  const { pathname } = useLocation()
+  const isChatPage = pathname.includes("/conversations/")
+
+  const hideSidebar = isMobile && isChatPage
+
+  return (
+    <Container>
+      {!hideSidebar && (
+        <div className="flex w-full flex-col gap-5 p-1 md:max-w-[33%]">
+          <SearchUsers />
+          <Connections />
+        </div>
+      )}
+
+      <div className="flex-1">
+        <Outlet />
+      </div>
+    </Container>
+  )
+}

@@ -64,6 +64,12 @@ export const getChat = catchAsyncError(async (req, res) => {
     ])
     .lean();
 
+  if (chat) {
+    chat.users = chat.users.filter(
+      (user) => String(user._id) !== String(req.user._id)
+    );
+  }
+
   if (!chat) throw new ApiError(404, "Chat does not exist");
 
   if (req.query.includeMessages === "true")

@@ -5,7 +5,7 @@ import { useChatWindow } from "../../hooks/useChatWindow"
 
 export default function MessagesArea() {
   const { currentUserId } = useAuth()
-  
+
   const { messages, isLoading, loadOlder } = useChatMessages()
   const { autoScroll, containerRef, handleScroll, useReachToBottom } = useChatWindow()
 

@@ -3,11 +3,13 @@ import { useState } from "react"
 import { Spinner } from "@/components"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
+import { useAuth } from "@/context"
 import { useSendMessage } from "../../api/useMutations"
 import { useChatStore } from "../../store/chatStore"
 
 export default function MessageInput() {
   const [text, setText] = useState("")
+  const { user } = useAuth()
   const chat = useChatStore((s) => s.selectedChat)
   const addMessage = useChatStore((s) => s.addMessage)
   const { mutateAsync, isPending } = useSendMessage(chat?._id)
@@ -15,6 +17,19 @@ export default function MessageInput() {
   const send = async (e) => {
     e.preventDefault()
     if (!text.trim()) return
+
+    addMessage({
+      chat: chat?._id,
+      sender: {
+        _id: user?._id,
+        name: user?.name,
+        profilePicture: user?.profilePicture,
+      },
+      receiverId: chat.users[0]._id,
+      content: text,
+      media: null,
+      createdAt: new Date().toISOString(),
+    })
 
     const res = await mutateAsync({ receiverId: chat.users[0]._id, message: text })
     addMessage(res.sentMessage)

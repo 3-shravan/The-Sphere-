@@ -8,7 +8,6 @@ export function useChatMessages() {
   const params = useMemo(() => ({ limit, page }), [limit, page])
   const { data, isLoading } = useMessages(selectedChat?._id, params)
 
-  // Placeholder function for fetching the next page
   const fetchNextPage = () => {}
 
   useEffect(() => {

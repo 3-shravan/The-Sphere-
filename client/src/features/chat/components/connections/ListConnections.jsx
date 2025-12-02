@@ -1,14 +1,24 @@
 import { useState } from "react"
 import { MdDeleteOutline, MdMoreVert } from "react-icons/md"
+import { useNavigate } from "react-router-dom"
 import { ProfilePicture } from "@/components"
 import { Button } from "@/components/ui/button"
 import { HandleClickOutsideWrapper } from "@/components/wrappers/HandleClickOutsideWrapper"
+import { useIsMobile } from "@/hooks/util/useMediaQuery"
 import { multiFormatDateString } from "@/utils"
 import { useDeleteChat } from "../../api/useMutations"
 import { useChatStore } from "../../store/chatStore"
 
 export default function ListConnections({ connections }) {
   const setSelectedChat = useChatStore((state) => state.setSelectedChat)
+  const selectedChat = useChatStore((state) => state.selectedChat)
+  const navigate = useNavigate()
+  const IS_MOBILE = useIsMobile()
+
+  function handleChatSelect(chat) {
+    if (selectedChat?._id !== chat._id) setSelectedChat(chat)
+    if (IS_MOBILE) navigate(`/conversations/${chat._id}`)
+  }
 
   return (
     <div>
@@ -22,7 +32,7 @@ export default function ListConnections({ connections }) {
         return (
           <div
             key={c._id}
-            onClick={() => setSelectedChat(c)}
+            onClick={() => handleChatSelect(c)}
             className="flex cursor-pointer items-center gap-3 rounded-xl p-3 transition hover:bg-muted/50"
           >
             <ProfilePicture profilePicture={user.profilePicture} username={user.name} size="lg" />
