@@ -1,15 +1,13 @@
 export default function H2({ text, children }) {
-	return (
-		<h2
-			className={`text-3xl md:font-bold md:leading-tight md:tracking-tighter font-Futura font-bold text-left w-full
-        ${
-					children &&
-					" text-lg w-full font-extralight font-Gilroy px-1 text-muted-foreground "
-				}
+  return (
+    <h2
+      className={`w-full text-left font-Futura font-bold text-3xl md:font-bold md:leading-tight md:tracking-tighter ${
+        children && "w-full px-1 font-Gilroy font-extralight text-lg text-muted-foreground"
+      }
         `}
-		>
-			{text}
-			{children}
-		</h2>
-	);
+    >
+      {text}
+      {children}
+    </h2>
+  )
 }

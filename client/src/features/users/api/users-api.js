@@ -1,4 +1,4 @@
-import { fetcher } from "@/lib/fetcher"
+import { fetcher } from "@/lib/api/fetcher"
 
 export const usersApi = {
   getProfile: (username) => fetcher({ endpoint: `/users/profile/${username}` }),

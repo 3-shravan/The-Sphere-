@@ -17,7 +17,12 @@ export const authUser = catchAsyncError(async (req, _res, next) => {
   if (isBlackListed)
     throw new TOKEN_EXPIRED("Resouce revoked.Please log in again ");
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (_err) {
+    throw new TOKEN_EXPIRED("Your session has expired. Please log in again.");
+  }
   if (!decoded)
     throw new UNAUTHORIZED(
       "You are no more authenticated. Please log in again."

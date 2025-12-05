@@ -1,7 +1,8 @@
 import { InputOtp } from "@features/auth/shared";
 import styles from "@features/auth/shared/auth.module.css";
 import { useApi } from "@hooks";
-import { IoIosArrowBack, motion } from "@lib";
+import { IoIosArrowBack } from "@lib";
+import { motion } from "framer-motion";
 
 const OtpVerify = ({
 	formData,

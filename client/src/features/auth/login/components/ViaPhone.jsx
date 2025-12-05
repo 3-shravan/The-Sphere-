@@ -1,39 +1,40 @@
-import styles from "@features/auth/shared/auth.module.css";
-import { FaPlus, MdLock, motion, TbNumber91Small } from "@lib";
+import styles from "@features/auth/shared/auth.module.css"
+import { FaPlus, MdLock, TbNumber91Small } from "@lib"
+import { motion } from "framer-motion"
 
 const ViaPhone = ({ handleChange, formData }) => {
-	return (
-		<motion.div
-			initial={{ opacity: 0.5 }}
-			animate={{ opacity: 1 }}
-			transition={{ delay: 0.2, ease: "circIn" }}
-		>
-			<div className={styles.inputWrapper}>
-				<FaPlus className="text-sm absolute left-2 text-zinc-300 pr-2  border-zinc-700 h-7 mx-auto" />
-				<TbNumber91Small className="text-3xl absolute left-2.5 text-zinc-300 pr-1 border-r-1 border-zinc-700 h-7 " />
-				<input
-					type="number"
-					placeholder=" Phone Number"
-					name="phone"
-					value={formData.phone}
-					onChange={(e) => handleChange(e)}
-					className={styles.inputField}
-				/>
-			</div>
+  return (
+    <motion.div
+      initial={{ opacity: 0.5 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.2, ease: "circIn" }}
+    >
+      <div className={styles.inputWrapper}>
+        <FaPlus className="absolute left-2 mx-auto h-7 border-zinc-700 pr-2 text-sm text-zinc-300" />
+        <TbNumber91Small className="absolute left-2.5 h-7 border-zinc-700 border-r-1 pr-1 text-3xl text-zinc-300" />
+        <input
+          type="number"
+          placeholder=" Phone Number"
+          name="phone"
+          value={formData.phone}
+          onChange={(e) => handleChange(e)}
+          className={styles.inputField}
+        />
+      </div>
 
-			<div className={styles.inputWrapper}>
-				<MdLock className="text-3xl absolute left-2.5 text-zinc-100 pr-2 border-r-1 border-zinc-700 h-7 " />
-				<input
-					type="password"
-					placeholder=" Password"
-					name="password"
-					value={formData.password}
-					onChange={(e) => handleChange(e)}
-					className={styles.inputField}
-				/>
-			</div>
-		</motion.div>
-	);
-};
+      <div className={styles.inputWrapper}>
+        <MdLock className="absolute left-2.5 h-7 border-zinc-700 border-r-1 pr-2 text-3xl text-zinc-100" />
+        <input
+          type="password"
+          placeholder=" Password"
+          name="password"
+          value={formData.password}
+          onChange={(e) => handleChange(e)}
+          className={styles.inputField}
+        />
+      </div>
+    </motion.div>
+  )
+}
 
-export default ViaPhone;
+export default ViaPhone

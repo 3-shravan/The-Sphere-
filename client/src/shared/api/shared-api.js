@@ -1,4 +1,4 @@
-import { fetcher } from "@/lib/fetcher"
+import { fetcher } from "@/lib/api/fetcher"
 
 export const api = {
   getUsers: ({ query }) => fetcher({ endpoint: `/users?search=${query}` }),

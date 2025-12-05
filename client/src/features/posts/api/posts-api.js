@@ -1,8 +1,7 @@
-import { fetcher } from "@/lib/fetcher";
+import { fetcher } from "@/lib/api/fetcher"
 
 export const postApi = {
-  createPost: (formData) =>
-    fetcher({ endpoint: "/posts", method: "POST", data: formData }),
+  createPost: (formData) => fetcher({ endpoint: "/posts", method: "POST", data: formData }),
 
   createThought: (formData) =>
     fetcher({ endpoint: "/posts/thought", method: "POST", data: formData }),
@@ -10,6 +9,5 @@ export const postApi = {
   updatePost: (postId, formData) =>
     fetcher({ endpoint: `/posts/${postId}`, method: "PUT", data: formData }),
 
-  deletePost: (postId) =>
-    fetcher({ endpoint: `/posts/${postId}`, method: "DELETE" }),
-};
+  deletePost: (postId) => fetcher({ endpoint: `/posts/${postId}`, method: "DELETE" }),
+}

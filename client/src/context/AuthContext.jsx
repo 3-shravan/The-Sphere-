@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react"
 import { useChatStore } from "@/features/chat/store/chatStore"
 import { useApi, useSocket } from "@/hooks"
-import { setLogoutHandler } from "@/lib/axios"
-import { showErrorToast, showSuccessToast } from "@/lib/utils/api-responses"
+import { showErrorToast, showSuccessToast } from "@/lib/api/api-responses"
+import { setLogoutHandler } from "@/lib/api/axios"
 import { socket } from "@/socket/socket"
 import { getIsAuthenticated, getToken, removeTokenAndAuthenticated } from "@/utils"
 

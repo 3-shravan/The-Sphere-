@@ -1,5 +1,5 @@
 import { useIgnoreLenisScroll } from "@eightmay/use-custom-lenis"
-import { AnimatePresence, motion } from "@/lib"
+import { AnimatePresence, motion } from "framer-motion"
 import { SearchedUser } from "./SearchedUser"
 export const SearchResults = ({ users, loading, isOpen }) => {
   useIgnoreLenisScroll(".scroll")

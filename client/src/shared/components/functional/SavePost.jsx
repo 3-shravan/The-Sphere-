@@ -1,6 +1,6 @@
 import { Loading } from "@/components"
 import { useAuth } from "@/context"
-import { showErrorToast } from "@/lib/utils/api-responses"
+import { showErrorToast } from "@/lib/api/api-responses"
 import useSavePost from "@/shared/hooks/useSavePost"
 
 const SavePost = ({ postId }) => {

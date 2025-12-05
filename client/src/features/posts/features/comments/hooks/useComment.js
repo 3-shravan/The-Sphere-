@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useAuth } from "@/context"
-import { showErrorToast } from "@/lib/utils/api-responses"
+import { showErrorToast } from "@/lib/api/api-responses"
 import { useCreateComment, useDeleteComment, useGetPostComments } from "../services"
 
 const useComment = (postId) => {

@@ -3,7 +3,7 @@ import { forwardRef, useImperativeHandle, useState } from "react"
 import { FaHeart } from "react-icons/fa6"
 import { Modal } from "@/components"
 import { useAuth } from "@/context"
-import { showErrorToast } from "@/lib/utils/api-responses"
+import { showErrorToast } from "@/lib/api/api-responses"
 import useLikePost from "../../hooks/useLikePost"
 import LikeModal from "./modals/ShowUserModal"
 

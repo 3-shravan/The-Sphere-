@@ -41,6 +41,7 @@ const router = express.Router();
 router.get("/connections", authUser, connections);
 router.get("/search?:q", authUser, getConversationUsers);
 router.get("/check/:otherUserId", authUser, chatExists);
+router.get("/:chatId/q?:includeSelf", authUser, getChat);
 router
   .route("/:chatId")
   .all(authUser, validateRequest(chatIdSchema))

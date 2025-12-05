@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button"
 import { DrawerClose } from "@/components/ui/drawer"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { showInfoToast } from "@/lib/api/api-responses"
 import DateOfBirth from "./DateOfBirth"
 import ProfileImageUploader from "./ProfileImageUploader"
 import SelectGender from "./SelectGender"
-import { showInfoToast } from "@/lib/utils/api-responses"
 
 const EditProfileForm = ({
   user,

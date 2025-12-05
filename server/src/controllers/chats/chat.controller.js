@@ -51,6 +51,7 @@ export const connections = catchAsyncError(async (req, res) => {
 
 export const getChat = catchAsyncError(async (req, res) => {
   const { chatId } = req.params;
+  const { q = "false" } = req.query;
   const chat = await Chat.findById(chatId)
     .populate([
       { path: "users", select: "name profilePicture" },
@@ -64,7 +65,7 @@ export const getChat = catchAsyncError(async (req, res) => {
     ])
     .lean();
 
-  if (chat) {
+  if (chat && q === "true") {
     chat.users = chat.users.filter(
       (user) => String(user._id) !== String(req.user._id)
     );

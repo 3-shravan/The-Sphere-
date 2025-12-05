@@ -1,7 +1,7 @@
 import { Forward, Link as LinkIcon, MessageCircle, Share2 } from "lucide-react"
 import { Link } from "react-router-dom"
-import { CLIENT_URL } from "@/lib/utils/api"
-import { showErrorToast, showSuccessToast } from "@/lib/utils/api-responses"
+import { showErrorToast, showSuccessToast } from "@/lib/api/api-responses"
+import { CLIENT_URL } from "@/lib/api/http"
 
 export default function ShareModal({ postId }) {
   const postUrl = `${CLIENT_URL}/post/${postId}`

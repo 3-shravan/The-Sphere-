@@ -1,7 +1,7 @@
-import { Loader } from "@components";
 import { useAuth } from "@context";
 import { Outlet, useNavigate } from "@lib";
 import React from "react";
+import { Loader } from "../ui/loader";
 
 export default function PublicRoutes() {
 	const navigate = useNavigate();

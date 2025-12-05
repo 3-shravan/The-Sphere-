@@ -1,4 +1,4 @@
-import ApiError from "../core/errors/apiError.js";
+import ApiError, { ErrorTypes } from "../core/errors/apiError.js";
 import {
   BAD_REQUEST,
   BAD_TOKEN,
@@ -14,7 +14,7 @@ export const errorMiddleware = (err, _req, res, _next) => {
   if (!(err instanceof ApiError))
     err = new ApiError(
       err.statusCode || 500,
-      err.message || "Internal Server Error"
+      err.message || ErrorTypes.INTERNAL,
     );
 
   if (err.code === 11000)
@@ -40,5 +40,5 @@ export const errorMiddleware = (err, _req, res, _next) => {
   });
 
   if (process.env.NODE_ENV === "development")
-    console.error("❌ Error:", err.message);
+    console.error("❌ Error:", err);
 };

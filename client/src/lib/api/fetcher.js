@@ -1,4 +1,4 @@
-import axios, { publicAxiosInstance } from "@/lib/axios"
+import axios, { publicAxiosInstance } from "@/lib/api/axios"
 export const fetcher = async ({
   endpoint,
   method = "GET",

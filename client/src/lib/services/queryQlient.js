@@ -1,6 +1,6 @@
 import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query"
-import { MODE } from "../utils/api"
-import { showErrorToast, showSuccessToast } from "../utils/api-responses"
+import { showErrorToast, showSuccessToast } from "../api/api-responses"
+import { MODE } from "../api/http"
 
 export const queryClient = new QueryClient({
   defaultOptions: {
