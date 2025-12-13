@@ -7,9 +7,11 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "format": "biome check --write "
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "type-check": "tsc --noEmit",
+    "format": "biome check --write"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -33,6 +35,12 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.2.5"
+    "@biomejs/biome": "^2.2.5",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.1",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }

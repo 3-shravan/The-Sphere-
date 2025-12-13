@@ -8,15 +8,17 @@ export function useChatMessages() {
   const params = useMemo(() => ({ limit, page }), [limit, page])
   const { data, isLoading } = useMessages(selectedChat?._id, params)
 
-  const fetchNextPage = () => {}
+  // const fetchNextPage = () => {
+  //   if (!data) return { messages: [] }
+  // }
 
   useEffect(() => {
     if (data?.messages && page === 1) setMessages(data.messages)
   }, [data, setMessages, page])
 
   const loadOlder = async () => {
-    const { messages: older } = await fetchNextPage()
-    prependMessages(older)
+    // const { messages: older } = fetchNextPage()
+    // prependMessages(older)
   }
   return {
     messages,

@@ -100,7 +100,7 @@ export const getChat = catchAsyncError(async (req, res) => {
 
 export const chatExists = catchAsyncError(async (req, res) => {
   const { userId } = req;
-  const { otherUserId } = req.params;
+  const { userId: otherUserId } = req.params;
 
   if (!isExists(User, { _id: otherUserId }))
     throw new BAD_REQUEST(
@@ -142,6 +142,8 @@ export const getConversationUsers = catchAsyncError(async (req, res) => {
 
   handleSuccessResponse(res, 200, "", { users });
 });
+
+
 
 export const deleteChat = catchAsyncError(async (req, res, next) => {
   const { chatId } = req.params;

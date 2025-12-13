@@ -9,7 +9,7 @@ export default function chatEvents(socket) {
 
     if (useChatStore.getState().selectedChat?._id === message.chat) {
       useChatStore.getState().addMessage(message)
-      useChatListStore.getState().markRead(message.chatId)
+      useChatListStore.getState().markChatRead(message.chatId)
     }
   }
   socket.on("newMessage", handleNewMessage)

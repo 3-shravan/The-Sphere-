@@ -27,4 +27,14 @@ export const useChatStore = create((set) => ({
     set((state) => ({
       messages: sortByCreatedAtAsc([...older, ...state.messages]),
     })),
+
+  replaceMessage: (tempId, newMsg) =>
+    set((state) => ({
+      messages: sortByCreatedAtAsc(state.messages.map((m) => (m._id === tempId ? newMsg : m))),
+    })),
+
+  updateMessageStatus: (id, status) =>
+    set((state) => ({
+      messages: state.messages.map((m) => (m._id === id ? { ...m, status } : m)),
+    })),
 }))

@@ -3,9 +3,9 @@ import { config } from "dotenv";
 config({ path: "./src/config/config.env" });
 
 import http from "node:http";
-import app from "./src/app.js";
-import connectToDB from "./src/db/db.js";
-import { initSocket } from "./src/sockets/socket.js";
+import app from "./app.js";
+import connectToDB from "./db/db.js";
+import { initSocket } from "./sockets/socket.js";
 
 const server = http.createServer(app);
 connectToDB();

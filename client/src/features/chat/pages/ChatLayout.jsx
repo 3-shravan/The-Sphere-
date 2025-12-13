@@ -3,13 +3,14 @@ import { useIsMobile } from "@/hooks"
 import SearchUsers from "../components/chats-search/SearchUsers"
 import Connections from "../components/connections/Connections"
 import Container from "../components/ui/chat-container"
+import { useChatStore } from "../store/chatStore"
 
 export default function ChatLayout() {
   const isMobile = useIsMobile()
-  const { pathname } = useLocation()
-  const isChatPage = pathname.includes("/conversations/")
+  const isChatPage = useLocation().pathname.includes("/conversations/")
+  const selectedChat = useChatStore((state) => state.selectedChat)
 
-  const hideSidebar = isMobile && isChatPage
+  const hideSidebar = isMobile && isChatPage && selectedChat
 
   return (
     <Container>
