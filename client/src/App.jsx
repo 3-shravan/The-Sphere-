@@ -48,7 +48,7 @@ export default function App() {
               <Route path="explore" element={<Explore />} />
               <Route path="conversations" element={<ChatLayout />}>
                 <Route index element={<Conversations />} />
-                <Route path=":chatId" element={<ChatPage />} />
+                <Route path="chat/:chatId" element={<ChatPage />} />
               </Route>
               <Route path="profile/:username" element={<Profile />} />
             </Route>

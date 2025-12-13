@@ -1,29 +1,29 @@
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { useIsMobile } from "@/hooks"
-import { MessagesArea } from "../components/chat-area/MessagesArea"
-import { ChatComposer } from "../components/chat-area/ChatComposer"
-import { ChatHeader } from "../components/ui/chat-header"
-import { NoSelectedChat } from "../components/ui/no-selected-chat"
-import { useChatStore } from "../store/chatStore"
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks";
+import { ChatComposer } from "../components/chat-area/ChatComposer";
+import { Messages } from "../components/chat-area/Messages";
+import { ChatHeader } from "../components/chat-area/chat-header";
+import { NoSelectedChat } from "../components/ui/no-selected-chat";
+import { useChatStore } from "../store/chatStore";
 
 export default function ChatArea() {
-  const navigate = useNavigate()
-  const IS_MOBILE = useIsMobile()
+  const navigate = useNavigate();
+  const IS_MOBILE = useIsMobile();
 
-  const { selectedChat } = useChatStore()
+  const { selectedChat } = useChatStore();
 
   useEffect(() => {
-    if (!selectedChat && IS_MOBILE) navigate("/conversations")
-  }, [selectedChat, IS_MOBILE, navigate])
+    if (!selectedChat && IS_MOBILE) navigate("/conversations");
+  }, [selectedChat, IS_MOBILE, navigate]);
 
-  if (!selectedChat) return <NoSelectedChat />
+  if (!selectedChat) return <NoSelectedChat />;
 
   return (
     <div className="flex h-full w-full flex-col rounded-xl p-1 pb-2 md:bg-input/5">
       <ChatHeader />
-      <MessagesArea />
+      <Messages />
       <ChatComposer />
     </div>
-  )
+  );
 }

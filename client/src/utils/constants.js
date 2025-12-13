@@ -26,6 +26,7 @@ export const sizeMap = {
   sm: "w-5 h-5",
   base: "w-6 h-6",
   md: "w-7 h-7",
+  lmd: "w-9 h-9",
   lg: "w-10 h-10",
   xl: "w-12 h-12",
   profile: "w-50 h-50",
