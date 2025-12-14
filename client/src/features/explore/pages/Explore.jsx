@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Container, H2 } from "@/components"
 import { HandleClickOutsideWrapper } from "@/components/wrappers/HandleClickOutsideWrapper"
 import Birthdays from "@/features/birthdays/pages/Birthdays"
@@ -9,9 +9,13 @@ import { useSearchUsers } from "../hooks/useSearchUsers"
 
 const Explore = () => {
   const [query, setQuery] = useState("")
-  const [isDropdownOpen, setIsDropdownOpen] = useState(true)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const { users, loading } = useSearchUsers(query)
+  useEffect(() => {
+    if (query.length > 0) setIsDropdownOpen(true)
+    else setIsDropdownOpen(false)
+  }, [query])
 
   const handleClickOutside = useCallback(() => {
     setIsDropdownOpen(false)

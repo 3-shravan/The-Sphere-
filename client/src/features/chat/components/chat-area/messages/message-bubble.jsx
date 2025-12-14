@@ -6,7 +6,7 @@ export function MessageBubble({ msg, mine, isActive, longPressHandlers, onContex
         e.preventDefault()
         onContextMenu()
       }}
-      className={`max-w-xs rounded-3xl px-4 pt-2 font-mono text-sm leading-4 shadow transition ${
+      className={`no-text-select max-w-xs touch-manipulation select-none rounded-2xl px-4 pt-2 font-mono text-sm leading-4 shadow transition ${
         mine
           ? "rounded-br-none bg-neutral-200 dark:bg-[#14161f]"
           : "rounded-bl-none bg-slate-300 dark:bg-[#0d191b]"

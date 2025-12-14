@@ -1,33 +1,31 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Modal, ProfilePicture } from "@/components";
-import { Button } from "@/components/ui/button";
-import { FollowUser, ShowUserModal, SocialLinksModal } from "@/shared";
-import EditProfile from "../drawer/EditProfile";
-import useProfile from "../hooks/useProfile";
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { Modal, ProfilePicture } from "@/components"
+import { Button } from "@/components/ui/button"
+import { useStartChat } from "@/hooks/useStartChat"
+import { FollowUser, ShowUserModal, SocialLinksModal } from "@/shared"
+import EditProfile from "../drawer/EditProfile"
+import useProfile from "../hooks/useProfile"
 
 export function ProfileCard({ user }) {
-  const [activeModal, setActiveModal] = useState(null);
-  const [showLinksModal, setShowLinksModal] = useState(false);
-  const [socialLinks, setSocialLinks] = useState({});
+  const [activeModal, setActiveModal] = useState(null)
+  const [showLinksModal, setShowLinksModal] = useState(false)
+  const [socialLinks, setSocialLinks] = useState({})
 
-  const { me, followersCount, isFollowing, followUser, isPending } =
-    useProfile(user);
+  const { me, followersCount, isFollowing, followUser, isPending } = useProfile(user)
 
   useEffect(() => {
-    const saved = localStorage.getItem(`links_${user._id}`);
-    if (saved) setSocialLinks(JSON.parse(saved));
-  }, [user._id]);
+    const saved = localStorage.getItem(`links_${user._id}`)
+    if (saved) setSocialLinks(JSON.parse(saved))
+  }, [user._id])
 
-  const { fullName, dob, name, bio, following, followers } = user;
-  if (!user) return null;
+  const startChat = useStartChat(user)
+
+  const { fullName, dob, name, bio, following, followers } = user
+  if (!user) return null
   return (
     <div className="flex w-full flex-col items-center justify-center font-Gilroy backdrop-blur-md">
-      <ProfilePicture
-        profilePicture={user.profilePicture}
-        username={name}
-        size="profile"
-      />
+      <ProfilePicture profilePicture={user.profilePicture} username={name} size="profile" />
 
       <div className="mt-3 flex flex-col items-center text-neutral-700">
         <h2 className="font-Futura font-bold text-2xl text-second">{name}</h2>
@@ -69,7 +67,7 @@ export function ProfileCard({ user }) {
                 >
                   {key}
                 </Link>
-              )
+              ),
           )}
         </div>
 
@@ -94,6 +92,7 @@ export function ProfileCard({ user }) {
             />
             <Button
               variant="secondary"
+              onClick={startChat}
               className="cursor-pointer rounded-xl border bg-input/20 font-Gilroy font-bold text-xs"
             >
               Message
@@ -120,5 +119,5 @@ export function ProfileCard({ user }) {
         />
       )}
     </div>
-  );
+  )
 }

@@ -7,18 +7,29 @@ import { User } from "../../models/user/user.model.js";
 import { isExists } from "../../services/db.services.js";
 import { handleSuccessResponse } from "../../utils/responseHandler.js";
 
+const USER_FIELDS = "name profilePicture fullName bio followers following";
+
 export const connections = catchAsyncError(async (req, res) => {
   const userId = String(req.user._id);
   const chats = await Chat.find({ users: userId })
     .populate([
-      { path: "users", select: "name profilePicture" },
+      { path: "users", select: USER_FIELDS },
       {
         path: "lastMessage",
         select: "content sender isLiked createdAt",
-        populate: { path: "sender", select: "name profilePicture" },
+        populate: {
+          path: "sender",
+          select: USER_FIELDS,
+        },
       },
-      { path: "admins", select: "name profilePicture" },
-      { path: "groupCreatedBy", select: "name profilePicture" },
+      {
+        path: "admins",
+        select: USER_FIELDS,
+      },
+      {
+        path: "groupCreatedBy",
+        select: USER_FIELDS,
+      },
     ])
     .sort({ updatedAt: -1 })
     .lean();
@@ -54,14 +65,14 @@ export const getChat = catchAsyncError(async (req, res) => {
   const { q = "false" } = req.query;
   const chat = await Chat.findById(chatId)
     .populate([
-      { path: "users", select: "name profilePicture" },
+      { path: "users", select: USER_FIELDS },
       {
         path: "lastMessage",
         select: "content sender isLiked createdAt",
-        populate: { path: "sender", select: "name profilePicture" },
+        populate: { path: "sender", select: USER_FIELDS },
       },
-      { path: "admins", select: "name profilePicture" },
-      { path: "groupCreatedBy", select: "name profilePicture" },
+      { path: "admins", select: USER_FIELDS },
+      { path: "groupCreatedBy", select: USER_FIELDS },
     ])
     .lean();
 
@@ -107,7 +118,6 @@ export const chatExists = catchAsyncError(async (req, res) => {
       "The user you are trying to chat with does not exist."
     );
   let chat = null;
-  // Self chat case
   if (userId.toString() === otherUserId.toString()) {
     chat = await Chat.findOne({
       isGroupChat: false,
@@ -115,7 +125,7 @@ export const chatExists = catchAsyncError(async (req, res) => {
     })
       .populate({
         path: "users",
-        select: "name profilePicture",
+        select: USER_FIELDS,
       })
       .lean();
   } else {
@@ -128,7 +138,7 @@ export const chatExists = catchAsyncError(async (req, res) => {
     })
       .populate({
         path: "users",
-        select: "name profilePicture",
+        select: USER_FIELDS,
       })
       .lean();
   }
@@ -158,7 +168,7 @@ export const getConversationUsers = catchAsyncError(async (req, res) => {
   const users = await User.find({
     _id: { $in: allRelatedUsers },
     ...(q ? { name: { $regex: q, $options: "i" } } : {}),
-  }).select("name fullName profilePicture");
+  }).select(USER_FIELDS);
 
   handleSuccessResponse(res, 200, "", { users });
 });

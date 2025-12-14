@@ -15,7 +15,7 @@ export default function ChatLayout() {
   return (
     <Container>
       {!hideSidebar && (
-        <div className="flex w-full flex-col gap-5 p-1 md:max-w-[33%]">
+        <div className="flex w-full flex-col gap-5 p-1 pt-12 md:max-w-[33%] md:pt-2">
           <SearchUsers />
           <Connections />
         </div>

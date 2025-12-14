@@ -16,7 +16,7 @@ export function ChatComposer() {
   const { textareaRef, insertEmoji } = useEmojiInsert(setText)
 
   return (
-    <div className="sticky bottom-0 z-20 px-2 py-2 md:pb-1">
+    <div className="sticky bottom-0 z-20 px-2 py-1">
       <div className="mx-auto max-w-4xl">
         <div className="flex items-center gap-2 rounded-3xl bg-muted/50 px-4 py-2 shadow-sm">
           <ActionButton>
@@ -57,7 +57,7 @@ export function ChatComposer() {
             disabled={!hasText}
             className={cn(
               "flex cursor-pointer items-center justify-center transition",
-              hasText ? "text-teal-700" : "text-foreground",
+              hasText ? "text-teal-600" : "text-foreground",
             )}
           >
             <PaperPlaneRight size={25} weight="fill" />
