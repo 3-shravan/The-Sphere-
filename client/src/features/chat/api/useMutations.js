@@ -1,4 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
+import { useChatStore } from "../store/chatStore"
 import { chatApi } from "./conversation-api"
 import { CHAT_QUERY_KEYS } from "./query-keys"
 
@@ -37,6 +38,30 @@ export const useDeleteMessage = (chatId) => {
     },
   })
 }
+export const useDeleteMessageOptimistic = () => {
+  const removeMessage = useChatStore((s) => s.removeMessageOptimistic)
+  const restoreMessage = useChatStore((s) => s.restoreMessage)
+
+  return useMutation({
+    mutationFn: ({ message }) => chatApi.deleteMessage(message._id),
+
+    // 🔥 OPTIMISTIC UPDATE
+    onMutate: async ({ message }) => {
+      removeMessage(message._id)
+      // return context for rollback
+      return { message }
+    },
+
+    // ❌ ROLLBACK ON ERROR
+    onError: (_err, _vars, context) => {
+      if (context?.message) {
+        restoreMessage(context.message)
+      }
+    },
+    onSuccess: () => {},
+  })
+}
+
 export const useDeleteChat = (chatId) => {
   return useMutation({
     queryKey: CHAT_QUERY_KEYS.chat(chatId),

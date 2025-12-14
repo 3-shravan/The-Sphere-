@@ -36,6 +36,22 @@ export function Loading({ message = "", size, spinner = true, pos = "center" }) 
   )
 }
 
+export function PageSuspenseLoader() {
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center font-Futura">
+      <div className="flex flex-col items-center gap-4">
+        <motion.p
+          className="inline animate-pulse text-neutral-500 text-sm tracking-wide"
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+        >
+          ⚙ page is loading...
+        </motion.p>
+      </div>
+    </div>
+  )
+}
+
 export function ShowError({ message = "❗ Failed to fetch" }) {
   return <div className="py-10 text-center font-bold text-third">{message}</div>
 }

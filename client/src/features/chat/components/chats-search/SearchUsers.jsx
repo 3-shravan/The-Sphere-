@@ -1,33 +1,38 @@
-import { useEffect, useState } from "react"
 import { HandleClickOutsideWrapper } from "@/components/wrappers/HandleClickOutsideWrapper"
-import useToggle from "@/hooks/util/useToggle"
-import { useSearch } from "../../api/useMutations"
-import SearchBar from "./SearchBar"
-import ShowSearchedUsers from "./ShowSeachedUsers"
+import { useUserSearch } from "../../hooks/useUserSearch"
+import { SearchUserDropdown } from "../ui/search-user-dropdown"
+import { SearchBar } from "./search-bar"
+import { UserItem } from "./searched-user-item"
 
 export default function SearchUsers() {
-  const [isDropdownOpen, setDropdown] = useToggle()
-  const [query, setQuery] = useState("")
-  const [users, setUsers] = useState([])
-  const { mutateAsync: search } = useSearch(query)
-
-  useEffect(() => {
-    async function find() {
-      if (!query) return setUsers([])
-      const res = await search({ query })
-      setUsers(res?.users)
-      setDropdown(true)
-    }
-    find()
-  }, [search, setDropdown, query])
-
+  const { query, setQuery, users, status, isOpen, closeDropdown } = useUserSearch(300)
   return (
     <div className="relative w-full p-1.5">
-      <HandleClickOutsideWrapper onClickOutside={() => setDropdown(false)}>
+      <HandleClickOutsideWrapper onClickOutside={closeDropdown}>
         <div className="relative w-full">
           <SearchBar query={query} setQuery={setQuery} />
 
-          {query && isDropdownOpen && <ShowSearchedUsers users={users} />}
+          {query && isOpen && (
+            <SearchUserDropdown>
+              {status === "pending" && (
+                <div className="flex items-center justify-center py-6 text-muted-foreground text-sm">
+                  Searching...
+                </div>
+              )}
+
+              {status !== "pending" && users.length === 0 && (
+                <div className="flex items-center justify-center py-6 text-muted-foreground text-sm">
+                  No users found
+                </div>
+              )}
+
+              {status !== "pending" &&
+                users.length > 0 &&
+                users.map((user) => (
+                  <UserItem key={user._id} user={user} closeDropdown={closeDropdown} />
+                ))}
+            </SearchUserDropdown>
+          )}
         </div>
       </HandleClickOutsideWrapper>
     </div>

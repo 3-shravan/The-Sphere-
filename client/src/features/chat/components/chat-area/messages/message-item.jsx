@@ -1,5 +1,6 @@
 import { Trash } from "lucide-react"
 import { ProfilePicture } from "@/components"
+import { useDeleteMessageOptimistic } from "@/features/chat/api/useMutations"
 import { longPress } from "@/lib/utils/ui/longPress"
 import { MessageBubble } from "./message-bubble"
 
@@ -8,13 +9,19 @@ export function MessageItem({ msg, mine, isActive, onActivate }) {
     onActivate()
     navigator.vibrate?.(20)
   })
+  const { mutate: deleteMsg } = useDeleteMessageOptimistic()
+
+  const handleDelete = () => {
+    deleteMsg({ message: msg })
+  }
 
   return (
     <div className={`flex w-full items-end gap-1 ${mine ? "justify-end" : "justify-start"}`}>
       {!mine && <ProfilePicture profilePicture={msg.sender?.profilePicture} size="sm" />}
 
       <div className="relative">
-        <MessageOverlay show={mine && isActive} onDelete={() => console.log("delete", msg._id)} />
+        <MessageOverlay show={mine && isActive} onDelete={handleDelete} />
+
         <MessageBubble
           msg={msg}
           mine={mine}
@@ -37,7 +44,7 @@ function MessageOverlay({ show, onDelete }) {
           e.stopPropagation()
           onDelete()
         }}
-        className="flex items-center gap-1 text-rose-500 text-sm hover:text-rose-600"
+        className="flex cursor-pointer items-center gap-1 text-rose-500 text-sm hover:text-rose-600"
       >
         <Trash size={16} />
         Delete

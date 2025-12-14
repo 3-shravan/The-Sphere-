@@ -1,6 +1,6 @@
 import { Search } from "lucide-react"
 
-export default function SearchBar({ setQuery, query }) {
+export function SearchBar({ setQuery, query }) {
   return (
     <div className="relative w-full">
       <Search className="-translate-y-1/2 absolute top-1/2 left-4 text-second" size={16} />

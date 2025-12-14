@@ -106,12 +106,32 @@ export const chatExists = catchAsyncError(async (req, res) => {
     throw new BAD_REQUEST(
       "The user you are trying to chat with does not exist."
     );
-
-  const chat = await Chat.findOne({
-    isGroupChat: false,
-    users: { $all: [userId, otherUserId] },
-  }).lean();
-
+  let chat = null;
+  // Self chat case
+  if (userId.toString() === otherUserId.toString()) {
+    chat = await Chat.findOne({
+      isGroupChat: false,
+      users: [userId],
+    })
+      .populate({
+        path: "users",
+        select: "name profilePicture",
+      })
+      .lean();
+  } else {
+    chat = await Chat.findOne({
+      isGroupChat: false,
+      users: {
+        $all: [userId, otherUserId],
+        $size: 2,
+      },
+    })
+      .populate({
+        path: "users",
+        select: "name profilePicture",
+      })
+      .lean();
+  }
   return chat
     ? handleSuccessResponse(res, 200, "Chat existence checked", {
         isExists: true,
@@ -142,8 +162,6 @@ export const getConversationUsers = catchAsyncError(async (req, res) => {
 
   handleSuccessResponse(res, 200, "", { users });
 });
-
-
 
 export const deleteChat = catchAsyncError(async (req, res, next) => {
   const { chatId } = req.params;

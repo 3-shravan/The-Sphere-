@@ -1,39 +1,29 @@
-import { useEffect, useState } from "react";
-import { Container, H2 } from "@/components";
-import { HandleClickOutsideWrapper } from "@/components/wrappers/HandleClickOutsideWrapper";
-import Birthdays from "@/features/birthdays/pages/Birthdays";
-import SuggestedUsers from "@/features/users/pages/SuggestedUsers";
-import { SearchBar } from "../components/SearchBar";
-import { SearchResults } from "../components/SearchResults";
-import { useSearchUsers } from "../hooks/useSearchUsers";
+import { useState } from "react"
+import { Container, H2 } from "@/components"
+import { HandleClickOutsideWrapper } from "@/components/wrappers/HandleClickOutsideWrapper"
+import Birthdays from "@/features/birthdays/pages/Birthdays"
+import SuggestedUsers from "@/features/users/pages/SuggestedUsers"
+import { SearchBar } from "../components/SearchBar"
+import { SearchResults } from "../components/SearchResults"
+import { useSearchUsers } from "../hooks/useSearchUsers"
 
 const Explore = () => {
-  const [query, setQuery] = useState("");
-  const { users, loading } = useSearchUsers(query);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+  const [query, setQuery] = useState("")
+  const [isDropdownOpen, setIsDropdownOpen] = useState(true)
 
-  useEffect(() => {
-    if (query.trim()) {
-      setIsDropdownOpen(true);
-    } else {
-      setIsDropdownOpen(false);
-    }
-  }, [query]);
+  const { users, loading } = useSearchUsers(query)
+
+  const handleClickOutside = useCallback(() => {
+    setIsDropdownOpen(false)
+  }, [])
 
   return (
     <Container>
       <H2 text={"Explore"} />
       <main className="relative w-full">
-        <HandleClickOutsideWrapper
-          onClickOutside={() => setIsDropdownOpen(false)}
-        >
+        <HandleClickOutsideWrapper onClickOutside={handleClickOutside}>
           <SearchBar query={query} setQuery={setQuery} />
-          <SearchResults
-            isOpen={isDropdownOpen}
-            users={users}
-            loading={loading}
-            query={query}
-          />
+          <SearchResults isOpen={isDropdownOpen} users={users} loading={loading} query={query} />
         </HandleClickOutsideWrapper>
       </main>
       {!isDropdownOpen && (
@@ -43,6 +33,6 @@ const Explore = () => {
         </div>
       )}
     </Container>
-  );
-};
-export default Explore;
+  )
+}
+export default Explore

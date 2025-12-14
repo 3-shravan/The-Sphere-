@@ -19,7 +19,7 @@ export const useChatStore = create((set) => ({
 
   addMessage: (msg) =>
     set((state) => {
-      if (state.messages.some((m) => m._id === msg._id)) return state // prevent duplicates
+      if (state.messages.some((m) => m._id === msg._id)) return state
       return { messages: sortByCreatedAtAsc([...state.messages, msg]) }
     }),
 
@@ -36,5 +36,14 @@ export const useChatStore = create((set) => ({
   updateMessageStatus: (id, status) =>
     set((state) => ({
       messages: state.messages.map((m) => (m._id === id ? { ...m, status } : m)),
+    })),
+  removeMessageOptimistic: (id) =>
+    set((state) => ({
+      messages: state.messages.filter((m) => m._id !== id),
+    })),
+
+  restoreMessage: (msg) =>
+    set((state) => ({
+      messages: sortByCreatedAtAsc([...state.messages, msg]),
     })),
 }))

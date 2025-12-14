@@ -1,21 +1,21 @@
-import { useParams } from "react-router-dom";
-import { Container, Loading, NonExistRoutes } from "@/components";
-import { useAuth } from "@/context";
-import { PostGrid } from "@/shared";
-import { useGetProfile } from "../../api/useQueries";
-import { ProfileCard } from "../components/ProfileCard";
+import { useParams } from "react-router-dom"
+import { Container, Loading } from "@/components"
+import { useAuth } from "@/context"
+import { PostGrid } from "@/shared"
+import { useGetProfile } from "../../api/useQueries"
+import { ProfileCard } from "../components/ProfileCard"
 
-const Profile = () => {
-  const { username } = useParams();
-  const { currentUserId } = useAuth();
-  const { data: profile, isLoading } = useGetProfile(username);
+export default function Profile() {
+  const { username } = useParams()
+  const { currentUserId } = useAuth()
+  const { data: profile, isLoading } = useGetProfile(username)
 
-  const user = profile?.user;
-  const me = user?._id === currentUserId;
-  const posts = profile?.user?.posts;
+  const user = profile?.user
+  const me = user?._id === currentUserId
+  const posts = profile?.user?.posts
 
-  if (isLoading) return <Loading />;
-  if (!user) return <NonExistRoutes />;
+  if (isLoading) return <Loading />
+  if (!user) return null
 
   return (
     <Container>
@@ -28,7 +28,5 @@ const Profile = () => {
       </div>
       <PostGrid posts={posts} likePost={true} />
     </Container>
-  );
-};
-
-export default Profile;
+  )
+}

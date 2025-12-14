@@ -1,28 +1,30 @@
-import { CirclesThreePlus } from "phosphor-react";
-import { useState } from "react";
-import { MdDeleteOutline } from "react-icons/md";
-import { Button } from "@/components/ui/button";
-import { HandleClickOutsideWrapper } from "@/components/wrappers/HandleClickOutsideWrapper";
-import { useDeleteChat } from "../../api/useMutations";
-import { useChatStore } from "../../store/chatStore";
+import { CirclesThreePlus } from "phosphor-react"
+import { useState } from "react"
+import { MdDeleteOutline } from "react-icons/md"
+import { HandleClickOutsideWrapper } from "@/components/wrappers/HandleClickOutsideWrapper"
+import { useDeleteChat } from "../../api/useMutations"
+import { useChatStore } from "../../store/chatStore"
 
 export function ConnectionOptionsMenu({ chatId }) {
-  const [open, setOpen] = useState(false);
-  const { mutate: deleteChat } = useDeleteChat(chatId);
+  const [open, setOpen] = useState(false)
+  const { mutate: deleteChat } = useDeleteChat(chatId)
 
   const handleDelete = (e) => {
-    e.stopPropagation();
-    useChatStore.getState().setMessages([]);
-    deleteChat({ chatId });
-    setOpen(false);
-  };
+    e.stopPropagation()
+    useChatStore.getState().setMessages([])
+    deleteChat({ chatId })
+    setOpen(false)
+  }
 
   return (
     <HandleClickOutsideWrapper onClickOutside={() => setOpen(false)}>
       <div className="relative" onClick={(e) => e.stopPropagation()}>
-        <Button size="icon" variant="ghost" onClick={() => setOpen(!open)}>
-          <CirclesThreePlus size={32} />
-        </Button>
+        <button
+          className="cursor-pointer rounded-xl p-2 hover:bg-muted"
+          onClick={() => setOpen(!open)}
+        >
+          <CirclesThreePlus size={20} />
+        </button>
 
         {/* Dropdown */}
         {open && (
@@ -37,5 +39,5 @@ export function ConnectionOptionsMenu({ chatId }) {
         )}
       </div>
     </HandleClickOutsideWrapper>
-  );
+  )
 }
