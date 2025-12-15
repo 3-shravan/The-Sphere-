@@ -9,13 +9,13 @@ import { useChatStore } from "../store/chatStore"
 
 export default function ChatArea() {
   const navigate = useNavigate()
-  const IS_MOBILE = useIsMobile()
+  const IsMobile = useIsMobile()
 
   const { selectedChat } = useChatStore()
 
   useEffect(() => {
-    if (!selectedChat && IS_MOBILE) navigate("/conversations")
-  }, [selectedChat, IS_MOBILE, navigate])
+    if (!selectedChat && IsMobile) navigate("/conversations")
+  }, [selectedChat, IsMobile, navigate])
 
   if (!selectedChat) return <NoSelectedChat />
 

@@ -1,4 +1,4 @@
-import type { VitePWAOptions } from "vite-plugin-pwa";
+import type { VitePWAOptions } from "vite-plugin-pwa"
 
 export const pwaWorkbox: NonNullable<VitePWAOptions["workbox"]> = {
   globPatterns: ["**/*.{js,css,html,ico,png,svg,webp,woff,woff2}"],
@@ -37,4 +37,4 @@ export const pwaWorkbox: NonNullable<VitePWAOptions["workbox"]> = {
       },
     },
   ],
-};
+}

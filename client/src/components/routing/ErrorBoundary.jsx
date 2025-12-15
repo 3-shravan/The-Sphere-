@@ -18,7 +18,7 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <FallbackUI
+        <FallbackUi
           error={this.state.error}
           onReset={() => this.setState({ hasError: false, error: null })}
         />
@@ -28,7 +28,7 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-const FallbackUI = ({ error, onReset }) => {
+const FallbackUi = ({ error, onReset }) => {
   const navigate = useNavigate()
   const [viewDetails, setViewDetails] = useState(false)
   const isDev = import.meta.env.VITE_MODE === "development"

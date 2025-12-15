@@ -15,7 +15,7 @@ export const useSuggestedUsers = () =>
 export const useGetProfile = (username) =>
   useQuery({
     queryKey: USERS_QUERY_KEY.profile(username),
-   queryFn: () => usersApi.getProfile(username),
+    queryFn: () => usersApi.getProfile(username),
     enabled: !!username,
     meta: { showError: true },
   })

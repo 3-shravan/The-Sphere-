@@ -9,7 +9,7 @@ import { useEmojiInsert } from "../../hooks/useInsertEmoji"
 import { EmojiPickerPopover } from "../ui/emoji-picker"
 
 export function ChatComposer() {
-  const IS_MOBILE = useIsMobile()
+  const IsMobile = useIsMobile()
   const { text, setText, hasText, sendMessage, handleKeyDown } = useChatComposer()
 
   const [showEmoji, setShowEmoji] = useState(false)
@@ -26,13 +26,13 @@ export function ChatComposer() {
             />
           </ActionButton>
 
-          {!IS_MOBILE && (
+          {!IsMobile && (
             <ActionButton onClick={() => setShowEmoji((o) => !o)}>
               <SmileyWink size={25} />
             </ActionButton>
           )}
 
-          {showEmoji && !IS_MOBILE && (
+          {showEmoji && !IsMobile && (
             <EmojiPickerPopover
               onSelect={(emoji) => {
                 insertEmoji(emoji)

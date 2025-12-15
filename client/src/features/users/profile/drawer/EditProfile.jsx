@@ -1,5 +1,5 @@
-import { Settings2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Settings2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import {
   Drawer,
   DrawerContent,
@@ -7,9 +7,9 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import EditProfileForm from "../components/editProfile/EditProfileForm";
-import useEditProfile from "../hooks/useEditProfile";
+} from "@/components/ui/drawer"
+import EditProfileForm from "../components/editProfile/EditProfileForm"
+import useEditProfile from "../hooks/useEditProfile"
 
 const EditProfile = ({ user }) => {
   const {
@@ -23,15 +23,12 @@ const EditProfile = ({ user }) => {
     handleSubmit,
     isPending,
     drawerRef,
-  } = useEditProfile(user);
+  } = useEditProfile(user)
 
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button
-          variant="outline"
-          className="mt-4 cursor-pointer text-foreground text-xs"
-        >
+        <Button variant="outline" className="mt-4 cursor-pointer text-foreground text-xs">
           edit profile
           <Settings2 className="inline h-3 w-3 text-third" />
         </Button>
@@ -60,7 +57,7 @@ const EditProfile = ({ user }) => {
         </div>
       </DrawerContent>
     </Drawer>
-  );
-};
+  )
+}
 
-export default EditProfile;
+export default EditProfile

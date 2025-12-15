@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { usePosts } from "@/features/feeds/api/useQueries"
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const PostContext = createContext()
 const LIMIT = 5
 
@@ -31,6 +32,7 @@ export function PostProvider({ children }) {
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePost = () => {
   const context = useContext(PostContext)
   if (!context) throw new Error("usePost must be used within a PostProvider")

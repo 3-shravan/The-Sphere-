@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { Container, H2 } from "@/components"
 import { HandleClickOutsideWrapper } from "@/components/wrappers/HandleClickOutsideWrapper"
 import Birthdays from "@/features/birthdays/pages/Birthdays"

@@ -12,7 +12,6 @@ import EditPost from "@/features/posts/drawer/EditPost"
 import { DeleteModal, ShareModal, usePostFromCache } from "@/shared"
 
 const PostOptions = ({ postId, dropdown }) => {
-  
   const post = usePostFromCache(postId, "feed", dropdown)
 
   const [showModal, setShowModal] = useState(false)

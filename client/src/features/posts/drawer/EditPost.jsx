@@ -1,6 +1,6 @@
-import { X } from "lucide-react";
-import { CgVercel } from "react-icons/cg";
-import { Button } from "@/components/ui/button";
+import { X } from "lucide-react"
+import { CgVercel } from "react-icons/cg"
+import { Button } from "@/components/ui/button"
 import {
   Drawer,
   DrawerClose,
@@ -8,40 +8,35 @@ import {
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-} from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { usePostFromCache } from "@/shared";
-import {
-  errorToast,
-  formatTags,
-  stringifyTags,
-  validatePostForm,
-} from "@/utils";
-import { useUpdatePost } from "../api";
+} from "@/components/ui/drawer"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { usePostFromCache } from "@/shared"
+import { errorToast, formatTags, stringifyTags, validatePostForm } from "@/utils"
+import { useUpdatePost } from "../api"
 
 const EditPost = ({ open, setOpen, postId }) => {
-  const post = usePostFromCache(postId);
-  const { mutateAsync: updatePost, isPending } = useUpdatePost(post?._id);
+  const post = usePostFromCache(postId)
+  const { mutateAsync: updatePost, isPending } = useUpdatePost(post?._id)
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
+    e.preventDefault()
+    const formData = new FormData(e.target)
 
-    const tags = formData.get("tags");
-    const formattedTags = formatTags(tags);
-    formData.delete("tags");
+    const tags = formData.get("tags")
+    const formattedTags = formatTags(tags)
+    formData.delete("tags")
     // formData.set("tags", JSON.stringify(formattedTags));
     formattedTags.forEach((tag) => {
-      formData.append("tags", tag);
-    });
+      formData.append("tags", tag)
+    })
 
-    const errors = validatePostForm(formData, false);
-    if (errors) return errorToast(errors);
+    const errors = validatePostForm(formData, false)
+    if (errors) return errorToast(errors)
 
-    const data = await updatePost(formData);
-    if (data?.success) setOpen(false);
-  };
+    const data = await updatePost(formData)
+    if (data?.success) setOpen(false)
+  }
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
@@ -116,11 +111,7 @@ const EditPost = ({ open, setOpen, postId }) => {
               </Button>
 
               <DrawerClose asChild>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full cursor-pointer text-xs"
-                >
+                <Button type="button" variant="outline" className="w-full cursor-pointer text-xs">
                   <X className="h-4 w-4" />
                   Cancel
                 </Button>
@@ -130,7 +121,7 @@ const EditPost = ({ open, setOpen, postId }) => {
         </div>
       </DrawerContent>
     </Drawer>
-  );
-};
+  )
+}
 
-export default EditPost;
+export default EditPost

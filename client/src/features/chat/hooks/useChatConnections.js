@@ -13,13 +13,13 @@ export function useChatConnections() {
   const chats = useChatListStore((state) => state.chats)
 
   const navigate = useNavigate()
-  const IS_MOBILE = useIsMobile()
+  const IsMobile = useIsMobile()
   const selectedChat = useChatStore((state) => state.selectedChat)
   const setSelectedChat = useChatStore((state) => state.setSelectedChat)
 
   function handleChatSelect(chat) {
     if (selectedChat?._id !== chat._id) setSelectedChat(chat)
-    if (IS_MOBILE) navigate(`/conversations/chat/${chat._id}`)
+    if (IsMobile) navigate(`/conversations/chat/${chat._id}`)
   }
 
   return { chats, isLoading, handleChatSelect }

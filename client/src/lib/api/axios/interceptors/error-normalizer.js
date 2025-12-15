@@ -12,10 +12,10 @@ export const normalizeError = (error) => {
     }
 
   // HTML response (server misconfiguration)
-  const isHTML =
+  const isHtml =
     res?.headers?.["content-type"]?.includes("text/html") ||
     (typeof res?.data === "string" && res.data.startsWith("<!DOCTYPE html>"))
-  if (isHTML)
+  if (isHtml)
     return {
       status,
       type: "InvalidHTMLResponse",

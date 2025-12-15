@@ -23,7 +23,7 @@ export default function useApi() {
   }, [])
   const delay = (ms) => new Promise((res) => setTimeout(res, ms))
 
-  const attemptRequest = async (config, retryCount) => {
+  const attemptRequest = useCallback(async (config, retryCount) => {
     try {
       return await axiosInstance(config)
     } catch (err) {
@@ -33,7 +33,7 @@ export default function useApi() {
       }
       throw err
     }
-  }
+  }, [])
 
   /**
    ** REQUEST FUNCTION
@@ -86,7 +86,7 @@ export default function useApi() {
         setLoading(false)
       }
     },
-    [navigate],
+    [navigate, attemptRequest],
   )
 
   const fetcher = useCallback(async (endpointOrConfig) => {

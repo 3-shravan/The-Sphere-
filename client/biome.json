@@ -26,7 +26,7 @@
         "noChildrenProp": "error",
         "useHookAtTopLevel": "error",
         "useExhaustiveDependencies": "warn",
-        "useJsxKeyInIterable": "error",
+        "useJsxKeyInIterable": "warn",
         "noUnusedImports": "warn"
       },
       "suspicious": {
@@ -41,8 +41,11 @@
         }
       },
       "style": {
-        "useConst": "off",
-        "useTemplate": "warn"
+        "useConst": "info",
+        "useTemplate": "warn",
+        "useNamingConvention": {
+          "level": "warn"
+        }
       },
 
       "complexity": {

@@ -7,7 +7,7 @@ import { useIsMobile } from "@/hooks"
 import { useChatStore } from "../../store/chatStore"
 
 export function ChatHeader() {
-  const IS_MOBILE = useIsMobile()
+  const IsMobile = useIsMobile()
   const navigate = useNavigate()
   const { currentUserId } = useAuth()
 
@@ -20,12 +20,12 @@ export function ChatHeader() {
 
   function handleBackClick() {
     useChatStore.getState().setSelectedChat(null)
-    if (IS_MOBILE) navigate("/conversations")
+    if (IsMobile) navigate("/conversations")
   }
 
   return (
     <header className="flex items-center gap-2 p-2">
-      {IS_MOBILE && (
+      {IsMobile && (
         <Button onClick={handleBackClick} variant="ghost" size="icon">
           <ChevronLeft />
         </Button>

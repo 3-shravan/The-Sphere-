@@ -1,8 +1,8 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export const aliases = {
   "@": path.resolve(__dirname, "../src"),
@@ -19,4 +19,4 @@ export const aliases = {
   "@services": path.resolve(__dirname, "../src/services"),
   "@shared": path.resolve(__dirname, "../src/shared"),
   "@lib": path.resolve(__dirname, "../src/lib"),
-};
+}

@@ -1,20 +1,20 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import Confetti from "react-confetti";
-import { useAuth } from "@/context";
+import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
+import Confetti from "react-confetti"
+import { useAuth } from "@/context"
 
 export default function BirthdayHeader() {
-  const { isBirthday, auth } = useAuth();
-  const [confetti, setConfetti] = useState(true);
+  const { isBirthday, auth } = useAuth()
+  const [confetti, setConfetti] = useState(true)
 
   useEffect(() => {
     if (isBirthday) {
-      const t = setTimeout(() => setConfetti(false), 8000);
-      return () => clearTimeout(t);
+      const t = setTimeout(() => setConfetti(false), 8000)
+      return () => clearTimeout(t)
     }
-  }, [isBirthday]);
+  }, [isBirthday])
 
-  if (!isBirthday) return null;
+  if (!isBirthday) return null
 
   return (
     <div className="w-full font-Poppins">
@@ -39,5 +39,5 @@ export default function BirthdayHeader() {
         </span>
       </motion.div>
     </div>
-  );
+  )
 }

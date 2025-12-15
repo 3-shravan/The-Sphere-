@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useState } from "react"
 import { useChatStore } from "@/features/chat/store/chatStore"
 import { useApi, useSocket } from "@/hooks"

@@ -1,15 +1,14 @@
-import { Spinner } from "@/components";
-import { useDeletePost } from "@/features/posts/api";
+import { Spinner } from "@/components"
+import { useDeletePost } from "@/features/posts/api"
 
 export default function DeleteModal({ postId, onCancel }) {
-  const { mutateAsync: deletePost, isPending } = useDeletePost();
+  const { mutateAsync: deletePost, isPending } = useDeletePost()
 
   return (
     <>
       <h2 className="font-mono font-semibold text-lg">Confirm Deletion</h2>
       <p className="my-6 font-medium font-mono text-muted-foreground text-sm">
-        Are you sure you want to proceed with this action? This cannot be
-        undone.
+        Are you sure you want to proceed with this action? This cannot be undone.
       </p>
       <div className="flex justify-end gap-4">
         <button
@@ -24,8 +23,8 @@ export default function DeleteModal({ postId, onCancel }) {
           type="button"
           className="min-w-20 flex-center cursor-pointer rounded-md bg-third px-4 py-2 font-semibold text-black text-sm transition hover:bg-rose-600"
           onClick={async () => {
-            await deletePost(postId);
-            onCancel();
+            await deletePost(postId)
+            onCancel()
           }}
           disabled={isPending}
         >
@@ -33,5 +32,5 @@ export default function DeleteModal({ postId, onCancel }) {
         </button>
       </div>
     </>
-  );
+  )
 }

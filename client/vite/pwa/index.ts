@@ -1,6 +1,6 @@
-import { VitePWA } from "vite-plugin-pwa";
-import { pwaManifest } from "./manifest";
-import { pwaWorkbox } from "./workbox";
+import { VitePWA } from "vite-plugin-pwa"
+import { pwaManifest } from "./manifest"
+import { pwaWorkbox } from "./workbox"
 
 export function createPwaPlugin(enablePwa: boolean) {
   return VitePWA({
@@ -22,5 +22,5 @@ export function createPwaPlugin(enablePwa: boolean) {
       enabled: enablePwa,
       type: "module",
     },
-  });
+  })
 }

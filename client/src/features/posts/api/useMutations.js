@@ -1,6 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
-import { POSTS_QUERY_KEYS } from "@/lib/utils/global-query-keys";
-import { postApi } from "./posts-api";
+import { useMutation } from "@tanstack/react-query"
+import { POSTS_QUERY_KEYS } from "@/lib/utils/global-query-keys"
+import { postApi } from "./posts-api"
 
 export const useCreatePost = () =>
   useMutation({
@@ -10,7 +10,7 @@ export const useCreatePost = () =>
       showError: true,
       invalidateQuery: [POSTS_QUERY_KEYS.feeds()],
     },
-  });
+  })
 
 export const useCreateThought = () =>
   useMutation({
@@ -20,7 +20,7 @@ export const useCreateThought = () =>
       showError: true,
       invalidateQuery: [POSTS_QUERY_KEYS.feeds()],
     },
-  });
+  })
 
 export const useUpdatePost = (postId) =>
   useMutation({
@@ -28,12 +28,9 @@ export const useUpdatePost = (postId) =>
     meta: {
       showSuccess: true,
       showError: true,
-      invalidateQuery: [
-        POSTS_QUERY_KEYS.feeds(),
-        POSTS_QUERY_KEYS.detail(postId),
-      ],
+      invalidateQuery: [POSTS_QUERY_KEYS.feeds(), POSTS_QUERY_KEYS.detail(postId)],
     },
-  });
+  })
 
 export const useDeletePost = () =>
   useMutation({
@@ -43,4 +40,4 @@ export const useDeletePost = () =>
       showError: true,
       invalidateQuery: [POSTS_QUERY_KEYS.feeds(), POSTS_QUERY_KEYS.details()],
     },
-  });
+  })

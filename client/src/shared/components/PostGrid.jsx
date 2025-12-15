@@ -19,7 +19,7 @@ const PostGrid = ({
   const navigate = useNavigate()
   if (!posts) return null
 
-  const isExpanded = (caption, WORDS) => caption.length > WORDS
+  const isExpanded = (caption, Words) => caption.length > Words
   const toViewPost = (postId) => navigate(`/post/${postId}`)
   const toProfile = (username) => navigate(`/profile/${username}`)
 

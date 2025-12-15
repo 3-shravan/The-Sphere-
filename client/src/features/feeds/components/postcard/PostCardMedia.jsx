@@ -1,36 +1,36 @@
-import { useState } from "react";
-import { FaHeart } from "react-icons/fa6";
-import ThoughtsCard from "@/shared/components/ui/ThoughtsCard";
+import { useState } from "react"
+import { FaHeart } from "react-icons/fa6"
+import ThoughtsCard from "@/shared/components/ui/ThoughtsCard"
 
 const PostCardMedia = ({ media, thoughts, likePostRef }) => {
-	const [showHeart, setShowHeart] = useState(false);
+  const [showHeart, setShowHeart] = useState(false)
 
-	const handleDoubleClick = () => {
-		likePostRef?.current?.triggerLike();
-		setShowHeart(true);
-		setTimeout(() => setShowHeart(false), 1000); // longer to show full animation
-	};
+  const handleDoubleClick = () => {
+    likePostRef?.current?.triggerLike()
+    setShowHeart(true)
+    setTimeout(() => setShowHeart(false), 1000) // longer to show full animation
+  }
 
-	if (media) {
-		return (
-			<div className="relative w-full flex justify-center p-2">
-				<div className="overflow-hidden rounded-2xl max-w-[90vw] md:max-w-[55vw] lg:max-w-[45vw]">
-					<img
-						src={media}
-						alt="post"
-						onDoubleClick={handleDoubleClick}
-						className="w-full max-h-[85vh] object-cover cursor-pointer"
-					/>
-				</div>
+  if (media) {
+    return (
+      <div className="relative flex w-full justify-center p-2">
+        <div className="max-w-[90vw] overflow-hidden rounded-2xl md:max-w-[55vw] lg:max-w-[45vw]">
+          <img
+            src={media}
+            alt="post"
+            onDoubleClick={handleDoubleClick}
+            className="max-h-[85vh] w-full cursor-pointer object-cover"
+          />
+        </div>
 
-				{showHeart && (
-					<FaHeart className="absolute inset-0 m-auto text-rose-600 text-8xl opacity-50 animate-[popBounce_1s_ease-out]" />
-				)}
-			</div>
-		);
-	} else {
-		return <ThoughtsCard thought={thoughts} className="pt-0 px-2.5" />;
-	}
-};
+        {showHeart && (
+          <FaHeart className="absolute inset-0 m-auto animate-[popBounce_1s_ease-out] text-8xl text-rose-600 opacity-50" />
+        )}
+      </div>
+    )
+  } else {
+    return <ThoughtsCard thought={thoughts} className="px-2.5 pt-0" />
+  }
+}
 
-export default PostCardMedia;
+export default PostCardMedia

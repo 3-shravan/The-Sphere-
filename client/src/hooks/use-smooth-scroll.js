@@ -36,7 +36,7 @@ export function useSmoothScrollRef(containerRef, options = {}) {
       }
       lenis.destroy()
     }
-  }, [enabled, containerRef.current])
+  }, [enabled, containerRef])
 
   return lenisRef
 }
