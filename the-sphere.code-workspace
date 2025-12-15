@@ -1,9 +1,0 @@
-{
-  "folders": [{ "path": "client" }, { "path": "server" }],
-  "settings": {
-    "editor.formatOnSave": true
-  },
-  "extensions": {
-    "recommendations": []
-  }
-}
