@@ -4,34 +4,34 @@ import {
   Register,
   ResetPasswordViaEmail,
   ResetPasswordViaPhone,
-} from "@features/auth"
-import { Toast } from "@lib/Toast"
-import { motion } from "framer-motion"
-import { lazy, Suspense } from "react"
-import { Route, Routes } from "react-router-dom"
+} from "@features/auth";
+import { Toast } from "@lib/Toast";
+import { motion } from "framer-motion";
+import { lazy, Suspense } from "react";
+import { Route, Routes } from "react-router-dom";
 import {
   NonExistRoutes,
   Offline,
   PageSuspenseLoader,
   ProtectedRoutes,
   PublicRoutes,
-} from "@/components"
-import { CreatePost, SavedPosts } from "@/features/posts"
-import { FeedLayout, HomePage } from "@/layouts"
-import { DeveloperRoute } from "./components/routing/DeveloperRoutes"
-import PostProviderWrapper from "./components/routing/PostProviderWrapper"
-import { ChatLayout, ChatPage, Conversations } from "./features/chat"
-import DeveloperPage from "./features/developer/pages/DeveloperPage"
-import Explore from "./features/explore/pages/Explore"
-import Page from "./features/landing-page/pages/Page"
-import ViewPost from "./features/posts/pages/ViewPost"
-import useNetworkStatus from "./hooks/useNetworkStatus"
+} from "@/components";
+import { CreatePost, SavedPosts } from "@/features/posts";
+import { FeedLayout, HomePage } from "@/layouts";
+import { DeveloperRoute } from "./components/routing/DeveloperRoutes";
+import PostProviderWrapper from "./components/routing/PostProviderWrapper";
+import { ChatLayout, ChatPage, Conversations } from "./features/chat";
+import DeveloperPage from "./features/developer/pages/DeveloperPage";
+import Explore from "./features/explore/pages/Explore";
+import Page from "./features/landing-page/pages/Page";
+import ViewPost from "./features/posts/pages/ViewPost";
+import useNetworkStatus from "./hooks/useNetworkStatus";
 
-const Profile = lazy(() => import("@/features/users/profile/pages/Profile"))
+const Profile = lazy(() => import("@/features/users/profile/pages/Profile"));
 
 export default function App() {
-  const isOnline = useNetworkStatus()
-  if (!isOnline) return <Offline />
+  const isOnline = useNetworkStatus();
+  if (!isOnline) return <Offline />;
 
   return (
     <>
@@ -44,8 +44,14 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Register />} />
             <Route path="/forget-password" element={<ForgetPassword />} />
-            <Route path="/reset-password/phone/:phoneNumber" element={<ResetPasswordViaPhone />} />
-            <Route path="/reset-password/email/:token" element={<ResetPasswordViaEmail />} />
+            <Route
+              path="/reset-password/phone/:phoneNumber"
+              element={<ResetPasswordViaPhone />}
+            />
+            <Route
+              path="/reset-password/email/:token"
+              element={<ResetPasswordViaEmail />}
+            />
           </Route>
 
           {/* Protected Routes */}
@@ -89,5 +95,5 @@ export default function App() {
         </Routes>
       </Suspense>
     </>
-  )
+  );
 }
